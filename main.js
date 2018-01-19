@@ -15,6 +15,7 @@ function createWindow () {
   win.on('closed', function () {
     win = null
   })
+  win.setMenu(null);
 }
 // Create window on electron intialization
 app.on('ready', createWindow)
