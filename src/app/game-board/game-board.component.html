@@ -1,0 +1,24 @@
+
+<!-- <div class="w3-container w3-center">
+  <div class="w3-half">
+    <div class="w3-quarter" *ngFor="let cell of boardCells | async;">
+      {{cell.id}}
+    </div>
+  </div>
+  <div class="w3-half">
+    <div class="w3-quarter" *ngFor="let cell of boardCells | async">
+      {{cell.id}}
+    </div>
+  </div>
+</div> -->
+
+<div class="w3-container w3-center">
+  <div class="board">
+    <div class="cell" *ngFor="let col of boardCells | async" (click)="makeMove(col.id, col.isOn)">
+      <p style="color: white; font-size: 20%">{{col.id}}</p>
+      <img src="/assets/avatar.png" *ngIf="col.isOn" style="width: 50%">
+    </div>
+  </div>
+</div>
+
+

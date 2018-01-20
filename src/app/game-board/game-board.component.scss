@@ -1,0 +1,50 @@
+.board{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  background-color: #a45632;
+  color: #ffffff;
+  max-width: 100%;
+  width: 56.9%;
+}
+
+.gameStatus {
+  margin: 0;
+  padding: 15px;
+  background-color: #34495e;
+  color: white;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.restart{
+  background-color: #34495e;
+  color: white;
+  border: 0;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0;
+  padding: 15px;
+  width: 100%;
+}
+
+.restart:hover{
+  background-color: #c1cdcd;
+  cursor: pointer;
+}
+
+.cell{
+  width: 100px;
+  height: 100px;
+  box-sizing: border-box;
+  border: 3px solid #f4af78;
+  font-size: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell:hover{
+  background-color: #c1cdcd;
+}
