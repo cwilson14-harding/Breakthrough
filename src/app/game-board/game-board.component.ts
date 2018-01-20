@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from "angularfire2/firestore";
-import { Observable } from 'rxjs/Observable';
+import {Component, OnInit} from '@angular/core';
+import {AngularFirestore} from 'angularfire2/firestore';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-game-board',
@@ -13,23 +13,17 @@ export class GameBoardComponent implements OnInit {
   boardCells: Observable<any[]>;
 
   constructor(private db: AngularFirestore) {
-  this.boardCells = db.collection('board').valueChanges();
-}
+    this.boardCells = db.collection('board').valueChanges();
+  }
 
   ngOnInit() {
 
   }
 
-makeMove(id, isOn){
-    if (isOn){
-      //isOn is being changed to false here
-      this.db.collection('board').doc(id).update({isOn: false});
-    }
-    else{
-      //is on is being changed to true here
-      this.db.collection('board').doc(id).update({isOn: true});
-    }
-}
+  makeMove(id, isOn) {
+    // Update isOn here.
+    this.db.collection('board').doc(id).update({isOn: !isOn});
+  }
 
 
 }
