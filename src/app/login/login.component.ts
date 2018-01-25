@@ -50,4 +50,8 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  playGame() {
+    this.router.navigateByUrl('board');
+  }
+
 }

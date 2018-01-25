@@ -12,8 +12,8 @@
   </div>
 </div> -->
 
-<div class="w3-container w3-center">
-  <div class="board">
+<div class="w3-container">
+  <div class="board w3-middle">
     <div class="cell" *ngFor="let col of boardCells | async" (click)="makeMove(col.id, col.isOn)">
       <p style="color: white; font-size: 20%">{{col.id}}</p>
       <img src="/assets/avatar.png" *ngIf="col.isOn" style="width: 50%">
