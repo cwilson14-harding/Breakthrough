@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "angularfire2/firestore";
-import { Observable } from "rxjs/Observable";
 import * as firebase from "firebase/app";
 import { user } from '../models/user';
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AuthService {
 
   user: Observable<user>;
+  avaliable: Observable<user[]>
 
   constructor(public afAuth: AngularFireAuth, public db: AngularFirestore) {
 
@@ -21,13 +22,10 @@ export class AuthService {
           return Observable.of(null)
         }
       })
-
-
   }
 
-  googleLogin(user){
+  googleLogin(){
     const provider = new firebase.auth.GoogleAuthProvider();
-    user.isOnline = true;
     return this.oAuthLogin(provider);
   }
   oAuthLogin(provider){
@@ -37,10 +35,16 @@ export class AuthService {
       });
   }
 
-  logout(user){
-    this.db.collection(`users`).doc(`${user.uid}`).update({isOnline: false});
-    //const userRef: AngularFirestoreDocument<user> = this.db.doc(`users/${user.uid}`);
-    //userRef.update({isOnline: false});
+  updateUserStatus(user){
+    if(user.isOnline){
+      this.db.collection('users').doc(user.uid).update({isOnline: false});
+    }
+    else{
+      this.db.collection('users').doc(user.uid).update({isOnline: true});
+    }
+  }
+
+  logout(){
     return this.afAuth.auth.signOut();
   }
 
@@ -52,9 +56,19 @@ export class AuthService {
       email: user.email,
       photoURL: user.photoURL,
       displayName: user.displayName,
-      isOnline: user.isOnline
+      isOnline: user.isOnline = true
     };
     return userRef.set(data);
   }
 
+  viewOnlineUsers(){
+    this.avaliable = this.db.collection('users', ref => ref.where('isOnline', '==', true)).snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as user;
+        data.uid = a.payload.doc.id;
+        return data;
+      });
+    });
+    return this.avaliable;
+  }
 }

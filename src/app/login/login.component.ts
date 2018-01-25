@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../core/auth.service";
+import { AngularFirestore } from "angularfire2/firestore";
 
 @Component({
   selector: 'app-login',
@@ -8,18 +9,41 @@ import { AuthService } from "../core/auth.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  availableUsers: any;
+  animals: any;
+
+  constructor(public auth: AuthService, private db: AngularFirestore) {
+    this.onlineUsers();
+    this.animals = this.db.collection('animals').valueChanges();
+  }
 
   ngOnInit() {
+
   }
 
-  googleLogin(){
+  loginGoogle(){
     this.auth.googleLogin();
   }
-  logout(user){
-    this.auth.logout(user);
+
+  logOff(user){
+    this.updateUserStatus(user);
+    this.auth.logout();
   }
 
+  updateUserStatus(user){
+    this.auth.updateUserStatus(user);
+  }
 
+  onlineUsers(){
+    this.availableUsers = this.auth.viewOnlineUsers();
+  }
+
+  startGame(uid, name){
+    alert('Starting a game with '+name);
+  }
+
+  addFrog(){
+    this.animals = this.db.collection('animals').add({type: "frog", legCount: 4, body:{color: "green", eyes: 2}})
+  }
 
 }

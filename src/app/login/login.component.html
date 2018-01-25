@@ -1,12 +1,23 @@
+<div class="w3-container">
+  <div class="w3-quarter" *ngFor="let animal of animals | async">
+    <div class="w3-card w3-blue w3-padding-32 w3-center" >
+      {{animal.type}}
+    </div>
+  </div>
+</div>
+
+<button (click)="addFrog()">Add a Frog</button>
+
+
 <div *ngIf="auth.user | async; then authenticated else guest">
 
 </div>
 
 <ng-template #guest>
   <h3>Hello!</h3>
-  <p>Login to play our awesome game</p>
+  <p>Login to be on the Leaderboard</p>
 
-  <button (click)="googleLogin()">
+  <button (click)="loginGoogle()">
     <i class="fa fa-google"></i> Connect to Google
   </button>
 </ng-template>
@@ -15,10 +26,15 @@
   <div *ngIf="auth.user | async as user">
     <h3> {{ user.displayName }}</h3>
     <img  [src]='user.photoURL'>
-    <p>UID: {{ user.uid }}</p>
-    <p>Online</p>
+    <!--<p>UID: {{ user.uid }}</p>-->
 
-
-    <button (click)="logout(user)">Logout</button>
+    <br>
+    <br>
+    <h3>Online Users:</h3>
+    <div *ngFor="let available of availableUsers | async" class="w3-padding w3-hover-blue">
+      <img [src]="available.photoURL" style="width: 5%"> <span (click)="startGame(available.uid, available.displayName)">Start Game with {{available.displayName}}</span>
+    </div>
+    <br>
+    <button (click)="logOff(user)">Logout</button>
   </div>
 </ng-template>
