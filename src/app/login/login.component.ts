@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   toHome() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('');
   }
 
   playGame() {
