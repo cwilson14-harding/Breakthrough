@@ -5,6 +5,11 @@ module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular/cli'],
+    // TODO: Alaina added files section, need to check for errors
+    // files: [
+    //  '(src/)?**/*.+(ts|js)',
+    //  '(test/)?**/*.+(ts|js)'
+    // ],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
