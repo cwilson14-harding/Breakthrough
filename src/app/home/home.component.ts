@@ -22,5 +22,8 @@ export class HomeComponent implements OnInit {
   tutorial() {
     this.router.navigateByUrl('tutorial');
   }
+  intro() {
+    this.router.navigateByUrl('intro');
+  }
 
 }

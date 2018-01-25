@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { SinglePlayerComponent } from './single-player/single-player.component';
 import { MultiPlayerComponent } from './multi-player/multi-player.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
+import { IntroComponent } from './intro/intro.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent},
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
   { path: 'login', pathMatch: 'full', component: LoginComponent},
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
+  { path: 'intro', pathMatch: 'full', component: IntroComponent},
   { path: '**', redirectTo: '/'}
 ];
 
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     HomeComponent,
     SinglePlayerComponent,
     MultiPlayerComponent,
-    TutorialComponent
+    TutorialComponent,
+    IntroComponent
   ],
   imports: [
     BrowserModule,
