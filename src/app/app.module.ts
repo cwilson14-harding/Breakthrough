@@ -6,16 +6,24 @@ import { GameBoardComponent } from './game-board/game-board.component';
 import { CellComponent } from './cell/cell.component';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from "angularfire2/firestore";
-import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from "./core/auth.service";
+import { AuthService } from './core/auth.service';
 
-import { Routes, RouterModule } from "@angular/router";
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { SinglePlayerComponent } from './single-player/single-player.component';
+import { MultiPlayerComponent } from './multi-player/multi-player.component';
+import { TutorialComponent } from './tutorial/tutorial.component';
 
 const appRoutes: Routes = [
-  { path: '', pathMatch: 'full', component: LoginComponent},
+  { path: '', pathMatch: 'full', component: HomeComponent},
+  { path: 'single-player', pathMatch: 'full', component: SinglePlayerComponent},
+  { path: 'multi-player', pathMatch: 'full', component: MultiPlayerComponent},
+  { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
+  { path: 'login', pathMatch: 'full', component: LoginComponent},
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
   { path: '**', redirectTo: '/'}
 ];
@@ -25,7 +33,11 @@ const appRoutes: Routes = [
     AppComponent,
     GameBoardComponent,
     CellComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    SinglePlayerComponent,
+    MultiPlayerComponent,
+    TutorialComponent
   ],
   imports: [
     BrowserModule,

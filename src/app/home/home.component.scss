@@ -1,16 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=VT323');
 
-h1{
-  font-family: 'VT323', monospace;
-  color: ivory;
-}
-
 .backImg{
   background-image: url("../../assets/backgrounds/cyberCity9.jpg");
   width: 100vw;
   height: 100vh;
 }
+
 .buttonStyle{
   width: 100%;
   font-family: 'VT323', monospace;
+}
+
+h1{
+  font-family: 'VT323', monospace;
+  font-size: 550%;
+  color: #E93336;
 }

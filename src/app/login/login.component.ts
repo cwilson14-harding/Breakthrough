@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../core/auth.service";
-import { AngularFirestore } from "angularfire2/firestore";
+import { AuthService } from '../core/auth.service';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,40 +11,43 @@ import { AngularFirestore } from "angularfire2/firestore";
 export class LoginComponent implements OnInit {
 
   availableUsers: any;
-  animals: any;
+  animals;
 
-  constructor(public auth: AuthService, private db: AngularFirestore) {
+  constructor(public auth: AuthService, private db: AngularFirestore, private router: Router) {
     this.onlineUsers();
-    this.animals = this.db.collection('animals').valueChanges();
   }
 
   ngOnInit() {
-
+    this.animals = this.db.collection('animals').valueChanges();
   }
 
-  loginGoogle(){
+  loginGoogle() {
     this.auth.googleLogin();
   }
 
-  logOff(user){
+  logOff(user) {
     this.updateUserStatus(user);
     this.auth.logout();
   }
 
-  updateUserStatus(user){
+  updateUserStatus(user) {
     this.auth.updateUserStatus(user);
   }
 
-  onlineUsers(){
+  onlineUsers() {
     this.availableUsers = this.auth.viewOnlineUsers();
   }
 
-  startGame(uid, name){
-    alert('Starting a game with '+name);
+  startGame(uid, name) {
+    alert('Starting a game with ' + name);
   }
 
-  addFrog(){
-    this.animals = this.db.collection('animals').add({type: "frog", legCount: 4, body:{color: "green", eyes: 2}})
+  addFrog() {
+    this.animals = this.db.collection('animals').add({type: 'frog', legCount: 4, body: {color: 'green', eyes: 2}});
+  }
+
+  toHome() {
+    this.router.navigateByUrl('/');
   }
 
 }
