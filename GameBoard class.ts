@@ -51,6 +51,12 @@ export module GameCore {
             }
         }
 
+        // getTurn
+        // Returns whose turn it is (1 or 2).
+         getTurn() {
+             return this.playerTurn;
+         }
+
         // isMoveValid: function(){}
         // Parameters: location1: [number, number], location2: [number, number]
         // The parameters location1 and location2 are tuples that contains two numbers.
@@ -133,7 +139,8 @@ export module GameCore {
             }
             // Testing if the diagonals or center moves are valid.
             // During this for loop all available moves are pushed to the availableMoves array.
-            for (let column: number = -1; column <= 1; column++){
+            for (let count: number = -1; count <= 1; count++){
+                let column: number = location[1] + count;
                 let location2:Coordinate = [row, column];
                 if (this.isMoveValid(location, location2)) {
                     availableMoves.push(location2);
@@ -216,20 +223,21 @@ export module GameCore {
 
             for (let r = 0; r < 8; ++r) {
                 for (let c = 0; c < 8; ++c) {
-                    let moves: Coordinate[];
-                    moves = board.findAvailableMoves([r, c]);
-                    //for (let target: Coordinate in board.findAvailableMoves([r, c])) {
+                    let moves: Coordinate[] = board.findAvailableMoves([r, c]);
+
                     for (let i = 0; i < moves.length; ++i) {
-                        //possibleMoves.push([[r,c], [target[0],target[1]]);
                         possibleMoves.push([[r,c], moves[i]]);
                     }
                 }
             }
 
-            let index = Math.floor((Math.random() + possibleMoves.length - 1);
-            board.movePiece(possibleMoves[index][0], possibleMoves[index][1]);
+            if (possibleMoves.length > 0) {
+                let index = Math.floor((Math.random() * possibleMoves.length);
+                let fromLoc = possibleMoves[index][0];
+                let toLoc = possibleMoves[index][1];
+                logMove(board.movePiece(fromLoc, toLoc), fromLoc, toLoc, "Geraldo[AI"+board.getTurn()+"]");
+            }
         }
-
     }
 
     interface Player {
@@ -250,21 +258,25 @@ export module GameCore {
     function ai_move() {
         let ai = new AIPlayer();
         ai.notifyTurnStarted(board);
-        redraw();
     }
     function move() {
         let fromRow = document.getElementById("fromRow");
         let toRow = document.getElementById("toRow");
         let fromCol = document.getElementById("fromCol");
         let toCol = document.getElementById("toCol");
+
+        let location1: Coordinate = [+fromRow.value, +fromCol.value];
+        let location2: Coordinate = [+toRow.value, +toCol.value];
+        logMove(board.movePiece(location1, location2), location1, location2, "Human["+board.getTurn()+"]");
+}
+function logMove(validMove: boolean, loc1: Coordinate, loc2: Coordinate, name:string) {
         let status = document.getElementById("status");
         let log = document.getElementById("log");
-
-        if (board.movePiece([+fromRow.value, +fromCol.value], [+toRow.value, +toCol.value])) {
+        if (validMove) {
             redraw();
 
-            status.innerText = "Moved from " + getSelectedText(fromCol) + getSelectedText(fromRow)
-                + " to " + getSelectedText(toCol) + getSelectedText(toRow) + ".";
+            status.innerText = name + "  moved from " + numberToLetter(loc1[1]) + loc1[0]
+                + " to " + numberToLetter(loc2[1]) + loc2[0] + ".";
             log.innerHTML += status.innerText + "<br>";
 
             let winner = board.isGameFinished()
@@ -273,6 +285,19 @@ export module GameCore {
             }
         } else {
             status.innerText = "Invalid move.";
+        }
+}
+function numberToLetter(n: number): string {
+    switch (n) {
+        case 0: return 'A';
+        case 1: return 'B';
+        case 2: return 'C';
+        case 3: return 'D';
+        case 4: return 'E';
+        case 5: return 'F';
+        case 6: return 'G';
+        case 7: return 'H';
+        default: return '!';
         }
     }
     function getSelectedText(node) {
@@ -283,6 +308,6 @@ export module GameCore {
         htmlboard.innerHTML = boardToString(board.getBoardState());
 
     }
-    document.body.innerHTML ="<div style='float:left;'><div id='board'></div> <button onclick='move();'>Make Move</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;' id = 'log'> </div>";
+    document.body.innerHTML ="<div style='float:left;'><div id='board'></div> <button onclick='move();'>Make Move</button> <button onclick='ai_move();'>AI Move</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;' id = 'log'> </div>";
     redraw();
 }
