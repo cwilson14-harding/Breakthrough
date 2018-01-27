@@ -51,6 +51,12 @@ export module GameCore {
             }
         }
 
+        // getTurn
+        // Returns whose turn it is (1 or 2).
+         getTurn() {
+             return this.playerTurn;
+         }
+
         // isMoveValid: function(){}
         // Parameters: location1: [number, number], location2: [number, number]
         // The parameters location1 and location2 are tuples that contains two numbers.
@@ -133,7 +139,8 @@ export module GameCore {
             }
             // Testing if the diagonals or center moves are valid.
             // During this for loop all available moves are pushed to the availableMoves array.
-            for (let column: number = -1; column <= 1; column++){
+            for (let count: number = -1; count <= 1; count++){
+                let column: number = location[1] + count;
                 let location2:Coordinate = [row, column];
                 if (this.isMoveValid(location, location2)) {
                     availableMoves.push(location2);
@@ -208,35 +215,142 @@ export module GameCore {
         }
     }
 
+    export class AIPlayer implements Player {
+        constructor() {}
+        notifyTurnStarted(board: Board) {
+            let boardState = board.getBoardState();
+            let possibleMoves: [Coordinate, Coordinate][] = [];
+
+            for (let r = 0; r < 8; ++r) {
+                for (let c = 0; c < 8; ++c) {
+                    let moves: Coordinate[] = board.findAvailableMoves([r, c]);
+
+                    for (let i = 0; i < moves.length; ++i) {
+                        possibleMoves.push([[r,c], moves[i]]);
+                    }
+                }
+            }
+
+            if (possibleMoves.length > 0) {
+                let index = Math.floor((Math.random() * possibleMoves.length);
+                let fromLoc = possibleMoves[index][0];
+                let toLoc = possibleMoves[index][1];
+                logMove(board.movePiece(fromLoc, toLoc), fromLoc, toLoc, "Geraldo[AI"+((board.getTurn() == 1) ? 2 : 1)+"]");
+            }
+        }
+    }
+
     interface Player {
         notifyTurnStarted(board: Board);
     }
 
 
     let board: Board = new Board();
+    let selectedCell: Coordinate = undefined;
+    let aiInterval;
+    let ai = new AIPlayer();
+
     function boardToString(board: number[][]) {
+<<<<<<< HEAD
         let result = '';
         for (const row of board) {
             for (const col of row) {
               result += ' ' + col + ' ';
             }
             result += '<br>';
+=======
+        let result: string = "";
+        for (let row in board) {
+            result += "<div class='row'>";
+            for (let col in board[row]) {
+                result += "<div id='" + row + "-" + col + "' onclick='guiMove(this);' class='cell noSelect";
+                if (board[row][col] == 1) result += " whitePlayer'>X";
+                else if (board[row][col] == 2) result += " blackPlayer'>O";
+                else result += "'>";
+                result += "</div>";
+            }
+            result += "</div>";
+>>>>>>> 765f8f4f3bbeea0b0079560d94d992e347676792
         }
+        result += "<br style='clear:both;'/>"
         return result;
+    }
+    function guiMove(obj: string) {
+        let coord = obj.id.split('-');
+        let cell: Coordinate = [+coord[0], +coord[1]];
+        if (selectedCell == undefined) {
+            let moves = board.findAvailableMoves(cell);
+            if (moves.length > 0) {
+                selectedCell = cell;
+                obj.classList.add("selectedCell");
+                for (let move of moves) {
+                    document.getElementById(move.join('-')).classList.add("possibleMove");
+                }
+            }
+        } else if (cell[0] == selectedCell[0] && cell[1] == selectedCell[1]) {
+            selectedCell = undefined;
+            removeClass("selectedCell");
+            removeClass("possibleMove");
+            removeClass("possibleMove");
+        } else {
+            let success:boolean = board.movePiece(selectedCell, cell);
+            logMove(success, selectedCell, cell, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
+            selectedCell = undefined;
+            removeClass("selectedCell");
+            removeClass("possibleMove");
+            removeClass("possibleMove");
+            if (success && document.getElementById("human-ai").checked) {
+                setTimeout(ai_move, document.getElementById('autoAISpeed').value);
+            }
+        }
+}
+function removeClass(c) {
+        for (let o of document.getElementsByClassName(c))
+                o.classList.remove(c);
+    }
+    function ai_move() {
+        selectedCell = undefined;
+        ai.notifyTurnStarted(board);
+        if (document.getElementById("autoAI").checked) {
+            if (aiInterval != undefined) {
+                stopAutoAI(true);
+            }
+            aiInterval = setInterval(ai_move, document.getElementById('autoAISpeed').value);
+        }
+}
+function stopAutoAI(shouldStop: boolean) {
+    if (shouldStop) {
+        clearInterval(aiInterval);
+        aiInterval = undefined;
+    }
     }
     function move() {
         let fromRow = document.getElementById("fromRow");
         let toRow = document.getElementById("toRow");
         let fromCol = document.getElementById("fromCol");
         let toCol = document.getElementById("toCol");
+
+        let location1: Coordinate = [+fromRow.value, +fromCol.value];
+        let location2: Coordinate = [+toRow.value, +toCol.value];
+        logMove(board.movePiece(location1, location2), location1, location2, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
+        if (document.getElementById("human-ai").checked) {
+            setTimeout(ai_move, document.getElementById('autoAISpeed').value);
+        }
+    }
+    function logMove(validMove: boolean, loc1: Coordinate, loc2: Coordinate, name: string) {
         let status = document.getElementById("status");
         let log = document.getElementById("log");
-
-        if (board.movePiece([+fromRow.value, +fromCol.value], [+toRow.value, +toCol.value])) {
+        if (validMove) {
             redraw();
 
+<<<<<<< HEAD
             status.innerText = "Moved from " + getSelectedText(fromCol) + getSelectedText(fromRow)
                 + " to " + getSelectedText(toCol) + getSelectedText(toRow) + ".";
+=======
+            log.style.display = "block";
+            status.innerText = name + "  moved from " + numberToLetter(loc1[1]) + (loc1[0] + 1)
+                + " to " + numberToLetter(loc2[1]) + (loc2[0] + 1) + ".";
+>>>>>>> 765f8f4f3bbeea0b0079560d94d992e347676792
             log.innerHTML += status.innerText + "<br>";
 
             let winner = board.isGameFinished()
@@ -247,6 +361,19 @@ export module GameCore {
             status.innerText = 'Invalid move.';
         }
     }
+    function numberToLetter(n: number): string {
+        switch (n) {
+            case 0: return 'A';
+            case 1: return 'B';
+            case 2: return 'C';
+            case 3: return 'D';
+            case 4: return 'E';
+            case 5: return 'F';
+            case 6: return 'G';
+            case 7: return 'H';
+            default: return '!';
+        }
+    }
     function getSelectedText(node) {
         return node.options[node.selectedIndex].text
     }
@@ -254,7 +381,22 @@ export module GameCore {
         let htmlboard = document.getElementById("board");
         htmlboard.innerHTML = boardToString(board.getBoardState());
 
+<<<<<<< HEAD
     }
     document.body.innerHTML ="<div style='float:left;'><div id='board'></div> <button onclick='move();'>Make Move</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;' id = 'log'> </div>";
+=======
+}
+function resetGame() {
+    stopAutoAI(true);
+    let log = document.getElementById("log");
+    log.style.display = "none";
+    log.innerText = "";
+    document.getElementById("status").innerText = "";
+    board = new Board();
+    redraw();
+}
+    document.body.innerHTML = "<div style='float:left;width:256px;'><div id='board'></div><br/> <button onclick='move();'>Make Move</button> <button onclick='ai_move();'>AI Move</button> <button onclick='resetGame();'>Reset Game</button><br/><label class='noSelect'><div><input id='autoAI' name='controlType' type='radio'/>Automatic AI</label><br/><label><input id='human-ai' onchange='stopAutoAI(true);' type='radio' name='controlType' checked/>Human-AI rounds</label><br/><label><input onchange='stopAutoAI(true);' id='manualControl' type='radio' name='controlType' />Manual control</label></div><br/><label class='noSelect'>Speed: <input id='autoAISpeed' type='text' size='3' maxlength='5' value='250'/>ms</label><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div id = 'log'> </div>";
+    document.body.innerHTML += "<style>.row{clear:both;}.cell{text-align: center;float:left; margin:1px; padding:6px;width:18px;height:18px;background-color:lightblue;}#board{background-color:lightslategrey;width:fit-content;}.whitePlayer{background-color:lightGreen;}.blackPlayer{background-color:indianred;}.selectedCell{background-color:lightgoldenrodyellow;} .cell:hover{background-color:yellow;}.noSelect {-webkit-touch-callout: none;-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}.possibleMove{background-color: gold;}#log{float: left;overflow:auto;max-height: 95%;margin-left: 48px;padding: 6px;border: 1px;border-color: black;border-style: solid;background-color: lightblue; display:none;}</style>"
+>>>>>>> 765f8f4f3bbeea0b0079560d94d992e347676792
     redraw();
 }
