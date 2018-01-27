@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFirestore} from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-networking',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NetworkingComponent implements OnInit {
 
-  constructor() { }
+  users;
+  constructor(private Auth: AngularFireAuth, private db: AngularFirestore) {
+    this.users = this.db.collection('users').valueChanges();
+  }
 
   ngOnInit() {
   }
