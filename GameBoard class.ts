@@ -247,6 +247,7 @@ export module GameCore {
 
     let board: Board = new Board();
     let selectedCell: Coordinate = undefined;
+    let aiInterval;
     let ai = new AIPlayer();
 
     function boardToString(board: number[][]) {
@@ -257,7 +258,7 @@ export module GameCore {
                 result += "<div id='" + row + "-" + col + "' onclick='guiMove(this);' class='cell noSelect";
                 if (board[row][col] == 1) result += " whitePlayer'>X";
                 else if (board[row][col] == 2) result += " blackPlayer'>O";
-                else result += "'> -";
+                else result += "'>";
                 result += "</div>";
             }
             result += "</div>";
@@ -283,20 +284,36 @@ export module GameCore {
             removeClass("possibleMove");
             removeClass("possibleMove");
         } else {
-            logMove(board.movePiece(selectedCell, cell), selectedCell, cell, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
+            let success:boolean = board.movePiece(selectedCell, cell);
+            logMove(success, selectedCell, cell, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
             selectedCell = undefined;
             removeClass("selectedCell");
             removeClass("possibleMove");
             removeClass("possibleMove");
+            if (success && document.getElementById("human-ai").checked) {
+                setTimeout(ai_move, document.getElementById('autoAISpeed').value);
+            }
         }
-    }
-    function removeClass(c) {
+}
+function removeClass(c) {
         for (let o of document.getElementsByClassName(c))
                 o.classList.remove(c);
     }
     function ai_move() {
         selectedCell = undefined;
         ai.notifyTurnStarted(board);
+        if (document.getElementById("autoAI").checked) {
+            if (aiInterval != undefined) {
+                stopAutoAI(true);
+            }
+            aiInterval = setInterval(ai_move, document.getElementById('autoAISpeed').value);
+        }
+}
+function stopAutoAI(shouldStop: boolean) {
+    if (shouldStop) {
+        clearInterval(aiInterval);
+        aiInterval = undefined;
+    }
     }
     function move() {
         let fromRow = document.getElementById("fromRow");
@@ -307,6 +324,9 @@ export module GameCore {
         let location1: Coordinate = [+fromRow.value, +fromCol.value];
         let location2: Coordinate = [+toRow.value, +toCol.value];
         logMove(board.movePiece(location1, location2), location1, location2, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
+        if (document.getElementById("human-ai").checked) {
+            setTimeout(ai_move, document.getElementById('autoAISpeed').value);
+        }
     }
     function logMove(validMove: boolean, loc1: Coordinate, loc2: Coordinate, name: string) {
         let status = document.getElementById("status");
@@ -347,16 +367,17 @@ export module GameCore {
         let htmlboard = document.getElementById("board");
         htmlboard.innerHTML = boardToString(board.getBoardState());
 
-    }
-    function resetGame() {
-      let log = document.getElementById("log");
-      log.style.display = "none";
-      log.innerText = "";
-      document.getElementById("status").innerText = "";
-      board = new Board();
-      redraw();
-    }
-    document.body.innerHTML = "<div style='float:left;width:250px;'><div id='board'></div><br/> <button onclick='move();'>Make Move</button> <button onclick='ai_move();'>AI Move</button> <button onclick='resetGame();'>Reset Game</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;overflow:auto;max-height: 95%;margin-left: 48px;padding: 6px;border: 1px;border-color: black;border-style: solid;background-color: lightblue; display:none;' id = 'log'> </div>";
-    document.body.innerHTML += "<style>.row{clear:both;}.cell{float:left; margin:1px; padding:6px;width:12px;background-color:lightblue;}#board{background-color:lightslategrey;width:fit-content;}.whitePlayer{background-color:lightGreen;}.blackPlayer{background-color:indianred;}.selectedCell{background-color:lightgoldenrodyellow;} .cell:hover{background-color:yellow;}.noSelect {-webkit-touch-callout: none;-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}.possibleMove{background-color: gold;}</style>"
+}
+function resetGame() {
+    stopAutoAI(true);
+    let log = document.getElementById("log");
+    log.style.display = "none";
+    log.innerText = "";
+    document.getElementById("status").innerText = "";
+    board = new Board();
+    redraw();
+}
+    document.body.innerHTML = "<div style='float:left;width:256px;'><div id='board'></div><br/> <button onclick='move();'>Make Move</button> <button onclick='ai_move();'>AI Move</button> <button onclick='resetGame();'>Reset Game</button><br/><label class='noSelect'><div><input id='autoAI' name='controlType' type='radio'/>Automatic AI</label><br/><label><input id='human-ai' onchange='stopAutoAI(true);' type='radio' name='controlType' checked/>Human-AI rounds</label><br/><label><input onchange='stopAutoAI(true);' id='manualControl' type='radio' name='controlType' />Manual control</label></div><br/><label class='noSelect'>Speed: <input id='autoAISpeed' type='text' size='3' maxlength='5' value='250'/>ms</label><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div id = 'log'> </div>";
+    document.body.innerHTML += "<style>.row{clear:both;}.cell{text-align: center;float:left; margin:1px; padding:6px;width:18px;height:18px;background-color:lightblue;}#board{background-color:lightslategrey;width:fit-content;}.whitePlayer{background-color:lightGreen;}.blackPlayer{background-color:indianred;}.selectedCell{background-color:lightgoldenrodyellow;} .cell:hover{background-color:yellow;}.noSelect {-webkit-touch-callout: none;-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}.possibleMove{background-color: gold;}#log{float: left;overflow:auto;max-height: 95%;margin-left: 48px;padding: 6px;border: 1px;border-color: black;border-style: solid;background-color: lightblue; display:none;}</style>"
     redraw();
 }
