@@ -251,14 +251,6 @@ export module GameCore {
     let ai = new AIPlayer();
 
     function boardToString(board: number[][]) {
-<<<<<<< HEAD
-        let result = '';
-        for (const row of board) {
-            for (const col of row) {
-              result += ' ' + col + ' ';
-            }
-            result += '<br>';
-=======
         let result: string = "";
         for (let row in board) {
             result += "<div class='row'>";
@@ -270,7 +262,6 @@ export module GameCore {
                 result += "</div>";
             }
             result += "</div>";
->>>>>>> 765f8f4f3bbeea0b0079560d94d992e347676792
         }
         result += "<br style='clear:both;'/>"
         return result;
@@ -343,14 +334,9 @@ function stopAutoAI(shouldStop: boolean) {
         if (validMove) {
             redraw();
 
-<<<<<<< HEAD
-            status.innerText = "Moved from " + getSelectedText(fromCol) + getSelectedText(fromRow)
-                + " to " + getSelectedText(toCol) + getSelectedText(toRow) + ".";
-=======
             log.style.display = "block";
             status.innerText = name + "  moved from " + numberToLetter(loc1[1]) + (loc1[0] + 1)
                 + " to " + numberToLetter(loc2[1]) + (loc2[0] + 1) + ".";
->>>>>>> 765f8f4f3bbeea0b0079560d94d992e347676792
             log.innerHTML += status.innerText + "<br>";
 
             let winner = board.isGameFinished()
@@ -381,10 +367,6 @@ function stopAutoAI(shouldStop: boolean) {
         let htmlboard = document.getElementById("board");
         htmlboard.innerHTML = boardToString(board.getBoardState());
 
-<<<<<<< HEAD
-    }
-    document.body.innerHTML ="<div style='float:left;'><div id='board'></div> <button onclick='move();'>Make Move</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;' id = 'log'> </div>";
-=======
 }
 function resetGame() {
     stopAutoAI(true);
@@ -395,8 +377,7 @@ function resetGame() {
     board = new Board();
     redraw();
 }
-    document.body.innerHTML = "<div style='float:left;width:256px;'><div id='board'></div><br/> <button onclick='move();'>Make Move</button> <button onclick='ai_move();'>AI Move</button> <button onclick='resetGame();'>Reset Game</button><br/><label class='noSelect'><div><input id='autoAI' name='controlType' type='radio'/>Automatic AI</label><br/><label><input id='human-ai' onchange='stopAutoAI(true);' type='radio' name='controlType' checked/>Human-AI rounds</label><br/><label><input onchange='stopAutoAI(true);' id='manualControl' type='radio' name='controlType' />Manual control</label></div><br/><label class='noSelect'>Speed: <input id='autoAISpeed' type='text' size='3' maxlength='5' value='250'/>ms</label><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div id = 'log'> </div>";
-    document.body.innerHTML += "<style>.row{clear:both;}.cell{text-align: center;float:left; margin:1px; padding:6px;width:18px;height:18px;background-color:lightblue;}#board{background-color:lightslategrey;width:fit-content;}.whitePlayer{background-color:lightGreen;}.blackPlayer{background-color:indianred;}.selectedCell{background-color:lightgoldenrodyellow;} .cell:hover{background-color:yellow;}.noSelect {-webkit-touch-callout: none;-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}.possibleMove{background-color: gold;}#log{float: left;overflow:auto;max-height: 95%;margin-left: 48px;padding: 6px;border: 1px;border-color: black;border-style: solid;background-color: lightblue; display:none;}</style>"
->>>>>>> 765f8f4f3bbeea0b0079560d94d992e347676792
-    redraw();
+document.body.innerHTML = "<div style='float:left;width:256px;'><div id='board'></div><br/><button onclick='ai_move();'>AI Move</button> <button onclick='resetGame();'>Reset Game</button><br/><label class='noSelect'><div><input id='autoAI' name='controlType' type='radio'/>AI vs. AI</label><br/><label><input id='human-ai' onchange='stopAutoAI(true);' type='radio' name='controlType' checked/>Human vs. AI</label><br/><label><input onchange='stopAutoAI(true);' id='manualControl' type='radio' name='controlType' />Human vs. Human</label></div><br/><label class='noSelect'>Speed: <input id='autoAISpeed' type='text' size='3' maxlength='5' value='250'/>ms</label><br/><p id='status'></p></div> <div id = 'log'> </div>";
+document.body.innerHTML += "<style>.row{clear:both;}.cell{text-align: center;float:left; margin:1px; padding:6px;width:18px;height:18px;background-color:lightblue;}#board{background-color:lightslategrey;width:fit-content;}.whitePlayer{background-color:lightGreen;}.blackPlayer{background-color:indianred;}.selectedCell{background-color:lightgoldenrodyellow;} .cell:hover{background-color:yellow;}.noSelect {-webkit-touch-callout: none;-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}.possibleMove{background-color: gold;}#log{float: left;overflow:auto;max-height: 95%;margin-left: 48px;padding: 6px;border: 1px;border-color: black;border-style: solid;background-color: lightblue; display:none;}</style>"
+redraw();
 }
