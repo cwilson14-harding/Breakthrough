@@ -1,11 +1,10 @@
-import * as GameCore from "../GameBoard class";
-let board = new GameCore.board;
-// TODO: Alaina - fix type errors
+import { GameCore } from "../GameBoard class";
 
 describe("validateLocation", function () {
     it("approves given location", function() {
-        location: GameCore.Coordinate = [2, 3];
-        isValidated: boolean = GameCore.IsLocationValid(location);
+        let board: GameCore.Board;
+        let location: GameCore.Coordinate = [2, 3];
+        let isValidated: boolean = board.isLocationValid.apply(location);
 
         expect(isValidated).toBe(true);
     });
