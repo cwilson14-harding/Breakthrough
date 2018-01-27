@@ -25,5 +25,8 @@ export class HomeComponent implements OnInit {
   intro() {
     this.router.navigateByUrl('intro');
   }
+  gameBoard() {
+    this.router.navigateByUrl('board');
+  }
 
 }

@@ -53,7 +53,7 @@ export module GameCore {
 
         // isMoveValid: function(){}
         // Parameters: location1: [number, number], location2: [number, number]
-        // The parameters location1 and location2 are tuples that contains two numbers. 
+        // The parameters location1 and location2 are tuples that contains two numbers.
         // These numbers are the x and y coordinates for a potential location.
 
         // This function checks to see if the piece in location1 is okay to move to location2.
@@ -116,7 +116,7 @@ export module GameCore {
         // Returns: An array of type Coordinate.
         // This function checks to see what moves are available at a location
         findAvailableMoves(location: Coordinate):Coordinate[] {
-            // When an empty array is returned that means there are no available moves from the 
+            // When an empty array is returned that means there are no available moves from the
             // location passed into the function.
             if (!this.isLocationValid(location) || this.board[location[0]][location[1]] == 0) {
                 return [];
@@ -215,11 +215,12 @@ export module GameCore {
 
     let board: Board = new Board();
     function boardToString(board: number[][]) {
-        let result: string = "";
-        for (let row of board) {
-            for (let col of row)
-                result += " "+col+" ";
-            result += "<br>";
+        let result = '';
+        for (const row of board) {
+            for (const col of row) {
+              result += ' ' + col + ' ';
+            }
+            result += '<br>';
         }
         return result;
     }
@@ -233,7 +234,7 @@ export module GameCore {
 
         if (board.movePiece([+fromRow.value, +fromCol.value], [+toRow.value, +toCol.value])) {
             redraw();
-            
+
             status.innerText = "Moved from " + getSelectedText(fromCol) + getSelectedText(fromRow)
                 + " to " + getSelectedText(toCol) + getSelectedText(toRow) + ".";
             log.innerHTML += status.innerText + "<br>";
@@ -243,7 +244,7 @@ export module GameCore {
                 status.innerHTML += "<br>Player " + winner + " won!";
             }
         } else {
-            status.innerText = "Invalid move.";
+            status.innerText = 'Invalid move.';
         }
     }
     function getSelectedText(node) {
@@ -252,7 +253,7 @@ export module GameCore {
     function redraw() {
         let htmlboard = document.getElementById("board");
         htmlboard.innerHTML = boardToString(board.getBoardState());
-        
+
     }
     document.body.innerHTML ="<div style='float:left;'><div id='board'></div> <button onclick='move();'>Make Move</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;' id = 'log'> </div>";
     redraw();

@@ -18,6 +18,8 @@ import { SinglePlayerComponent } from './single-player/single-player.component';
 import { MultiPlayerComponent } from './multi-player/multi-player.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
 import { IntroComponent } from './intro/intro.component';
+import { ChatComponent } from './chat/chat.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent},
@@ -40,7 +42,9 @@ const appRoutes: Routes = [
     SinglePlayerComponent,
     MultiPlayerComponent,
     TutorialComponent,
-    IntroComponent
+    IntroComponent,
+    ChatComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
