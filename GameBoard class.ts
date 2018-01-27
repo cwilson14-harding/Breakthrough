@@ -246,12 +246,15 @@ export module GameCore {
 
 
     let board: Board = new Board();
+    let selectedCell: Coordinate = undefined;
+    let ai = new AIPlayer();
+
     function boardToString(board: number[][]) {
         let result: string = "";
         for (let row in board) {
             result += "<div class='row'>";
             for (let col in board[row]) {
-                result += "<div id='"+row+"-"+col+"' onclick='guiMove(this);' class='cell noSelect";
+                result += "<div id='" + row + "-" + col + "' onclick='guiMove(this);' class='cell noSelect";
                 if (board[row][col] == 1) result += " whitePlayer'>X";
                 else if (board[row][col] == 2) result += " blackPlayer'>O";
                 else result += "'> -";
@@ -259,38 +262,37 @@ export module GameCore {
             }
             result += "</div>";
         }
-        result+="<br style='clear:both;'/>"
+        result += "<br style='clear:both;'/>"
         return result;
-}
-var selectedCell: Coordinate = undefined;
-let ai = new AIPlayer();
-function guiMove(obj: string) {
-    let coord = obj.id.split('-');
-    let cell: Coordinate = [+coord[0], +coord[1]];
-    if (selectedCell == undefined) {
-        let moves = board.findAvailableMoves(cell);
-        if (moves.length > 0) {
-            selectedCell = cell;
-            obj.classList.add("selectedCell");
-            console.log(moves[0].join('-'));
-            for (let move of moves) {
-                document.getElementById(move.join('-')).classList.add("possibleMove");
+    }
+    function guiMove(obj: string) {
+        let coord = obj.id.split('-');
+        let cell: Coordinate = [+coord[0], +coord[1]];
+        if (selectedCell == undefined) {
+            let moves = board.findAvailableMoves(cell);
+            if (moves.length > 0) {
+                selectedCell = cell;
+                obj.classList.add("selectedCell");
+                for (let move of moves) {
+                    document.getElementById(move.join('-')).classList.add("possibleMove");
+                }
             }
+        } else if (cell[0] == selectedCell[0] && cell[1] == selectedCell[1]) {
+            selectedCell = undefined;
+            removeClass("selectedCell");
+            removeClass("possibleMove");
+            removeClass("possibleMove");
+        } else {
+            logMove(board.movePiece(selectedCell, cell), selectedCell, cell, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
+            selectedCell = undefined;
+            removeClass("selectedCell");
+            removeClass("possibleMove");
+            removeClass("possibleMove");
         }
-    } else if (cell[0] == selectedCell[0] && cell[1] == selectedCell[1]) {
-        selectedCell = undefined;
-        for (let o of document.getElementsByClassName("selectedCell"))
-            o.classList.remove("selectedCell");
-        for (let o of document.getElementsByClassName("possibleMove"))
-            o.classList.remove("possibleMove");
-    } else {
-        logMove(board.movePiece(selectedCell, cell), selectedCell, cell, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
-        selectedCell = undefined;
-         for (let o of document.getElementsByClassName("selectedCell"))
-            o.classList.remove("selectedCell");
-        for (let o of document.getElementsByClassName("possibleMove"))
-            o.classList.remove("possibleMove");
-        }
+    }
+    function removeClass(c) {
+        for (let o of document.getElementsByClassName(c))
+                o.classList.remove(c);
     }
     function ai_move() {
         selectedCell = undefined;
@@ -304,16 +306,16 @@ function guiMove(obj: string) {
 
         let location1: Coordinate = [+fromRow.value, +fromCol.value];
         let location2: Coordinate = [+toRow.value, +toCol.value];
-        logMove(board.movePiece(location1, location2), location1, location2, "Human["+((board.getTurn() == 1) ? 2 : 1)+"]");
-}
-function logMove(validMove: boolean, loc1: Coordinate, loc2: Coordinate, name: string) {
+        logMove(board.movePiece(location1, location2), location1, location2, "Human[" + ((board.getTurn() == 1) ? 2 : 1) + "]");
+    }
+    function logMove(validMove: boolean, loc1: Coordinate, loc2: Coordinate, name: string) {
         let status = document.getElementById("status");
         let log = document.getElementById("log");
         if (validMove) {
             redraw();
 
             log.style.display = "block";
-            status.innerText = name + "  moved from " + numberToLetter(loc1[1]) + (loc1[0]+1)
+            status.innerText = name + "  moved from " + numberToLetter(loc1[1]) + (loc1[0] + 1)
                 + " to " + numberToLetter(loc2[1]) + (loc2[0] + 1) + ".";
             log.innerHTML += status.innerText + "<br>";
 
@@ -324,18 +326,18 @@ function logMove(validMove: boolean, loc1: Coordinate, loc2: Coordinate, name: s
         } else {
             status.innerText = "Invalid move.";
         }
-}
-function numberToLetter(n: number): string {
-    switch (n) {
-        case 0: return 'A';
-        case 1: return 'B';
-        case 2: return 'C';
-        case 3: return 'D';
-        case 4: return 'E';
-        case 5: return 'F';
-        case 6: return 'G';
-        case 7: return 'H';
-        default: return '!';
+    }
+    function numberToLetter(n: number): string {
+        switch (n) {
+            case 0: return 'A';
+            case 1: return 'B';
+            case 2: return 'C';
+            case 3: return 'D';
+            case 4: return 'E';
+            case 5: return 'F';
+            case 6: return 'G';
+            case 7: return 'H';
+            default: return '!';
         }
     }
     function getSelectedText(node) {
@@ -346,7 +348,15 @@ function numberToLetter(n: number): string {
         htmlboard.innerHTML = boardToString(board.getBoardState());
 
     }
-    document.body.innerHTML ="<div style='float:left;width:250px;'><div id='board'></div><br/> <button onclick='move();'>Make Move</button> <button onclick='ai_move();'>AI Move</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;overflow:auto;max-height: 95%;margin-left: 48px;padding: 6px;border: 1px;border-color: black;border-style: solid;background-color: lightblue; display:none;' id = 'log'> </div>";
-document.body.innerHTML += "<style>.row{clear:both;}.cell{float:left; margin:1px; padding:6px;width:12px;background-color:lightblue;}#board{background-color:lightslategrey;width:fit-content;}.whitePlayer{background-color:lightGreen;}.blackPlayer{background-color:indianred;}.selectedCell{background-color:lightgoldenrodyellow;} .cell:hover{background-color:yellow;}.noSelect {-webkit-touch-callout: none;-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}.possibleMove{background-color: gold;}</style>"
-redraw();
+    function resetGame() {
+      let log = document.getElementById("log");
+      log.style.display = "none";
+      log.innerText = "";
+      document.getElementById("status").innerText = "";
+      board = new Board();
+      redraw();
+    }
+    document.body.innerHTML = "<div style='float:left;width:250px;'><div id='board'></div><br/> <button onclick='move();'>Make Move</button> <button onclick='ai_move();'>AI Move</button> <button onclick='resetGame();'>Reset Game</button><br/><br/> <b>From:</b> <select id='fromCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='fromRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select><br/><br/> <b>To:</b> <select id='toCol'> <option value='0'>A</option> <option value='1'>B</option> <option value='2'>C</option> <option value='3'>D</option> <option value='4'>E</option> <option value='5'>F</option> <option value='6'>G</option> <option value='7'>H</option> </select> <select id='toRow'> <option value='0'>1</option> <option value='1'>2</option> <option value='2'>3</option> <option value='3'>4</option> <option value='4'>5</option> <option value='5'>6</option> <option value='6'>7</option> <option value='7'>8</option> </select> <p id='status'></p></div> <div style='float: left;overflow:auto;max-height: 95%;margin-left: 48px;padding: 6px;border: 1px;border-color: black;border-style: solid;background-color: lightblue; display:none;' id = 'log'> </div>";
+    document.body.innerHTML += "<style>.row{clear:both;}.cell{float:left; margin:1px; padding:6px;width:12px;background-color:lightblue;}#board{background-color:lightslategrey;width:fit-content;}.whitePlayer{background-color:lightGreen;}.blackPlayer{background-color:indianred;}.selectedCell{background-color:lightgoldenrodyellow;} .cell:hover{background-color:yellow;}.noSelect {-webkit-touch-callout: none;-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}.possibleMove{background-color: gold;}</style>"
+    redraw();
 }
