@@ -1,4 +1,3 @@
-
 type Coordinate = [number, number];
 export class Board {
 

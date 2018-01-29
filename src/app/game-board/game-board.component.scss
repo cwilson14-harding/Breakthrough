@@ -1,12 +1,15 @@
-.board{
-  display: flex;
+.board {
+  background-color: #a45632;
+  color: #ffffff;
+}
+
+.row{
+  display: table;//flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  background-color: #a45632;
-  color: #ffffff;
   max-width: 100%;
-  width: 56.9%;
+  width: 800px;
 }
 
 .gameStatus {
@@ -35,14 +38,16 @@
 }
 
 .cell{
-  width: 100px;
+
+  /*width: 100px;
   height: 100px;
   box-sizing: border-box;
   border: 3px solid #f4af78;
   font-size: 5em;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;*/
+  float: left;
 }
 
 .cell:hover{

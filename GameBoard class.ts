@@ -366,7 +366,6 @@ function stopAutoAI(shouldStop: boolean) {
     function redraw() {
         let htmlboard = document.getElementById("board");
         htmlboard.innerHTML = boardToString(board.getBoardState());
-
 }
 function resetGame() {
     stopAutoAI(true);

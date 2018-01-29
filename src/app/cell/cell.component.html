@@ -1,1 +1,3 @@
-<div class="cell"></div>
+<div class="cell {{(isPotentialMove) ? 'potentialMove' : ''}} {{(isSelected) ? 'selected' : ''}}">
+  {{(state == 1) ? 'X' : (state == 2) ? 'O' : ''}}
+</div>

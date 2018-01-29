@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-cell',
@@ -6,6 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cell.component.scss']
 })
 export class CellComponent implements OnInit {
+  @Input()
+  state: number;
+  @Input()
+  isSelected: boolean;
+  @Input()
+  isPotentialMove: boolean;
 
   constructor() { }
 
