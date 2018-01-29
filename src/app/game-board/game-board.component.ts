@@ -162,9 +162,9 @@ export class GameBoardComponent implements OnInit {
   // Parameters location:Coordinate
   // Returns: An array of type Coordinate.
   // This function checks to see what moves are available at a location
-  findAvailableMoves():Coordinate[] {
-    return this.findAvailableMoves(this.selectedCoordinate);
-  }
+  // findAvailableMoves():Coordinate[] {
+  //   return this.findAvailableMoves(this.selectedCoordinate);
+  // }
 
   findAvailableMoves(location: Coordinate):Coordinate[] {
     // When an empty array is returned that means there are no available moves from the

@@ -1,5 +1,6 @@
 .board {
-  background-color: #a45632;
+  //background-color: #a45632;
+  background-color: black;
   color: #ffffff;
 }
 
@@ -9,7 +10,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   max-width: 100%;
-  width: 800px;
+  width: 680px;
 }
 
 .gameStatus {
@@ -54,8 +55,6 @@
   background-color: #c1cdcd;
 }
 
-
-
 #chessboard {
   width:384px;
   height:384px;
@@ -74,4 +73,9 @@
 
 .white_square {
   background-color:#FFFFFF;
+}
+.backImg{
+  background-image: url("../../assets/backgrounds/cyberCity9.jpg");
+  width: 100vw;
+  height: 100vh;
 }
