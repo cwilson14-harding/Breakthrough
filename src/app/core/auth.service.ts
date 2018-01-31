@@ -12,7 +12,6 @@ export class AuthService {
   avaliable: Observable<user[]>
 
   constructor(public afAuth: AngularFireAuth, public db: AngularFirestore) {
-
     //// Get auth data, then get firestore user document || null
     this.user = this.afAuth.authState
       .switchMap(user => {
@@ -32,7 +31,7 @@ export class AuthService {
     this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
         this.updateUserData(credential.user)
-      });
+      })
   }
 
   updateUserStatus(user){
@@ -56,7 +55,8 @@ export class AuthService {
       email: user.email,
       photoURL: user.photoURL,
       displayName: user.displayName,
-      isOnline: user.isOnline = true
+      isOnline: user.isOnline = true,
+      gameType: user.gameType = ''
     };
     return userRef.set(data);
   }

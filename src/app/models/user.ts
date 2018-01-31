@@ -4,4 +4,5 @@ export interface user{
   displayName?: string;
   photoURL?: string;
   isOnline: boolean;
+  gameType: string;
 }

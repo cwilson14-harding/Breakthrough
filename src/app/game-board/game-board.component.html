@@ -231,7 +231,7 @@
                   [state]="board[row][col]"
                   [isSelected]="selectedCoordinate==[row, col]"
                   [isPotentialMove]="findAvailableMoves().indexOf([row, col]) > -1"
-                  (click)="movePiece([row, col]);">
+                  (click)="movePiece([row, col]);" id="cell1">
         </app-cell>
       </div>
     </div>

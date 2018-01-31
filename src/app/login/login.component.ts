@@ -11,14 +11,12 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   availableUsers: any;
-  animals;
 
   constructor(public auth: AuthService, private db: AngularFirestore, private router: Router) {
     this.onlineUsers();
   }
 
   ngOnInit() {
-    this.animals = this.db.collection('animals').valueChanges();
   }
 
   loginGoogle() {
@@ -40,10 +38,6 @@ export class LoginComponent implements OnInit {
 
   startGame(uid, name) {
     alert('Starting a game with ' + name);
-  }
-
-  addFrog() {
-    this.animals = this.db.collection('animals').add({type: 'frog', legCount: 4, body: {color: 'green', eyes: 2}});
   }
 
   toHome() {

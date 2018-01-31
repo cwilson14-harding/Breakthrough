@@ -1,8 +1,10 @@
 .board {
   //background-color: #a45632;
-  background-color: black;
-  color: #ffffff;
+  background-color: white;
+  color: black;
+  opacity: 0.3;
 }
+
 
 .row{
   display: table;//flex;
@@ -75,7 +77,7 @@
   background-color:#FFFFFF;
 }
 .backImg{
-  background-image: url("../../assets/backgrounds/cyberCity9.jpg");
+  background-image: url("../../assets/backgrounds/board.jpg");
   width: 100vw;
   height: 100vh;
 }
