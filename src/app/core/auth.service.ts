@@ -3,15 +3,19 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "angularfire2/firestore";
 import * as firebase from "firebase/app";
 import { user } from '../models/user';
+import { game } from '../models/game';
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AuthService {
 
   user: Observable<user>;
+  game: Observable<game>;
   avaliable: Observable<user[]>;
   open;
   gamesRef;
+  joinerId;
+  gameUid: string;
 
 
   constructor(public afAuth: AngularFireAuth, public db: AngularFirestore) {
@@ -86,18 +90,21 @@ export class AuthService {
     return Math.floor(Math.random() * 1000000) + 1;
   }
   createGame(user) {
-    let randomNum = this.generateRandomNumber().toString();
+    const randomNum = this.generateRandomNumber().toString();
     this.db.collection('games').doc(randomNum).set({
       creator: user.uid,
       creatorName: user.displayName,
       joiner: '',
       joinerName: '',
       state: 'open',
-      gameId: randomNum
+      gameId: randomNum,
+      playerTurn: 'creator',
+      winner: ''
     });
   }
-  joinGame(user, gameId, creatorId) {
-    if (user.uid == creatorId) {
+  joinGame(user, gameId, creatorId) { // gameId, creatorId
+    this.gameUid = gameId;
+    if (user.uid === creatorId) {
         alert('You Cant join your own game');
     } else {
       this.db.collection('games').doc(gameId).update({

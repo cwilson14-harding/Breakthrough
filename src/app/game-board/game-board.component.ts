@@ -1,22 +1,28 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
+import { user } from '../models/user';
+import { game } from '../models/game';
 import {Coordinate} from "../models/game-core/coordinate";
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-game-board',
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.scss']
 })
+
 export class GameBoardComponent implements OnInit {
+
+  user: Observable<user>;
+  game: Observable<game>;
 
   private board: number[][];
   private readonly BOARD_SIZE: number = 8;
   private playerTurn = 1;
   private selectedCoordinate: Coordinate = undefined;
 
-
-  constructor(private db: AngularFirestore) {
+  constructor(public db: AngularFirestore, public auth: AuthService) {
     //this.board = db.collection('board').valueChanges();
   }
 
