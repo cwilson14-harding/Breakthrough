@@ -104,14 +104,10 @@ export class AuthService {
   }
   joinGame(user, gameId, creatorId) { // gameId, creatorId
     this.gameUid = gameId;
-    if (user.uid === creatorId) {
-        alert('You Cant join your own game');
-    } else {
       this.db.collection('games').doc(gameId).update({
         joiner: user.uid,
         joinerName: user.displayName,
         state: 'closed'
       });
     }
-  }
 }

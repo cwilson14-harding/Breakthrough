@@ -54,9 +54,14 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinGame(user, gameId, creatorId) {
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
-    this.auth.joinGame(user, gameId, creatorId);
-    // this.auth.joinGame(user, game);
-    this.router.navigateByUrl('board');
+    if (user.uid === creatorId) {
+      alert('CANT JOIN YOUR OWN GAME')
+    } else {
+      this.auth.joinGame(user, gameId, creatorId);
+      // this.auth.joinGame(user, game);
+      this.router.navigateByUrl('board');
+    }
+
   }
 
   viewOpenGames() {
