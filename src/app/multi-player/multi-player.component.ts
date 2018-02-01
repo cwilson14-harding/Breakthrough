@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../core/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-multi-player',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MultiPlayerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
+  googleLogin() {
+    this.auth.googleLogin();
+    this.router.navigateByUrl('multiPlayerLobby');
+  }
 }

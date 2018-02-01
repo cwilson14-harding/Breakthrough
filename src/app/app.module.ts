@@ -21,6 +21,7 @@ import { IntroComponent } from './intro/intro.component';
 import { ChatComponent } from './chat/chat.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { NetworkingComponent } from './networking/networking.component';
+import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent},
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent},
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
+  { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: '**', redirectTo: '/'}
 ];
 
@@ -46,7 +48,8 @@ const appRoutes: Routes = [
     IntroComponent,
     ChatComponent,
     LeaderboardComponent,
-    NetworkingComponent
+    NetworkingComponent,
+    MultiplayerLobbyComponent
   ],
   imports: [
     BrowserModule,

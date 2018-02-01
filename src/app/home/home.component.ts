@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public auth: AuthService) { }
 
   ngOnInit() {
   }
@@ -27,6 +28,10 @@ export class HomeComponent implements OnInit {
   }
   gameBoard() {
     this.router.navigateByUrl('board');
+  }
+  googleLogin() {
+    this.auth.googleLogin();
+    this.router.navigateByUrl('login');
   }
 
 }

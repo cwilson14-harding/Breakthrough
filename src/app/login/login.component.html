@@ -38,8 +38,11 @@
         <h1> {{ user.displayName | uppercase }} </h1>
         <img  [src]='user.photoURL' class="proPic w3-padding">
       </div>
+      <!--<div class="w3-row w3-padding">-->
+        <!--<button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="playGame()" style="width: 40%">PLAY</button>-->
+      <!--</div>-->
       <div class="w3-row w3-padding">
-        <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="playGame()" style="width: 40%">PLAY</button>
+        <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="goToMulti(user)" style="width: 40%">MULTI-PLAYER</button>
       </div>
       <div class="w3-row w3-padding">
         <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="logOff(user)" style="width: 40%">LOGOUT</button>

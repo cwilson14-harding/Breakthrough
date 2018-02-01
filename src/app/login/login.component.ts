@@ -24,13 +24,13 @@ export class LoginComponent implements OnInit {
   }
 
   logOff(user) {
-    this.updateUserStatus(user);
+    // this.updateUserStatus(user);
     this.auth.logout();
   }
 
-  updateUserStatus(user) {
-    this.auth.updateUserStatus(user);
-  }
+  // updateUserStatus(user) {
+  //   this.auth.updateUserStatus(user);
+  // }
 
   onlineUsers() {
     this.availableUsers = this.auth.viewOnlineUsers();
@@ -42,6 +42,11 @@ export class LoginComponent implements OnInit {
 
   toHome() {
     this.router.navigateByUrl('');
+  }
+  goToMulti(user) {
+    this.auth.updategameTypeMulti(user);
+   // alert(userId);
+    this.router.navigateByUrl('multiPlayerLobby');
   }
 
   playGame() {
