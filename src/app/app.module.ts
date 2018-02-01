@@ -22,6 +22,7 @@ import { ChatComponent } from './chat/chat.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { NetworkingComponent } from './networking/networking.component';
 import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent},
@@ -49,7 +50,8 @@ const appRoutes: Routes = [
     ChatComponent,
     LeaderboardComponent,
     NetworkingComponent,
-    MultiplayerLobbyComponent
+    MultiplayerLobbyComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
