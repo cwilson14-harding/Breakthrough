@@ -32,27 +32,38 @@ export module GameCore {
         constructor() {
             this.newGame();
         }
-
+        /*  newGame: function(){}
+            Parameters: none
+            The newGame function takes no parameters and it returns nothing. It accesses the board property which is
+            a two dimensional array of type number. This array is the model for our game board. At the end of this
+            function empty spaces on the board will be represented with zeroes. Player 1's pieces will be represented
+            with the number one, and Player 2's pieces will be represented with the number two.
+       */
         newGame() {
             // Initialize the board
             this.board = [];
-            // Fill the board array with zeros.
-            for (var r = 0; r < this.BOARD_SIZE; r++){
-                this.board[r] = [];
-                for (var c = 0; c < this.BOARD_SIZE; c++){
-                    if (r <= 1) {
-                        this.board[r][c] = 1;
-                    } else if (r >= this.BOARD_SIZE - 2) {
-                        this.board[r][c] = 2;
+            /* Fill the board array with zeros.
+               Changed var keyword to let. If it causes problems switch back to var. The var keyword allows variables
+               to be accessed outside of their containing block or for loop.
+           */
+            for (let row: number = 0; row < this.BOARD_SIZE; row++){
+                this.board[row] = [];
+                for (let column: number = 0; column < this.BOARD_SIZE; column++){
+                    if (row <= 1) {
+                        this.board[row][column] = 1;
+                    } else if (row >= this.BOARD_SIZE - 2) {
+                        this.board[row][column] = 2;
                     } else {
-                        this.board[r][c] = 0;
+                        this.board[row][column] = 0;
                     }
                 }
             }
         }
 
-        // getTurn
-        // Returns whose turn it is (1 or 2).
+        /* getTurn: function(){}
+           Parameters: None
+           Returns whose turn it is (Player 1 or Player 2). The function accesses the property playerTurn.
+        */
          getTurn() {
              return this.playerTurn;
          }
@@ -118,7 +129,7 @@ export module GameCore {
         }
 
         // findAvailableMoves: function(){}
-        // Parameters location:Coordinate
+        // Parameters location: Coordinate
         // Returns: An array of type Coordinate.
         // This function checks to see what moves are available at a location
         findAvailableMoves(location: Coordinate):Coordinate[] {
@@ -141,7 +152,7 @@ export module GameCore {
             // During this for loop all available moves are pushed to the availableMoves array.
             for (let count: number = -1; count <= 1; count++){
                 let column: number = location[1] + count;
-                let location2:Coordinate = [row, column];
+                let location2: Coordinate = [row, column];
                 if (this.isMoveValid(location, location2)) {
                     availableMoves.push(location2);
                 }
@@ -155,6 +166,10 @@ export module GameCore {
         movePiece(c1: Coordinate, c2: Coordinate): boolean {
             if (this.isMoveValid(c1,c2))
             {
+                /* The following three lines perform the move. In the model we use '0' to represent a free space.
+                  When a move is made, change the slot where the piece was to '0'. Then change the slot where the piece
+                  is going to the variable piece. This can be the number one or the number two.
+               */
                 let piece: number = this.board[c1[0]][c1[1]];
                 this.board[c1[0]][c1[1]] = 0;
                 this.board[c2[0]][c2[1]] = piece;
@@ -175,14 +190,14 @@ export module GameCore {
         //      2: Player 2 has won.
         isGameFinished(): number {
             // Check for a home row victory.
-            for (let c = 0; c < this.BOARD_SIZE; ++c) {
+            for (let column: number = 0; column < this.BOARD_SIZE; ++column) {
                 // Check for player 2 (black) on player 1's home row.
-                if (this.board[this.BOARD_SIZE - 1][c] == 1) {
+                if (this.board[this.BOARD_SIZE - 1][column] == 1) {
                     return 1;
                 }
 
                 // Check for player 1 (white) on player 2's home row.
-                if (this.board[0][c] == 2) {
+                if (this.board[0][column] == 2) {
                     return 2;
                 }
             }
@@ -190,9 +205,9 @@ export module GameCore {
             // Search the board to find if each player has a piece or not.
             let playerOneFound: boolean = false;
             let playerTwoFound: boolean = false;
-            for (let r = 0; r < this.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++r) {
-                for (let c = 0; c < this.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++c) {
-                    switch (this.board[r][c]) {
+            for (let row = 0; row < this.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++row) {
+                for (let column = 0; column < this.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++column) {
+                    switch (this.board[row][column]) {
                         case 1: playerOneFound = true; break;
                         case 2: playerTwoFound = true; break;
                     }
@@ -218,24 +233,26 @@ export module GameCore {
     export class AIPlayer implements Player {
         constructor() {}
         notifyTurnStarted(board: Board) {
+
             let boardState = board.getBoardState();
             let possibleMoves: [Coordinate, Coordinate][] = [];
 
-            for (let r = 0; r < 8; ++r) {
-                for (let c = 0; c < 8; ++c) {
-                    let moves: Coordinate[] = board.findAvailableMoves([r, c]);
+            for (let row: number = 0; row < 8; ++row) {
+                for (let column: number = 0; column < 8; ++column) {
+                    let moves: Coordinate[] = board.findAvailableMoves([row, column]);
 
-                    for (let i = 0; i < moves.length; ++i) {
-                        possibleMoves.push([[r,c], moves[i]]);
+                    for (let i: number = 0; i < moves.length; ++i) {
+                        possibleMoves.push([[row,column], moves[i]]);
                     }
                 }
             }
 
             if (possibleMoves.length > 0) {
-                let index = Math.floor((Math.random() * possibleMoves.length);
-                let fromLoc = possibleMoves[index][0];
-                let toLoc = possibleMoves[index][1];
-                logMove(board.movePiece(fromLoc, toLoc), fromLoc, toLoc, "Geraldo[AI"+((board.getTurn() == 1) ? 2 : 1)+"]");
+                let index = Math.floor((Math.random() * possibleMoves.length));
+                let fromLocation = possibleMoves[index][0];
+                let toLocation = possibleMoves[index][1];
+                logMove(board.movePiece(fromLocation, toLocation), fromLocation, toLocation,
+                  "Geraldo[AI"+((board.getTurn() == 1) ? 2 : 1)+"]");
             }
         }
     }
@@ -244,11 +261,10 @@ export module GameCore {
         notifyTurnStarted(board: Board);
     }
 
-
+    let ai = new AIPlayer();
+    let aiInterval;
     let board: Board = new Board();
     let selectedCell: Coordinate = undefined;
-    let aiInterval;
-    let ai = new AIPlayer();
 
     function boardToString(board: number[][]) {
         let result: string = "";
@@ -339,7 +355,7 @@ function stopAutoAI(shouldStop: boolean) {
                 + " to " + numberToLetter(loc2[1]) + (loc2[0] + 1) + ".";
             log.innerHTML += status.innerText + "<br>";
 
-            let winner = board.isGameFinished()
+            let winner = board.isGameFinished();
             if (winner != 0) {
                 status.innerHTML += "<br>Player " + winner + " won!";
             }
@@ -347,6 +363,11 @@ function stopAutoAI(shouldStop: boolean) {
             status.innerText = 'Invalid move.';
         }
     }
+    /*
+    numberToLetter(){}
+    Parameters: n: number
+    Returns: A string that corresponds to the correct chess notation for that number.
+    */
     function numberToLetter(n: number): string {
         switch (n) {
             case 0: return 'A';
