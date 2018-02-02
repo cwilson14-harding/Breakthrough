@@ -14,7 +14,7 @@ import { AuthService } from '../core/auth.service';
 
 export class GameBoardComponent implements OnInit {
 
-  user: Observable<user>
+  user: Observable<user>;
   game: Observable<game>;
   games: any;
 
