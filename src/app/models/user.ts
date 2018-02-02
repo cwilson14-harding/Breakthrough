@@ -1,8 +1,8 @@
 export interface user{
-  uid: string;
-  email: string;
   displayName?: string;
-  photoURL?: string;
-  isOnline: boolean;
+  email: string;
   gameType: string;
+  isOnline: boolean;
+  photoURL?: string;
+  uid: string;
 }

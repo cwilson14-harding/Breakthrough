@@ -68,13 +68,14 @@ export module GameCore {
              return this.playerTurn;
          }
 
-        // isMoveValid: function(){}
-        // Parameters: location1: [number, number], location2: [number, number]
-        // The parameters location1 and location2 are tuples that contains two numbers.
-        // These numbers are the x and y coordinates for a potential location.
+        /* isMoveValid: function(){}
+           Parameters: location1: [number, number], location2: [number, number]
+           The parameters location1 and location2 are tuples that contains two numbers.
+           These numbers are the x and y coordinates for a potential location.
 
-        // This function checks to see if the piece in location1 is okay to move to location2.
-        // Returns: A boolean that determines if it is okay to move.
+           This function checks to see if the piece in location1 is okay to move to location2.
+           Returns: A boolean that determines if it is okay to move.
+         */
         isMoveValid(location1: Coordinate, location2: Coordinate): boolean {
             // Verify that both locations given are valid.
             if (!this.isLocationValid(location1) || !this.isLocationValid(location2) || this.isGameFinished() != 0) {
