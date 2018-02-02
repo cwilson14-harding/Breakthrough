@@ -34,7 +34,11 @@ export class AuthService {
     let currentUser = this.afAuth.auth.currentUser;
     return currentUser.uid;
   }
+  getCurrentGame(game){
+    let currentGame = this.db.collection('games').doc(game.gameId);
+    alert(currentGame);
 
+  }
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
@@ -92,9 +96,9 @@ export class AuthService {
   createGame(user) {
     const randomNum = this.generateRandomNumber().toString();
     this.db.collection('games').doc(randomNum).set({
-      creator: user.uid,
+      creatorId: user.uid,
       creatorName: user.displayName,
-      joiner: '',
+      joinerId: '',
       joinerName: '',
       state: 'open',
       gameId: randomNum,
@@ -102,10 +106,10 @@ export class AuthService {
       winner: ''
     });
   }
-  joinGame(user, gameId, creatorId) { // gameId, creatorId
-    this.gameUid = gameId;
-      this.db.collection('games').doc(gameId).update({
-        joiner: user.uid,
+  joinGame(user, game) { // gameId, creatorId
+    this.gameUid = game.gameId;
+      this.db.collection('games').doc(game.gameId).update({
+        joinerId: user.uid,
         joinerName: user.displayName,
         state: 'closed'
       });

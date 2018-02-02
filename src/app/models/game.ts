@@ -1,10 +1,11 @@
 export interface game {
-  gameId: string;
-  creator: string;
+  creatorId: string;
   creatorName: string;
-  joiner: string;
+  gameId: string;
   joinerId: string;
+  joinerName: string;
+  playerTurn: string;
   state: string;
   winner: string;
-  playerTurn: string;
+
 }

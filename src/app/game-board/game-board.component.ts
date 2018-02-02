@@ -14,8 +14,9 @@ import { AuthService } from '../core/auth.service';
 
 export class GameBoardComponent implements OnInit {
 
-  user: Observable<user>;
+  user: Observable<user>
   game: Observable<game>;
+  games: any;
 
   private board: number[][];
   private readonly BOARD_SIZE: number = 8;
@@ -24,12 +25,17 @@ export class GameBoardComponent implements OnInit {
 
   constructor(public db: AngularFirestore, public auth: AuthService) {
     //this.board = db.collection('board').valueChanges();
+    // Compare the user.uid field with the game.creatorId field.
+    this.games = db.collection('games', ref => ref.where('creatorId', '==', 'creatorId'));
+
   }
 
   ngOnInit() {
     this.newGame();
   }
-
+  getCurrentGame(game){
+    this.auth.getCurrentGame(game);
+  }
   newGame() {
     // Initialize the board
     this.board = [];

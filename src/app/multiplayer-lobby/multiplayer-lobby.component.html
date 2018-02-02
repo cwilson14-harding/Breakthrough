@@ -23,7 +23,7 @@
       <h1>Open Games:</h1>
       <div *ngFor="let open of openGames | async">
          {{open.creatorName}}
-        <button (click)="joinGame(user, open.gameId, open.creator)">Join Game</button>
+        <button (click)="joinGame(user, open)">Join Game</button>
         <br>
       </div>
     </div>

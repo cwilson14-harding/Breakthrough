@@ -30,17 +30,6 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.viewOpenGames();
   }
 
-  // getCurrentUser() {
-  //   let uid = this.auth.getCurrentUser();
-  //   alert(uid);
-  // }
-  //
-  // updateToMulti() {
-  //   let uid = this.auth.getCurrentUser();
-  //   let usersRef = this.db.collection(`users`).doc(uid);
-  //   usersRef.update({gameType: 'multi'});
-  // }
-
   logOff() {
     this.auth.logout();
     this.router.navigateByUrl('/');
@@ -51,13 +40,13 @@ export class MultiplayerLobbyComponent implements OnInit {
      this.auth.createGame(user);
   }
 
-  joinGame(user, gameId, creatorId) {
+  joinGame(user, game) { //creatorId, gameId
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
-    if (user.uid === creatorId) {
+    if (user.uid === game.creatorId) {
       alert('CANT JOIN YOUR OWN GAME')
     } else {
-      this.auth.joinGame(user, gameId, creatorId);
+      this.auth.joinGame(user, game);
       // this.auth.joinGame(user, game);
       this.router.navigateByUrl('board');
     }
