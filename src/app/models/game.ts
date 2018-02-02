@@ -7,5 +7,4 @@ export interface game {
   playerTurn: string;
   state: string;
   winner: string;
-
 }
