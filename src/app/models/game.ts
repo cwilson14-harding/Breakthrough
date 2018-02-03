@@ -4,7 +4,7 @@ export interface game {
   gameId: string;
   joinerId: string;
   joinerName: string;
-  playerTurn: string;
+  playerTurn: number;
   state: string;
   winner: string;
 }

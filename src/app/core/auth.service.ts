@@ -36,6 +36,7 @@ export class AuthService {
   */
   createGame(user) {
     const randomNum = this.generateRandomNumber().toString();
+    this.gameId = randomNum;
     this.db.collection('games').doc(randomNum).set({
       creatorId: user.uid,
       creatorName: user.displayName,
@@ -43,7 +44,7 @@ export class AuthService {
       joinerName: '',
       state: 'open',
       gameId: randomNum,
-      playerTurn: 'creator',
+      playerTurn: '1',
       winner: ''
     });
   }

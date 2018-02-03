@@ -50,13 +50,18 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinGame(user, game) { //creatorId, gameId
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
-    if (user.uid === game.creatorId) {
-      alert('Can\'t join your own game.')
-    } else {
-      this.auth.joinGame(user, game);
-      this.router.navigateByUrl('board');
-    }
+    this.auth.joinGame(user, game);
+    this.router.navigateByUrl('board');
+    // if (user.uid === game.creatorId) {
+    //   alert('Can\'t join your own game.')
+    // } else {
+    //   this.auth.joinGame(user, game);
+    //   this.router.navigateByUrl('board');
+    // }
   }
+
+
+
   /* logOff: function(){}
      Parameters: none
      This function calls an Angular Firebase method to log the user out of the account that they are signed into.

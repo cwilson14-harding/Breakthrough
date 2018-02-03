@@ -5,6 +5,9 @@ import { user } from '../models/user';
 import { game } from '../models/game';
 import {Coordinate} from "../models/game-core/coordinate";
 import { AuthService } from '../core/auth.service';
+import  { AngularFireAuth } from "angularfire2/auth";
+import {Player} from "../models/Player";
+import {LocalPlayer} from "../models/LocalPlayer";
 
 @Component({
   selector: 'app-game-board',
@@ -17,17 +20,43 @@ export class GameBoardComponent implements OnInit {
   user: Observable<user>;
   game: Observable<game>;
   games: any;
+  currentUserName: any;
+  winner: number = 0;
+  player1: Player = new LocalPlayer(1);
+  player2: Player = new LocalPlayer(2);
+  get currentPlayer(): Player {
+      if (this.playerTurn == 1) return this.player1;
+      else if (this.playerTurn == 2) return this.player2;
+      else return undefined;
+  }
 
   private board: number[][];
   private readonly BOARD_SIZE: number = 8;
-  private playerTurn = 1;
+   playerTurn = 1;
   private selectedCoordinate: Coordinate = undefined;
 
-  constructor(public db: AngularFirestore, public auth: AuthService) {
+  constructor(public db: AngularFirestore, public auth: AuthService, public afAuth: AngularFireAuth) {
+    this.currentUserName = this.afAuth.auth.currentUser.displayName;
     //this.board = db.collection('board').valueChanges();
     // Compare the user.uid field with the game.creatorId field.
-    this.games = db.collection('games', ref => ref.where('creatorId', '==', 'creatorId'));
+    //this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
+    this.games = this.db.collection('games').valueChanges();
 
+  }
+
+  getCurrName() {
+    //this.currentUserName = this.afAuth.auth.currentUser.displayName;
+    //alert(this.currentUserName);
+    this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
+  }
+
+  getCurrentGame(user, game){
+    if (user.displayName == game.creatorName){
+      alert("This is your game.");
+    }
+    else{
+      alert("This is " + game.creatorName + " game.")
+    }
   }
 
   ngOnInit() {
@@ -78,9 +107,6 @@ export class GameBoardComponent implements OnInit {
     return this.board;
   }
 
-  getCurrentGame(game){
-    this.auth.getCurrentGame(game);
-  }
   /* newGame: function(){}
      Parameters: none
      The newGame function takes no parameters and it returns nothing. It accesses the board property which is
@@ -207,26 +233,48 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  /* movePiece: function(){}
-     Moves a piece from one coordinate to the other if the move was valid.
-     Returns a boolean that is true if the move was made, or false if the move was not valid.
-  */
-  movePiece(target: Coordinate): boolean {
-    this.selectPiece(target);
-    if (this.isMoveValid(this.selectedCoordinate, target)) {
+
+  makeMove(move: [Coordinate, Coordinate]): boolean {
+    //let creatorTurn = this.db.collection('games', ref => ref.where('playerTurn', '==', this.playerTurn));
+    this.selectedCoordinate = move[0];
+
+    if (this.isMoveValid(this.selectedCoordinate, move[1])) {
       let piece: number = this.board[this.selectedCoordinate[0]][this.selectedCoordinate[1]];
       this.board[this.selectedCoordinate[0]][this.selectedCoordinate[1]] = 0;
-      this.board[target[0]][target[1]] = piece;
+      this.board[move[1][0]][move[1][1]] = piece;
 
       // Change the turn.
       this.playerTurn = (this.playerTurn == 1) ? 2 : 1;
+      /*TODO: Fix this
+      this.db.collection('games').doc(game.gameId).update({
+        playerTurn: this.playerTurn
+      });*/
 
       // Deselect the piece.
       this.selectedCoordinate = undefined;
 
+      // Update the win status.
+      this.winner = this.isGameFinished();
+
       return true;
     }
     return false;
+  }
+
+  /* movePiece: function(){}
+     Moves a piece from one coordinate to the other if the move was valid.
+     Returns a boolean that is true if the move was made, or false if the move was not valid.
+  */
+  getMove() {
+    let currentPlayer = this.currentPlayer;
+    if (currentPlayer != undefined) {
+      let movePromise: Promise<[Coordinate, Coordinate]> = currentPlayer.getMove(this);
+
+      movePromise.then((move: [Coordinate, Coordinate]) => {
+        this.makeMove(move);
+        this.getMove();
+      })
+    }
   }
 
   /* newGame: function(){}
@@ -256,6 +304,9 @@ export class GameBoardComponent implements OnInit {
     // Initialize variables.
     this.selectedCoordinate = undefined;
     this.playerTurn = 1;
+
+    // Start the game.
+    this.getMove();
   }
 
   /* selectPiece: function(){}
@@ -266,11 +317,13 @@ export class GameBoardComponent implements OnInit {
      This allows us to determine which of the pieces have been clicked and selected.
   */
   selectPiece(target: Coordinate) {
-    if (this.selectedCoordinate !== undefined && this.selectedCoordinate[0] == target[0]
-      && this.selectedCoordinate[1] == target[1]) {
-      this.selectedCoordinate = undefined;
-    } else if (this.board[target[0]][target[1]] == this.playerTurn) {
-      this.selectedCoordinate = target;
+    let currentPlayer = this.currentPlayer;
+    if (currentPlayer instanceof LocalPlayer) {
+      let localPlayer: LocalPlayer = currentPlayer as LocalPlayer;
+      localPlayer.selectPiece(target);
+      this.selectedCoordinate = localPlayer.selectedCoordinate;
     }
+
+    // Ignore if a non-local player.
   }
 }
