@@ -15,7 +15,7 @@ export class AuthService {
   open;
   gamesRef;
   joinerId;
-  gameUid: string;
+  gameId: string;
 
 
   constructor(public afAuth: AngularFireAuth, public db: AngularFirestore) {
@@ -29,37 +29,81 @@ export class AuthService {
         }
       });
   }
+  /* createGame: function(){}
+     Parameters: user
+     createGame calls the generateRandomNumber function to get a unique gameId. It then accesses the database, and sets
+     the document name to this random number, and it sets all of the parameters defined in the game interface.
+  */
+  createGame(user) {
+    const randomNum = this.generateRandomNumber().toString();
+    this.db.collection('games').doc(randomNum).set({
+      creatorId: user.uid,
+      creatorName: user.displayName,
+      joinerId: '',
+      joinerName: '',
+      state: 'open',
+      gameId: randomNum,
+      playerTurn: 'creator',
+      winner: ''
+    });
+  }
+
+  facebookLogin() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    // According to the documentation this line should set the login window to the user's preferred browser language.
+    firebase.auth().useDeviceLanguage();
+    return this.oAuthLogin(provider);
+  }
+
+  getCurrentGame(game) {
+    let currentGame = this.db.collection('games').doc(game.gameId);
+    alert(currentGame);
+  }
 
   getCurrentUser() {
     let currentUser = this.afAuth.auth.currentUser;
     return currentUser.uid;
   }
-  getCurrentGame(game){
-    let currentGame = this.db.collection('games').doc(game.gameId);
-    alert(currentGame);
 
+  generateRandomNumber() {
+    return Math.floor(Math.random() * 1000000) + 1;
   }
+
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
+    // According to the documentation this line should set the login window to the user's preferred browser language.
+    firebase.auth().useDeviceLanguage();
     return this.oAuthLogin(provider);
   }
-  oAuthLogin(provider){
+
+  joinGame(user, game) { // gameId, creatorId
+    this.gameId = game.gameId;
+    this.db.collection('games').doc(game.gameId).update({
+      joinerId: user.uid,
+      joinerName: user.displayName,
+      state: 'closed'
+    });
+  }
+
+  logout() {
+    return this.afAuth.auth.signOut();
+  }
+
+  oAuthLogin(provider) {
     this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
         this.updateUserData(credential.user);
       });
   }
-  updategameTypeMulti(user) {
+
+  updateGameTypeMulti(user) {
     const userRef: AngularFirestoreDocument<user> = this.db.doc(`users/${user.uid}`);
     userRef.update({gameType: 'multi', isOnline: true});
   }
+
   updategameTypeSingle(user) {
     const userRef: AngularFirestoreDocument<user> = this.db.doc(`users/${user.uid}`);
     userRef.update({gameType: 'single'});
-  }
-
-  logout() {
-    return this.afAuth.auth.signOut();
   }
 
   private updateUserData(user) {
@@ -76,8 +120,12 @@ export class AuthService {
     return userRef.set(data);
   }
 
+  /* viewOnlineUsers: function(){}
+     Parameters: none
+  */
   viewOnlineUsers() {
-    this.avaliable = this.db.collection('users', ref => ref.where('isOnline', '==', true)).snapshotChanges().map(actions => {
+    this.avaliable = this.db.collection('users', ref => ref.where('isOnline', '==',
+      true)).snapshotChanges().map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data() as user;
         data.uid = a.payload.doc.id;
@@ -86,32 +134,14 @@ export class AuthService {
     });
     return this.avaliable;
   }
+
+  /* viewOpenGames: function(){}
+     Parameters: none
+     This function queries the database and returns all games where the state property is equal to open.
+  */
   viewOpenGames() {
-    this.open = this.db.collection('games', ref => ref.where('state', '==', 'open')).valueChanges();
+    this.open = this.db.collection('games', ref => ref.where('state', '==',
+      'open')).valueChanges();
     return this.open;
   }
-  generateRandomNumber() {
-    return Math.floor(Math.random() * 1000000) + 1;
-  }
-  createGame(user) {
-    const randomNum = this.generateRandomNumber().toString();
-    this.db.collection('games').doc(randomNum).set({
-      creatorId: user.uid,
-      creatorName: user.displayName,
-      joinerId: '',
-      joinerName: '',
-      state: 'open',
-      gameId: randomNum,
-      playerTurn: 'creator',
-      winner: ''
-    });
-  }
-  joinGame(user, game) { // gameId, creatorId
-    this.gameUid = game.gameId;
-      this.db.collection('games').doc(game.gameId).update({
-        joinerId: user.uid,
-        joinerName: user.displayName,
-        state: 'closed'
-      });
-    }
 }

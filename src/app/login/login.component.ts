@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('');
   }
   goToMulti(user) {
-    this.auth.updategameTypeMulti(user);
+    this.auth.updateGameTypeMulti(user);
    // alert(userId);
     this.router.navigateByUrl('multiPlayerLobby');
   }
