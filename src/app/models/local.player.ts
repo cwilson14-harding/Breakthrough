@@ -29,7 +29,9 @@ export class LocalPlayer implements Player {
       this.selectedCoordinate = target;
     } else if (this.board.isMoveValid(this.selectedCoordinate, target)) {
       // Submit the move if it is valid.
-      this.resolve([this.selectedCoordinate, target]);
+      const coord = this.selectedCoordinate;
+      this.selectedCoordinate = undefined;
+      this.resolve([coord, target]);
     }
   }
 }

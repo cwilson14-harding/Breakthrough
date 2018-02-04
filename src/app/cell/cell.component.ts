@@ -9,9 +9,7 @@ export class CellComponent implements OnInit {
   @Input()
   state: number;
   @Input()
-  isSelected: boolean;
-  @Input()
-  isPotentialMove: boolean;
+  boardClass: string;
 
   constructor() { }
 

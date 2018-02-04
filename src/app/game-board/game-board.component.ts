@@ -5,7 +5,7 @@ import { user } from '../models/user';
 import { game } from '../models/game';
 import {Coordinate} from '../models/game-core/coordinate';
 import { AuthService } from '../core/auth.service';
-import  { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from 'angularfire2/auth';
 import {Player} from '../models/player';
 import {LocalPlayer} from '../models/local.player';
 import {AIPlayer} from '../models/ai.player';
@@ -25,7 +25,7 @@ export class GameBoardComponent implements OnInit {
   winner = 0;
   player1: Player = new LocalPlayer(1);
   player2: Player = new LocalPlayer(2);
-  //player2: Player = new AIPlayer();
+  // player2: Player = new AIPlayer();
   get currentPlayer(): Player {
       if (this.playerTurn === 1) {
         return this.player1;
@@ -37,27 +37,28 @@ export class GameBoardComponent implements OnInit {
   }
 
   private board: number[][];
+  private boardClass: string[][];
   private readonly BOARD_SIZE: number = 8;
    playerTurn = 1;
   private selectedCoordinate: Coordinate = undefined;
 
   constructor(public db: AngularFirestore, public auth: AuthService, public afAuth: AngularFireAuth) {
     this.currentUserName = this.afAuth.auth.currentUser.displayName;
-    //this.board = db.collection('board').valueChanges();
+    // this.board = db.collection('board').valueChanges();
     // Compare the user.uid field with the game.creatorId field.
-    //this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
+    // this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
     this.games = this.db.collection('games').valueChanges();
 
   }
 
   getCurrName() {
-    //this.currentUserName = this.afAuth.auth.currentUser.displayName;
-    //alert(this.currentUserName);
+    // this.currentUserName = this.afAuth.auth.currentUser.displayName;
+    // alert(this.currentUserName);
     this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
   }
 
   getCurrentGame(user, game) {
-    if (user.displayName == game.creatorName) {
+    if (user.displayName === game.creatorName) {
       alert('This is your game.');
     } else {
       alert('This is ' + game.creatorName + ' game.');
@@ -79,14 +80,14 @@ export class GameBoardComponent implements OnInit {
     /* When an empty array is returned that means there are no available moves from the
        location passed into the function.
     */
-    if (!this.isLocationValid(location) || this.board[location[0]][location[1]] == 0) {
+    if (!this.isLocationValid(location) || this.board[location[0]][location[1]] === 0) {
       return [];
     }
 
     const availableMoves: Coordinate[] = [];
     // Find the next row to move to.
     let row: number;
-    if (this.board[location[0]][location[1]] == 1) {
+    if (this.board[location[0]][location[1]] === 1) {
       row = location[0] + 1;
     } else {
       row = location[0] - 1;
@@ -161,6 +162,7 @@ export class GameBoardComponent implements OnInit {
     /* Verify that the starting piece exists and that it's the player's turn.
        If so, find the row we need to be moving to.
     */
+
     if (piece === 0 || piece !== this.playerTurn) {
       return false;
     } else if (piece === 1) {
@@ -237,16 +239,15 @@ export class GameBoardComponent implements OnInit {
 
 
   makeMove(move: [Coordinate, Coordinate]): boolean {
-    //let creatorTurn = this.db.collection('games', ref => ref.where('playerTurn', '==', this.playerTurn));
-    this.selectedCoordinate = move[0];
+    // let creatorTurn = this.db.collection('games', ref => ref.where('playerTurn', '==', this.playerTurn));
 
-    if (this.isMoveValid(this.selectedCoordinate, move[1])) {
-      const piece: number = this.board[this.selectedCoordinate[0]][this.selectedCoordinate[1]];
-      this.board[this.selectedCoordinate[0]][this.selectedCoordinate[1]] = 0;
+    if (this.isMoveValid(move[0], move[1])) {
+      const piece: number = this.board[move[0][0]][move[0][1]];
+      this.board[move[0][0]][move[0][1]] = 0;
       this.board[move[1][0]][move[1][1]] = piece;
 
       // Change the turn.
-      this.playerTurn = (this.playerTurn == 1) ? 2 : 1;
+      this.playerTurn = (this.playerTurn === 1) ? 2 : 1;
       /*TODO: Fix this
       this.db.collection('games').doc(game.gameId).update({
         playerTurn: this.playerTurn
@@ -268,8 +269,9 @@ export class GameBoardComponent implements OnInit {
      Returns a boolean that is true if the move was made, or false if the move was not valid.
   */
   getMove() {
+    this.clearHighlighting();
     const currentPlayer = this.currentPlayer;
-    if (currentPlayer != undefined) {
+    if (currentPlayer !== undefined) {
       const movePromise: Promise<[Coordinate, Coordinate]> = currentPlayer.getMove(this);
 
       movePromise.then((move: [Coordinate, Coordinate]) => {
@@ -289,10 +291,13 @@ export class GameBoardComponent implements OnInit {
   newGame() {
     // Initialize the board
     this.board = [];
+    this.boardClass = [];
     // Fill the board array with zeros.
     for (let row = 0; row < this.BOARD_SIZE; row++) {
       this.board[row] = [];
+      this.boardClass[row] = [];
       for (let column = 0; column < this.BOARD_SIZE; column++) {
+        this.boardClass[row][column] = '';
         if (row <= 1) {
           this.board[row][column] = 1;
         } else if (row >= this.BOARD_SIZE - 2) {
@@ -306,6 +311,17 @@ export class GameBoardComponent implements OnInit {
     // Initialize variables.
     this.selectedCoordinate = undefined;
     this.playerTurn = 1;
+    if (this.player1 instanceof LocalPlayer) {
+      this.player1 = new LocalPlayer(1);
+    } else {
+      this.player1 = new AIPlayer();
+    }
+
+    if (this.player2 instanceof LocalPlayer) {
+      this.player2 = new LocalPlayer(2);
+    } else {
+      this.player2 = new AIPlayer();
+    }
 
     // Start the game.
     this.getMove();
@@ -320,12 +336,28 @@ export class GameBoardComponent implements OnInit {
   */
   selectPiece(target: Coordinate) {
     const currentPlayer = this.currentPlayer;
+    this.clearHighlighting();
     if (currentPlayer instanceof LocalPlayer) {
       const localPlayer: LocalPlayer = currentPlayer as LocalPlayer;
       localPlayer.selectPiece(target);
       this.selectedCoordinate = localPlayer.selectedCoordinate;
+
+      if (localPlayer.selectedCoordinate !== undefined) {
+        this.boardClass[localPlayer.selectedCoordinate[0]][localPlayer.selectedCoordinate[1]] = 'selected';
+        for (const coord of this.findAvailableMoves(localPlayer.selectedCoordinate)) {
+          this.boardClass[coord[0]][coord[1]] = 'potentialMove';
+        }
+      }
     }
 
     // Ignore if a non-local player.
+  }
+
+  clearHighlighting() {
+    for (let row = 0; row < this.BOARD_SIZE; row++) {
+      for (let col = 0; col < this.BOARD_SIZE; col++) {
+        this.boardClass[row][col] = '';
+      }
+    }
   }
 }
