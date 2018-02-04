@@ -1,4 +1,4 @@
-// Place into TypeScript Playground to test.
+4// Place into TypeScript Playground to test.
 // Alaina - added surrounding module and export statements, changed file extension to ts
 export module GameCore {
     export type Coordinate = [number, number];

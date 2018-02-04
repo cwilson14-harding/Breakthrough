@@ -1,6 +1,6 @@
-import {Player} from "./player";
-import {Coordinate} from "./game-core/coordinate";
-import {GameBoardComponent} from "../game-board/game-board.component";
+import {Player} from './player';
+import {Coordinate} from './game-core/coordinate';
+import {GameBoardComponent} from '../game-board/game-board.component';
 
 
 export class LocalPlayer implements Player {
@@ -15,17 +15,17 @@ export class LocalPlayer implements Player {
 
   getMove(board: GameBoardComponent): Promise<[Coordinate, Coordinate]> {
     this.board = board;
-    return new Promise<[Coordinate,Coordinate]>((resolve, reject) => {
+    return new Promise<[Coordinate, Coordinate]>((resolve, reject) => {
       this.resolve = resolve;
     });
   }
 
   selectPiece(target: Coordinate) {
-    let board: number[][] = this.board.getBoardState();
-    if (this.selectedCoordinate !== undefined && this.selectedCoordinate[0] == target[0]
-      && this.selectedCoordinate[1] == target[1]) {
+    const board: number[][] = this.board.getBoardState();
+    if (this.selectedCoordinate !== undefined && this.selectedCoordinate[0] === target[0]
+      && this.selectedCoordinate[1] === target[1]) {
       this.selectedCoordinate = undefined;
-    } else if (board[target[0]][target[1]] == this.team) {
+    } else if (board[target[0]][target[1]] === this.team) {
       this.selectedCoordinate = target;
     } else if (this.board.isMoveValid(this.selectedCoordinate, target)) {
       // Submit the move if it is valid.

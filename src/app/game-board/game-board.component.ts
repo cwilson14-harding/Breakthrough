@@ -3,11 +3,12 @@ import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import { user } from '../models/user';
 import { game } from '../models/game';
-import {Coordinate} from "../models/game-core/coordinate";
+import {Coordinate} from '../models/game-core/coordinate';
 import { AuthService } from '../core/auth.service';
-import  { AngularFireAuth } from "angularfire2/auth";
-import {Player} from "../models/player";
-import {LocalPlayer} from "../models/local.player";
+import  { AngularFireAuth } from 'angularfire2/auth';
+import {Player} from '../models/player';
+import {LocalPlayer} from '../models/local.player';
+import {AIPlayer} from '../models/ai.player';
 
 @Component({
   selector: 'app-game-board',
@@ -21,13 +22,18 @@ export class GameBoardComponent implements OnInit {
   game: Observable<game>;
   games: any;
   currentUserName: any;
-  winner: number = 0;
+  winner = 0;
   player1: Player = new LocalPlayer(1);
   player2: Player = new LocalPlayer(2);
+  //player2: Player = new AIPlayer();
   get currentPlayer(): Player {
-      if (this.playerTurn == 1) return this.player1;
-      else if (this.playerTurn == 2) return this.player2;
-      else return undefined;
+      if (this.playerTurn === 1) {
+        return this.player1;
+      } else if (this.playerTurn === 2) {
+        return this.player2;
+      } else {
+        return undefined;
+      }
   }
 
   private board: number[][];
@@ -50,12 +56,11 @@ export class GameBoardComponent implements OnInit {
     this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
   }
 
-  getCurrentGame(user, game){
-    if (user.displayName == game.creatorName){
-      alert("This is your game.");
-    }
-    else{
-      alert("This is " + game.creatorName + " game.")
+  getCurrentGame(user, game) {
+    if (user.displayName == game.creatorName) {
+      alert('This is your game.');
+    } else {
+      alert('This is ' + game.creatorName + ' game.');
     }
   }
 
@@ -70,7 +75,7 @@ export class GameBoardComponent implements OnInit {
        return this.findAvailableMoves(this.selectedCoordinate);
   }
   */
-  findAvailableMoves(location: Coordinate):Coordinate[] {
+  findAvailableMoves(location: Coordinate): Coordinate[] {
     /* When an empty array is returned that means there are no available moves from the
        location passed into the function.
     */
@@ -78,20 +83,19 @@ export class GameBoardComponent implements OnInit {
       return [];
     }
 
-    let availableMoves: Coordinate[] = [];
+    const availableMoves: Coordinate[] = [];
     // Find the next row to move to.
     let row: number;
     if (this.board[location[0]][location[1]] == 1) {
       row = location[0] + 1;
-    }
-    else {
+    } else {
       row = location[0] - 1;
     }
     // Testing if the diagonals or center moves are valid.
     // During this for loop all available moves are pushed to the availableMoves array.
-    for (let count: number = -1; count <= 1; count++){
-      let column: number = location[1] + count;
-      let location2:Coordinate = [row, column];
+    for (let count = -1; count <= 1; count++) {
+      const column: number = location[1] + count;
+      const location2: Coordinate = [row, column];
       if (this.isMoveValid(location, location2)) {
         availableMoves.push(location2);
       }
@@ -133,7 +137,7 @@ export class GameBoardComponent implements OnInit {
 */
   isLocationValid(location: Coordinate): boolean {
     return (location !== undefined && location[0] >= 0 && location[1] >= 0 &&
-      location[0] < this.BOARD_SIZE && location[1] < this.BOARD_SIZE)
+      location[0] < this.BOARD_SIZE && location[1] < this.BOARD_SIZE);
   }
 
   /* isMoveValid: function(){}
@@ -146,29 +150,27 @@ export class GameBoardComponent implements OnInit {
   */
   isMoveValid(location1: Coordinate, location2: Coordinate): boolean {
     // Verify that both locations given are valid.
-    if (!this.isLocationValid(location1) || !this.isLocationValid(location2) || this.isGameFinished() != 0) {
+    if (!this.isLocationValid(location1) || !this.isLocationValid(location2) || this.isGameFinished() !== 0) {
       return false;
     }
 
     // Find the piece at the given starting location.
-    let piece = this.board[location1[0]][location1[1]];
+    const piece = this.board[location1[0]][location1[1]];
     let row: number;
 
     /* Verify that the starting piece exists and that it's the player's turn.
        If so, find the row we need to be moving to.
     */
-    if (piece == 0 || piece != this.playerTurn) {
+    if (piece === 0 || piece !== this.playerTurn) {
       return false;
-    }
-    else if (piece == 1) {
+    } else if (piece === 1) {
       row = location1[0] + 1;
-    }
-    else {
+    } else {
       row = location1[0] - 1;
     }
 
     // Verify that we are moving to the next row.
-    if (location2[0] != row) {
+    if (location2[0] !== row) {
       return false;
     }
 
@@ -178,12 +180,12 @@ export class GameBoardComponent implements OnInit {
     }
 
     // If we are moving forwards, check to see if the space ahead is clear.
-    if (location1[1] == location2[1] && this.board[row][location2[1]] != 0) {
+    if (location1[1] === location2[1] && this.board[row][location2[1]] !== 0) {
       return false;
     }
 
     // We are moving diagonally, check to see if the space is clear of our own pieces.
-    return (this.board[row][location2[1]] != piece);
+    return (this.board[row][location2[1]] !== piece);
   }
 
   /* isGameFinished: function(){}
@@ -197,12 +199,12 @@ export class GameBoardComponent implements OnInit {
     // Check for a home row victory.
     for (let c = 0; c < this.BOARD_SIZE; ++c) {
       // Check for player 2 (black) on player 1's home row.
-      if (this.board[this.BOARD_SIZE - 1][c] == 1) {
+      if (this.board[this.BOARD_SIZE - 1][c] === 1) {
         return 1;
       }
 
       // Check for player 1 (white) on player 2's home row.
-      if (this.board[0][c] == 2) {
+      if (this.board[0][c] === 2) {
         return 2;
       }
     }
@@ -239,7 +241,7 @@ export class GameBoardComponent implements OnInit {
     this.selectedCoordinate = move[0];
 
     if (this.isMoveValid(this.selectedCoordinate, move[1])) {
-      let piece: number = this.board[this.selectedCoordinate[0]][this.selectedCoordinate[1]];
+      const piece: number = this.board[this.selectedCoordinate[0]][this.selectedCoordinate[1]];
       this.board[this.selectedCoordinate[0]][this.selectedCoordinate[1]] = 0;
       this.board[move[1][0]][move[1][1]] = piece;
 
@@ -266,14 +268,14 @@ export class GameBoardComponent implements OnInit {
      Returns a boolean that is true if the move was made, or false if the move was not valid.
   */
   getMove() {
-    let currentPlayer = this.currentPlayer;
+    const currentPlayer = this.currentPlayer;
     if (currentPlayer != undefined) {
-      let movePromise: Promise<[Coordinate, Coordinate]> = currentPlayer.getMove(this);
+      const movePromise: Promise<[Coordinate, Coordinate]> = currentPlayer.getMove(this);
 
       movePromise.then((move: [Coordinate, Coordinate]) => {
         this.makeMove(move);
         this.getMove();
-      })
+      });
     }
   }
 
@@ -317,9 +319,9 @@ export class GameBoardComponent implements OnInit {
      This allows us to determine which of the pieces have been clicked and selected.
   */
   selectPiece(target: Coordinate) {
-    let currentPlayer = this.currentPlayer;
+    const currentPlayer = this.currentPlayer;
     if (currentPlayer instanceof LocalPlayer) {
-      let localPlayer: LocalPlayer = currentPlayer as LocalPlayer;
+      const localPlayer: LocalPlayer = currentPlayer as LocalPlayer;
       localPlayer.selectPiece(target);
       this.selectedCoordinate = localPlayer.selectedCoordinate;
     }
