@@ -1,4 +1,4 @@
-import {Player} from "./Player";
+import {Player} from "./player";
 import {Coordinate} from "./game-core/coordinate";
 import {GameBoardComponent} from "../game-board/game-board.component";
 
