@@ -6,8 +6,8 @@ import { game } from '../models/game';
 import {Coordinate} from "../models/game-core/coordinate";
 import { AuthService } from '../core/auth.service';
 import  { AngularFireAuth } from "angularfire2/auth";
-import {Player} from "../models/Player";
-import {LocalPlayer} from "../models/LocalPlayer";
+import {Player} from "../models/player";
+import {LocalPlayer} from "../models/local.player";
 
 @Component({
   selector: 'app-game-board',
