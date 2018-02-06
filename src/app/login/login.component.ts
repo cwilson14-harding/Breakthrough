@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   availableUsers: any;
-  showSettings = false;
 
   constructor(public auth: AuthService, private db: AngularFirestore, private router: Router) {
     this.onlineUsers();
@@ -42,7 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   toHome() {
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('');
   }
   goToMulti(user) {
     this.auth.updateGameTypeMulti(user);
@@ -52,14 +51,6 @@ export class LoginComponent implements OnInit {
 
   playGame() {
     this.router.navigateByUrl('board');
-  }
-  // set settings to true. settings div will appear
-  goToSettings() {
-    this.showSettings = true;
-  }
-  // settings is now closed
-  goBack() {
-    this.showSettings = false;
   }
 
 }

@@ -14,6 +14,6 @@ export class IntroComponent implements OnInit {
   }
 
   toHomePage() {
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('');
   }
 }
