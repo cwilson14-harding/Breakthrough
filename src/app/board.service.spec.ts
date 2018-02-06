@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
 import { TestBed, inject } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+
 import { BoardService } from './board.service';
 
 describe('BoardService', () => {

@@ -51,8 +51,7 @@ const appRoutes: Routes = [
     LeaderboardComponent,
     NetworkingComponent,
     MultiplayerLobbyComponent,
-    SettingsComponent,
-    RouterModule
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
