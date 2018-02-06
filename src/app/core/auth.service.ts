@@ -5,6 +5,7 @@ import * as firebase from "firebase/app";
 import { user } from '../models/user';
 import { game } from '../models/game';
 import {Observable} from "rxjs/Observable";
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,7 @@ export class AuthService {
   gameId: string;
 
 
-  constructor(public afAuth: AngularFireAuth, public db: AngularFirestore) {
+  constructor(public afAuth: AngularFireAuth, public db: AngularFirestore, public router: Router) {
     //// Get auth data, then get firestore user document || null
     this.user = this.afAuth.authState
       .switchMap(user => {
