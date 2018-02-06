@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   toHome() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('home');
   }
   goToMulti(user) {
     this.auth.updateGameTypeMulti(user);

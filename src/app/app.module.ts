@@ -23,9 +23,12 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { NetworkingComponent } from './networking/networking.component';
 import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+import { TypingAnimationDirective } from 'angular-typing-animation'
 
 const appRoutes: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent},
+  { path: '', pathMatch: 'full', component: SplashScreenComponent},
+  { path: 'home', pathMatch: 'full', component: HomeComponent},
   { path: 'single-player', pathMatch: 'full', component: SinglePlayerComponent},
   { path: 'multi-player', pathMatch: 'full', component: MultiPlayerComponent},
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
@@ -33,7 +36,7 @@ const appRoutes: Routes = [
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
   { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
-  { path: '**', redirectTo: '/'}
+  { path: '**', redirectTo: 'home'}
 ];
 
 @NgModule({
@@ -51,14 +54,16 @@ const appRoutes: Routes = [
     LeaderboardComponent,
     NetworkingComponent,
     MultiplayerLobbyComponent,
-    SettingsComponent
+    SettingsComponent,
+    SplashScreenComponent,
+    TypingAnimationDirective
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
