@@ -69,7 +69,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   */
   logOff() {
     this.auth.logout();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('home');
   }
 
   /* viewOpenGames: function(){}
