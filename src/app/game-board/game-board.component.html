@@ -24,7 +24,7 @@
       </div>
     <div *ngFor="let game of games | async">
       <button (click)="getCurrentGame(user,game)">Get Game</button>
-      <button (click)="auth.updateTurn(user)">Update Turn</button>
+      <button (click)="getWhosTurn()">Update Turn</button>
     </div>
   </div>
   </div>
@@ -36,9 +36,5 @@
 <div class="w3-container w3-display-topmiddle">
   <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="newGame()">NEW GAME</button>
 </div>
-<div class="w3-display-bottom">
-  <div *ngFor="let player of playerFireTurn | async">
-    <h1 style="color: red">{{player.creatorId}}</h1>
-  </div>
-</div>
+
 

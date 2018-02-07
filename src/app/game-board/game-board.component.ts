@@ -365,6 +365,7 @@ export class GameBoardComponent implements OnInit {
   }
 
   getWhosTurn() {
-    this.playerFireTurn = this.auth.updateTurn();
+    let playerFire = this.auth.updateTurn();
+    console.log(playerFire);
   }
 }
