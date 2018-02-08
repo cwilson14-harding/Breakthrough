@@ -153,14 +153,9 @@ export class AuthService {
   }
   updateTurn() {
     this.gameRef = this.db.collection('games', ref => ref.where('creatorId', '==',
-  'gameId')).snapshotChanges().map(actions => {
-     return actions.map(a => {
-       const data = a.payload.doc.data() as game;
-       data.gameId = a.payload.doc.id;
-       return data;
-     });
-   });
-  return this.gameRef;
+      'gameId'));
+    let currentUser = this.afAuth.auth.currentUser;
+    let currentUserId = currentUser.uid;
+    console.log(currentUserId);
   }
-
 }

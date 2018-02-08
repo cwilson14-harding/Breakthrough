@@ -24,7 +24,7 @@
       </div>
     <div *ngFor="let game of games | async">
       <button (click)="getCurrentGame(user,game)">Get Game</button>
-      <button (click)="getWhosTurn()">Update Turn</button>
+      <button (click)="updateTurn()">Update Turn</button>
     </div>
   </div>
   </div>
