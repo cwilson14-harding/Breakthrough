@@ -5,4 +5,6 @@ export interface user{
   isOnline: boolean;
   photoURL?: string;
   uid: string;
+  wins: number;
+  losses: number;
 }

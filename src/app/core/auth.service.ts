@@ -6,6 +6,8 @@ import { user } from '../models/user';
 import { game } from '../models/game';
 import {Observable} from "rxjs/Observable";
 import {Router} from '@angular/router';
+import 'rxjs/add/operator/map'
+
 
 @Injectable()
 export class AuthService {
@@ -14,7 +16,7 @@ export class AuthService {
   game: Observable<game>;
   avaliable: Observable<user[]>;
   open;
-  gamesRef;
+  gameRef;
   joinerId;
   gameId: string;
 
@@ -38,13 +40,14 @@ export class AuthService {
   createGame(user) {
     const randomNum = this.generateRandomNumber().toString();
     this.gameId = randomNum;
-    this.db.collection('games').doc(randomNum).set({
+
+    this.db.collection('games').doc(user.uid).set({
       creatorId: user.uid,
       creatorName: user.displayName,
       joinerId: '',
       joinerName: '',
       state: 'open',
-      gameId: randomNum,
+      gameId: user.uid,
       playerTurn: '1',
       winner: ''
     });
@@ -117,7 +120,9 @@ export class AuthService {
       photoURL: user.photoURL,
       displayName: user.displayName,
       isOnline: user.isOnline = false,
-      gameType: user.gameType = ''
+      gameType: user.gameType = '',
+      wins: user.wins = 0,
+      losses: user.losses = 0
     };
     return userRef.set(data);
   }
@@ -146,4 +151,16 @@ export class AuthService {
       'open')).valueChanges();
     return this.open;
   }
+  updateTurn() {
+    this.gameRef = this.db.collection('games', ref => ref.where('creatorId', '==',
+  'gameId')).snapshotChanges().map(actions => {
+     return actions.map(a => {
+       const data = a.payload.doc.data() as game;
+       data.gameId = a.payload.doc.id;
+       return data;
+     });
+   });
+  return this.gameRef;
+  }
+
 }
