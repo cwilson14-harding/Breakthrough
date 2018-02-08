@@ -1,17 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
-import { trigger, transition, useAnimation } from '@angular/animations';
+import { trigger, transition, useAnimation, state, animate, style } from '@angular/animations';
 import { bounce } from 'ng-animate';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('flyInOut', [
+      state('in', style({transform: 'translateX(100)'})),
+      transition('void => *', [
+        style({transform: 'translateX(-50%)'}),
+        animate(700)
+      ]),
+      transition('* => void', [
+        animate(300, style({transform: 'translateX(10%)'}))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, public auth: AuthService) { }
+  state = 'inactive';
+  constructor(private router: Router, public auth: AuthService) {
 
+  }
+
+  toggleState() {
+    this.state = this.state === 'active' ? 'inactive' : 'active';
+  }
 
   ngOnInit() {
   }

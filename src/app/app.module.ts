@@ -25,7 +25,7 @@ import { NetworkingComponent } from './networking/networking.component';
 import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
-import { TypingAnimationDirective } from 'angular-typing-animation';
+import { TypingAnimationModule } from 'angular-typing-animation';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -56,8 +56,7 @@ const appRoutes: Routes = [
     NetworkingComponent,
     MultiplayerLobbyComponent,
     SettingsComponent,
-    SplashScreenComponent,
-    TypingAnimationDirective
+    SplashScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +65,7 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
+    TypingAnimationModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

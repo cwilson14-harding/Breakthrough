@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   logOff(user) {
     // this.updateUserStatus(user);
     this.auth.logout();
+    this.router.navigateByUrl('home');
   }
 
   // updateUserStatus(user) {
