@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { user } from '../models/user';
-import { game } from '../models/game'
+import { game } from '../models/game';
 import {Observable} from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
