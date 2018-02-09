@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../core/auth.service';
-import { user } from '../models/user';
-import { game } from '../models/game'
-import {Observable} from 'rxjs/Observable';
+import {AuthService, Game, User} from '../core/auth.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { GameService } from '../game.service';
+import {PlayerData, PlayerType} from '../player-data';
+import * as firebase from 'firebase/app';
+import DocumentChange = firebase.firestore.DocumentChange;
+import {Observable} from 'rxjs/Observable';
+import DocumentChangeType = firebase.firestore.DocumentChangeType;
 
 @Component({
   selector: 'app-multiplayer-lobby',
@@ -13,8 +16,6 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class MultiplayerLobbyComponent implements OnInit {
 
-  user: Observable<user>;
-  game: Observable<game>;
   gameType;
   availableUsers: any;
   openGames: any;
@@ -22,7 +23,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinerId: string;
   gameUid: string;
 
-  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore) {
+  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
   }
 
@@ -34,9 +35,22 @@ export class MultiplayerLobbyComponent implements OnInit {
      This function takes a user and sets the isGameCreated property to true. Then the function calls the
      createGame function from the auth.service to create a new game an store it in the database.
   */
-  createNewGame(user) {
+  createdGame: Observable<Game>;
+  createNewGame(user: User) {
      this.isGameCreated = true;
-     this.auth.createGame(user);
+     const createdGame = this.auth.createGame(user);
+     const gameId: string = createdGame[0];
+     createdGame[1].then(() => {
+       this.createdGame = this.db.collection('games').doc<Game>(gameId).valueChanges();
+       /* TODO: Auto join game
+       this.createdGame.subscribe(game => {
+         console.log(game);
+         if (game !== null) {
+           console.log('joining');
+           this.joinGame(user, game);
+         }
+       });*/
+     });
   }
 
   /* joinGame: function(){}
@@ -47,10 +61,19 @@ export class MultiplayerLobbyComponent implements OnInit {
      If the user's uid property does not match the game's creatorId property then the person joining the game is
      navigated to the board where gameplay can commence.
   */
-  joinGame(user, game) { //creatorId, gameId
+  joinGame(user: User, game: Game) { // creatorId, gameId
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
     this.auth.joinGame(user, game);
+    const localPlayer = new PlayerData(game.creatorName, user.photoURL, PlayerType.Local);
+    const remotePlayer = new PlayerData(game.joinerName, '', PlayerType.Local); // TODO: PlayerType.Network);
+
+    if (user.uid === game.creatorName) {
+      this.gameService.newGame(localPlayer, remotePlayer, game.gameId);
+    } else {
+      this.gameService.newGame(remotePlayer, localPlayer, game.gameId);
+    }
+
     this.router.navigateByUrl('board');
     // if (user.uid === game.creatorId) {
     //   alert('Can\'t join your own game.')

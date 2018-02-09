@@ -15,8 +15,6 @@ import { AuthService } from './core/auth.service';
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { SinglePlayerComponent } from './single-player/single-player.component';
-import { MultiPlayerComponent } from './multi-player/multi-player.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
 import { IntroComponent } from './intro/intro.component';
 import { ChatComponent } from './chat/chat.component';
@@ -26,13 +24,15 @@ import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby
 import { SettingsComponent } from './settings/settings.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { TypingAnimationModule } from 'angular-typing-animation';
+<<<<<<< HEAD
 import { ParticlesModule } from 'angular-particle';
+=======
+import {GameService} from './game.service';
+>>>>>>> 1eb1c0f003536f3e4d7d2a0b20f5898e3e31473c
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
   { path: 'home', pathMatch: 'full', component: HomeComponent},
-  { path: 'single-player', pathMatch: 'full', component: SinglePlayerComponent},
-  { path: 'multi-player', pathMatch: 'full', component: MultiPlayerComponent},
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
   { path: 'login', pathMatch: 'full', component: LoginComponent},
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
@@ -48,8 +48,6 @@ const appRoutes: Routes = [
     CellComponent,
     LoginComponent,
     HomeComponent,
-    SinglePlayerComponent,
-    MultiPlayerComponent,
     TutorialComponent,
     IntroComponent,
     ChatComponent,
@@ -69,7 +67,7 @@ const appRoutes: Routes = [
     TypingAnimationModule,
     ParticlesModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,11 @@
-import { GameCore } from "../GameBoard class";
+import { Coordinate } from '../src/app/models/game-core/coordinate';
+import {Board} from '../src/app/models/board';
 
-describe("validateLocation", function () {
-    it("approves given location", function() {
-        let board: GameCore.Board;
-        let location: GameCore.Coordinate = [2, 3];
-        let isValidated: boolean = board.isLocationValid.apply(location);
+describe('validateLocation', function () {
+    it('approves given location', function() {
+        const board: Board = new Board();
+        const location: Coordinate = [2, 3];
+        const isValidated: boolean = board.isLocationValid.apply(location);
 
         expect(isValidated).toBe(true);
     });
