@@ -67,8 +67,6 @@ export class GameBoardComponent implements OnInit {
       case PlayerType.Network: this.player2 = new LocalPlayer(2); break; // TODO: Change to NetworkPlayer
     }
 
-    this.playerFireTurn = this.auth.updateTurn();
-
   }
 
   getCurrName() {
@@ -378,9 +376,5 @@ export class GameBoardComponent implements OnInit {
         this.boardClass[row][col] = '';
       }
     }
-  }
-
-  updateTurn() {
-    this.auth.updateTurn()
   }
 }
