@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
-import { user } from '../models/user';
-import { game } from '../models/game';
 import {Coordinate} from '../models/game-core/coordinate';
-import { AuthService } from '../core/auth.service';
+import {AuthService, Game, User} from '../core/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {Player} from '../models/player';
 import {LocalPlayer} from '../models/local-player';
@@ -12,6 +10,7 @@ import {AIPlayer} from '../models/ai-player';
 import { GameService } from '../game.service';
 import {PlayerType} from '../player-data';
 import {Board} from '../models/board';
+import {NetworkPlayer} from '../models/network-player';
 
 @Component({
   selector: 'app-game-board',
@@ -21,8 +20,8 @@ import {Board} from '../models/board';
 
 export class GameBoardComponent implements OnInit {
 
-  user: Observable<user>;
-  game: Observable<game>;
+  user: Observable<User>;
+  game: AngularFirestoreDocument<Game>;
   games: any;
   currentUserName: any;
   player1: Player;
@@ -35,21 +34,26 @@ export class GameBoardComponent implements OnInit {
     // Compare the user.uid field with the game.creatorId field.
     // this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
     this.games = this.db.collection('games').valueChanges();
+    if (this.gameService.gameId !== '') {
+      this.game = this.db.collection('games').doc<Game>(this.gameService.gameId);
+    }
 
-    const p1 = gameService.playerOne;
+    const p1 = this.gameService.playerOne;
     const p2 = this.gameService.playerTwo;
 
     switch (p1.type) {
       case PlayerType.AI: this.player1 = new AIPlayer(); break;
       case PlayerType.Local: this.player1 = new LocalPlayer(1); break;
-      case PlayerType.Network: this.player1 = new LocalPlayer(1); break; // TODO: Change to NetworkPlayer
+      case PlayerType.Network: this.player1 = new NetworkPlayer(this.game); break; // TODO: Change to NetworkPlayer
     }
 
     switch (p2.type) {
       case PlayerType.AI: this.player2 = new AIPlayer(); break;
       case PlayerType.Local: this.player2 = new LocalPlayer(2); break;
-      case PlayerType.Network: this.player2 = new LocalPlayer(2); break; // TODO: Change to NetworkPlayer
+      case PlayerType.Network: this.player2 = new NetworkPlayer(this.game); break; // TODO: Change to NetworkPlayer
     }
+
+    this.getMove();
 
   }
 

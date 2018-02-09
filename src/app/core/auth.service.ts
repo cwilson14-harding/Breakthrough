@@ -1,20 +1,38 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from "angularfire2/auth";
-import { AngularFirestore, AngularFirestoreDocument } from "angularfire2/firestore";
-import * as firebase from "firebase/app";
-import { user } from '../models/user';
-import { game } from '../models/game';
-import {Observable} from "rxjs/Observable";
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import * as firebase from 'firebase/app';
+import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 
+export interface User {
+  displayName?: string;
+  email: string;
+  gameType: string;
+  isOnline: boolean;
+  photoURL?: string;
+  uid: string;
+  wins: number;
+  losses: number;
+}
+export interface Game {
+  creatorId: string;
+  creatorName: string;
+  gameId: string;
+  joinerId: string;
+  joinerName: string;
+  playerTurn: number;
+  state: string;
+  winner: string;
+}
 
 @Injectable()
 export class AuthService {
 
-  user: Observable<user>;
-  game: Observable<game>;
-  avaliable: Observable<user[]>;
+  user: Observable<User>;
+  game: Observable<Game>;
+  avaliable: Observable<User[]>;
   open;
   gameRef;
   joinerId;
@@ -26,7 +44,7 @@ export class AuthService {
     this.user = this.afAuth.authState
       .switchMap(user => {
         if (user) {
-          return this.db.doc<user>(`users/${user.uid}`).valueChanges()
+          return this.db.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return Observable.of(null);
         }
@@ -37,20 +55,19 @@ export class AuthService {
      createGame calls the generateRandomNumber function to get a unique gameId. It then accesses the database, and sets
      the document name to this random number, and it sets all of the parameters defined in the game interface.
   */
-  createGame(user) {
-    const randomNum = this.generateRandomNumber().toString();
-    this.gameId = randomNum;
+  createGame(user: User): [string, Promise<void>] {
+    this.gameId = this.generateRandomNumber().toString();
 
-    this.db.collection('games').doc(user.uid).set({
+    return [this.gameId, this.db.collection('games').doc(user.uid).set({
       creatorId: user.uid,
       creatorName: user.displayName,
       joinerId: '',
       joinerName: '',
       state: 'open',
       gameId: user.uid,
-      playerTurn: '1',
-      winner: ''
-    });
+      playerTurn: 1,
+      winner: 0
+    })];
   }
 
   facebookLogin() {
@@ -61,12 +78,12 @@ export class AuthService {
   }
 
   getCurrentGame(game) {
-    let currentGame = this.db.collection('games').doc(game.gameId);
+    const currentGame = this.db.collection('games').doc(game.gameId);
     alert(currentGame);
   }
 
   getCurrentUser() {
-    let currentUser = this.afAuth.auth.currentUser;
+    const currentUser = this.afAuth.auth.currentUser;
     return currentUser.uid;
   }
 
@@ -102,19 +119,19 @@ export class AuthService {
   }
 
   updateGameTypeMulti(user) {
-    const userRef: AngularFirestoreDocument<user> = this.db.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
     userRef.update({gameType: 'multi', isOnline: true});
   }
 
   updategameTypeSingle(user) {
-    const userRef: AngularFirestoreDocument<user> = this.db.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
     userRef.update({gameType: 'single'});
   }
 
   private updateUserData(user) {
-    const userRef: AngularFirestoreDocument<user> = this.db.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
 
-    const data: user = {
+    const data: User = {
       uid: user.uid,
       email: user.email,
       photoURL: user.photoURL,
@@ -134,7 +151,7 @@ export class AuthService {
     this.avaliable = this.db.collection('users', ref => ref.where('isOnline', '==',
       true)).snapshotChanges().map(actions => {
       return actions.map(a => {
-        const data = a.payload.doc.data() as user;
+        const data = a.payload.doc.data() as User;
         data.uid = a.payload.doc.id;
         return data;
       });
@@ -157,8 +174,8 @@ export class AuthService {
     this.gameRef = this.db.collection('games', ref => ref.where('creatorId', '==',
       'gameId'));
     // Current user is whatever user is logged in at the time. This is part of Firebase.
-    let currentUser = this.afAuth.auth.currentUser;
-    let currentUserId = currentUser.uid;
+    const currentUser = this.afAuth.auth.currentUser;
+    const currentUserId = currentUser.uid;
     console.log(currentUserId);
   }
 }

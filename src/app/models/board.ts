@@ -190,10 +190,7 @@ export class Board {
 
       // Change the turn.
       this.playerTurn = (this.playerTurn === 1) ? 2 : 1;
-      /* TODO: Fix this
-      this.db.collection('games').doc(game.gameId).update({
-        playerTurn: this.playerTurn
-      }); */
+
       // Deselect the piece.
       this.selectedCoordinate = undefined;
 
