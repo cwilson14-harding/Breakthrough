@@ -15,8 +15,8 @@
         <div class="board">
           <div class="row" *ngFor="let row of [0,1,2,3,4,5,6,7]">
             <app-cell class="cell" *ngFor="let col of [0,1,2,3,4,5,6,7]"
-                      [state]="board[row][col]"
-                      [boardClass]="boardClass[row][col]"
+                      [state]="board.board[row][col]"
+                      [boardClass]="board.boardClass[row][col]"
                       (click)="selectPiece([row, col]);" id="cell1">
             </app-cell>
           </div>

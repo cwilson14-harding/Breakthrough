@@ -21,13 +21,13 @@ export class LocalPlayer implements Player {
   }
 
   selectPiece(target: Coordinate) {
-    const board: number[][] = this.board.getBoardState();
+    const board: number[][] = this.board.board.getBoardState();
     if (this.selectedCoordinate !== undefined && this.selectedCoordinate[0] === target[0]
       && this.selectedCoordinate[1] === target[1]) {
       this.selectedCoordinate = undefined;
     } else if (board[target[0]][target[1]] === this.team) {
       this.selectedCoordinate = target;
-    } else if (this.board.isMoveValid(this.selectedCoordinate, target)) {
+    } else if (this.board.board.isMoveValid(this.selectedCoordinate, target)) {
       // Submit the move if it is valid.
       const coord = this.selectedCoordinate;
       this.selectedCoordinate = undefined;

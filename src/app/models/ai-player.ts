@@ -22,7 +22,7 @@ export class AIPlayer implements Player {
 
     for (let row = 0; row < 8; ++row) {
       for (let column = 0; column < 8; ++column) {
-        const moves: Coordinate[] = board.findAvailableMoves([row, column]);
+        const moves: Coordinate[] = board.board.findAvailableMoves([row, column]);
 
         for (let i = 0; i < moves.length; ++i) {
           possibleMoves.push([[row, column], moves[i]]);
