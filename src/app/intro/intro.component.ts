@@ -11,6 +11,9 @@ export class IntroComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.router.navigateByUrl('home');
+    }, 16000);
   }
 
   toHomePage() {
