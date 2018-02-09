@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
+import {PlayerData, PlayerType} from '../player-data';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ export class LoginComponent implements OnInit {
   availableUsers: any;
   showSettings = false;
 
-  constructor(public auth: AuthService, private db: AngularFirestore, private router: Router) {
+  constructor(public auth: AuthService, private db: AngularFirestore, private router: Router, private gameService: GameService) {
     this.onlineUsers();
   }
 
@@ -52,6 +54,9 @@ export class LoginComponent implements OnInit {
   }
 
   playGame() {
+    const playerOne = new PlayerData('Bob', '', PlayerType.Local);
+    const playerTwo = new PlayerData('Geraldo', '', PlayerType.AI);
+    this.gameService.newGame(playerOne, playerTwo, '');
     this.router.navigateByUrl('board');
   }
   // set settings to true. settings div will appear

@@ -26,6 +26,7 @@ import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby
 import { SettingsComponent } from './settings/settings.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { TypingAnimationModule } from 'angular-typing-animation';
+import {GameService} from './game.service';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -67,7 +68,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     TypingAnimationModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

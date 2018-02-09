@@ -9,6 +9,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import {Player} from '../models/player';
 import {LocalPlayer} from '../models/local.player';
 import {AIPlayer} from '../models/ai.player';
+import { GameService } from '../game.service';
+import {PlayerType} from '../player-data';
 
 @Component({
   selector: 'app-game-board',
@@ -23,9 +25,8 @@ export class GameBoardComponent implements OnInit {
   games: any;
   currentUserName: any;
   winner = 0;
-  player1: Player = new LocalPlayer(1);
-  player2: Player = new LocalPlayer(2);
-  // player2: Player = new AIPlayer();
+  player1: Player;
+  player2: Player;
   playerFireTurn: any;
 
   get currentPlayer(): Player {
@@ -44,12 +45,27 @@ export class GameBoardComponent implements OnInit {
    playerTurn = 1;
   private selectedCoordinate: Coordinate = undefined;
 
-  constructor(public db: AngularFirestore, public auth: AuthService, public afAuth: AngularFireAuth) {
+  constructor(public db: AngularFirestore, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
     this.currentUserName = this.afAuth.auth.currentUser.displayName;
     // this.board = db.collection('board').valueChanges();
     // Compare the user.uid field with the game.creatorId field.
     // this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
     this.games = this.db.collection('games').valueChanges();
+
+    const p1 = gameService.playerOne;
+    const p2 = this.gameService.playerTwo;
+
+    switch (p1.type) {
+      case PlayerType.AI: this.player1 = new AIPlayer(); break;
+      case PlayerType.Local: this.player1 = new LocalPlayer(1); break;
+      case PlayerType.Network: this.player1 = new LocalPlayer(1); break; // TODO: Change to NetworkPlayer
+    }
+
+    switch (p2.type) {
+      case PlayerType.AI: this.player2 = new AIPlayer(); break;
+      case PlayerType.Local: this.player2 = new LocalPlayer(2); break;
+      case PlayerType.Network: this.player2 = new LocalPlayer(2); break; // TODO: Change to NetworkPlayer
+    }
 
     this.playerFireTurn = this.auth.updateTurn();
 

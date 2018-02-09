@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
-import { user } from '../models/user';
-import { game } from '../models/game'
-import {Observable} from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { GameService } from '../game.service';
+import {PlayerData, PlayerType} from '../player-data';
 
 @Component({
   selector: 'app-multiplayer-lobby',
@@ -13,8 +12,6 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class MultiplayerLobbyComponent implements OnInit {
 
-  user: Observable<user>;
-  game: Observable<game>;
   gameType;
   availableUsers: any;
   openGames: any;
@@ -22,7 +19,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinerId: string;
   gameUid: string;
 
-  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore) {
+  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
   }
 
@@ -34,7 +31,7 @@ export class MultiplayerLobbyComponent implements OnInit {
      This function takes a user and sets the isGameCreated property to true. Then the function calls the
      createGame function from the auth.service to create a new game an store it in the database.
   */
-  createNewGame(user) {
+  createNewGame(user: string) {
      this.isGameCreated = true;
      this.auth.createGame(user);
   }
@@ -47,10 +44,13 @@ export class MultiplayerLobbyComponent implements OnInit {
      If the user's uid property does not match the game's creatorId property then the person joining the game is
      navigated to the board where gameplay can commence.
   */
-  joinGame(user, game) { //creatorId, gameId
+  joinGame(user: string, game: string) { // creatorId, gameId
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
     this.auth.joinGame(user, game);
+    const playerOne = new PlayerData('Bob', '', PlayerType.Local);
+    const playerTwo = new PlayerData('Geraldo', '', PlayerType.Network);
+    this.gameService.newGame(playerOne, playerTwo, game);
     this.router.navigateByUrl('board');
     // if (user.uid === game.creatorId) {
     //   alert('Can\'t join your own game.')
