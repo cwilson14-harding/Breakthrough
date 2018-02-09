@@ -24,11 +24,8 @@ import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby
 import { SettingsComponent } from './settings/settings.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { TypingAnimationModule } from 'angular-typing-animation';
-<<<<<<< HEAD
 import { ParticlesModule } from 'angular-particle';
-=======
 import {GameService} from './game.service';
->>>>>>> 1eb1c0f003536f3e4d7d2a0b20f5898e3e31473c
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
