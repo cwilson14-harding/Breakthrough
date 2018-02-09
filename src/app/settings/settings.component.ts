@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  constructor(public auth: AuthService,  public db: AngularFirestore, private router: Router) {
+  constructor(public auth: AuthService, public db: AngularFirestore, private router: Router) {
   }
 
   ngOnInit() {

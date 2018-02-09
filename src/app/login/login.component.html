@@ -77,7 +77,7 @@
               <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle ">Single Player</button>
             </div>
             <div class="w3-row w3-padding">
-              <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle ">Tutorial</button>
+              <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="goToTutorial()">Tutorial</button>
             </div>
             <div class="w3-row w3-padding">
               <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="logOff(user)">Logout</button>
@@ -87,13 +87,25 @@
       </div>
     </div>
     <div *ngIf="showSettings">
+    <div class="w3-container w3-padding-64">
+      <div class="w3-container w3-center w3-display-middle w3-white w3-opacity-min" style="height: 70vh; width: 55vw">
+        <div class="w3-display-topright">
+          <i class="fa fa-chevron-circle-left w3-padding w3-xxlarge w3-hover-opacity" (click)="goBack()"></i>
+        </div>
+        <div class="w3-center w3-display-middle">
+          <app-settings></app-settings>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div *ngIf="showTutorial">
       <div class="w3-container w3-padding-64">
-        <div class="w3-container w3-center w3-display-middle w3-white w3-opacity-min" style="height: 70vh; width: 55vw">
+        <div class="w3-container w3-center w3-display-middle w3-white" style="height: 80vh; width: 80vw">
           <div class="w3-display-topright">
             <i class="fa fa-chevron-circle-left w3-padding w3-xxlarge w3-hover-opacity" (click)="goBack()"></i>
           </div>
           <div class="w3-center w3-display-middle">
-            <app-settings></app-settings>
+            <app-tutorial></app-tutorial>
           </div>
         </div>
       </div>

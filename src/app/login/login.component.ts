@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   availableUsers: any;
   showSettings = false;
+  showTutorial = false;
 
   constructor(public auth: AuthService, private db: AngularFirestore, private router: Router) {
     this.onlineUsers();
@@ -58,9 +59,13 @@ export class LoginComponent implements OnInit {
   goToSettings() {
     this.showSettings = true;
   }
-  // settings is now closed
+  goToTutorial() {
+    this.showTutorial = true;
+  }
+  // settings & Tutorial is now closed
   goBack() {
     this.showSettings = false;
+    this.showTutorial = false;
   }
 
 }
