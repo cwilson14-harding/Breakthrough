@@ -151,9 +151,12 @@ export class AuthService {
       'open')).valueChanges();
     return this.open;
   }
-  updateTurn() {
+  // Calling this function will get the gameId. The gameId is == to the currentUser's unique identifier.
+  // The gameId is created in the createGame function.
+  getGameId() {
     this.gameRef = this.db.collection('games', ref => ref.where('creatorId', '==',
       'gameId'));
+    // Current user is whatever user is logged in at the time. This is part of Firebase.
     let currentUser = this.afAuth.auth.currentUser;
     let currentUserId = currentUser.uid;
     console.log(currentUserId);

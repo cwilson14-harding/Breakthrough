@@ -26,7 +26,6 @@ export class GameBoardComponent implements OnInit {
   player1: Player = new LocalPlayer(1);
   player2: Player = new LocalPlayer(2);
   // player2: Player = new AIPlayer();
-  playerFireTurn: any;
 
   get currentPlayer(): Player {
       if (this.playerTurn === 1) {
@@ -50,9 +49,6 @@ export class GameBoardComponent implements OnInit {
     // Compare the user.uid field with the game.creatorId field.
     // this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
     this.games = this.db.collection('games').valueChanges();
-
-    this.playerFireTurn = this.auth.updateTurn();
-
   }
 
   getCurrName() {
@@ -362,9 +358,5 @@ export class GameBoardComponent implements OnInit {
         this.boardClass[row][col] = '';
       }
     }
-  }
-
-  updateTurn() {
-    this.auth.updateTurn()
   }
 }
