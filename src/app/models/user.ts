@@ -6,5 +6,4 @@ export interface user{
   photoURL?: string;
   uid: string;
   wins: number;
-  losses: number;
 }
