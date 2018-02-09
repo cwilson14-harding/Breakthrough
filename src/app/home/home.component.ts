@@ -77,6 +77,10 @@ export class HomeComponent implements OnInit {
   gameBoard() {
     this.router.navigateByUrl('board');
   }
+  facebookLogin(){
+    this.auth.facebookLogin();
+    this.router.navigateByUrl('login');
+  }
   googleLogin() {
     this.auth.googleLogin();
     this.router.navigateByUrl('login');
