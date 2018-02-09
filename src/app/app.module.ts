@@ -15,8 +15,6 @@ import { AuthService } from './core/auth.service';
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { SinglePlayerComponent } from './single-player/single-player.component';
-import { MultiPlayerComponent } from './multi-player/multi-player.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
 import { IntroComponent } from './intro/intro.component';
 import { ChatComponent } from './chat/chat.component';
@@ -31,8 +29,6 @@ import {GameService} from './game.service';
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
   { path: 'home', pathMatch: 'full', component: HomeComponent},
-  { path: 'single-player', pathMatch: 'full', component: SinglePlayerComponent},
-  { path: 'multi-player', pathMatch: 'full', component: MultiPlayerComponent},
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
   { path: 'login', pathMatch: 'full', component: LoginComponent},
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
@@ -48,8 +44,6 @@ const appRoutes: Routes = [
     CellComponent,
     LoginComponent,
     HomeComponent,
-    SinglePlayerComponent,
-    MultiPlayerComponent,
     TutorialComponent,
     IntroComponent,
     ChatComponent,
