@@ -3,7 +3,6 @@ export interface user{
   email: string;
   gameType: string;
   isOnline: boolean;
-  losses: number;
   photoURL?: string;
   uid: string;
   wins: number;
