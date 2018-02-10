@@ -26,8 +26,8 @@ export class HomeComponent implements OnInit {
   state = 'inactive';
   myStyle: object = {};
   myParams: object = {};
-  width: number = 100;
-  height: number = 100;
+  width = 100;
+  height = 100;
   constructor(private router: Router, public auth: AuthService) {
 
   }
@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
       'right': 0,
       'bottom': 0,
     };
+    const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
     this.myParams = {
       particles: {
         number: {
@@ -58,6 +59,12 @@ export class HomeComponent implements OnInit {
         shape: {
           type: 'triangle',
         },
+        line_linked: {
+          // Neon color palette: http://www.colourlovers.com/palette/2652343/*Neon-Palette*
+          color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
+          opacity: .6,
+          width: 2
+        }
       }
     };
   }
@@ -78,7 +85,7 @@ export class HomeComponent implements OnInit {
     this.router.navigateByUrl('board');
   }
 
-  facebookLogin(){
+  facebookLogin() {
     this.auth.facebookLogin();
     this.router.navigateByUrl('login');
   }

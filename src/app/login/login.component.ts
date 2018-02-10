@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   state = 'inactive';
   myStyle: object = {};
   myParams: object = {};
-  width: number = 100;
-  height: number = 100;
+  width = 100;
+  height = 100;
   showTutorial = false;
 
   constructor(public auth: AuthService, private db: AngularFirestore, private router: Router, private gameService: GameService) {
@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
       'right': 0,
       'bottom': 0,
     };
+    const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
     this.myParams = {
       particles: {
         number: {
@@ -47,6 +48,12 @@ export class LoginComponent implements OnInit {
         shape: {
           type: 'triangle',
         },
+        line_linked: {
+          // Neon color palette: http://www.colourlovers.com/palette/2652343/*Neon-Palette*
+          color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
+          opacity: .6,
+          width: 2
+        }
       }
     };
   }
