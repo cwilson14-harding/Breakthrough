@@ -26,6 +26,7 @@ import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby
 import { SettingsComponent } from './settings/settings.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { TypingAnimationModule } from 'angular-typing-animation';
+import {NgxSlideshowModule} from 'ngx-slideshow';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    TypingAnimationModule
+    TypingAnimationModule,
+    NgxSlideshowModule.forRoot()
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
