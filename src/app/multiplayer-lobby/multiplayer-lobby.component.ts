@@ -23,6 +23,13 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinerId: string;
   gameUid: string;
 
+  // Vars for Prototype
+  luke = true;
+  cj = false;
+  brad = false;
+  dylan = false;
+  alania = false;
+
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
   }
@@ -30,6 +37,44 @@ export class MultiplayerLobbyComponent implements OnInit {
   ngOnInit() {
     this.viewOpenGames();
   }
+
+  // Methods For PROTOTYPE
+  click_luke() {
+    this.luke = true;
+    this.cj = false;
+    this.brad = false;
+    this.dylan = false;
+    this.alania = false;
+  }
+  click_cj() {
+    this.luke = false;
+    this.cj = true;
+    this.brad = false;
+    this.dylan = false;
+    this.alania = false;
+  }
+  click_brad() {
+    this.luke = false;
+    this.cj = false;
+    this.brad = true;
+    this.dylan = false;
+    this.alania = false;
+  }
+  click_dylan() {
+    this.luke = false;
+    this.cj = false;
+    this.brad = false;
+    this.dylan = true;
+    this.alania = false;
+  }
+  click_alania() {
+    this.luke = false;
+    this.cj = false;
+    this.brad = false;
+    this.dylan = false;
+    this.alania = true;
+  }
+
   /* createNewGame: function(){}
      Parameters: user
      This function takes a user and sets the isGameCreated property to true. Then the function calls the

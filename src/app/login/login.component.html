@@ -1,3 +1,5 @@
+<particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height">
+</particles>
 <div class="w3-container backImg">
   <div *ngIf="auth.user | async; then authenticated else guest">
 
@@ -59,9 +61,9 @@
     </div>
     <br> -->
 
-    <div *ngIf="!showSettings">
+    <div *ngIf="!showSettings" >
       <div class="w3-container w3-padding-64">
-        <div class="w3-container w3-center w3-display-middle w3-white w3-opacity-min" style="height: 70vh; width: 55vw">
+        <div class="w3-container w3-center w3-display-middle w3-white w3-opacity-min" style="height: 70vh; width: 55vw; z-index: 1">
           <div class="w3-display-topright">
             <i class="fa fa-cog w3-padding w3-xxlarge w3-hover-opacity" (click)="goToSettings()"></i>
           </div>
@@ -87,7 +89,7 @@
     </div>
     <div *ngIf="showSettings">
       <div class="w3-container w3-padding-64">
-        <div class="w3-container w3-center w3-display-middle w3-white w3-opacity-min" style="height: 70vh; width: 55vw">
+        <div class="w3-container w3-center w3-display-middle w3-white w3-opacity-min" style="height: 70vh; width: 55vw; z-index: 1">
           <div class="w3-display-topright">
             <i class="fa fa-chevron-circle-left w3-padding w3-xxlarge w3-hover-opacity" (click)="goBack()"></i>
           </div>
