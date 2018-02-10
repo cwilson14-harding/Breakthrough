@@ -1,12 +1,13 @@
 <p (click)="carousel.leftBy(2)">Left by 2</p>
-<button  class="w3-center w3-left w3-padding w3-large w3-hover-opacity" (click)="carousel.left()">Left</button>
+<button  class="w3-center w3-left w3-padding w3-large" (click)="carousel.left()">Left</button>
 <p (click)="carousel.goTo(0)">Go to the Start</p>
-<ngx-slideshow #carousel [cards]="1" [cardSize]="'250px'" [padding]="'0px'">
-  <li><img src="http://i.brainking.com/rules/break/01.gif"></li>
-  <li><img src="http://i.brainking.com/rules/break/02.gif"></li>
-  <li><img src="https://cf.geekdo-images.com/images/pic432003_t.jpg"></li>
-  <li><img src="http://via.placeholder.com/350x150"></li>
-  <li><img src="http://via.placeholder.com/350x150"></li>
+<ngx-slideshow #carousel [cards]="1" [cardSize]="'450px'" [padding]="'0px'">
+  <li><img src="https://i.imgur.com/AZayfWA.png?2"></li>
+  <li ><img src="https://i.imgur.com/pmmdEvf.png?1"></li>
+  <li><img src="https://i.imgur.com/VEZJPq0.png?1"></li>
+  <li><img src="https://i.imgur.com/ZSRCgxF.png?1"></li>
+  <li><img src="https://i.imgur.com/VNbR6AC.png?1"></li>
+  <li><img src="https://i.imgur.com/h3t8gYG.png?1"></li>
 </ngx-slideshow>
 <p (click)="carousel.goTo(5)">Go to the End</p>
 <p (click)="carousel.right()">Right</p>
