@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   myParams: object = {};
   width: number = 100;
   height: number = 100;
+  showTutorial = false;
 
   constructor(public auth: AuthService, private db: AngularFirestore, private router: Router, private gameService: GameService) {
     this.onlineUsers();
@@ -91,9 +92,13 @@ export class LoginComponent implements OnInit {
   goToSettings() {
     this.showSettings = true;
   }
-  // settings is now closed
+  goToTutorial() {
+    this.showTutorial = true;
+  }
+  // settings & Tutorial is now closed
   goBack() {
     this.showSettings = false;
+    this.showTutorial = false;
   }
 
 }

@@ -26,6 +26,7 @@ import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { TypingAnimationModule } from 'angular-typing-animation';
 import { ParticlesModule } from 'angular-particle';
 import {GameService} from './game.service';
+import {NgxSlideshowModule} from 'ngx-slideshow';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -62,7 +63,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     TypingAnimationModule,
-    ParticlesModule
+    ParticlesModule,
+    NgxSlideshowModule.forRoot()
   ],
   providers: [AuthService, GameService],
   bootstrap: [AppComponent]
