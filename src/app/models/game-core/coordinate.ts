@@ -1,1 +1,3 @@
-export type Coordinate = [number, number];
+export class Coordinate {
+  constructor(public row: number, public column: number) {}
+}

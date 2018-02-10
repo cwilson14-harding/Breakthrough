@@ -44,13 +44,13 @@ export class GameBoardComponent implements OnInit {
     switch (p1.type) {
       case PlayerType.AI: this.player1 = new AIPlayer(); break;
       case PlayerType.Local: this.player1 = new LocalPlayer(1); break;
-      case PlayerType.Network: this.player1 = new NetworkPlayer(this.game); break; // TODO: Change to NetworkPlayer
+      case PlayerType.Network: this.player1 = new NetworkPlayer(this.game); break;
     }
 
     switch (p2.type) {
       case PlayerType.AI: this.player2 = new AIPlayer(); break;
       case PlayerType.Local: this.player2 = new LocalPlayer(2); break;
-      case PlayerType.Network: this.player2 = new NetworkPlayer(this.game); break; // TODO: Change to NetworkPlayer
+      case PlayerType.Network: this.player2 = new NetworkPlayer(this.game); break;
     }
 
     this.getMove();
@@ -68,8 +68,10 @@ export class GameBoardComponent implements OnInit {
       const movePromise: Promise<[Coordinate, Coordinate]> = currentPlayer.getMove(this);
 
       movePromise.then((move: [Coordinate, Coordinate]) => {
-        this.board.makeMove(move);
+        this.board.makeMove(move[0], move[1]);
         this.getMove();
+      }, () => {
+        console.log('Move rejected');
       });
     }
   }
@@ -104,6 +106,11 @@ export class GameBoardComponent implements OnInit {
     this.getMove();
   }
 
+  selectRowCol(target: [number, number]) {
+    const coord: Coordinate = new Coordinate(target[0], target[1]);
+    this.selectPiece(coord);
+  }
+
   selectPiece(target: Coordinate) {
     const currentPlayer = this.currentPlayer;
     this.board.clearHighlighting();
@@ -113,9 +120,9 @@ export class GameBoardComponent implements OnInit {
       this.board.selectedCoordinate = localPlayer.selectedCoordinate;
 
       if (localPlayer.selectedCoordinate !== undefined) {
-        this.board.boardClass[localPlayer.selectedCoordinate[0]][localPlayer.selectedCoordinate[1]] = 'selected';
+        this.board.boardClass[localPlayer.selectedCoordinate.row][localPlayer.selectedCoordinate.column] = 'selected';
         for (const coord of this.board.findAvailableMoves(localPlayer.selectedCoordinate)) {
-          this.board.boardClass[coord[0]][coord[1]] = 'potentialMove';
+          this.board.boardClass[coord.row][coord.column] = 'potentialMove';
         }
       }
     }

@@ -22,23 +22,23 @@ export class Board {
     /* When an empty array is returned that means there are no available moves from the
        location passed into the function.
     */
-    if (!this.isLocationValid(location) || this.board[location[0]][location[1]] === 0) {
+    if (!this.isLocationValid(location) || this.board[location.row][location.column] === 0) {
       return [];
     }
 
     const availableMoves: Coordinate[] = [];
     // Find the next row to move to.
     let row: number;
-    if (this.board[location[0]][location[1]] === 1) {
-      row = location[0] + 1;
+    if (this.board[location.row][location.column] === 1) {
+      row = location.row + 1;
     } else {
-      row = location[0] - 1;
+      row = location.row - 1;
     }
     // Testing if the diagonals or center moves are valid.
     // During this for loop all available moves are pushed to the availableMoves array.
     for (let count = -1; count <= 1; count++) {
-      const column: number = location[1] + count;
-      const location2: Coordinate = [row, column];
+      const column: number = location.column + count;
+      const location2: Coordinate = new Coordinate(row, column);
       if (this.isMoveValid(location, location2)) {
         availableMoves.push(location2);
       }
@@ -79,8 +79,8 @@ export class Board {
    passed in is in bounds. Otherwise the function returns false.
 */
   isLocationValid(location: Coordinate): boolean {
-    return (location !== undefined && location[0] >= 0 && location[1] >= 0 &&
-      location[0] < this.BOARD_SIZE && location[1] < this.BOARD_SIZE);
+    return (location !== undefined && location.row >= 0 && location.column >= 0 &&
+      location.row < this.BOARD_SIZE && location.column < this.BOARD_SIZE);
   }
 
   /* isMoveValid: function(){}
@@ -98,7 +98,7 @@ export class Board {
     }
 
     // Find the piece at the given starting location.
-    const piece = this.board[location1[0]][location1[1]];
+    const piece = this.board[location1.row][location1.column];
     let row: number;
 
     /* Verify that the starting piece exists and that it's the player's turn.
@@ -108,28 +108,28 @@ export class Board {
     if (piece === 0 || piece !== this.playerTurn) {
       return false;
     } else if (piece === 1) {
-      row = location1[0] + 1;
+      row = location1.row + 1;
     } else {
-      row = location1[0] - 1;
+      row = location1.row - 1;
     }
 
     // Verify that we are moving to the next row.
-    if (location2[0] !== row) {
+    if (location2.row !== row) {
       return false;
     }
 
     // Check to see if the move is within range and direction of piece.
-    if (Math.abs(location2[1] - location1[1]) > 1) {
+    if (Math.abs(location2.column - location1.column) > 1) {
       return false;
     }
 
     // If we are moving forwards, check to see if the space ahead is clear.
-    if (location1[1] === location2[1] && this.board[row][location2[1]] !== 0) {
+    if (location1.column === location2.column && this.board[row][location2.column] !== 0) {
       return false;
     }
 
     // We are moving diagonally, check to see if the space is clear of our own pieces.
-    return (this.board[row][location2[1]] !== piece);
+    return (this.board[row][location2.column] !== piece);
   }
 
   /* isGameFinished: function(){}
@@ -180,13 +180,13 @@ export class Board {
   }
 
 
-  makeMove(move: [Coordinate, Coordinate]): boolean {
+  makeMove(location1: Coordinate, location2: Coordinate): boolean {
     // let creatorTurn = this.db.collection('games', ref => ref.where('playerTurn', '==', this.playerTurn));
 
-    if (this.isMoveValid(move[0], move[1])) {
-      const piece: number = this.board[move[0][0]][move[0][1]];
-      this.board[move[0][0]][move[0][1]] = 0;
-      this.board[move[1][0]][move[1][1]] = piece;
+    if (this.isMoveValid(location1, location2)) {
+      const piece: number = this.board[location1.row][location1.column];
+      this.board[location1.row][location1.column] = 0;
+      this.board[location2.row][location2.column] = piece;
 
       // Change the turn.
       this.playerTurn = (this.playerTurn === 1) ? 2 : 1;
