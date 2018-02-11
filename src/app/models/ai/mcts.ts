@@ -9,14 +9,15 @@ export class MCTS {
   currentNode: Node;
   canExecute: Boolean = false;
 
-  get bestMove(): Move {
+  private bestNode(): Node {
+    const team: number = this.currentNode.turn;
     let maxNodes: Node[] = [];
     let maxNodeScore = -1;
 
     // Find the node with the most evaluations.
     for (const node of this.currentNode.getAllChildren()) {
       // Get the current score for this node.
-      const score = node.evaluationCount;
+      const score = node.getWinRatio(team);
 
       // Check if the score is the highest.
       if (score > maxNodeScore) {
@@ -34,31 +35,11 @@ export class MCTS {
     // Return null if no possible moves.
     if (maxNodes.length === 0) { return null; }
 
-    // Choose a random move from the top nodes.
+    // Choose a random node from the top nodes.
     const chosenNode: Node = MCTS.chooseRandom<Node>(maxNodes);
 
-    // Find the move that was made.
-    let from: Coordinate;
-    let to: Coordinate;
-
-    for (let r = 0; r < Board.BOARD_SIZE; ++r) {
-      for (let c = 0; c < Board.BOARD_SIZE; ++c) {
-        if (chosenNode.board.board[r][c] !== chosenNode.parent.board.board[r][c]) {
-          const coordinate = new Coordinate(r, c);
-          if (chosenNode.board.board[r][c] === 0) {
-            from = coordinate;
-          } else {
-            to = coordinate;
-          }
-        }
-      }
-    }
-
-    // Update the current node to be the best node.
-    this.currentNode = chosenNode;
-
-    // Return the new move.
-    return new Move(from, to);
+    // Return the chosen node.
+    return chosenNode;
   }
 
   static chooseRandom<T>(a: T[]): T {
@@ -71,7 +52,9 @@ export class MCTS {
   }
 
   constructor() {
-    this.rootNode = new Node(new Board());
+    const board: Board = new Board();
+    board.newGame();
+    this.rootNode = new Node(board);
     this.currentNode = this.rootNode;
   }
 
@@ -81,11 +64,7 @@ export class MCTS {
     newBoard.setBoardState(board.getBoardState());
 
     // Find or create the new node.
-    let node = this.currentNode.findChildWithState(newBoard.getBoardState());
-    if (node === null) {
-      node = new Node(newBoard, this.currentNode);
-      this.currentNode.children.push(node);
-    }
+    const node = this.currentNode.findChildWithState(newBoard.getBoardState());
     this.currentNode = node;
   }
 
@@ -99,42 +78,102 @@ export class MCTS {
   }
 
   getMove(): Move {
-    console.log(this.currentNode);
-    return this.bestMove;
+    const bestNode: Node = this.bestNode();
+    const team = bestNode.turn;
+
+    // Update the current node to be the best node.
+    this.currentNode = bestNode;
+
+    // Remove all previous nodes to save on memory.
+    bestNode.parent.children = [bestNode];
+    // this.rootNode = this.currentNode;
+    // this.rootNode.parent = null;
+
+    return bestNode.move;
   }
 
   private evaluateMoves(node: Node) {
-    // TODO: Go deeper...
+    // Get all possible moves.
     const children: Node[] = node.getAllChildren();
-    let count = 0;
-    while (this.canExecute && count < 10) {
+
+    // If there are no moves to make, don't bother.
+    if (children.length === 0) {
+      return;
+    }
+
+    // Evaluate each possible node a set number of times before focusing on the top ones.
+    for (const chosenNode of children) {
+      for (let i = 0; i < 20; ++i) {
+        this.playRandomGame(chosenNode);
+      }
+    }
+
+    // Play a certain number of games of the top nodes.
+    for (let i = 0; i < 4000 && this.canExecute; ++i) {
       const chosenNode: Node = this.chooseNodeToEvaluate(children);
       this.playRandomGame(chosenNode);
-      ++count;
     }
   }
 
   private chooseNodeToEvaluate(nodes: Node[]): Node {
-    return MCTS.chooseRandom<Node>(nodes);
+    if (nodes.length === 0) {
+      return null;
+    }
+
+    const team: number = nodes[0].parent.turn;
+    let maxNode: Node;
+    let maxScore = -1;
+    for (const node of nodes) {
+      if (maxNode === undefined || node.getWinRatio(team) > maxScore) {
+        maxScore = node.getWinRatio(team);
+        maxNode = node;
+      }
+    }
+    return maxNode;
   }
 
-  private playRandomGame(node: Node) {
-    let winner = 0;
+  private playRandomGame(node: Node): number {
+    const board: Board = new Board();
+    board.setBoardState(node.state);
+    let winner = board.isGameFinished();
 
     // Play the game until a winner is found.
     while (winner === 0) {
-      node = MCTS.chooseRandom<Node>(node.getAllChildren());
-      winner = node.board.isGameFinished();
+      const move: Move = this.chooseRandomMove(board);
+      board.makeMove(move);
+      winner = board.isGameFinished();
     }
 
     // Propagate the win back up to the root node.
-    while (node) {
+    while (node !== null) {
       if (winner === 1) {
         ++node.p1wins;
       } else {
         ++node.p2wins;
       }
       node = node.parent;
+    }
+
+    return winner;
+  }
+
+  private chooseRandomMove(board: Board): Move {
+    const possibleMoves: Move[] = [];
+
+    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      for (let column = 0; column < Board.BOARD_SIZE; ++column) {
+        const moves: Coordinate[] = board.findAvailableMoves(new Coordinate(row, column));
+
+        for (let i = 0; i < moves.length; ++i) {
+          possibleMoves.push(new Move(new Coordinate(row, column), moves[i]));
+        }
+      }
+    }
+
+    if (possibleMoves.length > 0) {
+      return MCTS.chooseRandom<Move>(possibleMoves);
+    } else {
+      return null;
     }
   }
 }

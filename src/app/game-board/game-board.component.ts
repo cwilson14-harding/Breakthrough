@@ -27,9 +27,12 @@ export class GameBoardComponent implements OnInit {
   currentUserName: any;
   player1: Player;
   player2: Player;
-  board: Board = new Board();
+  board: Board
 
   constructor(public db: AngularFirestore, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
+    this.board = new Board();
+    this.board.newGame();
+
     this.currentUserName = this.afAuth.auth.currentUser.displayName;
     // this.board = db.collection('board').valueChanges();
     // Compare the user.uid field with the game.creatorId field.

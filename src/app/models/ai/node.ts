@@ -3,7 +3,7 @@ import {Move} from '../move';
 import {Coordinate} from '../game-core/coordinate';
 
 export class Node {
-  constructor(public board: Board, public parent = null) {
+  constructor(board: Board, public move: Move = null, public parent = null) {
     this.state = board.getBoardState();
   }
   children: Node[] = [];
@@ -12,12 +12,16 @@ export class Node {
   p2wins = 0;
   childrenEvaluated: Boolean = false;
 
+  get turn(): number {
+    return +this.state[0];
+  }
+
   get evaluationCount(): number {
     return this.p1wins + this.p2wins;
   }
 
   getWinRatio(team: number): number {
-    return (team === 1) ? (this.p1wins / this.p2wins) : (this.p2wins / this.p1wins);
+    return ((team === 1) ? (this.p1wins) : (this.p2wins)) / (this.p1wins + this.p2wins);
   }
 
   // Return all nodes for all the possible moves with this board state.
@@ -26,22 +30,26 @@ export class Node {
     if (!this.childrenEvaluated) {
 
       // Create all the children.
-      for (const move of this.findAllAvailableMoves(this.board)) {
+      const board: Board = new Board();
+      board.setBoardState(this.state);
+      for (const move of this.findAllAvailableMoves(board)) {
         // Create the new board configuration.
         const newBoard: Board = new Board();
-        newBoard.setBoardState(this.board.getBoardState());
+        newBoard.setBoardState(board.getBoardState());
 
         // Create new nodes for all the moves.
         newBoard.makeMove(move);
-        this.children.push(new Node(newBoard, this));
+        this.children.push(new Node(newBoard, move, this));
       }
+
+      this.childrenEvaluated = true;
     }
 
     return this.children;
   }
 
   findChildWithState(state: string): Node {
-    for (const node of this.children) {
+    for (const node of this.getAllChildren()) {
       if (node.state === state) {
         return node;
       }
@@ -52,12 +60,13 @@ export class Node {
   private findAllAvailableMoves(board: Board) {
     const possibleMoves: Move[] = [];
 
-    for (let row = 0; row < 8; ++row) {
-      for (let column = 0; column < 8; ++column) {
-        const moves: Coordinate[] = board.findAvailableMoves(new Coordinate(row, column));
+    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      for (let column = 0; column < Board.BOARD_SIZE; ++column) {
+        const startCoordinate: Coordinate = new Coordinate(row, column);
+        const moves: Coordinate[] = board.findAvailableMoves(startCoordinate);
 
         for (let i = 0; i < moves.length; ++i) {
-          possibleMoves.push(new Move(new Coordinate(row, column), moves[i]));
+          possibleMoves.push(new Move(startCoordinate, moves[i]));
         }
       }
     }

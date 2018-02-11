@@ -2,15 +2,13 @@ import {Coordinate} from './game-core/coordinate';
 import {Move} from './move';
 
 export class Board {
+  public static readonly BOARD_SIZE: number = 8;
   public board: number[][];
   public boardClass: string[][];
-  public static readonly BOARD_SIZE: number = 8;
   public selectedCoordinate: Coordinate = undefined;
   public playerTurn = 1;
 
-  constructor() {
-    this.newGame();
-  }
+  constructor() {}
   /* findAvailableMoves: function(): Coordinate[] {}
      Parameters location: Coordinate
      Returns: An array of type Coordinate.
@@ -64,27 +62,13 @@ export class Board {
 
   setBoardState(state: string) {
     this.playerTurn = +state[0];
+    this.board = [];
     for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      this.board[row] = [];
       for (let col = 0; col < Board.BOARD_SIZE; ++col) {
         this.board[row][col] = +state[(row * Board.BOARD_SIZE) + col + 1];
       }
     }
-  }
-
-  /* newGame: function(){}
-     Parameters: none
-     The newGame function takes no parameters and it returns nothing. It accesses the board property which is
-     a two dimensional array of type number. This array is the model for our game board. At the end of this
-     function empty spaces on the board will be represented with zeroes. Player 1's pieces will be represented
-     with the number one, and Player 2's pieces will be represented with the number two.
-  */
-
-  /* getTurn: function(){}
-     Parameters: None
-     Returns whose turn it is (Player 1 or Player 2).
-  */
-  getTurn() {
-    return this.playerTurn;
   }
 
   /* isLocationValid: function(){}
@@ -96,7 +80,7 @@ export class Board {
    passed in is in bounds. Otherwise the function returns false.
 */
   isLocationValid(location: Coordinate): boolean {
-    return (location !== undefined && location.row >= 0 && location.column >= 0 &&
+    return (location && location !== undefined && location.row >= 0 && location.column >= 0 &&
       location.row < Board.BOARD_SIZE && location.column < Board.BOARD_SIZE);
   }
 
@@ -110,7 +94,7 @@ export class Board {
   */
   isMoveValid(move: Move): boolean {
     // Verify that both locations given are valid.
-    if (!this.isLocationValid(move.from) || !this.isLocationValid(move.to) || this.isGameFinished() !== 0) {
+    if (move && !this.isLocationValid(move.from) || !this.isLocationValid(move.to) || this.isGameFinished() !== 0) {
       return false;
     }
 
