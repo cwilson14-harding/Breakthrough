@@ -22,7 +22,7 @@ export class LocalPlayer implements Player {
   }
 
   selectPiece(target: Coordinate) {
-    const board: number[][] = this.board.board.getBoardState();
+    const board: number[][] = this.board.board.board;
     if (this.selectedCoordinate !== undefined && this.selectedCoordinate.row === target.row
       && this.selectedCoordinate.column === target.column) {
       this.selectedCoordinate = undefined;

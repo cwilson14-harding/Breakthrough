@@ -4,7 +4,7 @@ import {Move} from './move';
 export class Board {
   public board: number[][];
   public boardClass: string[][];
-  public readonly BOARD_SIZE: number = 8;
+  public static readonly BOARD_SIZE: number = 8;
   public selectedCoordinate: Coordinate = undefined;
   public playerTurn = 1;
 
@@ -52,8 +52,23 @@ export class Board {
      Parameters: none
      This function returns the two dimensional array board. This array is of type number.
   */
-  getBoardState() {
-    return this.board;
+  getBoardState(): string {
+    let state: string = this.playerTurn.toString();
+    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      for (let col = 0; col < Board.BOARD_SIZE; ++col) {
+        state += this.board[row][col].toString();
+      }
+    }
+    return state;
+  }
+
+  setBoardState(state: string) {
+    this.playerTurn = +state[0];
+    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      for (let col = 0; col < Board.BOARD_SIZE; ++col) {
+        this.board[row][col] = +state[(row * Board.BOARD_SIZE) + col + 1];
+      }
+    }
   }
 
   /* newGame: function(){}
@@ -82,7 +97,7 @@ export class Board {
 */
   isLocationValid(location: Coordinate): boolean {
     return (location !== undefined && location.row >= 0 && location.column >= 0 &&
-      location.row < this.BOARD_SIZE && location.column < this.BOARD_SIZE);
+      location.row < Board.BOARD_SIZE && location.column < Board.BOARD_SIZE);
   }
 
   /* isMoveValid: function(){}
@@ -143,9 +158,9 @@ export class Board {
   */
   isGameFinished(): number {
     // Check for a home row victory.
-    for (let c = 0; c < this.BOARD_SIZE; ++c) {
+    for (let c = 0; c < Board.BOARD_SIZE; ++c) {
       // Check for player 2 (black) on player 1's home row.
-      if (this.board[this.BOARD_SIZE - 1][c] === 1) {
+      if (this.board[Board.BOARD_SIZE - 1][c] === 1) {
         return 1;
       }
 
@@ -158,8 +173,8 @@ export class Board {
     // Search the board to find if each player has a piece or not.
     let playerOneFound = false;
     let playerTwoFound = false;
-    for (let row = 0; row < this.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++row) {
-      for (let column = 0; column < this.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++column) {
+    for (let row = 0; row < Board.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++row) {
+      for (let column = 0; column < Board.BOARD_SIZE && (!playerOneFound || !playerTwoFound); ++column) {
         switch (this.board[row][column]) {
           case 1:
             playerOneFound = true;
@@ -216,14 +231,14 @@ export class Board {
     this.board = [];
     this.boardClass = [];
     // Fill the board array with zeros.
-    for (let row = 0; row < this.BOARD_SIZE; row++) {
+    for (let row = 0; row < Board.BOARD_SIZE; row++) {
       this.board[row] = [];
       this.boardClass[row] = [];
-      for (let column = 0; column < this.BOARD_SIZE; column++) {
+      for (let column = 0; column < Board.BOARD_SIZE; column++) {
         this.boardClass[row][column] = '';
         if (row <= 1) {
           this.board[row][column] = 1;
-        } else if (row >= this.BOARD_SIZE - 2) {
+        } else if (row >= Board.BOARD_SIZE - 2) {
           this.board[row][column] = 2;
         } else {
           this.board[row][column] = 0;
@@ -245,8 +260,8 @@ export class Board {
 
 
     clearHighlighting() {
-      for (let row = 0; row < this.BOARD_SIZE; row++) {
-        for (let col = 0; col < this.BOARD_SIZE; col++) {
+      for (let row = 0; row < Board.BOARD_SIZE; row++) {
+        for (let col = 0; col < Board.BOARD_SIZE; col++) {
           this.boardClass[row][col] = '';
         }
       }
