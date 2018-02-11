@@ -4,17 +4,17 @@ import {GameBoardComponent} from '../game-board/game-board.component';
 import {Game} from '../core/auth.service';
 import {AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Subscription} from 'rxjs/Subscription';
+import {Move} from './move';
 
 export class NetworkPlayer implements Player {
   board: GameBoardComponent;
   private resolve: Function;
   private reject: Function;
-  private subscription: Subscription;
 
   constructor(private game: AngularFirestoreDocument<Game>) {}
 
-  getMove(board: GameBoardComponent): Promise<[Coordinate, Coordinate]> {
-    return new Promise<[Coordinate, Coordinate]>((resolve, reject) => {
+  getMove(board: GameBoardComponent): Promise<Move> {
+    return new Promise<Move>((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
       this.board = board;

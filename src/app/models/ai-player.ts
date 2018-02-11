@@ -1,6 +1,7 @@
 import {Player} from './player';
 import {Coordinate} from './game-core/coordinate';
 import {GameBoardComponent} from '../game-board/game-board.component';
+import {Move} from './move';
 
 export class AIPlayer implements Player {
   board: GameBoardComponent;
@@ -9,8 +10,8 @@ export class AIPlayer implements Player {
 
   constructor() { }
 
-  getMove(board: GameBoardComponent): Promise<[Coordinate, Coordinate]> {
-    return new Promise<[Coordinate, Coordinate]>((resolve, reject) => {
+  getMove(board: GameBoardComponent): Promise<Move> {
+    return new Promise<Move>((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
       this.chooseMove(board);
@@ -34,7 +35,7 @@ export class AIPlayer implements Player {
       const index = Math.floor((Math.random() * possibleMoves.length));
       const fromLocation = possibleMoves[index][0];
       const toLocation = possibleMoves[index][1];
-      this.resolve([fromLocation, toLocation]);
+      this.resolve(new Move(fromLocation, toLocation));
     } else {
       this.reject();
     }

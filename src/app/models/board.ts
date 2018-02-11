@@ -1,4 +1,5 @@
 import {Coordinate} from './game-core/coordinate';
+import {Move} from './move';
 
 export class Board {
   public board: number[][];
@@ -39,8 +40,9 @@ export class Board {
     for (let count = -1; count <= 1; count++) {
       const column: number = location.column + count;
       const location2: Coordinate = new Coordinate(row, column);
-      if (this.isMoveValid(location, location2)) {
-        availableMoves.push(location2);
+      const move = new Move(location, location2);
+      if (this.isMoveValid(move)) {
+        availableMoves.push(move.to);
       }
     }
     return availableMoves;
@@ -91,14 +93,14 @@ export class Board {
      This function checks to see if the piece in location1 is okay to move to location2.
      Returns: A boolean that determines if it is okay to move.
   */
-  isMoveValid(location1: Coordinate, location2: Coordinate): boolean {
+  isMoveValid(move: Move): boolean {
     // Verify that both locations given are valid.
-    if (!this.isLocationValid(location1) || !this.isLocationValid(location2) || this.isGameFinished() !== 0) {
+    if (!this.isLocationValid(move.from) || !this.isLocationValid(move.to) || this.isGameFinished() !== 0) {
       return false;
     }
 
     // Find the piece at the given starting location.
-    const piece = this.board[location1.row][location1.column];
+    const piece = this.board[move.from.row][move.from.column];
     let row: number;
 
     /* Verify that the starting piece exists and that it's the player's turn.
@@ -108,28 +110,28 @@ export class Board {
     if (piece === 0 || piece !== this.playerTurn) {
       return false;
     } else if (piece === 1) {
-      row = location1.row + 1;
+      row = move.from.row + 1;
     } else {
-      row = location1.row - 1;
+      row = move.from.row - 1;
     }
 
     // Verify that we are moving to the next row.
-    if (location2.row !== row) {
+    if (move.to.row !== row) {
       return false;
     }
 
     // Check to see if the move is within range and direction of piece.
-    if (Math.abs(location2.column - location1.column) > 1) {
+    if (Math.abs(move.to.column - move.to.column) > 1) {
       return false;
     }
 
     // If we are moving forwards, check to see if the space ahead is clear.
-    if (location1.column === location2.column && this.board[row][location2.column] !== 0) {
+    if (move.from.column === move.to.column && this.board[row][move.to.column] !== 0) {
       return false;
     }
 
     // We are moving diagonally, check to see if the space is clear of our own pieces.
-    return (this.board[row][location2.column] !== piece);
+    return (this.board[row][move.to.column] !== piece);
   }
 
   /* isGameFinished: function(){}
@@ -180,13 +182,13 @@ export class Board {
   }
 
 
-  makeMove(location1: Coordinate, location2: Coordinate): boolean {
+  makeMove(move: Move): boolean {
     // let creatorTurn = this.db.collection('games', ref => ref.where('playerTurn', '==', this.playerTurn));
 
-    if (this.isMoveValid(location1, location2)) {
-      const piece: number = this.board[location1.row][location1.column];
-      this.board[location1.row][location1.column] = 0;
-      this.board[location2.row][location2.column] = piece;
+    if (this.isMoveValid(move)) {
+      const piece: number = this.board[move.from.row][move.from.column];
+      this.board[move.from.row][move.from.column] = 0;
+      this.board[move.to.row][move.to.column] = piece;
 
       // Change the turn.
       this.playerTurn = (this.playerTurn === 1) ? 2 : 1;

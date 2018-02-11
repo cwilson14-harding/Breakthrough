@@ -11,6 +11,7 @@ import { GameService } from '../game.service';
 import {PlayerType} from '../player-data';
 import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
+import {Move} from '../models/move';
 
 @Component({
   selector: 'app-game-board',
@@ -65,10 +66,10 @@ export class GameBoardComponent implements OnInit {
     this.board.clearHighlighting();
     const currentPlayer = this.currentPlayer;
     if (currentPlayer !== undefined) {
-      const movePromise: Promise<[Coordinate, Coordinate]> = currentPlayer.getMove(this);
+      const movePromise: Promise<Move> = currentPlayer.getMove(this);
 
-      movePromise.then((move: [Coordinate, Coordinate]) => {
-        this.board.makeMove(move[0], move[1]);
+      movePromise.then((move: Move) => {
+        this.board.makeMove(move);
         this.getMove();
       }, () => {
         console.log('Move rejected');
