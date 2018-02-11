@@ -79,7 +79,6 @@ export class MCTS {
 
   getMove(): Move {
     const bestNode: Node = this.bestNode();
-    const team = bestNode.turn;
 
     // Update the current node to be the best node.
     this.currentNode = bestNode;
