@@ -8,19 +8,36 @@ export class Node {
   }
   children: Node[] = [];
   state: string;
-  wins = 0;
-  losses = 0;
+  p1wins = 0;
+  p2wins = 0;
+  childrenEvaluated: Boolean = false;
 
-  findAllChildren() {
-    for (const move of this.findAllAvailableMoves(this.board)) {
-      // Create the new board configuration.
-      const newBoard: Board = new Board();
-      newBoard.setBoardState(this.board.getBoardState());
+  get evaluationCount(): number {
+    return this.p1wins + this.p2wins;
+  }
 
-      // Create new nodes for all the moves.
-      newBoard.makeMove(move);
-      this.children.push(new Node(newBoard, this));
+  getWinRatio(team: number): number {
+    return (team === 1) ? (this.p1wins / this.p2wins) : (this.p2wins / this.p1wins);
+  }
+
+  // Return all nodes for all the possible moves with this board state.
+  getAllChildren(): Node[] {
+    // Skip evaluation if we have already gotten all children.
+    if (!this.childrenEvaluated) {
+
+      // Create all the children.
+      for (const move of this.findAllAvailableMoves(this.board)) {
+        // Create the new board configuration.
+        const newBoard: Board = new Board();
+        newBoard.setBoardState(this.board.getBoardState());
+
+        // Create new nodes for all the moves.
+        newBoard.makeMove(move);
+        this.children.push(new Node(newBoard, this));
+      }
     }
+
+    return this.children;
   }
 
   findChildWithState(state: string): Node {

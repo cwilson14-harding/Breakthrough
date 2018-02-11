@@ -15,19 +15,19 @@ export class AIPlayer implements Player {
 
   getMove(board: GameBoardComponent): Promise<Move> {
     this.mcts.updateBoard(board.board);
+    this.mcts.startSearch();
 
     return new Promise<Move>((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
 
-      this.mcts.startSearch();
       setTimeout(() => {
         this.mcts.stopSearch();
         const move: Move = this.mcts.getMove();
         if (move) {
-          resolve(move);
+          this.resolve(move);
         } else {
-          reject();
+          this.reject();
         }
       }, 5500);
       // this.chooseRandomMove(board.board);
