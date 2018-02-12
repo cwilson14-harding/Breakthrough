@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { trigger, transition, useAnimation, state, animate, style } from '@angular/animations';
 import { bounce } from 'ng-animate';
-
+import {HostListener} from "@angular/core";
 
 @Component({
   selector: 'app-home',
@@ -23,13 +23,31 @@ import { bounce } from 'ng-animate';
   ]
 })
 export class HomeComponent implements OnInit {
-  state = 'inactive';
-  myStyle: object = {};
-  myParams: object = {};
-  width = 100;
   height = 100;
+  myParams: object = {};
+  myStyle: object = {};
+  pauseBackgroundMusic: boolean;
+  playBackgroundMusic: boolean;
+  state = 'inactive';
+  width = 100;
+  @HostListener('document: keypress', ['$event'])
+  playPauseBackgroundMusic(event: KeyboardEvent){
+    let audio = document.getElementById("audioPlayer") as any;
+    let key = event.keyCode;
+    if(key === 32 && this.playBackgroundMusic == true){
+      this.pauseBackgroundMusic = true;
+      this.playBackgroundMusic = false;
+      audio.pause();
+    }
+    else if(key === 32 && this.playBackgroundMusic == false){
+      this.pauseBackgroundMusic = false;
+      this.playBackgroundMusic = true;
+      audio.play();
+    }
+  }
   constructor(private router: Router, public auth: AuthService) {
-
+    this.pauseBackgroundMusic = false;
+    this.playBackgroundMusic = true;
   }
 
   toggleState() {
@@ -87,17 +105,8 @@ export class HomeComponent implements OnInit {
   multiPlayer() {
     this.router.navigateByUrl('multi-player');
   }
-  // In progress code. Working on play pause for music on the home page.
-  playPauseBackgroundMusic(data: string, event: KeyboardEvent){
-    let audio = document.getElementById("audioPlayer");
-    let pauseMusic: boolean = false;
-    let playMusic: boolean = true;
+// In progress code. Working on play pause for music on the home page.
 
-    if(event.keyCode == 32 && playMusic == true){
-      pauseMusic = true;
-      playMusic = false;
-    }
-  }
   singlePlayer() {
     this.router.navigateByUrl('/single-player');
   }
