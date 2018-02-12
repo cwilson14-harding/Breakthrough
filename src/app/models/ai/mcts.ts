@@ -2,15 +2,15 @@ import {Board} from '../board';
 import {Move} from '../move';
 import {Node} from './node';
 import {Coordinate} from '../game-core/coordinate';
+import {MCTSWorkerPool} from './mcts-worker-pool';
+import {Task} from './task';
 
 export class MCTS {
 
-  static readonly THREAD_COUNT = 7;
   rootNode: Node;
   currentNode: Node;
   canExecute: Boolean = false;
-  workers: Worker[] = [];
-  tasks: [Node, number][] = [];
+  workerPool: MCTSWorkerPool = new MCTSWorkerPool();
 
   static chooseRandom<T>(a: T[]): T {
     if (a.length > 0) {
@@ -68,10 +68,7 @@ export class MCTS {
     if (maxNodes.length === 0) { return null; }
 
     // Choose a random node from the top nodes.
-    const chosenNode: Node = MCTS.chooseRandom<Node>(maxNodes);
-
-    // Return the chosen node.
-    return chosenNode;
+    return MCTS.chooseRandom<Node>(maxNodes);;
   }
 
   constructor() {
@@ -87,8 +84,7 @@ export class MCTS {
     newBoard.setBoardState(board.getBoardState());
 
     // Find or create the new node.
-    const node = this.currentNode.findChildWithState(newBoard.getBoardState());
-    this.currentNode = node;
+    this.currentNode = this.currentNode.findChildWithState(newBoard.getBoardState());;
   }
 
   startSearch() {
@@ -102,10 +98,7 @@ export class MCTS {
 
   stopSearch() {
     this.canExecute = false;
-    for (const worker of this.workers) {
-      worker.terminate();
-    }
-    this.workers = [];
+
   }
 
   getMove(): Move {
@@ -123,37 +116,36 @@ export class MCTS {
     return bestNode.move;
   }
 
-  createWorkers(): Worker[] {
-    for (let i = 0; i < MCTS.THREAD_COUNT; ++i) {
-      this.workers.push(new Worker('/assets/scripts/worker.js'));
-    }
-    return this.workers;
-  }
-
-  workerFinished(worker: Worker) {
-    const task: [Node, number] = this.tasks.shift();
-    console.log('worker finished');
-    if (task) {
-      const targetNode: Node = task[0];
-      const count = task[1];
-      worker.postMessage(count + '-' + targetNode.state);
-      worker.onmessage = (ev) => {
-        const wins: [number, number] = ev.data.split('-');
-        targetNode.p1wins += +wins[0];
-        targetNode.p2wins += +wins[1];
-        this.workerFinished(worker);
-      };
-    }
+  private taskCompleted(ev: MessageEvent, task: Task) {
+    const results = ev.data.split('-');
+    task.node.p1wins += +results[0];
+    task.node.p2wins += +results[1];
   }
 
   private evaluateMovesThreaded(node: Node) {
+    // Get all the possible moves.
     const children: Node[] = this.currentNode.getAllChildren();
+
+    // Evaluate all of the nodes.
     for (const chosenNode of children) {
-      this.tasks.push([chosenNode, 200]);
+      const task: Task = new Task(chosenNode, 200, this.taskCompleted);
+      this.workerPool.addTask(task);
     }
-    for (const worker of this.createWorkers()) {
-      this.workerFinished(worker);
-    }
+
+    // Concentrate on the best nodes.
+    this.workerPool.onAllTasksCompleted(() => {
+      for (let i = 0; i < MCTSWorkerPool.THREAD_COUNT; ++i) {
+        this.workerPool.addTask(this.createTaskToEvaluate(children, 100));
+      }
+    });
+
+  }
+
+  private createTaskToEvaluate(nodes: Node[], ms: number): Task {
+    return new Task(this.chooseNodeToEvaluate(nodes), ms, (ev: MessageEvent, task: Task) => {
+      this.taskCompleted(ev, task);
+      this.workerPool.addTask(this.createTaskToEvaluate(nodes, ms));
+    });
   }
 
   private evaluateMoves(node: Node) {
@@ -177,6 +169,20 @@ export class MCTS {
       const chosenNode: Node = this.chooseNodeToEvaluate(children);
       this.playRandomGame(chosenNode);
     }
+  }
+
+  private sortNodesByBest(nodes: Node[]): Node[] {
+    return nodes.sort(function (n1: Node, n2: Node) {
+      const n1Ratio = n1.getWinRatio(nodes[0].parent.team);
+      const n2Ratio = n2.getWinRatio(nodes[0].parent.team);
+      if (n1Ratio > n2Ratio) {
+        return 1;
+      } else if (n1Ratio < n2Ratio) {
+        return 2;
+      } else {
+        return 0;
+      }
+    });
   }
 
   private chooseNodeToEvaluate(nodes: Node[]): Node {
