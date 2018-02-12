@@ -5,9 +5,41 @@ import {Coordinate} from '../game-core/coordinate';
 
 export class MCTS {
 
+  static readonly THREAD_COUNT = 7;
   rootNode: Node;
   currentNode: Node;
   canExecute: Boolean = false;
+  workers: Worker[] = [];
+  tasks: [Node, number][] = [];
+
+  static chooseRandom<T>(a: T[]): T {
+    if (a.length > 0) {
+      const index = Math.floor((Math.random() * a.length));
+      return a[index];
+    } else {
+      return null;
+    }
+  }
+
+  static chooseRandomMove(board: Board): Move {
+    const possibleMoves: Move[] = [];
+
+    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      for (let column = 0; column < Board.BOARD_SIZE; ++column) {
+        const moves: Coordinate[] = board.findAvailableMoves(new Coordinate(row, column));
+
+        for (let i = 0; i < moves.length; ++i) {
+          possibleMoves.push(new Move(new Coordinate(row, column), moves[i]));
+        }
+      }
+    }
+
+    if (possibleMoves.length > 0) {
+      return MCTS.chooseRandom<Move>(possibleMoves);
+    } else {
+      return null;
+    }
+  }
 
   private bestNode(): Node {
     const team: number = this.currentNode.turn;
@@ -42,15 +74,6 @@ export class MCTS {
     return chosenNode;
   }
 
-  static chooseRandom<T>(a: T[]): T {
-    if (a.length > 0) {
-      const index = Math.floor((Math.random() * a.length));
-      return a[index];
-    } else {
-      return null;
-    }
-  }
-
   constructor() {
     const board: Board = new Board();
     board.newGame();
@@ -70,25 +93,67 @@ export class MCTS {
 
   startSearch() {
     this.canExecute = true;
-    this.evaluateMoves(this.currentNode);
+    if (Worker) {
+      this.evaluateMovesThreaded(this.currentNode);
+    } else {
+      this.evaluateMoves(this.currentNode);
+    }
   }
 
   stopSearch() {
     this.canExecute = false;
+    for (const worker of this.workers) {
+      worker.terminate();
+    }
+    this.workers = [];
   }
 
   getMove(): Move {
     const bestNode: Node = this.bestNode();
+    console.log(this.currentNode);
 
     // Update the current node to be the best node.
     this.currentNode = bestNode;
 
     // Remove all previous nodes to save on memory.
-    bestNode.parent.children = [bestNode];
+    //bestNode.parent.children = [bestNode];
     // this.rootNode = this.currentNode;
     // this.rootNode.parent = null;
 
     return bestNode.move;
+  }
+
+  createWorkers(): Worker[] {
+    for (let i = 0; i < MCTS.THREAD_COUNT; ++i) {
+      this.workers.push(new Worker('/assets/scripts/worker.js'));
+    }
+    return this.workers;
+  }
+
+  workerFinished(worker: Worker) {
+    const task: [Node, number] = this.tasks.shift();
+    console.log('worker finished');
+    if (task) {
+      const targetNode: Node = task[0];
+      const count = task[1];
+      worker.postMessage(count + '-' + targetNode.state);
+      worker.onmessage = (ev) => {
+        const wins: [number, number] = ev.data.split('-');
+        targetNode.p1wins += +wins[0];
+        targetNode.p2wins += +wins[1];
+        this.workerFinished(worker);
+      };
+    }
+  }
+
+  private evaluateMovesThreaded(node: Node) {
+    const children: Node[] = this.currentNode.getAllChildren();
+    for (const chosenNode of children) {
+      this.tasks.push([chosenNode, 2000]);
+    }
+    for (const worker of this.createWorkers()) {
+      this.workerFinished(worker);
+    }
   }
 
   private evaluateMoves(node: Node) {
@@ -138,7 +203,7 @@ export class MCTS {
 
     // Play the game until a winner is found.
     while (winner === 0) {
-      const move: Move = this.chooseRandomMove(board);
+      const move: Move = MCTS.chooseRandomMove(board);
       board.makeMove(move);
       winner = board.isGameFinished();
     }
@@ -154,25 +219,5 @@ export class MCTS {
     }
 
     return winner;
-  }
-
-  private chooseRandomMove(board: Board): Move {
-    const possibleMoves: Move[] = [];
-
-    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
-      for (let column = 0; column < Board.BOARD_SIZE; ++column) {
-        const moves: Coordinate[] = board.findAvailableMoves(new Coordinate(row, column));
-
-        for (let i = 0; i < moves.length; ++i) {
-          possibleMoves.push(new Move(new Coordinate(row, column), moves[i]));
-        }
-      }
-    }
-
-    if (possibleMoves.length > 0) {
-      return MCTS.chooseRandom<Move>(possibleMoves);
-    } else {
-      return null;
-    }
   }
 }
