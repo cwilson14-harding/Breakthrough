@@ -2,11 +2,14 @@ let mcts: MCTSWorker;
 onmessage = function(ev) {
   mcts = new MCTSWorker();
   const task: [number, string] = ev.data.split('-');
-  const count = +task[0];
+  const ms = +task[0];
   const state: string = task[1];
   const results = [0, 0];
 
-  for (let i = 0; i < count; ++i) {
+  // https://stackoverflow.com/a/14968331
+  // Run the loop for the specified number of ms.
+  const startTime = Date.now();
+  while (Date.now() - startTime < ms) {
     ++results[mcts.playGame(state) - 1];
   }
   postMessage(results.join('-'));

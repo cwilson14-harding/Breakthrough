@@ -2,10 +2,13 @@ var mcts;
 onmessage = function (ev) {
     mcts = new MCTSWorker();
     var task = ev.data.split('-');
-    var count = +task[0];
+    var ms = +task[0];
     var state = task[1];
     var results = [0, 0];
-    for (var i = 0; i < count; ++i) {
+    // https://stackoverflow.com/a/14968331
+    // Run the loop for the specified number of ms.
+    var startTime = Date.now();
+    while (Date.now() - startTime < ms) {
         ++results[mcts.playGame(state) - 1];
     }
     postMessage(results.join('-'));

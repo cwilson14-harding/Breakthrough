@@ -149,7 +149,7 @@ export class MCTS {
   private evaluateMovesThreaded(node: Node) {
     const children: Node[] = this.currentNode.getAllChildren();
     for (const chosenNode of children) {
-      this.tasks.push([chosenNode, 2000]);
+      this.tasks.push([chosenNode, 200]);
     }
     for (const worker of this.createWorkers()) {
       this.workerFinished(worker);
