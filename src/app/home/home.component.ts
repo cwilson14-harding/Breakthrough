@@ -69,29 +69,40 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  singlePlayer() {
-    this.router.navigateByUrl('/single-player');
-  }
-  multiPlayer() {
-    this.router.navigateByUrl('multi-player');
-  }
-  tutorial() {
-    this.router.navigateByUrl('tutorial');
-  }
-  intro() {
-    this.router.navigateByUrl('intro');
-  }
-  gameBoard() {
-    this.router.navigateByUrl('board');
-  }
 
   facebookLogin() {
     this.auth.facebookLogin();
     this.router.navigateByUrl('login');
   }
+  gameBoard() {
+    this.router.navigateByUrl('board');
+  }
   googleLogin() {
     this.auth.googleLogin();
     this.router.navigateByUrl('login');
   }
+  intro() {
+    this.router.navigateByUrl('intro');
+  }
+  multiPlayer() {
+    this.router.navigateByUrl('multi-player');
+  }
+  // In progress code. Working on play pause for music on the home page.
+  playPauseBackgroundMusic(data: string, event: KeyboardEvent){
+    let audio = document.getElementById("audioPlayer");
+    let pauseMusic: boolean = false;
+    let playMusic: boolean = true;
 
+    if(event.keyCode == 32 && playMusic == true){
+      pauseMusic = true;
+      playMusic = false;
+    }
+  }
+  singlePlayer() {
+    this.router.navigateByUrl('/single-player');
+  }
+
+  tutorial() {
+    this.router.navigateByUrl('tutorial');
+  }
 }
