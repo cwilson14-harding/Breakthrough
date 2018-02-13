@@ -43,7 +43,7 @@ export class MCTS {
 
   private bestNode(): Node {
     const team: number = this.currentNode.turn;
-    let maxNodes: Node[] = [];
+    let maxNode: Node;
     let maxNodeScore = -1;
 
     // Find the node with the most evaluations.
@@ -55,20 +55,13 @@ export class MCTS {
       if (score > maxNodeScore) {
 
         // New score is higher than previous.
-        maxNodes = [node];
+        maxNode = node;
         maxNodeScore = score;
-      } else if (score === maxNodeScore) {
-
-        // New score is equal to previous.
-        maxNodes.push(node);
       }
     }
 
-    // Return null if no possible moves.
-    if (maxNodes.length === 0) { return null; }
-
     // Choose a random node from the top nodes.
-    return MCTS.chooseRandom<Node>(maxNodes);;
+    return maxNode;
   }
 
   constructor() {
@@ -84,7 +77,7 @@ export class MCTS {
     newBoard.setBoardState(board.getBoardState());
 
     // Find or create the new node.
-    this.currentNode = this.currentNode.findChildWithState(newBoard.getBoardState());;
+    this.currentNode = this.currentNode.findChildWithState(newBoard.getBoardState());
   }
 
   startSearch() {
@@ -98,12 +91,13 @@ export class MCTS {
 
   stopSearch() {
     this.canExecute = false;
-
+    if (Worker) {
+      this.workerPool.clearTasks();
+    }
   }
 
   getMove(): Move {
     const bestNode: Node = this.bestNode();
-    console.log(this.currentNode);
 
     // Update the current node to be the best node.
     this.currentNode = bestNode;
@@ -112,30 +106,35 @@ export class MCTS {
     //bestNode.parent.children = [bestNode];
     // this.rootNode = this.currentNode;
     // this.rootNode.parent = null;
-
+    console.log(bestNode);
     return bestNode.move;
   }
 
   private taskCompleted(ev: MessageEvent, task: Task) {
     const results = ev.data.split('-');
-    task.node.p1wins += +results[0];
-    task.node.p2wins += +results[1];
+    let node: Node = task.node;
+    while (node) {
+      node.p1wins += +results[0];
+      node.p2wins += +results[1];
+      node = node.parent;
+    }
   }
 
   private evaluateMovesThreaded(node: Node) {
     // Get all the possible moves.
-    const children: Node[] = this.currentNode.getAllChildren();
+    const children: Node[] = node.getAllChildren();
 
     // Evaluate all of the nodes.
     for (const chosenNode of children) {
-      const task: Task = new Task(chosenNode, 200, this.taskCompleted);
+      const task: Task = new Task(chosenNode, 500, this.taskCompleted);
       this.workerPool.addTask(task);
     }
 
     // Concentrate on the best nodes.
     this.workerPool.onAllTasksCompleted(() => {
-      for (let i = 0; i < MCTSWorkerPool.THREAD_COUNT; ++i) {
-        this.workerPool.addTask(this.createTaskToEvaluate(children, 100));
+      const sortedNodes: Node[] = this.sortNodesByBest(children, node.turn);
+      for (let i = 0; i < MCTSWorkerPool.THREAD_COUNT && i < MCTSWorkerPool.THREAD_COUNT; ++i) {
+        this.workerPool.addTask(new Task(sortedNodes[i], 5000));
       }
     });
 
@@ -171,14 +170,14 @@ export class MCTS {
     }
   }
 
-  private sortNodesByBest(nodes: Node[]): Node[] {
+  private sortNodesByBest(nodes: Node[], team: number): Node[] {
     return nodes.sort(function (n1: Node, n2: Node) {
-      const n1Ratio = n1.getWinRatio(nodes[0].parent.team);
-      const n2Ratio = n2.getWinRatio(nodes[0].parent.team);
+      const n1Ratio = n1.getWinRatio(team);
+      const n2Ratio = n2.getWinRatio(team);
       if (n1Ratio > n2Ratio) {
-        return 1;
+        return -1;
       } else if (n1Ratio < n2Ratio) {
-        return 2;
+        return 1;
       } else {
         return 0;
       }
