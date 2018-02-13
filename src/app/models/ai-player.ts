@@ -19,15 +19,15 @@ export class AIPlayer implements Player {
       this.resolve = resolve;
       this.reject = reject;
 
-      // setTimeout(() => {
-        // this.mcts.stopSearch();
-        const move: Move = this.mcts.getMove();
-        if (move) {
-          this.resolve(move);
-        } else {
-          this.reject();
-        }
-      // }, 5500);
+      setTimeout(() => {
+          this.mcts.stopSearch();
+          const move: Move = this.mcts.getMove();
+          if (move) {
+            this.resolve(move);
+          } else {
+            this.reject();
+          }
+        }, 5900);
       // this.chooseRandomMove(board.board);
     });
   }

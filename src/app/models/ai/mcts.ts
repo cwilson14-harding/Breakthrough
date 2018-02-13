@@ -2,16 +2,48 @@ import {Board} from '../board';
 import {Move} from '../move';
 import {Node} from './node';
 import {Coordinate} from '../game-core/coordinate';
+import {MCTSWorkerPool} from './mcts-worker-pool';
+import {Task} from './task';
 
 export class MCTS {
 
   rootNode: Node;
   currentNode: Node;
   canExecute: Boolean = false;
+  workerPool: MCTSWorkerPool = new MCTSWorkerPool();
+
+  static chooseRandom<T>(a: T[]): T {
+    if (a.length > 0) {
+      const index = Math.floor((Math.random() * a.length));
+      return a[index];
+    } else {
+      return null;
+    }
+  }
+
+  static chooseRandomMove(board: Board): Move {
+    const possibleMoves: Move[] = [];
+
+    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      for (let column = 0; column < Board.BOARD_SIZE; ++column) {
+        const moves: Coordinate[] = board.findAvailableMoves(new Coordinate(row, column));
+
+        for (let i = 0; i < moves.length; ++i) {
+          possibleMoves.push(new Move(new Coordinate(row, column), moves[i]));
+        }
+      }
+    }
+
+    if (possibleMoves.length > 0) {
+      return MCTS.chooseRandom<Move>(possibleMoves);
+    } else {
+      return null;
+    }
+  }
 
   private bestNode(): Node {
     const team: number = this.currentNode.turn;
-    let maxNodes: Node[] = [];
+    let maxNode: Node;
     let maxNodeScore = -1;
 
     // Find the node with the most evaluations.
@@ -23,32 +55,13 @@ export class MCTS {
       if (score > maxNodeScore) {
 
         // New score is higher than previous.
-        maxNodes = [node];
+        maxNode = node;
         maxNodeScore = score;
-      } else if (score === maxNodeScore) {
-
-        // New score is equal to previous.
-        maxNodes.push(node);
       }
     }
 
-    // Return null if no possible moves.
-    if (maxNodes.length === 0) { return null; }
-
     // Choose a random node from the top nodes.
-    const chosenNode: Node = MCTS.chooseRandom<Node>(maxNodes);
-
-    // Return the chosen node.
-    return chosenNode;
-  }
-
-  static chooseRandom<T>(a: T[]): T {
-    if (a.length > 0) {
-      const index = Math.floor((Math.random() * a.length));
-      return a[index];
-    } else {
-      return null;
-    }
+    return maxNode;
   }
 
   constructor() {
@@ -64,17 +77,23 @@ export class MCTS {
     newBoard.setBoardState(board.getBoardState());
 
     // Find or create the new node.
-    const node = this.currentNode.findChildWithState(newBoard.getBoardState());
-    this.currentNode = node;
+    this.currentNode = this.currentNode.findChildWithState(newBoard.getBoardState());
   }
 
   startSearch() {
     this.canExecute = true;
-    this.evaluateMoves(this.currentNode);
+    if (Worker) {
+      this.evaluateMovesThreaded(this.currentNode);
+    } else {
+      this.evaluateMoves(this.currentNode);
+    }
   }
 
   stopSearch() {
     this.canExecute = false;
+    if (Worker) {
+      this.workerPool.clearTasks();
+    }
   }
 
   getMove(): Move {
@@ -84,11 +103,48 @@ export class MCTS {
     this.currentNode = bestNode;
 
     // Remove all previous nodes to save on memory.
-    bestNode.parent.children = [bestNode];
+    //bestNode.parent.children = [bestNode];
     // this.rootNode = this.currentNode;
     // this.rootNode.parent = null;
-
+    console.log(bestNode);
     return bestNode.move;
+  }
+
+  private taskCompleted(ev: MessageEvent, task: Task) {
+    const results = ev.data.split('-');
+    let node: Node = task.node;
+    while (node) {
+      node.p1wins += +results[0];
+      node.p2wins += +results[1];
+      node = node.parent;
+    }
+  }
+
+  private evaluateMovesThreaded(node: Node) {
+    // Get all the possible moves.
+    const children: Node[] = node.getAllChildren();
+
+    // Evaluate all of the nodes.
+    for (const chosenNode of children) {
+      const task: Task = new Task(chosenNode, 500, this.taskCompleted);
+      this.workerPool.addTask(task);
+    }
+
+    // Concentrate on the best nodes.
+    this.workerPool.onAllTasksCompleted(() => {
+      const sortedNodes: Node[] = this.sortNodesByBest(children, node.turn);
+      for (let i = 0; i < MCTSWorkerPool.THREAD_COUNT && i < MCTSWorkerPool.THREAD_COUNT; ++i) {
+        this.workerPool.addTask(new Task(sortedNodes[i], 5000));
+      }
+    });
+
+  }
+
+  private createTaskToEvaluate(nodes: Node[], ms: number): Task {
+    return new Task(this.chooseNodeToEvaluate(nodes), ms, (ev: MessageEvent, task: Task) => {
+      this.taskCompleted(ev, task);
+      this.workerPool.addTask(this.createTaskToEvaluate(nodes, ms));
+    });
   }
 
   private evaluateMoves(node: Node) {
@@ -112,6 +168,20 @@ export class MCTS {
       const chosenNode: Node = this.chooseNodeToEvaluate(children);
       this.playRandomGame(chosenNode);
     }
+  }
+
+  private sortNodesByBest(nodes: Node[], team: number): Node[] {
+    return nodes.sort(function (n1: Node, n2: Node) {
+      const n1Ratio = n1.getWinRatio(team);
+      const n2Ratio = n2.getWinRatio(team);
+      if (n1Ratio > n2Ratio) {
+        return -1;
+      } else if (n1Ratio < n2Ratio) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
   }
 
   private chooseNodeToEvaluate(nodes: Node[]): Node {
@@ -138,7 +208,7 @@ export class MCTS {
 
     // Play the game until a winner is found.
     while (winner === 0) {
-      const move: Move = this.chooseRandomMove(board);
+      const move: Move = MCTS.chooseRandomMove(board);
       board.makeMove(move);
       winner = board.isGameFinished();
     }
@@ -154,25 +224,5 @@ export class MCTS {
     }
 
     return winner;
-  }
-
-  private chooseRandomMove(board: Board): Move {
-    const possibleMoves: Move[] = [];
-
-    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
-      for (let column = 0; column < Board.BOARD_SIZE; ++column) {
-        const moves: Coordinate[] = board.findAvailableMoves(new Coordinate(row, column));
-
-        for (let i = 0; i < moves.length; ++i) {
-          possibleMoves.push(new Move(new Coordinate(row, column), moves[i]));
-        }
-      }
-    }
-
-    if (possibleMoves.length > 0) {
-      return MCTS.chooseRandom<Move>(possibleMoves);
-    } else {
-      return null;
-    }
   }
 }
