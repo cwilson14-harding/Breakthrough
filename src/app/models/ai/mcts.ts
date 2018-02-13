@@ -103,7 +103,7 @@ export class MCTS {
     this.currentNode = bestNode;
 
     // Remove all previous nodes to save on memory.
-    //bestNode.parent.children = [bestNode];
+    bestNode.parent.children = [bestNode];
     // this.rootNode = this.currentNode;
     // this.rootNode.parent = null;
     console.log(bestNode);
