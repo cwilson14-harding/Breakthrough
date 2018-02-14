@@ -17,7 +17,6 @@ export class MCTSWorker {
 
     this.busy = true;
     this.worker.onmessage = (event: MessageEvent) => {
-      //const task: Task = this.currentTask
       this.busy = false;
       this.currentTask = undefined;
 

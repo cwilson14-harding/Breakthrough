@@ -27,7 +27,7 @@ export class AIPlayer implements Player {
           } else {
             this.reject();
           }
-        }, 5900);
+        }, 5950);
       // this.chooseRandomMove(board.board);
     });
   }

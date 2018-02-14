@@ -73,11 +73,14 @@ export class MCTS {
 
   updateBoard(board: Board) {
     // Create the new board configuration.
-    const newBoard: Board = new Board();
-    newBoard.setBoardState(board.getBoardState());
+    const state: string = board.getBoardState();
+    if (state !== this.currentNode.state) {
+      const newBoard: Board = new Board();
+      newBoard.setBoardState(state);
 
-    // Find or create the new node.
-    this.currentNode = this.currentNode.findChildWithState(newBoard.getBoardState());
+      // Find or create the new node.
+      this.currentNode = this.currentNode.findChildWithState(state);
+    }
   }
 
   startSearch() {
@@ -98,16 +101,20 @@ export class MCTS {
 
   getMove(): Move {
     const bestNode: Node = this.bestNode();
+    if (bestNode) {
 
-    // Update the current node to be the best node.
-    this.currentNode = bestNode;
+      // Update the current node to be the best node.
+      this.currentNode = bestNode;
 
-    // Remove all previous nodes to save on memory.
-    bestNode.parent.children = [bestNode];
-    // this.rootNode = this.currentNode;
-    // this.rootNode.parent = null;
-    console.log(bestNode);
-    return bestNode.move;
+      // Remove all previous nodes to save on memory.
+      bestNode.parent.children = [bestNode];
+      // this.rootNode = this.currentNode;
+      // this.rootNode.parent = null;
+
+      return bestNode.move;
+    } else {
+      return null;
+    }
   }
 
   private taskCompleted(ev: MessageEvent, task: Task) {
@@ -126,15 +133,15 @@ export class MCTS {
 
     // Evaluate all of the nodes.
     for (const chosenNode of children) {
-      const task: Task = new Task(chosenNode, 500, this.taskCompleted);
+      const task: Task = new Task(chosenNode, 300, this.taskCompleted);
       this.workerPool.addTask(task);
     }
 
     // Concentrate on the best nodes.
     this.workerPool.onAllTasksCompleted(() => {
       const sortedNodes: Node[] = this.sortNodesByBest(children, node.turn);
-      for (let i = 0; i < MCTSWorkerPool.THREAD_COUNT && i < MCTSWorkerPool.THREAD_COUNT; ++i) {
-        this.workerPool.addTask(new Task(sortedNodes[i], 5000));
+      for (let i = 0; i < MCTSWorkerPool.THREAD_COUNT && i < children.length; ++i) {
+        this.workerPool.addTask(new Task(sortedNodes[i], 500, this.taskCompleted));
       }
     });
 

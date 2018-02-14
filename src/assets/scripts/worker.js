@@ -130,7 +130,7 @@ var Board = /** @class */ (function () {
      Parameters: location: [number, number]
      The parameter location is a tuple that contains two numbers. These numbers are the x and y
      coordinates for a potential location.
-  
+
      The function checks to see if a move is out of bounds. It returns true if the location
      passed in is in bounds. Otherwise the function returns false.
   */
@@ -142,13 +142,13 @@ var Board = /** @class */ (function () {
        Parameters: location1: [number, number], location2: [number, number]
        The parameters location1 and location2 are tuples that contains two numbers.
        These numbers are the x and y coordinates for a potential location.
-  
+
        This function checks to see if the piece in location1 is okay to move to location2.
        Returns: A boolean that determines if it is okay to move.
     */
     Board.prototype.isMoveValid = function (move) {
         // Verify that both locations given are valid.
-        if (move && !this.isLocationValid(move.from) || !this.isLocationValid(move.to) || this.isGameFinished() !== 0) {
+        if (!move || !this.isLocationValid(move.from) || !this.isLocationValid(move.to) || this.isGameFinished() !== 0) {
             return false;
         }
         // Find the piece at the given starting location.

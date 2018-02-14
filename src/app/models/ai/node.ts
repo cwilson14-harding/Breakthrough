@@ -21,6 +21,7 @@ export class Node {
   }
 
   getWinRatio(team: number): number {
+    if (this.p1wins + this.p2wins === 0) { return 0.5; }
     return ((team === 1) ? (this.p1wins) : (this.p2wins)) / (this.p1wins + this.p2wins);
   }
 

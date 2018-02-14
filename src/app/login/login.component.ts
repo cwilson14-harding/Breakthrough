@@ -90,8 +90,8 @@ export class LoginComponent implements OnInit {
   }
 
   playGame() {
-    const playerOne = new PlayerData('Bob', '', PlayerType.Local);
-    const playerTwo = new PlayerData('Geraldo', '', PlayerType.AI);
+    const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
+    const playerTwo = new PlayerData('Jack', '', PlayerType.AI);
     this.gameService.newGame(playerOne, playerTwo);
     this.router.navigateByUrl('board');
   }

@@ -8,7 +8,7 @@ import {Player} from '../models/player';
 import {LocalPlayer} from '../models/local-player';
 import {AIPlayer} from '../models/ai-player';
 import { GameService } from '../game.service';
-import {PlayerType} from '../player-data';
+import {PlayerData, PlayerType} from '../player-data';
 import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
 import {Move} from '../models/move';
@@ -27,7 +27,7 @@ export class GameBoardComponent implements OnInit {
   currentUserName: any;
   player1: Player;
   player2: Player;
-  board: Board
+  board: Board;
 
   constructor(public db: AngularFirestore, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
     this.board = new Board();
@@ -73,7 +73,16 @@ export class GameBoardComponent implements OnInit {
 
       movePromise.then((move: Move) => {
         this.board.makeMove(move);
-        this.getMove();
+        const winner: number = this.board.isGameFinished();
+        if (winner) {
+          const winnerData: PlayerData = (winner === 1) ? this.gameService.playerOne : this.gameService.playerTwo;
+          setTimeout(() => {
+            // TODO: Go to game over screen.
+            alert(winnerData.name + ' [' + winner + '] has won!');
+          }, 1000);
+        } else {
+          this.getMove();
+        }
       }, () => {
         console.log('Move rejected');
       });
@@ -148,7 +157,5 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.newGame();
-  }
+  ngOnInit() {}
 }

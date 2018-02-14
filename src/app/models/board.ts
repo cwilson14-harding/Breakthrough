@@ -94,7 +94,7 @@ export class Board {
   */
   isMoveValid(move: Move): boolean {
     // Verify that both locations given are valid.
-    if (move && !this.isLocationValid(move.from) || !this.isLocationValid(move.to) || this.isGameFinished() !== 0) {
+    if (!move || !this.isLocationValid(move.from) || !this.isLocationValid(move.to) || this.isGameFinished() !== 0) {
       return false;
     }
 
