@@ -27,6 +27,7 @@ import { TypingAnimationModule } from 'angular-typing-animation';
 import { ParticlesModule } from 'angular-particle';
 import {GameService} from './game.service';
 import {NgxSlideshowModule} from 'ngx-slideshow';
+import {FormsModule} from "@angular/forms";
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
+    FormsModule,
     TypingAnimationModule,
     ParticlesModule,
     NgxSlideshowModule.forRoot()

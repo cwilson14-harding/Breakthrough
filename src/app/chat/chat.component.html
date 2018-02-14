@@ -1,3 +1,10 @@
-<p>
-  chat works!
-</p>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<div *ngFor="let message of messages | async">
+  {{message.$value}}
+</div>
+<div class=" w3-container w3-border-color-grey w3-left w3-bottom roundedCorners" style="height: 30vh; width: 40vh; background: #777777; z-index: 1; opacity: .9">
+  <h1>Real Time Chat</h1>
+  <input type="text" #message placeholder="Your message...">
+</div>
