@@ -4,24 +4,26 @@
 
 <particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height">
 </particles>
-<div>
 
-  <div class="w3-container w3-center w3-display-middle " style="height: 50vh; width: 40vw; position: fixed; z-index: 1" [@flyInOut]="state">
+<div class="w3-container w3-padding-64">
+
+  <div class="w3-container w3-center w3-display-middle " style="height: 50vh; width: 55vw; position: fixed; z-index: 1" [@flyInOut]="state">
+    <!--<h1>SYSTEM.BREAK();</h1> -->
     <div class="w3-center w3-display-middle">
-      <!--<h1>SYSTEM.BREAK();</h1> -->
-        <div>
-          <img class="w3-display-topmiddle" src="../../assets/logos/systemBreakLogoSmall.png" style="width: 225%; position: relative;">
+      <div>
+        <img  class="w3-display-topmiddle" style="width: 200%; position: relative;" src="../../assets/logos/systemBreakLogoSmall.png">
+      </div>
+
+      <div class=" w3-opacity-min">
+        <div class="w3-row w3-padding">
+          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="googleLogin()">Login with Google</button>
         </div>
-
-
-      <div class="w3-row w3-padding w3-opacity-min">
-        <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="googleLogin()">Login with Google</button>
-      </div>
-      <div class="w3-row w3-padding w3-opacity-min">
-        <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="facebookLogin()">Login with Facebook</button>
-      </div>
-      <div class="w3-row w3-padding w3-opacity-min">
-        <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle ">Play as Guest</button>
+        <div class="w3-row w3-padding">
+          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="facebookLogin()">Login with Facebook</button>
+        </div>
+        <div class="w3-row w3-padding">
+          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle ">Play as Guest</button>
+        </div>
       </div>
     </div>
   </div>
