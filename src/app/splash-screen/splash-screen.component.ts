@@ -35,4 +35,8 @@ export class SplashScreenComponent implements OnInit {
     }, 5000);
   }
 
+  toHomePage() {
+    this.router.navigateByUrl('home');
+  }
+
 }
