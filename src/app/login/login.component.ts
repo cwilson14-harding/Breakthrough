@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import { GameService } from '../game.service';
+declare var $: any;
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   availableUsers: any;
   showSettings = false;
@@ -56,6 +57,14 @@ export class LoginComponent implements OnInit {
         }
       }
     };
+  }
+
+  ngAfterViewInit() {
+    // Initialize parallax background.
+    // https://www.jqueryscript.net/animation/Interactive-Mouse-Hover-Parallax-Effect-with-jQuery-Mouse-Parallax.html
+    const background = $('.backImg');
+    background.mouseParallax({ moveFactor: 5 });
+    background.height(3000);
   }
 
   loginGoogle() {

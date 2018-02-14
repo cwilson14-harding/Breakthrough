@@ -2,10 +2,12 @@
 
 .backImg{
   background-image: url("../../assets/backgrounds/sylvain-sarrailh-theexchange.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100vw;
-  height: 100vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  position: fixed;
+  z-index: -1;
 }
 
 .buttonStyle{

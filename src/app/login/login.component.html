@@ -3,7 +3,7 @@
 </audio>
 <particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height">
 </particles>
-<div class="w3-container backImg">
+<div class="w3-container">
   <div *ngIf="auth.user | async; then authenticated else guest">
 
   </div>
@@ -115,8 +115,7 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </ng-template>
+<div class="backImg"></div>
 

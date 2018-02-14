@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { trigger, transition, useAnimation, state, animate, style } from '@angular/animations';
 import { bounce } from 'ng-animate';
-import {HostListener} from "@angular/core";
+import {HostListener, AfterViewInit} from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ import {HostListener} from "@angular/core";
     ])
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   height = 100;
   myParams: object = {};
   myStyle: object = {};
@@ -31,15 +32,14 @@ export class HomeComponent implements OnInit {
   state = 'inactive';
   width = 100;
   @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent){
-    let audio = document.getElementById("audioPlayer") as any;
-    let key = event.keyCode;
-    if(key === 32 && this.playBackgroundMusic == true){
+  playPauseBackgroundMusic(event: KeyboardEvent) {
+    const audio = document.getElementById('audioPlayer') as any;
+    const key = event.keyCode;
+    if (key === 32 && this.playBackgroundMusic) {
       this.pauseBackgroundMusic = true;
       this.playBackgroundMusic = false;
       audio.pause();
-    }
-    else if(key === 32 && this.playBackgroundMusic == false){
+    } else if (key === 32 && !this.playBackgroundMusic) {
       this.pauseBackgroundMusic = false;
       this.playBackgroundMusic = true;
       audio.play();
@@ -85,6 +85,14 @@ export class HomeComponent implements OnInit {
         }
       }
     };
+  }
+
+  ngAfterViewInit() {
+    // Initialize parallax background.
+    // https://www.jqueryscript.net/animation/Interactive-Mouse-Hover-Parallax-Effect-with-jQuery-Mouse-Parallax.html
+    const background = $('.backImg');
+    background.mouseParallax({ moveFactor: 5 });
+    background.height(3000);
   }
 
 
