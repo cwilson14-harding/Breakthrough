@@ -1,41 +1,41 @@
-<div *ngIf="auth.user | async as user">
-  <div class="w3-container w3-center">
-    <div class="w3-row">
-      <h1> {{ user.displayName | uppercase }} </h1>
-      <img  [src]='user.photoURL' class="proPic w3-padding">
-    </div>
-    <div class="w3-row w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" style="width: 40%">PLAY</button>
-    </div>
-    <div class="w3-row w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="logOff()" style="width: 40%">LOGOUT</button>
-    </div>
+<!--<div *ngIf="auth.user | async as user">-->
+  <!--<div class="w3-container w3-center">-->
+    <!--<div class="w3-row">-->
+      <!--<h1> {{ user.displayName | uppercase }} </h1>-->
+      <!--<img  [src]='user.photoURL' class="proPic w3-padding">-->
+    <!--</div>-->
+    <!--<div class="w3-row w3-padding">-->
+      <!--<button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" style="width: 40%">PLAY</button>-->
+    <!--</div>-->
+    <!--<div class="w3-row w3-padding">-->
+      <!--<button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="logOff()" style="width: 40%">LOGOUT</button>-->
+    <!--</div>-->
 
-   <!-- <div class="w3-container">
-      <h1>Online Users:</h1>
-      <div *ngFor="let available of availableUsers | async" class="w3-padding">
-        <img  [src]='available.photoURL' style="width: 10%">
-        <button>Start Game with {{available.displayName}}</button>
-      </div>
-    </div> -->
+   <!--&lt;!&ndash; <div class="w3-container">-->
+      <!--<h1>Online Users:</h1>-->
+      <!--<div *ngFor="let available of availableUsers | async" class="w3-padding">-->
+        <!--<img  [src]='available.photoURL' style="width: 10%">-->
+        <!--<button>Start Game with {{available.displayName}}</button>-->
+      <!--</div>-->
+    <!--</div> &ndash;&gt;-->
 
-    <div class = 'w3-container'>
-      <h1>Open Games:</h1>
-      <div *ngFor="let open of openGames | async">
-         {{open.creatorName}}
-        <button (click)="joinGame(user, open)">Join Game</button>
-        <br>
-      </div>
-    </div>
+    <!--<div class = 'w3-container'>-->
+      <!--<h1>Open Games:</h1>-->
+      <!--<div *ngFor="let open of openGames | async">-->
+         <!--{{open.creatorName}}-->
+        <!--<button (click)="joinGame(user, open)">Join Game</button>-->
+        <!--<br>-->
+      <!--</div>-->
+    <!--</div>-->
 
-    <div class="w3-container w3-padding">
-      <div *ngIf="!isGameCreated">
-        <button (click)="createNewGame(user)">Create Game</button>
-      </div>
-    </div>
+    <!--<div class="w3-container w3-padding">-->
+      <!--<div *ngIf="!isGameCreated">-->
+        <!--<button (click)="createNewGame(user)">Create Game</button>-->
+      <!--</div>-->
+    <!--</div>-->
 
-  </div>
-</div>
+  <!--</div>-->
+<!--</div>-->
 
 <!--  EVERYTHING BELOW IS A PROTOTYPE WITH FAKE INFO THAT IS HARD CODED IN -->
 
