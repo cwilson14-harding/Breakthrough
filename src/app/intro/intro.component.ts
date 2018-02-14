@@ -7,16 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./intro.component.scss']
 })
 export class IntroComponent implements OnInit {
+  timeout;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       this.router.navigateByUrl('home');
     }, 16000);
   }
 
   toHomePage() {
+    clearTimeout(this.timeout);
     this.router.navigateByUrl('home');
   }
 }
