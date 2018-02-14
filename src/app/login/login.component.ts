@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // https://www.jqueryscript.net/animation/Interactive-Mouse-Hover-Parallax-Effect-with-jQuery-Mouse-Parallax.html
     const background = $('.backImg');
     background.mouseParallax({ moveFactor: 5 });
-    background.height(3000);
   }
 
   loginGoogle() {
