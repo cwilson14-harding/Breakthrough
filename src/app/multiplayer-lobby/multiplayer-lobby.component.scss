@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker|Rajdhani');
+
 .background{
   background-color: #6B5B95;
   background-image: url("../../assets/backgrounds/lobby.jpg");
@@ -8,4 +10,35 @@
 }
 .greyBackground{
   background-color: #AA99AA;
+}
+.infoText {
+  font-size: 200%;
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: bold;
+}
+
+.gameListHeading {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 150%;
+}
+.gameListText {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 100%;
+}
+
+.headingText{
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
+  color: white;
+  font-size: 300%;
+}
+
+.button{
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 125%;
+}
+
+.ulOpacity {
+  opacity: .9;
 }

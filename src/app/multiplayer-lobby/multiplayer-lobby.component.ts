@@ -19,6 +19,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   gameType;
   availableUsers: any;
   openGames: any;
+  createdGame: Observable<Game>;
   isGameCreated: boolean;
   joinerId: string;
   gameUid: string;
@@ -80,7 +81,7 @@ export class MultiplayerLobbyComponent implements OnInit {
      This function takes a user and sets the isGameCreated property to true. Then the function calls the
      createGame function from the auth.service to create a new game an store it in the database.
   */
-  createdGame: Observable<Game>;
+
   createNewGame(user: User) {
      this.isGameCreated = true;
      const createdGame = this.auth.createGame(user);

@@ -39,197 +39,209 @@
 
 <!--  EVERYTHING BELOW IS A PROTOTYPE WITH FAKE INFO THAT IS HARD CODED IN -->
 
-<div class="w3-container background">
-  <!-- DIV FOR LUKE -->
-  <div class="w3-half" *ngIf="luke">
-    <h1 style="text-align: center">Choose Opponent</h1>
+<div *ngIf="auth.user | async as user">
+  <div class="w3-container background">
+    <!-- DIV FOR LUKE -->
+    <div class="w3-half" *ngIf="luke">
+      <h1 class="headingText">Choose Opponent</h1>
 
-    <div class="w3-half">
-      <img src="assets/avatars/luke.jpg" style="width: 95%;">
-      <div class="w3-padding w3-center">
-        <div class="w3-button w3-black">
-          Join Game
+      <div>
+        <div class="w3-center">
+          <img src="assets/avatars/luke.jpg" style="width: 40%;">
+          <div class = "infoText">
+          Name: Luke Uebelein
+          <br>
+          Wins: 0
+          <br>
+          Losses: 25
+          </div>
         </div>
-        <div class="w3-button w3-black">
-          Create Game
-        </div>
-      </div>
 
-    </div>
-    <div class = "w3-half">
-      Name: Luke Uebelein
-      <br>
-      Wins: 0
-      <br>
-      Losses: 25
-    </div>
-  </div>
-  <!-- DIV FOR CJ -->
-  <div class="w3-half" *ngIf="cj">
-    <h1 style="text-align: center">Choose Opponent</h1>
-
-    <div class="w3-half">
-      <img src="../../assets/avatars/cjAvatar.png" style="width: 95%;">
-      <div class="w3-padding w3-center">
-        <div class="w3-button w3-black">
-          Join Game
-        </div>
-        <div class="w3-button w3-black">
-          Create Game
+        <div class="w3-padding w3-center">
+          <div class="w3-button w3-black button">
+            Join Game
+          </div>
+          <div class="w3-button w3-black button">
+            Create Game
+          </div>
         </div>
       </div>
+    </div>
+    <!-- DIV FOR CJ -->
+    <div class="w3-half" *ngIf="cj">
+      <h1 class="headingText">Choose Opponent</h1>
 
+      <div>
+        <div class="w3-center">
+          <img src="../../assets/avatars/cjAvatar.png" style="width: 40%;">
+          <div class = "infoText">
+            Name: C.J Wilson
+            <br>
+            Wins: 25
+            <br>
+            Losses: 0
+          </div>
+        </div>
+
+        <div class="w3-padding w3-center">
+          <div class="w3-button w3-black button">
+            Join Game
+          </div>
+          <div class="w3-button w3-black button">
+            Create Game
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class = "w3-half">
-      Name: C.J Wilson
-      <br>
-      Wins: 25
-      <br>
-      Losses: 0
+    <!-- DIV FOR BRADLEY -->
+    <div class="w3-half" *ngIf="brad">
+      <h1 class="headingText">Choose Opponent</h1>
+
+      <div>
+        <div class="w3-center">
+          <img src="../../assets/avatars/bradAvatar.png" style="width: 40%;">
+          <div class = "infoText">
+            Name: Bradley Marques
+            <br>
+            Wins: 1
+            <br>
+            Losses: 1
+          </div>
+        </div>
+
+        <div class="w3-padding w3-center">
+          <div class="w3-button w3-black button">
+            Join Game
+          </div>
+          <div class="w3-button w3-black button">
+            Create Game
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-  <!-- DIV FOR BRADLEY -->
-  <div class="w3-half" *ngIf="brad">
-    <h1 style="text-align: center">Choose Opponent</h1>
+    <!-- DIV FOR DYLAN -->
+    <div class="w3-half" *ngIf="dylan">
+      <h1 class="headingText">Choose Opponent</h1>
+
+      <div>
+        <div class="w3-center">
+          <img src="../../assets/avatars/dylanAvatar.png" style="width: 40%;">
+          <div class = "infoText">
+            Name: Dylan Gonzalez
+            <br>
+            Wins: 1
+            <br>
+            Losses: 1
+          </div>
+        </div>
+
+        <div class="w3-padding w3-center">
+          <div class="w3-button w3-black button">
+            Join Game
+          </div>
+          <div class="w3-button w3-black button">
+            Create Game
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- DIV FOR Alania -->
+    <div class="w3-half" *ngIf="alania">
+      <h1 class="headingText">Choose Opponent</h1>
+
+      <div>
+        <div class="w3-center">
+          <img src="../../assets/avatars/alaniaAvatar.png" style="width: 40%;">
+          <div class = "infoText">
+            Name: Alania Bridges
+            <br>
+            Wins: 0
+            <br>
+            Losses: 0
+          </div>
+        </div>
+
+        <div class="w3-padding w3-center">
+          <div class="w3-button w3-black button">
+            Join Game
+          </div>
+          <div class="w3-button w3-black button">
+            Create Game
+          </div>
+        </div>
+
+      </div>
+    </div>
+
 
     <div class="w3-half">
-      <img src="../../assets/avatars/bradAvatar.png" style="width: 95%;">
-      <div class="w3-padding w3-center">
-        <div class="w3-button w3-black">
-          Join Game
-        </div>
-        <div class="w3-button w3-black">
-          Create Game
-        </div>
-      </div>
+      <h1 class="headingText">Open Games</h1>
+        <!--<div *ngFor="let open of createdGame | async">-->
+          <!--<ul class="w3-ul w3-card-4">-->
+            <!--<li class="w3-bar greyBackground">-->
+              <!--<span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_luke()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
+              <!--<img src="assets/avatars/luke.jpg" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">-->
+              <!--<div class="w3-bar-item">-->
+                <!--<span class="w3-large">{{open.creatorName}}</span><br>-->
+                <!--<span>0 wins; 25 Losses</span>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</ul>-->
+          <!--<button (click)="createNewGame(user)">CREATE GAME</button>-->
+        <!--</div>-->
 
-    </div>
-    <div class = "w3-half">
-      Name: Bradley Marques
-      <br>
-      Wins: 1
-      <br>
-      Losses: 1
-    </div>
-  </div>
-  <!-- DIV FOR DYLAN -->
-  <div class="w3-half" *ngIf="dylan">
-    <h1 style="text-align: center">Choose Opponent</h1>
-
-    <div class="w3-half">
-      <img src="../../assets/avatars/dylanAvatar.png" style="width: 95%;">
-      <div class="w3-padding w3-center">
-        <div class="w3-button w3-black">
-          Join Game
-        </div>
-        <div class="w3-button w3-black">
-          Create Game
-        </div>
-      </div>
-
-    </div>
-    <div class = "w3-half">
-      Name: Dylan Gonzalez
-      <br>
-      Wins: 1
-      <br>
-      Losses: 1
-    </div>
-  </div>
-  <!-- DIV FOR Alania -->
-  <div class="w3-half" *ngIf="alania">
-    <h1 style="text-align: center">Choose Opponent</h1>
-
-    <div class="w3-half">
-      <img src="../../assets/avatars/alaniaAvatar.png" style="width: 95%;">
-      <div class="w3-padding w3-center">
-        <div class="w3-button w3-black">
-          Join Game
-        </div>
-        <div class="w3-button w3-black">
-          Create Game
-        </div>
-      </div>
-
-    </div>
-    <div class = "w3-half">
-      Name: Alania Bridges
-      <br>
-      Wins: 0
-      <br>
-      Losses: 0
-    </div>
-  </div>
-
-
-  <div class="w3-half">
-    <h1 style="text-align: center">Open Games</h1>
-    <div>
-      <div *ngIf="auth.user | async as user">
-        <ul class="w3-ul w3-card-4">
+          <ul class="w3-ul w3-card-4 ulOpacity">
 
             <li class="w3-bar greyBackground">
-              <div *ngFor="let open of openGames | async">
-                <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_luke()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-                <img src="assets/avatars/luke.jpg" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                <div class="w3-bar-item">
-                  <span class="w3-large">{{open.creatorName}}</span><br>
-                  <span>0 wins; 25 Losses</span>
-                </div>
+              <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_luke()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+              <img src="assets/avatars/luke.jpg" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+              <div class="w3-bar-item">
+                <span class="gameListHeading">Luke Uebelein</span><br>
+                <span class="gameListText">0 wins; 25 Losses</span>
               </div>
             </li>
 
+            <li class="w3-bar greyBackground">
+              <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_cj()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+              <img src="assets/avatars/cjAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+              <div class="w3-bar-item">
+                <span class="gameListHeading">C.J. Wilson</span><br>
+                <span class="gameListText">25 wins; 0 Losses</span>
+              </div>
+            </li>
 
+            <li class="w3-bar greyBackground">
+              <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_brad()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+              <img src="assets/avatars/bradAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+              <div class="w3-bar-item">
+                <span class="gameListHeading">Bradley Marques</span><br>
+                <span class="gameListText">1 win; 1 Loss</span>
+              </div>
+            </li>
+            <li class="w3-bar greyBackground">
+              <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_dylan()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+              <img src="assets/avatars/dylanAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+              <div class="w3-bar-item">
+                <span class="gameListHeading">Dylan Gonzalez</span><br>
+                <span class="gameListText">1 win; 1 Loss</span>
+              </div>
+            </li>
+            <li class="w3-bar greyBackground">
+              <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_alania()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+              <img src="assets/avatars/alaniaAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+              <div class="w3-bar-item">
+                <span class="gameListHeading">Alania Bridges</span><br>
+                <span class="gameListText">0 wins; 0 Losses</span>
+              </div>
+            </li>
+          </ul>
 
-          <li class="w3-bar greyBackground">
-            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_luke()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            <img src="assets/avatars/luke.jpg" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-              <span class="w3-large">Luke Uebelein</span><br>
-              <span>0 wins; 25 Losses</span>
-            </div>
-          </li>
+        <div class="w3-padding-64">
 
-          <li class="w3-bar greyBackground">
-            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_cj()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            <img src="assets/avatars/cjAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-              <span class="w3-large">C.J. Wilson</span><br>
-              <span>25 wins; 0 Losses</span>
-            </div>
-          </li>
-
-          <li class="w3-bar greyBackground">
-            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_brad()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            <img src="assets/avatars/bradAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-              <span class="w3-large">Bradley Marques</span><br>
-              <span>1 win; 1 Loss</span>
-            </div>
-          </li>
-          <li class="w3-bar greyBackground">
-            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_dylan()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            <img src="assets/avatars/dylanAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-              <span class="w3-large">Dylan Gonzalez</span><br>
-              <span>1 win; 1 Loss</span>
-            </div>
-          </li>
-          <li class="w3-bar greyBackground">
-            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_alania()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            <img src="assets/avatars/alaniaAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-              <span class="w3-large">Alania Bridges</span><br>
-              <span>0 wins; 0 Losses</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="w3-padding-64">
-
-      </div>
+        </div>
     </div>
   </div>
 </div>
-
