@@ -142,7 +142,15 @@ export class GameBoardComponent implements OnInit {
 
     // Ignore if a non-local player.
   }
-
+  showHideChat() {
+    let div = document.getElementById("chatContainer");
+    if(div.style.display !== "none"){
+      div.style.display = "none";
+    }
+    else{
+      div.style.display ="block";
+    }
+  }
   getCurrName() {
     // this.currentUserName = this.afAuth.auth.currentUser.displayName;
     // alert(this.currentUserName);

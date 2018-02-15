@@ -27,14 +27,4 @@ export class ChatComponent implements OnInit {
   newMessage(message) {
     this.messagesCollection.add(message);
   }
-
-  showHideChat() {
-    let div = document.getElementById("chatContainer");
-    if(div.style.display !== "none"){
-      div.style.display = "none";
-    }
-    else{
-      div.style.display ="block";
-    }
-  }
 }
