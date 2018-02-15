@@ -1,24 +1,18 @@
-<p (click)="carousel.leftBy(2)">Left by 2</p>
-<button  class="w3-center w3-left w3-padding w3-large" (click)="carousel.left()">Left</button>
-<p (click)="carousel.goTo(0)">Go to the Start</p>
-<ngx-slideshow #carousel [cards]="1" [cardSize]="'450px'" [padding]="'0px'">
-  <li><img src="https://i.imgur.com/AZayfWA.png?2">
-    <div>The board is setup with pieces filling the first two rows for</div>
+<ngx-slideshow class="w3-text-white" #carousel [cards]="1" [cardSize]="'1200px'" [padding]="'0px'">
+  <li><img src="https://i.imgur.com/eu0I9eZ.gif">
+    <div> The board is setup with pieces filling the first two rows for</div>
     <div>each player. Choose which player will go first. Each player</div>
         <div>can make one move per turn.</div></li>
-  <li ><img src="https://i.imgur.com/pmmdEvf.png?1"><div>A piece may move one space straight or diagonally forward</div>
+  <li ><img src="https://i.imgur.com/YIeftzm.gif"><div> A piece may move one space straight or diagonally forward</div>
     <div>if the target square is empty. In the Image above, the "X"</div>
       <div>piece on D7 can move into any of the highlighted squares. </div></li>
-  <li><img src="https://i.imgur.com/VEZJPq0.png?1"><div>Apiece may move into a square containing an opponent's </div>
+  <li><img src="https://i.imgur.com/VvRvoUY.gif"><div> A piece may move into a square containing an opponent's </div>
     <div>piece if and only if that square is one step diagonally </div>
     <div>forward the opponents piece is then removed.</div></li>
-  <li><img src="https://i.imgur.com/ZSRCgxF.png?1"><div>The "X" from the D5 captured the "O" player here, who </div>
-    <div>on the previous slide was on E4.</div></li>
-  <li><img src="https://i.imgur.com/VNbR6AC.png?1"><div>A player can win the game by getting one of their pieces</div>
-    <div>to the opponents home row. The "X" on G2 can win the </div>
-    <div>game by moving to F1.</div></li>
-  <li><img src="https://i.imgur.com/h3t8gYG.png?1"><div>Player "X" WINS!</div></li>
+  <li><img src="https://i.imgur.com/SPztfRa.gif"><div> A player can win the game by getting one of their pieces</div>
+    <div>to the opponents home row. Player "X" WINS!!!</div></li>
+  <li><img src="https://i.imgur.com/YEdgsXI.gif"><div> A player can also win the game by capturing all </div>
+    <div>of the opponents pieces.. Player "X" WINS!!!</div></li>
 </ngx-slideshow>
-<p (click)="carousel.goTo(5)">Go to the End</p>
-<p (click)="carousel.right()">Right</p>
-<p (click)="carousel.rightBy(2)">Right by 2</p>
+<p class="w3-padding w3-xxlarge w3-display-left w3-text-white w3-hover-opacity fa fa-hand-o-left"(click)="carousel.left()"></p>
+<p class="w3-padding w3-xxlarge w3-display-right w3-text-white w3-hover-opacity fa fa-hand-o-right"(click)="carousel.right()"></p>
