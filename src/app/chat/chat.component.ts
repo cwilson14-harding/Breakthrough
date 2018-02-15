@@ -10,9 +10,11 @@ import {Observable} from "rxjs/Observable";
 export class ChatComponent implements OnInit {
   messagesCollection: AngularFirestoreCollection<any[]>;
   messages: Observable<any[]>;
-  showStyle:false;
+  showStyle = false;
+  chatMessages: any;
 
   constructor(public afs: AngularFirestore) {
+    this.chatMessages = this.afs.collection('chats').valueChanges();
   }
 
   ngOnInit() {
