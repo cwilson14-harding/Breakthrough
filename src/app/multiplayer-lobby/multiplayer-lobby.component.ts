@@ -5,9 +5,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { GameService } from '../game.service';
 import {PlayerData, PlayerType} from '../player-data';
 import * as firebase from 'firebase/app';
-import DocumentChange = firebase.firestore.DocumentChange;
+// import DocumentChange = firebase.firestore.DocumentChange;
 import {Observable} from 'rxjs/Observable';
-import DocumentChangeType = firebase.firestore.DocumentChangeType;
+// import DocumentChangeType = firebase.firestore.DocumentChangeType;
 
 @Component({
   selector: 'app-multiplayer-lobby',

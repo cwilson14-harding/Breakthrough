@@ -45,7 +45,7 @@
     <h1 style="text-align: center">Choose Opponent</h1>
 
     <div class="w3-half">
-      <img src="../../assets/avatars/luke.jpg" style="width: 95%;">
+      <img src="assets/avatars/luke.jpg" style="width: 95%;">
       <div class="w3-padding w3-center">
         <div class="w3-button w3-black">
           Join Game
@@ -165,50 +165,67 @@
   <div class="w3-half">
     <h1 style="text-align: center">Open Games</h1>
     <div>
-      <ul class="w3-ul w3-card-4">
-        <li class="w3-bar greyBackground">
-          <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_luke()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-          <img src="../../assets/avatars/luke.jpg" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-          <div class="w3-bar-item">
-            <span class="w3-large">Luke Uebelein</span><br>
-            <span>0 wins; 25 Losses</span>
-          </div>
-        </li>
+      <div *ngIf="auth.user | async as user">
+        <ul class="w3-ul w3-card-4">
 
-        <li class="w3-bar greyBackground">
-          <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_cj()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-          <img src="../../assets/avatars/cjAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-          <div class="w3-bar-item">
-            <span class="w3-large">C.J. Wilson</span><br>
-            <span>25 wins; 0 Losses</span>
-          </div>
-        </li>
+            <li class="w3-bar greyBackground">
+              <div *ngFor="let open of openGames | async">
+                <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_luke()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                <img src="assets/avatars/luke.jpg" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                <div class="w3-bar-item">
+                  <span class="w3-large">{{open.creatorName}}</span><br>
+                  <span>0 wins; 25 Losses</span>
+                </div>
+              </div>
+            </li>
 
-        <li class="w3-bar greyBackground">
-          <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_brad()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-          <img src="../../assets/avatars/bradAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-          <div class="w3-bar-item">
-            <span class="w3-large">Bradley Marques</span><br>
-            <span>1 win; 1 Loss</span>
-          </div>
-        </li>
-        <li class="w3-bar greyBackground">
-          <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_dylan()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-          <img src="../../assets/avatars/dylanAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-          <div class="w3-bar-item">
-            <span class="w3-large">Dylan Gonzalez</span><br>
-            <span>1 win; 1 Loss</span>
-          </div>
-        </li>
-        <li class="w3-bar greyBackground">
-          <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_alania()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-          <img src="../../assets/avatars/alaniaAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-          <div class="w3-bar-item">
-            <span class="w3-large">Alania Bridges</span><br>
-            <span>0 wins; 0 Losses</span>
-          </div>
-        </li>
-      </ul>
+
+
+          <li class="w3-bar greyBackground">
+            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_luke()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            <img src="assets/avatars/luke.jpg" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            <div class="w3-bar-item">
+              <span class="w3-large">Luke Uebelein</span><br>
+              <span>0 wins; 25 Losses</span>
+            </div>
+          </li>
+
+          <li class="w3-bar greyBackground">
+            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_cj()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            <img src="assets/avatars/cjAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            <div class="w3-bar-item">
+              <span class="w3-large">C.J. Wilson</span><br>
+              <span>25 wins; 0 Losses</span>
+            </div>
+          </li>
+
+          <li class="w3-bar greyBackground">
+            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_brad()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            <img src="assets/avatars/bradAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            <div class="w3-bar-item">
+              <span class="w3-large">Bradley Marques</span><br>
+              <span>1 win; 1 Loss</span>
+            </div>
+          </li>
+          <li class="w3-bar greyBackground">
+            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_dylan()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            <img src="assets/avatars/dylanAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            <div class="w3-bar-item">
+              <span class="w3-large">Dylan Gonzalez</span><br>
+              <span>1 win; 1 Loss</span>
+            </div>
+          </li>
+          <li class="w3-bar greyBackground">
+            <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_alania()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            <img src="assets/avatars/alaniaAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            <div class="w3-bar-item">
+              <span class="w3-large">Alania Bridges</span><br>
+              <span>0 wins; 0 Losses</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
       <div class="w3-padding-64">
 
       </div>
