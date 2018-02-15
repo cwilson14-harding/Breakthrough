@@ -4,10 +4,13 @@
 <div *ngFor="let message of messages | async">
   {{message.$value}}
 </div>
-<div id="chatContainer" class=" w3-container w3-border-color-grey w3-left w3-bottom roundedCorners" style="height: 30vh; width: 40vh; background: #2c2c2c; z-index: 1; opacity: .9">
-  <h1 style="color:#FFF">Real Time Chat</h1>
-  <input type="text" #message placeholder="Your message...">
-  <button class="w3-right btn btn--border btn--primary btn--animated">Send</button>
+<div id="chatContainer" class=" w3-container w3-border-color-grey w3-left w3-bottom roundedCorners" style="height: 60vh; width: 25vw; background: #2c2c2c; z-index: 1; opacity: .9">
+  <h1 style="color:#FFF">Chat</h1>
+  <textarea rows="15" cols="80" readonly>Messages go here...
+
+  </textarea>
+  <input type="text" class="messageBox" #message placeholder="Your message...">
+  <button class="w3-right btn btn--border btn--primary btn--animated">Send Message</button>
 </div>
 <div>
   <button (click)="showHideChat()" style="z-index:1">show/hide chat</button>
