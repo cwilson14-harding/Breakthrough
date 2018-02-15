@@ -35,70 +35,53 @@ input[type=text], textarea {
   -o-transition: all 0.30s ease-in-out;
   outline: none;
   border: 1px solid #DDDDDD;
+  font-family: Raleway;
 }
 
 input[type=text]:focus, textarea:focus {
   box-shadow: 0 0 5px #6646FF;
   border: 1px solid #6646FF;
 }
-.btn {
-  position: relative;
-  display: inline-block;
-  letter-spacing: 1.2px;
-  padding: 12px 32px;
-  margin-top:15px;
-  text-align: center;
-  text-transform: uppercase;
-  overflow: hidden;
-  z-index: 1;
+.btn{
+  padding:8px 16px;
+  margin: 10px 0 0 10px;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
+  color: #ffffff;
+  border: 2px solid lightslategray;
+  background:linear-gradient( 45deg, #fff 50%, #6646FF 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: whitesmoke;
+  position:relative;
+  font-family: Raleway;
 }
-
-.btn--primary {
-  color: lightslategray;
+.btn:after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(45deg, #6646FF 50%, transparent 50%);
+  z-index:-1;
 }
-
-.btn--border {
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 10px;
-  box-sizing: border-box;
+.btn,.btn:after{
+  background-size:300%;
+  background-position:100%;
+  transition:0.3s;
 }
-
-.btn--animated {
-  transition-property: color;
-  transition-duration: 0.5s;
-
-  &.btn--border.btn--primary {
-    border: 1px solid lightslategray;
-  }
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #6646FF;
-    transform: scaleX(0);
-    transform-origin: 0 50%;
-    transition-property: transform;
-    transition-duration: 0.5s;
-    transition-timing-function: ease-out;
-    z-index: -1;
-  }
-
-  &:hover {
-    color: white;
-
-    &:before {
-      transform: scaleX(1);
-      transition-timing-function: cubic-bezier(0.45, 1.64, 0.47, 0.66);
-    }
-  }
+.btn:hover,.btn:hover:after{
+  background-position:0;
+}
+.textStroke{
+  color:#FFF;
+}
+.textStroke:hover{
+  color: #6646FF;
+  text-shadow:
+    -1px -1px 0 #6646FF
+  -1px -1px 0 #6646FF
+  -1px -1px 0 #6646FF
+  -1px -1px 0 #6646FF
 }
