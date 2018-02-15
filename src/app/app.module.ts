@@ -28,6 +28,7 @@ import { ParticlesModule } from 'angular-particle';
 import {GameService} from './game.service';
 import {NgxSlideshowModule} from 'ngx-slideshow';
 import {FormsModule} from "@angular/forms";
+import {NgbModule, NgbTab, NgbTabContent, NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -66,9 +67,10 @@ const appRoutes: Routes = [
     FormsModule,
     TypingAnimationModule,
     ParticlesModule,
-    NgxSlideshowModule.forRoot()
+    NgxSlideshowModule.forRoot(),
+    NgbModule.forRoot()
   ],
-  providers: [AuthService, GameService],
+  providers: [AuthService, GameService, NgbTab, NgbTabset],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

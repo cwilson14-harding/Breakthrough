@@ -23,6 +23,8 @@ export class MultiplayerLobbyComponent implements OnInit {
   isGameCreated: boolean;
   joinerId: string;
   gameUid: string;
+  showLobby = true;
+  showLeaderboard = false;
 
   // Vars for Prototype
   luke = true;
@@ -37,6 +39,15 @@ export class MultiplayerLobbyComponent implements OnInit {
 
   ngOnInit() {
     this.viewOpenGames();
+  }
+
+  goToLobby() {
+    this.showLobby = true;
+    this.showLeaderboard = false;
+  }
+  goToLeaderboard() {
+    this.showLobby = false;
+    this.showLeaderboard = true;
   }
 
   // Methods For PROTOTYPE
