@@ -5,20 +5,20 @@ h1{
 input, textarea {
   display:block;
   width: 100%;
-  margin-bottom:15px;
-  padding:10px;
+  margin-top:50px;
+
   background:none;
-  border-bottom: 1px solid #414a59 !important;
   border-left: 0;
   border-top: 0;
   border-right: 0 ;
+  padding: 12px 20px ;
   color:#fff;
   font-family: 'Raleway', sans-serif;
   border-radius: 5px;
 }
 
 .roundedCorners{
-  border-radius: 25px;
+  border-radius: 20px;
 }
 input[type=text], textarea {
   -webkit-transition: all 0.30s ease-in-out;
@@ -32,4 +32,65 @@ input[type=text], textarea {
 input[type=text]:focus, textarea:focus {
   box-shadow: 0 0 5px #6646FF;
   border: 1px solid #6646FF;
+}
+.btn {
+  position: relative;
+  display: inline-block;
+  letter-spacing: 1.2px;
+  padding: 12px 32px;
+  margin-top:15px;
+  text-align: center;
+  text-transform: uppercase;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn--primary {
+  color: lightslategray;
+}
+
+.btn--border {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.btn--animated {
+  transition-property: color;
+  transition-duration: 0.5s;
+
+  &.btn--border.btn--primary {
+    border: 1px solid lightslategray;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #6646FF;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition-property: transform;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: white;
+
+    &:before {
+      transform: scaleX(1);
+      transition-timing-function: cubic-bezier(0.45, 1.64, 0.47, 0.66);
+    }
+  }
 }
