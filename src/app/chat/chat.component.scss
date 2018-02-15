@@ -2,10 +2,10 @@
 h1{
   font-family: 'Raleway', sans-serif;
 }
-input, textarea {
+.messageBox {
   display:block;
   width: 100%;
-  margin-top:50px;
+  margin-top:15px;
 
   background:none;
   border-left: 0;
@@ -15,6 +15,14 @@ input, textarea {
   color:#fff;
   font-family: 'Raleway', sans-serif;
   border-radius: 5px;
+}
+textarea{
+  background: transparent;
+  max-width:325px;
+  max-height:220px;
+  resize:none;
+  color:whitesmoke;
+  overflow-y: scroll;
 }
 
 .roundedCorners{
