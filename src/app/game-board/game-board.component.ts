@@ -12,6 +12,7 @@ import {PlayerData, PlayerType} from '../player-data';
 import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
 import {Move} from '../models/move';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-game-board',
@@ -29,7 +30,7 @@ export class GameBoardComponent implements OnInit {
   player2: Player;
   board: Board;
 
-  constructor(public db: AngularFirestore, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
+  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService){
     this.board = new Board();
     this.board.newGame();
 
@@ -163,6 +164,9 @@ export class GameBoardComponent implements OnInit {
     } else {
       alert('This is ' + game.creatorName + ' game.');
     }
+  }
+  forfeitGame(){
+    this.router.navigateByUrl(('login'));
   }
 
   ngOnInit() {}
