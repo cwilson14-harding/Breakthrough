@@ -42,11 +42,14 @@
 <div *ngIf="auth.user | async as user">
   <div class="background" *ngIf="showLobby">
     <div class="w3-bar greyBackground ulOpacity">
-      <div class="w3-btn greyBackground ulOpacity" (click)="goToLobby()">
+      <div class="w3-btn selectedButton ulOpacity" (click)="goToLobby()">
         <span class="gameListHeading">Lobby</span>
       </div>
       <div class="w3-btn greyBackground ulOpacity">
         <span class="gameListHeading" (click)="goToLeaderboard()">Leaderboard</span>
+      </div>
+      <div class="w3-btn w3-right greyBackground ulOpacity">
+        <span class="gameListHeading" (click)="goToLogin()">Back</span>
       </div>
     </div>
     <!-- DIV FOR LUKE -->
@@ -258,7 +261,7 @@
         <div class="w3-btn greyBackground ulOpacity" (click)="goToLobby()">
           <span class="gameListHeading">Lobby</span>
         </div>
-        <div class="w3-btn greyBackground ulOpacity">
+        <div class="w3-btn selectedButton ulOpacity">
           <span class="gameListHeading" (click)="goToLeaderboard()">Leaderboard</span>
         </div>
       </div>

@@ -151,6 +151,9 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.auth.logout();
     this.router.navigateByUrl('home');
   }
+  goToLogin(){
+    this.router.navigateByUrl(('login'));
+  }
 
   /* viewOpenGames: function(){}
      Parameters: none
