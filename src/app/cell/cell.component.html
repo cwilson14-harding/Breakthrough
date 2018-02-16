@@ -1,6 +1,10 @@
 <div class="cell {{boardClass}}">
-  {{(state == 1) ? 'X' : (state == 2) ? 'O' : ''}}
-</div>
-<div>
-  {{column}}{{row}}
+  <div style="position: absolute;">
+    <div class="legend">
+      {{column}}{{row}}
+    </div>
+    <div class="w3-display-middle">
+      {{(state == 1) ? 'X' : (state == 2) ? 'O' : ''}}
+    </div>
+  </div>
 </div>
