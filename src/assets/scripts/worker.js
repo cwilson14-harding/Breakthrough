@@ -26,22 +26,33 @@ var MCTSWorker = /** @class */ (function () {
             return null;
         }
     };
+    MCTSWorker.chooseRandomWeighted = function (weightedArray) {
+        var items = [];
+        for (var _i = 0, weightedArray_1 = weightedArray; _i < weightedArray_1.length; _i++) {
+            var item = weightedArray_1[_i];
+            for (var i = 0; i < item[1]; ++i) {
+                items.push(item[0]);
+            }
+        }
+        var rand = Math.floor(Math.random() * items.length);
+        return items[rand];
+    };
     MCTSWorker.chooseMove = function (board) {
         var possibleMoves = this.findPossibleMoves(board);
-        var likelyMoves = [];
+        var weightedMoves = [];
         // Find a list of likely moves.
         for (var _i = 0, possibleMoves_1 = possibleMoves; _i < possibleMoves_1.length; _i++) {
             var move = possibleMoves_1[_i];
             if (board.board[move.to.row][move.to.column] !== 0) {
-                likelyMoves.push(move);
+                weightedMoves.push([move, 60]);
+            }
+            else {
+                weightedMoves.push([move, 1]);
             }
         }
         // Choose a move.
-        if (likelyMoves.length > 0) {
-            return MCTSWorker.chooseRandom(likelyMoves);
-        }
-        else if (possibleMoves.length > 0) {
-            return MCTSWorker.chooseRandom(possibleMoves);
+        if (weightedMoves.length > 0) {
+            return MCTSWorker.chooseRandomWeighted(weightedMoves);
         }
         else {
             return null;
