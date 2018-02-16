@@ -12,7 +12,7 @@ import {PlayerData, PlayerType} from '../player-data';
 import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
 import {Move} from '../models/move';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-game-board',
@@ -30,7 +30,7 @@ export class GameBoardComponent implements OnInit {
   player2: Player;
   board: Board;
 
-  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService){
+  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
     this.board = new Board();
     this.board.newGame();
 
@@ -67,13 +67,20 @@ export class GameBoardComponent implements OnInit {
      Returns a boolean that is true if the move was made, or false if the move was not valid.
   */
   getMove() {
-    this.board.clearHighlighting();
     const currentPlayer = this.currentPlayer;
     if (currentPlayer !== undefined) {
       const movePromise: Promise<Move> = currentPlayer.getMove(this);
 
       movePromise.then((move: Move) => {
+        // Make the move on the game board.
         this.board.makeMove(move);
+
+        // Reset highlighting
+        this.board.clearHighlighting();
+        this.board.boardClass[move.from.row][move.from.column] += ' lastMove';
+        this.board.boardClass[move.to.row][move.to.column] += ' lastMove';
+
+        // Check if the game is over.
         const winner: number = this.board.isGameFinished();
         if (winner) {
           const winnerData: PlayerData = (winner === 1) ? this.gameService.playerOne : this.gameService.playerTwo;
@@ -85,7 +92,7 @@ export class GameBoardComponent implements OnInit {
           this.getMove();
         }
       }, () => {
-        console.log('Move rejected');
+        alert('Move rejected');
       });
     }
   }
@@ -134,9 +141,9 @@ export class GameBoardComponent implements OnInit {
       this.board.selectedCoordinate = localPlayer.selectedCoordinate;
 
       if (localPlayer.selectedCoordinate !== undefined) {
-        this.board.boardClass[localPlayer.selectedCoordinate.row][localPlayer.selectedCoordinate.column] = 'selected';
+        this.board.boardClass[localPlayer.selectedCoordinate.row][localPlayer.selectedCoordinate.column] += ' selected';
         for (const coord of this.board.findAvailableMoves(localPlayer.selectedCoordinate)) {
-          this.board.boardClass[coord.row][coord.column] = 'potentialMove';
+          this.board.boardClass[coord.row][coord.column] += ' potentialMove';
         }
       }
     }
@@ -144,12 +151,11 @@ export class GameBoardComponent implements OnInit {
     // Ignore if a non-local player.
   }
   showHideChat() {
-    let div = document.getElementById("chatContainer");
-    if(div.style.display !== "none"){
-      div.style.display = "none";
-    }
-    else{
-      div.style.display ="block";
+    const div = document.getElementById('chatContainer');
+    if (div.style.display !== 'none') {
+      div.style.display = 'none';
+    } else {
+      div.style.display = 'block';
     }
   }
   getCurrName() {
@@ -165,7 +171,7 @@ export class GameBoardComponent implements OnInit {
       alert('This is ' + game.creatorName + ' game.');
     }
   }
-  forfeitGame(){
+  forfeitGame() {
     this.router.navigateByUrl(('login'));
   }
 
