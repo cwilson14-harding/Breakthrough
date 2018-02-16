@@ -15,11 +15,12 @@
   </div>
   <div class="backImg">
     <div class="w3-container w3-display-middle">
-      <div class="board showPlayerOne">
+      <div class="board">
         <div class="row" *ngFor="let row of [0,1,2,3,4,5,6,7]">
           <app-cell class="cell" *ngFor="let col of [0,1,2,3,4,5,6,7]"
                     [state]="board.board[row][col]"
                     [boardClass]="board.boardClass[row][col]"
+                    [legend]="row.toString()+col.toString()"
                     (click)="selectRowCol([row, col]);">
           </app-cell>
         </div>
