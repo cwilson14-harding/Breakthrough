@@ -94,7 +94,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     background.mouseParallax({ moveFactor: 5 });
   }
 
-
+  anonymousLogin(){
+    this.auth.anonymousLogin();
+    this.router.navigateByUrl('login');
+  }
   facebookLogin() {
     this.auth.facebookLogin();
     this.router.navigateByUrl('login');

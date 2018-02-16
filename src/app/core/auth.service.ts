@@ -69,6 +69,12 @@ export class AuthService {
       winner: 0
     })];
   }
+  anonymousLogin(){
+    firebase.auth().signInAnonymously();
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+      console.log(firebaseUser);
+    });
+  }
 
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
@@ -117,7 +123,6 @@ export class AuthService {
         this.updateUserData(credential.user);
       });
   }
-
   updateGameTypeMulti(user) {
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
     userRef.update({gameType: 'multi', isOnline: true});
