@@ -118,7 +118,7 @@ export class AuthService {
   }
 
   oAuthLogin(provider) {
-    this.afAuth.auth.signInWithPopup(provider)
+    this.afAuth.auth.signInWithRedirect(provider)
       .then((credential) => {
         this.updateUserData(credential.user);
       });
