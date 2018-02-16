@@ -70,13 +70,12 @@ export class AuthService {
     })];
   }
   anonymousLogin(){
-    firebase.auth().signInAnonymously().catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
+    firebase.auth().signInAnonymously();
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+      console.log(firebaseUser);
     });
   }
+
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
     // According to the documentation this line should set the login window to the user's preferred browser language.
