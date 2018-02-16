@@ -69,7 +69,14 @@ export class AuthService {
       winner: 0
     })];
   }
-
+  anonymousLogin(){
+    firebase.auth().signInAnonymously().catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
+  }
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
     // According to the documentation this line should set the login window to the user's preferred browser language.
@@ -117,7 +124,6 @@ export class AuthService {
         this.updateUserData(credential.user);
       });
   }
-
   updateGameTypeMulti(user) {
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
     userRef.update({gameType: 'multi', isOnline: true});
