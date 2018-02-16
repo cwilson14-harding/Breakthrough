@@ -26,7 +26,37 @@ var MCTSWorker = /** @class */ (function () {
             return null;
         }
     };
+    MCTSWorker.chooseMove = function (board) {
+        var possibleMoves = this.findPossibleMoves(board);
+        var likelyMoves = [];
+        // Find a list of likely moves.
+        for (var _i = 0, possibleMoves_1 = possibleMoves; _i < possibleMoves_1.length; _i++) {
+            var move = possibleMoves_1[_i];
+            if (board.board[move.to.row][move.to.column] !== 0) {
+                likelyMoves.push(move);
+            }
+        }
+        // Choose a move.
+        if (likelyMoves.length > 0) {
+            return MCTSWorker.chooseRandom(likelyMoves);
+        }
+        else if (possibleMoves.length > 0) {
+            return MCTSWorker.chooseRandom(possibleMoves);
+        }
+        else {
+            return null;
+        }
+    };
     MCTSWorker.chooseRandomMove = function (board) {
+        var possibleMoves = this.findPossibleMoves(board);
+        if (possibleMoves.length > 0) {
+            return MCTSWorker.chooseRandom(possibleMoves);
+        }
+        else {
+            return null;
+        }
+    };
+    MCTSWorker.findPossibleMoves = function (board) {
         var possibleMoves = [];
         for (var row = 0; row < Board.BOARD_SIZE; ++row) {
             for (var column = 0; column < Board.BOARD_SIZE; ++column) {
@@ -36,18 +66,13 @@ var MCTSWorker = /** @class */ (function () {
                 }
             }
         }
-        if (possibleMoves.length > 0) {
-            return MCTSWorker.chooseRandom(possibleMoves);
-        }
-        else {
-            return null;
-        }
+        return possibleMoves;
     };
     MCTSWorker.prototype.playGame = function (state) {
         this.board.setBoardState(state);
         var winner = 0;
         while (winner === 0) {
-            var move = MCTSWorker.chooseRandomMove(this.board);
+            var move = MCTSWorker.chooseMove(this.board);
             this.board.makeMove(move);
             winner = this.board.isGameFinished();
         }
@@ -130,7 +155,7 @@ var Board = /** @class */ (function () {
      Parameters: location: [number, number]
      The parameter location is a tuple that contains two numbers. These numbers are the x and y
      coordinates for a potential location.
-
+  
      The function checks to see if a move is out of bounds. It returns true if the location
      passed in is in bounds. Otherwise the function returns false.
   */
@@ -142,7 +167,7 @@ var Board = /** @class */ (function () {
        Parameters: location1: [number, number], location2: [number, number]
        The parameters location1 and location2 are tuples that contains two numbers.
        These numbers are the x and y coordinates for a potential location.
-
+  
        This function checks to see if the piece in location1 is okay to move to location2.
        Returns: A boolean that determines if it is okay to move.
     */
