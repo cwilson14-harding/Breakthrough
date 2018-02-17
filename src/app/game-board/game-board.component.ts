@@ -86,6 +86,7 @@ export class GameBoardComponent implements OnInit {
         if (winner) {
           const winnerData: PlayerData = (winner === 1) ? this.gameService.playerOne : this.gameService.playerTwo;
           setTimeout(() => {
+            this.router.navigateByUrl(('game-over'));
             // TODO: Go to game over screen.
             alert(winnerData.name + ' [' + winner + '] has won!');
           }, 1000);
@@ -173,7 +174,7 @@ export class GameBoardComponent implements OnInit {
     }
   }
   forfeitClicked(Null: null) {
-    this.router.navigateByUrl(('login'));
+    this.router.navigateByUrl(('game-over'));
   }
 
   ngOnInit() {}
