@@ -32,7 +32,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { GameOverComponent } from './game-over/game-over.component';
 import { SingleSetupComponent } from './single-setup/single-setup.component';
 import { MultiSetupComponent } from './multi-setup/multi-setup.component';
-import { RouterOutlet } from '@angular/router/src/directives/router_outlet';
+import { RouterOutlet } from '@angular/router';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
