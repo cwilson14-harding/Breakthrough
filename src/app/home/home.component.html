@@ -1,3 +1,10 @@
+<head>
+  <meta name="google-signin-client_id" content="425397411837-tcbd80oknbh1igc5cv33gl9iptgtchvk.apps.googleusercontent.com">
+  <meta name="google-signin-cookiepolicy" content="single_host_origin">
+  <meta name="google-signin-scope" content="profile email">
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+</head>
 <audio autoplay loop id="audioPlayer">
   <source src="../../assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton's.mp3" type="audio/mpeg">
 </audio>
@@ -17,7 +24,6 @@
 
       <div class=" w3-opacity-min">
         <div class="w3-row w3-padding">
-          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="googleLogin()">Login with Google</button>
         </div>
         <div class="w3-row w3-padding">
           <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="facebookLogin()">Login with Facebook</button>
