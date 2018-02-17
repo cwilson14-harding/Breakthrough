@@ -21,10 +21,15 @@ export class AIBoard {
     }
   }
 
-  makeMove(move: Move) {
+  makeMove(move: Move): boolean {
+    if (!this.isValidMove(move)) {
+      return false;
+    }
+
     this.board[move.toIndex] = this.board[move.fromIndex];
     this.board[move.fromIndex] = 0;
     this.turn *= -1;
+    return true;
   }
 
   isGameOver(): number {
@@ -104,5 +109,19 @@ export class AIBoard {
       }
       return result;
     }
+  }
+
+  setGameBoardState(state: string) {
+    this.turn = (state[0] === '1') ? -1 : 1;
+    this.board = [];
+    this.board.length = 64;
+    for (let i = 1; i < state.length; ++i) {
+      this.board[i - 1] = +state[i];
+    }
+  }
+
+  setAIBoardState(state: number[]) {
+    this.turn = state[0];
+    this.board = state.slice(1);
   }
 }
