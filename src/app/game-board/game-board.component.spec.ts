@@ -26,9 +26,8 @@ describe('GameBoardComponent', () => {
   //  let newGameButton = element.all(by.tagName('app-toolbar')).get(0)
   //    .all(by.tagName('button')).get(0);
   //  newGameButton.click().then(function() {
-  //    let board = element(by.tagName('app-game-board'))
-  //      .element(by.tagName('h3')).getText();
-  //    expect(newGameClicked()).toHaveBeenCalled();
+  //    spyOn(GameBoardComponent, 'newGameClicked')
+  //    expect(GameBoardComponent.newGameClicked()).toHaveBeenCalled();
   //  });
- // });
+  //});
 });

@@ -29,6 +29,7 @@ import {NgxSlideshowModule} from 'ngx-slideshow';
 import {FormsModule} from "@angular/forms";
 import {NgbModule, NgbTab, NgbTabContent, NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { GameOverComponent } from './game-over/game-over.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -56,7 +57,8 @@ const appRoutes: Routes = [
     MultiplayerLobbyComponent,
     SettingsComponent,
     SplashScreenComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    GameOverComponent
   ],
   imports: [
     BrowserModule,
