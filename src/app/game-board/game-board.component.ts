@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter} from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {Coordinate} from '../models/game-core/coordinate';
@@ -13,6 +13,7 @@ import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
 import {Move} from '../models/move';
 import {Router} from '@angular/router';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-game-board',
@@ -107,7 +108,7 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  newGame() {
+  newGameClicked(Null: null) {
     // Initialize variables.
     this.board.newGame();
 
@@ -150,7 +151,7 @@ export class GameBoardComponent implements OnInit {
 
     // Ignore if a non-local player.
   }
-  showHideChat() {
+  showChatClicked(Null: null) {
     const div = document.getElementById('chatContainer');
     if (div.style.display !== 'none') {
       div.style.display = 'none';
@@ -171,7 +172,7 @@ export class GameBoardComponent implements OnInit {
       alert('This is ' + game.creatorName + ' game.');
     }
   }
-  forfeitGame() {
+  forfeitClicked(Null: null) {
     this.router.navigateByUrl(('login'));
   }
 

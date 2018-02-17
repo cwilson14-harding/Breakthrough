@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GameBoardComponent } from './game-board.component';
 
 describe('GameBoardComponent', () => {
@@ -22,4 +21,14 @@ describe('GameBoardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  //it('should process new game click', function () {
+  //  let newGameButton = element.all(by.tagName('app-toolbar')).get(0)
+  //    .all(by.tagName('button')).get(0);
+  //  newGameButton.click().then(function() {
+  //    let board = element(by.tagName('app-game-board'))
+  //      .element(by.tagName('h3')).getText();
+  //    expect(newGameClicked()).toHaveBeenCalled();
+  //  });
+ // });
 });
