@@ -1,7 +1,7 @@
-import {Layer} from "./layer";
+import {Layer} from './layer';
 
 export class NeuralNetwork {
-    inputLayer: Layer = new Layer(5);
+    inputLayer: Layer = new Layer(65);
     hiddenLayer: Layer; // Mean number of input and output layers.
     outputLayer: Layer = new Layer(1536);
 
