@@ -8,9 +8,9 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-@Output() newGameClicked: EventEmitter<any>;
-@Output() showChatClicked: EventEmitter<any>;
-@Output() forfeitClicked: EventEmitter<any>;
+@Output() newGameClicked = new EventEmitter<any>();
+@Output() showChatClicked = new EventEmitter<any>();
+@Output() forfeitClicked = new EventEmitter<any>();
 
   constructor() { }
 
