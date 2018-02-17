@@ -97,11 +97,51 @@ export class AuthService {
     return Math.floor(Math.random() * 1000000) + 1;
   }
 
+
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     // According to the documentation this line should set the login window to the user's preferred browser language.
     firebase.auth().useDeviceLanguage();
     return this.oAuthLogin(provider);
+
+    /*console.log('Google Auth Response', googleUser);
+    // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+    let unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
+      unsubscribe();
+      // Check if we are already signed-in Firebase with the correct user.
+      if (!isUserEqual(googleUser, firebaseUser)) {
+        // Build Firebase credential with the Google ID token.
+        let credential = firebase.auth.GoogleAuthProvider.credential(
+          googleUser.getAuthResponse().id_token);
+        // Sign in with credential from the Google user.
+        firebase.auth().signInWithCredential(credential).catch(function(error) {
+          // Handle Errors here.
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          // The email of the user's account used.
+          let email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          let credential = error.credential;
+          // ...
+        });
+      } else {
+        console.log('User already signed-in Firebase.');
+      }
+    });
+    function isUserEqual(googleUser, firebaseUser) {
+      if (firebaseUser) {
+        let providerData = firebaseUser.providerData;
+        for (let i = 0; i < providerData.length; i++) {
+          if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+            providerData[i].uid === googleUser.getBasicProfile().getId()) {
+            // We don't need to reauth the Firebase connection.
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+    */
   }
 
   joinGame(user, game) { // gameId, creatorId
@@ -118,7 +158,7 @@ export class AuthService {
   }
 
   oAuthLogin(provider) {
-    this.afAuth.auth.signInWithRedirect(provider)
+    this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
         this.updateUserData(credential.user);
       });
