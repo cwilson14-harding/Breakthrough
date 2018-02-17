@@ -22,7 +22,7 @@ export class AIBoard {
   }
 
   makeMove(move: Move) {
-    this.board[move.toIndex] = this.board[];
+    this.board[move.toIndex] = this.board[move.fromIndex];
     this.board[move.fromIndex] = 0;
     this.turn *= -1;
   }
