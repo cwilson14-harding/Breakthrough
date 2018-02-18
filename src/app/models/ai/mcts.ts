@@ -1,6 +1,6 @@
 import {Board} from '../board';
 import {Move} from '../move';
-import {Node} from './node';
+import {Node} from '../../sign-in/node';
 import {Coordinate} from '../game-core/coordinate';
 import {MCTSWorkerPool} from './mcts-worker-pool';
 import {Task} from './task';

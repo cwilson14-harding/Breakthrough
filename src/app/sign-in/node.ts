@@ -1,6 +1,6 @@
-import {Board} from '../board';
-import {Move} from '../move';
-import {Coordinate} from '../game-core/coordinate';
+import {Board} from '../models/board';
+import {Move} from '../models/move';
+import {Coordinate} from '../models/game-core/coordinate';
 
 export class Node {
   constructor(board: Board, public move: Move = null, public parent = null) {

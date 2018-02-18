@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var board_1 = require("../board");
-var move_1 = require("../move");
-var coordinate_1 = require("../game-core/coordinate");
+var board_1 = require("../models/board");
+var move_1 = require("../models/move");
+var coordinate_1 = require("../models/game-core/coordinate");
 var Node = /** @class */ (function () {
     function Node(board, move, parent) {
         if (move === void 0) { move = null; }
