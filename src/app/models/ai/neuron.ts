@@ -20,13 +20,12 @@ export class Neuron {
     }
 
     train() {
-
       for (const synapse of this.frontSynapses) {
         // TODO: Be influenced by the values of the front synapses.
       }
 
       for (const synapse of this.backSynapses) {
-        // TODO: Be influenced by the values of the synapses.
+        // TODO: Influenced the values of the synapses.
         synapse.backpropogate(this.value);
       }
     }

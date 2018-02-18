@@ -20,4 +20,11 @@ export class Layer {
         neuron.activate();
       }
     }
+
+    // Train the network
+    train() {
+      for (const neuron of this.neurons) {
+        neuron.train();
+      }
+    }
 }
