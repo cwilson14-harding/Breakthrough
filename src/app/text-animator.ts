@@ -2,9 +2,16 @@ export class TextAnimator {
   private static readonly possible: string = '!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   interval;
   count = 0;
-  constructor(public element: HTMLElement, public message: string, public ms: number) { }
+  message: string;
+  ms: number;
+  element: HTMLElement;
+  constructor() { }
 
-  start() {
+  start(element: HTMLElement, message: string, ms: number) {
+    this.element = element;
+    this.message = message;
+    this.ms = ms;
+
     this.count = 0;
     this.interval = setInterval(() => {
       this.redraw();

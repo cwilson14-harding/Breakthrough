@@ -22,10 +22,9 @@ export class TutorialComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.textAnimator =  new TextAnimator(
-      document.getElementById('messenger'),
+    this.textAnimator =  new TextAnimator();
+    this.textAnimator.start(document.getElementById('messenger'),
       'This is a test message. It\'s really really really really really really really really really really really really really really really really really really really really really really really really long.',
       500);
-    this.textAnimator.start();
   }
 }
