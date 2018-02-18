@@ -3,13 +3,12 @@ import {GameBoardComponent} from '../game-board/game-board.component';
 import {Move} from './move';
 import {MCTS} from './ai/mcts';
 import {NeuralNetwork} from './ai/neural-network';
-import {AIBoard} from './ai/aiboard';
 
 export class AIPlayer2 implements Player {
   board: GameBoardComponent;
   private resolve: Function;
   private reject: Function;
-  //private mcts: MCTS = new MCTS();
+  // private mcts: MCTS = new MCTS();
   private neuralNetwork = new NeuralNetwork();
 
   constructor() {}

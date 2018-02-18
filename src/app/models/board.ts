@@ -69,6 +69,7 @@ export class Board {
         state[row * 8 + col + 1] = this.board[row][col];
       }
     }
+    return state;
   }
 
   setBoardState(state: string) {
