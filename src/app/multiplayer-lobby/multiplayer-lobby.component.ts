@@ -31,7 +31,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   cj = false;
   brad = false;
   dylan = false;
-  alania = false;
+  alaina = false;
 
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
@@ -56,35 +56,35 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.cj = false;
     this.brad = false;
     this.dylan = false;
-    this.alania = false;
+    this.alaina = false;
   }
   click_cj() {
     this.luke = false;
     this.cj = true;
     this.brad = false;
     this.dylan = false;
-    this.alania = false;
+    this.alaina = false;
   }
   click_brad() {
     this.luke = false;
     this.cj = false;
     this.brad = true;
     this.dylan = false;
-    this.alania = false;
+    this.alaina = false;
   }
   click_dylan() {
     this.luke = false;
     this.cj = false;
     this.brad = false;
     this.dylan = true;
-    this.alania = false;
+    this.alaina = false;
   }
-  click_alania() {
+  click_alaina() {
     this.luke = false;
     this.cj = false;
     this.brad = false;
     this.dylan = false;
-    this.alania = true;
+    this.alaina = true;
   }
 
   /* createNewGame: function(){}

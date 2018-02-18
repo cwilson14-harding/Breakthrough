@@ -32,8 +32,8 @@ export class NeuralNetwork {
 
       // Train the network.
       this.outputLayer.train();
-      this.hiddenLayer.activate();
-      this.inputLayer.activate();
+      this.hiddenLayer.train();
+      this.inputLayer.train();
 
       return move;
     }
