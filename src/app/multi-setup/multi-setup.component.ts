@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+// import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-multi-setup',
@@ -14,7 +15,11 @@ export class MultiSetupComponent implements OnInit {
   }
 
   goToBoard(){
-    this.router.navigateByUrl(('game-board'));
+    this.router.navigateByUrl(('board'));
+  }
+
+  returnToMenu(){
+    this.router.navigateByUrl(('login'));
   }
 
 }

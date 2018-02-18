@@ -118,10 +118,11 @@ export class MultiplayerLobbyComponent implements OnInit {
      If the user's uid property does not match the game's creatorId property then the person joining the game is
      navigated to the board where gameplay can commence.
   */
-  joinGame(user: User, game: Game) { // creatorId, gameId
+  joinGame() { // creatorId, gameId // used to be user: User, game: Game
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
-    this.auth.joinGame(user, game);
+
+  /*  this.auth.joinGame(user, game);
     const localPlayer = new PlayerData(game.creatorName, user.photoURL, PlayerType.Local);
     const remotePlayer = new PlayerData(game.joinerName, '', PlayerType.Local); // TODO: PlayerType.Network);
 
@@ -130,8 +131,8 @@ export class MultiplayerLobbyComponent implements OnInit {
     } else {
       this.gameService.newGame(remotePlayer, localPlayer, game.gameId);
     }
-
-    this.router.navigateByUrl('multi-setup');
+    */
+    this.router.navigateByUrl(('multi-setup'));
     // if (user.uid === game.creatorId) {
     //   alert('Can\'t join your own game.')
     // } else {
