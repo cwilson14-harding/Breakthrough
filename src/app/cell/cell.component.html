@@ -4,7 +4,12 @@
       {{column}}{{row}}
     </div>
     <div class="w3-display-middle">
-      {{(state == 1) ? 'X' : (state == 2) ? 'O' : ''}}
+      <div *ngIf="state==1" style="width: 30%;">
+        <img src="assets/sprites/human game piece.png">
+      </div>
+      <div *ngIf="state==2">
+        <img src="assets/sprites/AI game piece.png">
+      </div>
     </div>
   </div>
 </div>
