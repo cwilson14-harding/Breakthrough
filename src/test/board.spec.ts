@@ -2,6 +2,7 @@ import { Coordinate } from '../app/models/game-core/coordinate';
 import {Board} from '../app/models/board';
 import {inject} from '@angular/core/testing';
 import {Move} from '../app/models/move';
+import {AIBoard} from '../app/models/ai/aiboard';
 
 describe('GameBoard', function () {
     it('approves given location', function() {
@@ -87,5 +88,12 @@ describe('GameBoard', function () {
     move = new Move(new Coordinate(2, 0), new Coordinate(4, 0));
     const case2 = board.makeMove(move);
     expect(case1 || case2).toBeFalsy();
+  }));
+
+  it('should detect invalid team moves', inject([], () => {
+    const board: Board = new Board();
+    board.newGame();
+    const move: Move = new Move(new Coordinate(6, 7), new Coordinate(5, 7));
+    expect(board.isMoveValid(move)).toBeFalsy();
   }));
 });

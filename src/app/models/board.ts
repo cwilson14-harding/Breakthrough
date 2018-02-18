@@ -60,6 +60,17 @@ export class Board {
     return state;
   }
 
+  getAIBoardState(): number[] {
+    const state: number[] = [];
+    state.length = 65;
+    state[0] = (this.playerTurn === 1) ? -1 : 1;
+    for (let row = 0; row < Board.BOARD_SIZE; ++row) {
+      for (let col = 0; col < Board.BOARD_SIZE; ++col) {
+        state[row * 8 + col + 1] = this.board[row][col];
+      }
+    }
+  }
+
   setBoardState(state: string) {
     this.playerTurn = +state[0];
     this.board = [];

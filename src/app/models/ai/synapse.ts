@@ -5,6 +5,10 @@ export class Synapse {
     leftNeuron: Neuron;
     rightNeuron: Neuron;
 
+    push(value: number) {
+      // TODO: Let the edge value of this synapse be influenced.
+    }
+
     propogate() {
 
     }

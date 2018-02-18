@@ -52,6 +52,13 @@ describe('AIBoard', () => {
     expect(board.isValidMove(move)).toBeFalsy();
   }));
 
+  it('should detect invalid team moves', inject([], () => {
+    const board: AIBoard = new AIBoard();
+    board.newGame();
+    const move: Move = new Move(new Coordinate(6, 7), new Coordinate(5, 7));
+    expect(board.isValidMove(move)).toBeFalsy();
+  }));
+
   it('should detect invalid diagonal moves', inject([], () => {
     const board: AIBoard = new AIBoard();
     board.newGame();
