@@ -22,9 +22,25 @@ export class TutorialComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.textAnimator =  new TextAnimator();
-    this.textAnimator.start(document.getElementById('messenger'),
-      'This is a test message. It\'s really really really really really really really really really really really really really really really really really really really really really really really really long.',
-      500);
+      this.textAnimator = new TextAnimator();
+      this.textAnimator.start(document.getElementById('messenger'),
+        'The game starts with two players and the first two rows filled with their pieces.',
+        100);
+      this.textAnimator = new TextAnimator();
+      this.textAnimator.start(document.getElementById('messenger2'),
+        'A player can move one piece forward or diagonally forward, once per turn.',
+        100);
+      this.textAnimator = new TextAnimator();
+      this.textAnimator.start(document.getElementById('messenger3'),
+        'A player can capture an opponent\'s piece if and only if the opponent is in a forward diagonal space.',
+        100);
+      this.textAnimator = new TextAnimator();
+      this.textAnimator.start(document.getElementById('messenger4'),
+        'The main objective of the game is to get one of you\'re pieces into the opponent\'s home row.',
+        100);
+      this.textAnimator = new TextAnimator();
+      this.textAnimator.start(document.getElementById('messenger5'),
+        'The only other way to win is to capture all of you\'re opponent\'s pieces.',
+        100);
   }
 }
