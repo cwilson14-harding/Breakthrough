@@ -174,6 +174,7 @@ export class GameBoardComponent implements OnInit {
     }
   }
   forfeitClicked(Null: null) {
+    // TODO: CONFIRM before forfeit
     this.router.navigateByUrl(('game-over'));
   }
 

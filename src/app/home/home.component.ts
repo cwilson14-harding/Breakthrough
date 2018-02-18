@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 // In progress code. Working on play pause for music on the home page.
 
   singlePlayer() {
-    this.router.navigateByUrl('/single-player');
+    this.router.navigateByUrl('single-setup');
   }
 
   tutorial() {

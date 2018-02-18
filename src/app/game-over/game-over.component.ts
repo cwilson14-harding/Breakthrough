@@ -14,6 +14,10 @@ export class GameOverComponent implements OnInit {
   ngOnInit() {
   }
 
+returnToLeaderboard() {
+  this.router.navigateByUrl(('multiPlayerLobby'));
+}
+
   returnToMenu(){
     this.router.navigateByUrl(('login'));
   }

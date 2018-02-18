@@ -131,7 +131,7 @@ export class MultiplayerLobbyComponent implements OnInit {
       this.gameService.newGame(remotePlayer, localPlayer, game.gameId);
     }
 
-    this.router.navigateByUrl('board');
+    this.router.navigateByUrl('multi-setup');
     // if (user.uid === game.creatorId) {
     //   alert('Can\'t join your own game.')
     // } else {

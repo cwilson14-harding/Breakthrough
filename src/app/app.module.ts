@@ -45,6 +45,7 @@ const appRoutes: Routes = [
   { path: 'game-over', pathMatch: 'full', component: GameOverComponent},
   { path: 'single-setup', pathMatch: 'full', component: SingleSetupComponent},
   { path: 'multi-setup', pathMatch: 'full', component: MultiSetupComponent},
+  { path: 'leaderboard', pathMatch: 'full', component: LeaderboardComponent},
   { path: '**', redirectTo: 'home'}
 ];
 
