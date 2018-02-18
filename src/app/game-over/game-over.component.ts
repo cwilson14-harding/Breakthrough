@@ -15,6 +15,6 @@ export class GameOverComponent implements OnInit {
   }
 
   returnToMenu(){
-    this.router.navigateByUrl(('login'));
+    this.router.navigateByUrl(('main-menu'));
   }
 }

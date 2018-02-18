@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   anonymousLogin(){
     this.auth.anonymousLogin();
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('main-menu');
   }
 
   gameBoard() {

@@ -9,7 +9,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-import { LoginComponent } from './login/login.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 import { AuthService } from './core/auth.service';
 
 import { Routes, RouterModule } from '@angular/router';
@@ -38,7 +38,7 @@ const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
   { path: 'home', pathMatch: 'full', component: HomeComponent},
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
-  { path: 'login', pathMatch: 'full', component: LoginComponent},
+  { path: 'main-menu', pathMatch: 'full', component: MainMenuComponent},
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
   { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
@@ -51,7 +51,7 @@ const appRoutes: Routes = [
     AppComponent,
     GameBoardComponent,
     CellComponent,
-    LoginComponent,
+    MainMenuComponent,
     HomeComponent,
     TutorialComponent,
     IntroComponent,
