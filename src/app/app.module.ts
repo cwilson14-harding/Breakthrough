@@ -33,6 +33,7 @@ import { GameOverComponent } from './game-over/game-over.component';
 import { SingleSetupComponent } from './single-setup/single-setup.component';
 import { MultiSetupComponent } from './multi-setup/multi-setup.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { GuestInfoComponent } from './guest-info/guest-info.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -43,6 +44,7 @@ const appRoutes: Routes = [
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
   { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: 'sign-in', pathMatch: 'full', component: SignInComponent},
+  { path: 'guest-info', pathMatch: 'full', component: GuestInfoComponent},
   { path: '**', redirectTo: 'home'}
 ];
 
@@ -66,6 +68,7 @@ const appRoutes: Routes = [
     SingleSetupComponent,
     MultiSetupComponent,
     SignInComponent,
+    GuestInfoComponent,
   ],
   imports: [
     BrowserModule,

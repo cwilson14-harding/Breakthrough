@@ -70,12 +70,8 @@ export class AuthService {
     })];
   }
   anonymousLogin(){
-    firebase.auth().signInAnonymously().then((credential)=>{
-      this.updateUserData(credential.user);
-    });
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-      console.log(firebaseUser);
-    });
+   // firebase.auth().signInAnonymously();
+    this.afAuth.auth.signInAnonymously();
   }
 
   createAccountWithEmail(email){
