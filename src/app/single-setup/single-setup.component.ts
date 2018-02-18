@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-single-setup',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SingleSetupComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
+
+  goToBoard(){
+    this.router.navigateByUrl(('board'));
+  }
+
+  returnToMenu(){
+    this.router.navigateByUrl(('login'));
+  }
+
 
 }
