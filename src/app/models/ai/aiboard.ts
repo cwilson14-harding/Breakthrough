@@ -86,16 +86,19 @@ export class AIBoard {
       return false;
     }
 
-    const row = fromIndex + (8 * this.turn);
-    // Verify frontal moves are not blocked.
-    if (toIndex === row && this.board[toIndex] !== 0) {
+    const row = fromIndex + (8 * this.turn * -1);
+    // Verify that the row we are moving to is the next row.
+    if (Math.floor(toIndex / 8) !== Math.floor(row / 8)) {
       return false;
     }
 
+    // Verify frontal moves are not blocked.
+    if (toIndex === fromIndex + 8) {
+      return this.board[toIndex] === 0;
+    }
+
     // Verify that diagonal moves are at the correct locations and are not blocked by a friendly piece.
-    return ((toIndex === row + 1 && row / 8 === (row + 1) / 8) ||
-      (toIndex === row - 1 && row / 8 === (row - 1) / 8)) &&
-      this.board[toIndex] !== this.turn;
+    return (toIndex === row + 1 || toIndex === row - 1) && this.board[toIndex] !== this.turn;
   }
 
   getState(team: number): number[] {
@@ -111,7 +114,7 @@ export class AIBoard {
     }
   }
 
-  setGameBoardState(state: string) {
+  setGUIBoardState(state: string) {
     this.turn = (state[0] === '1') ? -1 : 1;
     this.board = [];
     this.board.length = 64;
