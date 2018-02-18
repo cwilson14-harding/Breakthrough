@@ -37,7 +37,7 @@ export class AuthService {
   gameRef;
   joinerId;
   gameId: string;
-
+  password = 'E3UdZuQ@02ixfa3J##us4ZbY29Azh8Iiwv46gsbBU#o%4XMqIfrW$EqW7fYU^#b3';
 
   constructor(public afAuth: AngularFireAuth, public db: AngularFirestore, public router: Router) {
     //// Get auth data, then get firestore user document || null
@@ -70,10 +70,19 @@ export class AuthService {
     })];
   }
   anonymousLogin(){
-    firebase.auth().signInAnonymously();
+    firebase.auth().signInAnonymously().then((credential)=>{
+      this.updateUserData(credential.user);
+    });
     firebase.auth().onAuthStateChanged(firebaseUser => {
       console.log(firebaseUser);
     });
+  }
+
+  createAccountWithEmail(email){
+    firebase.auth().createUserWithEmailAndPassword(email, this.password).then((credential)=>{
+      this.updateUserData(credential.user);
+    });
+
   }
 
   facebookLogin() {
@@ -156,6 +165,9 @@ export class AuthService {
   logout() {
     return this.afAuth.auth.signOut();
   }
+  loginUserWithEmail(email){
+    firebase.auth().signInWithEmailAndPassword(email, this.password);
+  }
 
   oAuthLogin(provider) {
     this.afAuth.auth.signInWithPopup(provider)
@@ -174,13 +186,14 @@ export class AuthService {
   }
 
   private updateUserData(user) {
-    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
+    const uid = Math.random().toString();
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${uid}`);
 
     const data: User = {
-      uid: user.uid,
+      uid: uid,
       email: user.email,
-      photoURL: user.photoURL,
-      displayName: user.displayName,
+      photoURL: '',
+      displayName: user.email,
       isOnline: user.isOnline = false,
       gameType: user.gameType = '',
       wins: user.wins = 0,

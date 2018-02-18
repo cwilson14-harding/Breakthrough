@@ -22,6 +22,9 @@ declare var $: any;
   ]
 })
 export class SignInComponent implements OnInit, AfterViewInit {
+  btnCreateAccount: any;
+  btnLogin: any;
+  txtEmail;
   height = 100;
   myParams: object = {};
   myStyle: object = {};
@@ -29,7 +32,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
   playBackgroundMusic: boolean;
   state = 'inactive';
   width = 100;
-
   @HostListener('document: keypress', ['$event'])
   playPauseBackgroundMusic(event: KeyboardEvent) {
     const audio = document.getElementById('audioPlayer') as any;
@@ -47,7 +49,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, public auth: AuthService) {
     this.pauseBackgroundMusic = false;
-    this.playBackgroundMusic = true;
+
   }
 
   toggleState() {
@@ -93,4 +95,18 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const background = $('.backImg');
     background.mouseParallax({moveFactor: 5});
   }
+  createAccount(){
+    this.txtEmail = document.getElementById('inputEmail');
+    const email = this.txtEmail.value;
+    this.btnCreateAccount = document.getElementById('createAccount');
+    const promise = this.auth.createAccountWithEmail(email);
+  }
+  signInWithEmail(){
+    this.txtEmail = document.getElementById('inputEmail');
+    const email = this.txtEmail.value;
+    this.btnLogin = document.getElementById('loginButton');
+    const promise = this.auth.loginUserWithEmail(email);
+
+  }
+
 }

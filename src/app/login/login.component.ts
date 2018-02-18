@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import { GameService } from '../game.service';
 declare var $: any;
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
