@@ -5,11 +5,11 @@ export class Synapse {
     leftNeuron: Neuron;
     rightNeuron: Neuron;
 
-    propogate() {
-
+    propogate(value: number) {
+      // TODO: Let the edge value of this synapse be influenced.
     }
 
-    backpropogate() {
-
+    backpropogate(value: number) {
+      // TODO: Let the weight of this synapse be influenced.
     }
 }

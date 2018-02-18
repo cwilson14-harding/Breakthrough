@@ -13,4 +13,18 @@ export class Layer {
     connect(layer: Layer) {
 
     }
+
+    // Activates a whole layer of neurons.
+    activate() {
+      for (const neuron of this.neurons) {
+        neuron.activate();
+      }
+    }
+
+    // Train the network
+    train() {
+      for (const neuron of this.neurons) {
+        neuron.train();
+      }
+    }
 }
