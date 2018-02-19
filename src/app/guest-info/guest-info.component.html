@@ -21,8 +21,8 @@
         <div class="form">
           <input id="inputGuestName" type="text" placeholder=' Display name' autofocus required>
           <div>
-            <p style="color: white">Select an Avatar: </p>
-            <div class="w3-third">
+            <h3 style="color: white;">Select an Avatar </h3>
+            <div class="w3-third" style="padding-top: 5%">
               <div (click)="circleSelected()">
                 <div *ngIf="avatar1Selected" style="background-color: #00FFFF; opacity: .9">
                   <img src="assets/avatars/circle.png" width="50%">
@@ -32,7 +32,7 @@
                 </div>
               </div>
             </div>
-            <div class="w3-third">
+            <div class="w3-third" style="padding-top: 5%; padding-bottom: 10%">
               <div (click)="virusSelected()">
                 <div *ngIf="avatar2Selected" style="background-color: #00FFFF; opacity: .9">
                   <img src="assets/avatars/virus.png" width="50%">
@@ -42,7 +42,7 @@
                 </div>
               </div>
             </div>
-            <div class="w3-third">
+            <div class="w3-third" style="padding-top: 5%">
               <div (click)="virus2Selected()">
                 <div *ngIf="avatar3Selected" style="background-color: #00FFFF; opacity: .9">
                   <img src="assets/avatars/virus2.png" width="50%">
