@@ -33,6 +33,13 @@ export class GuestInfoComponent implements OnInit {
   playBackgroundMusic: boolean;
   state = 'inactive';
   width = 100;
+
+  // avatar Css bools
+  avatar1Selected = false;
+  avatar2Selected = false;
+  avatar3Selected = false;
+  currentPic: string;
+
   @HostListener('document: keypress', ['$event'])
   playPauseBackgroundMusic(event: KeyboardEvent) {
     const audio = document.getElementById('audioPlayer') as any;
@@ -96,17 +103,45 @@ export class GuestInfoComponent implements OnInit {
     const background = $('.backImg');
     background.mouseParallax({moveFactor: 5});
   }
-  continue(){
+  continue() {
+
+    if (this.avatar1Selected == true) {
+      this.currentPic = 'assets/avatars/circle.png';
+    } else if (this.avatar2Selected == true) {
+      this.currentPic = 'assets/avatars/virus.png';
+    } else if (this.avatar3Selected == true) {
+      this.currentPic = 'assets/avatars/virus2.png';
+    } else {
+      alert('Please choose an avatar!');
+    }
+
     this.txtDisplayName = document.getElementById('inputGuestName');
     const displayName = this.txtDisplayName.value;
 
     let currUserId = this.auth.getCurrentUser();
     this.afs.collection('users').doc(currUserId).set({
       displayName: displayName,
-      uid: currUserId
+      uid: currUserId,
+      pic: this.currentPic
     }).then(() => {
       this.router.navigateByUrl('main-menu');
     });
+  }
+
+  circleSelected() {
+    this.avatar1Selected = true;
+    this.avatar2Selected = false;
+    this.avatar3Selected = false;
+  }
+  virusSelected() {
+    this.avatar1Selected = false;
+    this.avatar2Selected = true;
+    this.avatar3Selected = false;
+  }
+  virus2Selected() {
+    this.avatar1Selected = false;
+    this.avatar2Selected = false;
+    this.avatar3Selected = true;
   }
 
 }

@@ -256,7 +256,7 @@
           <!-- Using Firebase -->
           <li *ngFor="let open of openGames | async" class="w3-bar greyBackground" [@flyInOut]="state">
             <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="deleteGame(user.uid)"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-            <img src="assets/avatars/circle.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            <img src='{{open.pic}}' class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
             <div class="w3-bar-item">
               <span class="gameListHeading">{{open.creatorName}}</span><br>
               <span class="gameListText">0 wins; 0 Losses</span>

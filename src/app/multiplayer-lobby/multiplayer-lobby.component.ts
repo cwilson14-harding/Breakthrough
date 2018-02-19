@@ -38,6 +38,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   gameUid: string;
   showLobby = true;
   showLeaderboard = false;
+  currAvatar;
 
   // user vars
   currUserName;
@@ -165,9 +166,11 @@ export class MultiplayerLobbyComponent implements OnInit {
     let userInfo = userDoc.valueChanges();
     userInfo.subscribe(res => {
       this.currUserName = res['displayName'];
+      this.currAvatar = res['pic'];
 
       this.db.collection('games').doc(userId).set({
         creatorName: this.currUserName,
+        pic: this.currAvatar,
         creatorId: userId,
         state: 'open',
         type: 'multi',
