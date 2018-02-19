@@ -7,12 +7,25 @@ import {PlayerData, PlayerType} from '../player-data';
 import * as firebase from 'firebase/app';
 // import DocumentChange = firebase.firestore.DocumentChange;
 import {Observable} from 'rxjs/Observable';
+import {animate, state, style, transition, trigger} from "@angular/animations";
 // import DocumentChangeType = firebase.firestore.DocumentChangeType;
 
 @Component({
   selector: 'app-multiplayer-lobby',
   templateUrl: './multiplayer-lobby.component.html',
-  styleUrls: ['./multiplayer-lobby.component.scss']
+  styleUrls: ['./multiplayer-lobby.component.scss'],
+  animations: [
+    trigger('flyInOut', [
+      state('in', style({transform: 'translateX(100)'})),
+      transition('void => *', [
+        style({transform: 'translateX(-25%)'}),
+        animate(350)
+      ]),
+      transition('* => void', [
+        animate(300, style({transform: 'translateX(50%)'}))
+      ])
+    ])
+  ]
 })
 export class MultiplayerLobbyComponent implements OnInit {
 
@@ -146,14 +159,24 @@ export class MultiplayerLobbyComponent implements OnInit {
      });
   }
 
-  createGame() {
-    let currUserId = this.auth.getCurrentUser();
+  createGame(userId) {
 
-    this.auth.getAnonymousInfo(currUserId).subscribe(info => {
-      this.currUserName = info.displayName;
+    let userDoc = this.db.collection('users').doc(userId);
+    let userInfo = userDoc.valueChanges();
+    userInfo.subscribe(res => {
+      this.currUserName = res['displayName'];
+
+      this.db.collection('games').doc(userId).set({
+        creatorName: this.currUserName,
+        creatorId: userId,
+        state: 'open',
+        type: 'multi',
+        gameId: userId,
+      })
     });
-
-    alert(this.currUserName);
+  }
+  deleteGame(userId) {
+    this.db.collection('games').doc(userId).delete();
   }
 
   /* joinGame: function(){}
