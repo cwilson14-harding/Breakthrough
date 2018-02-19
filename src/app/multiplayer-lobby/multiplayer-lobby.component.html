@@ -239,6 +239,7 @@
               <span class="gameListText">1 win; 1 Loss</span>
             </div>
           </li>
+          <!--
           <li class="w3-bar greyBackground">
             <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="click_dylan()"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
             <img src="assets/avatars/dylanAvatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
@@ -254,7 +255,7 @@
               <span class="gameListHeading">Alaina Bridges</span><br>
               <span class="gameListText">0 wins; 0 Losses</span>
             </div>
-          </li>
+          </li> -->
 
           <!-- Using Firebase -->
           <li *ngFor="let open of openGames | async" class="w3-bar greyBackground" [@flyInOut]="state">
