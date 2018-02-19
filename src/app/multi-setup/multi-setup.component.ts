@@ -19,7 +19,7 @@ export class MultiSetupComponent implements OnInit {
   }
 
   returnToMenu(){
-    this.router.navigateByUrl(('login'));
+    this.router.navigateByUrl(('multiPlayerLobby'));
   }
 
 }
