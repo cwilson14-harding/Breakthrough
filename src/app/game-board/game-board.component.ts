@@ -13,6 +13,7 @@ import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
 import {Move} from '../models/move';
 import {Router} from '@angular/router';
+import {HostListener} from '@angular/core';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
@@ -30,6 +31,22 @@ export class GameBoardComponent implements OnInit {
   player1: Player;
   player2: Player;
   board: Board;
+  pauseBackgroundMusic: boolean;
+  playBackgroundMusic: boolean;
+  @HostListener('document: keypress', ['$event'])
+  playPauseBackgroundMusic(event: KeyboardEvent) {
+    const audio = document.getElementById('audioPlayer') as any;
+    const key = event.keyCode;
+    if (key === 32 && this.playBackgroundMusic) {
+      this.pauseBackgroundMusic = true;
+      this.playBackgroundMusic = false;
+      audio.pause();
+    } else if (key === 32 && !this.playBackgroundMusic) {
+      this.pauseBackgroundMusic = false;
+      this.playBackgroundMusic = true;
+      audio.play();
+    }
+  }
 
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
     this.board = new Board();

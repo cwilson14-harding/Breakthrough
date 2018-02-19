@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
@@ -20,7 +20,22 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   width = 100;
   height = 100;
   showTutorial = false;
-
+  pauseBackgroundMusic: boolean;
+  playBackgroundMusic: boolean;
+  @HostListener('document: keypress', ['$event'])
+  playPauseBackgroundMusic(event: KeyboardEvent) {
+    const audio = document.getElementById('audioPlayer') as any;
+    const key = event.keyCode;
+    if (key === 32 && this.playBackgroundMusic) {
+      this.pauseBackgroundMusic = true;
+      this.playBackgroundMusic = false;
+      audio.pause();
+    } else if (key === 32 && !this.playBackgroundMusic) {
+      this.pauseBackgroundMusic = false;
+      this.playBackgroundMusic = true;
+      audio.play();
+    }
+  }
   constructor(public auth: AuthService, private db: AngularFirestore, private router: Router, private gameService: GameService) {
     this.onlineUsers();
   }
