@@ -104,8 +104,9 @@ export class GuestInfoComponent implements OnInit {
     this.afs.collection('users').doc(currUserId).set({
       displayName: displayName,
       uid: currUserId
-    })
-    this.router.navigateByUrl('main-menu');
+    }).then(() => {
+      this.router.navigateByUrl('main-menu');
+    });
   }
 
 }
