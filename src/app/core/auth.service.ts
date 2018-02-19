@@ -38,6 +38,7 @@ export class AuthService {
   joinerId;
   gameId: string;
   password = 'E3UdZuQ@02ixfa3J##us4ZbY29Azh8Iiwv46gsbBU#o%4XMqIfrW$EqW7fYU^#b3';
+  anonymousInfo;
 
   constructor(public afAuth: AngularFireAuth, public db: AngularFirestore, public router: Router) {
     //// Get auth data, then get firestore user document || null
@@ -96,6 +97,11 @@ export class AuthService {
   getCurrentUser() {
     const currentUser = this.afAuth.auth.currentUser;
     return currentUser.uid;
+  }
+
+  getAnonymousInfo(id) {
+    this.anonymousInfo = this.db.doc('/users/'+id).valueChanges();
+    return this.anonymousInfo;
   }
 
   generateRandomNumber() {

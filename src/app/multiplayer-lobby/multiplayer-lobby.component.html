@@ -39,45 +39,50 @@
 
 <!--  EVERYTHING BELOW IS A PROTOTYPE WITH FAKE INFO THAT IS HARD CODED IN -->
 
+<particles [params]="myParams" [style]="myStyle" [width]=100 [height]=100>
+</particles>
+
 <div *ngIf="auth.user | async as user">
   <div class="background" *ngIf="showLobby">
-    <div class="w3-bar greyBackground ulOpacity">
-      <div class="w3-btn selectedButton ulOpacity" (click)="goToLobby()">
-        <span class="gameListHeading">Lobby</span>
-      </div>
-      <div class="w3-btn greyBackground ulOpacity">
-        <span class="gameListHeading" (click)="goToLeaderboard()">Leaderboard</span>
-      </div>
-      <div class="w3-btn w3-right greyBackground ulOpacity">
-        <span class="gameListHeading" (click)="goToLogin()">Back</span>
+    <div style="z-index: 1">
+      <div class="w3-bar greyBackground ulOpacity">
+        <div class="w3-btn selectedButton ulOpacity" (click)="goToLobby()">
+          <span class="gameListHeading">Lobby</span>
+        </div>
+        <div class="w3-btn greyBackground ulOpacity">
+          <span class="gameListHeading" (click)="goToLeaderboard()">Leaderboard</span>
+        </div>
+        <div class="w3-btn w3-right greyBackground ulOpacity">
+          <span class="gameListHeading" (click)="goToLogin()">Back</span>
+        </div>
       </div>
     </div>
     <!-- DIV FOR LUKE -->
-    <div class="w3-half" *ngIf="luke">
+    <div class="w3-half" *ngIf="luke" style="position: relative; z-index: 1">
       <h1 class="headingText">Choose Opponent</h1>
 
-      <div>
-        <div class="w3-center">
-          <img src="assets/avatars/luke.jpg" style="width: 40%;">
-          <div class = "infoText">
-            Name: Luke Uebelein
-            <br>
-            Wins: 0
-            <br>
-            Losses: 25
+        <div>
+          <div class="w3-center">
+            <img src="assets/avatars/luke.jpg" style="width: 40%;">
+            <div class = "infoText">
+              Name: Luke Uebelein
+              <br>
+              Wins: 0
+              <br>
+              Losses: 25
+            </div>
           </div>
-        </div>
 
-        <div class="w3-padding w3-center">
-          <div class="w3-button w3-black button" (click)="joinGame()">
-            Join Game
-          </div>
-          <div class="w3-button w3-black button" (click)="createGame()">
-            Create Game
+          <div class="w3-padding w3-center">
+            <div class="w3-button w3-black button" (click)="joinGame()">
+              Join Game
+            </div>
+            <div class="w3-button w3-black button" (click)="createGame()">
+              Create Game
+            </div>
           </div>
         </div>
       </div>
-    </div>
     <!-- DIV FOR CJ -->
     <div class="w3-half" *ngIf="cj">
       <h1 class="headingText">Choose Opponent</h1>
@@ -253,7 +258,6 @@
       </div>
     </div>
   </div>
-
   <!-- LEADERBOARD DIV -->
   <div *ngIf="auth.user | async as user">
     <div class="background" *ngIf="showLeaderboard">

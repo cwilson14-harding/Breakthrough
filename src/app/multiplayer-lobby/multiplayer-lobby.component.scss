@@ -2,18 +2,19 @@
 
 .background{
   background-color: #6B5B95;
-  background-image: url("../../assets/backgrounds/lobby.jpg");
+  background-image: url("../../assets/backgrounds/lobbybackground2.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
   width: 100vw;
 }
 .greyBackground{
-  background-color: #AA99AA;
+  // background-color: #AA99AA;
+   background-color: 	#696969;
 }
 
 .selectedButton {
-  background-color: #665b66;
+  background-color: #494949;
   color: white;
 }
 
@@ -27,10 +28,12 @@
 .gameListHeading {
   font-family: 'Rajdhani', sans-serif;
   font-size: 150%;
+  color: white;
 }
 .gameListText {
   font-family: 'Rajdhani', sans-serif;
   font-size: 100%;
+  color: white;
 }
 
 .headingText{

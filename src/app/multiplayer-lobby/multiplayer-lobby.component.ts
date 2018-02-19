@@ -26,6 +26,13 @@ export class MultiplayerLobbyComponent implements OnInit {
   showLobby = true;
   showLeaderboard = false;
 
+  // user vars
+  currUserName;
+  myStyle;
+  myParams;
+  width: 100;
+  height: 100;
+
   // Vars for Prototype
   luke = true;
   cj = false;
@@ -39,6 +46,35 @@ export class MultiplayerLobbyComponent implements OnInit {
 
   ngOnInit() {
     this.viewOpenGames();
+
+    this.myStyle = {
+      'position': 'fixed',
+      'width': '100%',
+      'height': '100%',
+      'z-index': 0,
+      'top': 0,
+      'left': 0,
+      'right': 0,
+      'bottom': 0,
+    };
+    this.myParams = {
+      particles: {
+        number: {
+          value: 200,
+        },
+        color: {
+          value: '#ff0000'
+        },
+        shape: {
+          type: 'triangle',
+        },
+        line_linked: {
+          color: '#2FB5F3',
+          opacity: .6,
+          width: 2
+        }
+      }
+    };
   }
 
   goToLobby() {
@@ -108,6 +144,16 @@ export class MultiplayerLobbyComponent implements OnInit {
          }
        });*/
      });
+  }
+
+  createGame() {
+    let currUserId = this.auth.getCurrentUser();
+
+    this.auth.getAnonymousInfo(currUserId).subscribe(info => {
+      this.currUserName = info.displayName;
+    });
+
+    alert(this.currUserName);
   }
 
   /* joinGame: function(){}
