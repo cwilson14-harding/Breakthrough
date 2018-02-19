@@ -3,14 +3,12 @@ export class TextAnimator {
   interval;
   count = 0;
   message: string;
-  ms: number;
   element: HTMLElement;
   constructor() { }
 
-  start(element: HTMLElement, message: string, ms: number) {
+  start(element: HTMLElement, message: string) {
     this.element = element;
     this.message = message;
-    this.ms = ms;
 
     this.count = 0;
     this.interval = setInterval(() => {
@@ -24,12 +22,12 @@ export class TextAnimator {
       clearInterval(this.interval);
 
     } else {
-      this.count += this.ms / this.message.length;
+      this.count += this.message.length / 26;
       let randomText = '';
       for (let i = 0; i < this.message.length; ++i) {
         if (this.message[i] === ' ') {
           randomText += ' ';
-        } else if (i < Math.random() * this.message.length) {
+        } else if (i > Math.random() * this.message.length) {
           randomText += TextAnimator.possible[Math.floor(Math.random() * TextAnimator.possible.length)];
         } else {
           randomText += this.message[i];
