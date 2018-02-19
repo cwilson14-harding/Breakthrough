@@ -8,6 +8,14 @@
   height: 100vh;
   width: 100vw;
 }
+
+.scrollGames {
+  width: 100%;
+  height: 470px;
+  position: relative;
+  overflow: scroll;
+}
+
 .greyBackground{
   // background-color: #AA99AA;
    background-color: 	#696969;
