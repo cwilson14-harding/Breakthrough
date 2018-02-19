@@ -35,7 +35,7 @@ export class GuestInfoComponent implements OnInit {
   width = 100;
 
   // avatar Css bools
-  avatar1Selected = false;
+  avatar1Selected = true;
   avatar2Selected = false;
   avatar3Selected = false;
   currentPic: string;
