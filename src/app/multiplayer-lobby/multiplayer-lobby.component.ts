@@ -3,6 +3,7 @@ import {AuthService, Game, User} from '../core/auth.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { GameService } from '../game.service';
+import {HostListener} from '@angular/core';
 import {PlayerData, PlayerType} from '../player-data';
 import * as firebase from 'firebase/app';
 // import DocumentChange = firebase.firestore.DocumentChange;
@@ -53,6 +54,22 @@ export class MultiplayerLobbyComponent implements OnInit {
   brad = false;
   dylan = false;
   alaina = false;
+  pauseBackgroundMusic: boolean;
+  playBackgroundMusic: boolean;
+  @HostListener('document: keypress', ['$event'])
+  playPauseBackgroundMusic(event: KeyboardEvent) {
+    const audio = document.getElementById('audioPlayer') as any;
+    const key = event.keyCode;
+    if (key === 32 && this.playBackgroundMusic) {
+      this.pauseBackgroundMusic = true;
+      this.playBackgroundMusic = false;
+      audio.pause();
+    } else if (key === 32 && !this.playBackgroundMusic) {
+      this.pauseBackgroundMusic = false;
+      this.playBackgroundMusic = true;
+      audio.play();
+    }
+  }
 
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
