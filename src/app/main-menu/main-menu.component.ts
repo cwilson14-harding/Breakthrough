@@ -5,13 +5,12 @@ import { Router } from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import { GameService } from '../game.service';
 declare var $: any;
-
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './main-menu.component.html',
+  styleUrls: ['./main-menu.component.scss']
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class MainMenuComponent implements OnInit, AfterViewInit {
 
   availableUsers: any;
   showSettings = false;

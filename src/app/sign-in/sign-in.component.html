@@ -1,7 +1,7 @@
 <head>
 </head>
 <audio autoplay loop id="audioPlayer">
-  <source src="assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton's.mp3" type="audio/mpeg">
+  <source src="../../assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton's.mp3" type="audio/mpeg">
 </audio>
 
 <particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height">
@@ -16,19 +16,15 @@
       <div>
         <img  class="w3-display-topmiddle" style="width: 200%; position: relative;" src="assets/logos/systemBreakLogoSmall.png">
       </div>
-
-      <div class=" w3-opacity-min">
-        <div class="w3-row w3-padding">
-          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="signInWithEmail()">Sign in with Email</button>
+      <form class="panel" onsubmit="javascript:void(0)">
+        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Log in</h1></div>
+        <div class="form">
+          <input id="inputEmail" type="email" placeholder='name@email.com' autofocus required>
+          <button id="createAccount" type="submit" class="login" (click)="createAccount()">Create Account</button>
+          <button id="loginButton" type="submit" class="login" (click)="signInWithEmail()">Login</button>
         </div>
-        <div class="w3-row w3-padding">
-          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="anonymousLogin()">Play as Guest</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
   <div class=" backImg"></div>
 </div>
-
-
-

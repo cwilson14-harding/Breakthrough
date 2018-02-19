@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../core/auth.service';
-import { trigger, transition, useAnimation, state, animate, style } from '@angular/animations';
-import { bounce } from 'ng-animate';
-import {HostListener, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
+import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFirestore} from "angularfire2/firestore";
+import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Router} from "@angular/router";
+import {AuthService} from "../core/auth.service";
 declare var $: any;
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-guest-info',
+  templateUrl: './guest-info.component.html',
+  styleUrls: ['./guest-info.component.scss'],
   animations: [
     trigger('flyInOut', [
       state('in', style({transform: 'translateX(100)'})),
@@ -23,7 +23,9 @@ declare var $: any;
     ])
   ]
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class GuestInfoComponent implements OnInit {
+  btnContinue;
+  txtDisplayName;
   height = 100;
   myParams: object = {};
   myStyle: object = {};
@@ -45,9 +47,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       audio.play();
     }
   }
-  constructor(private router: Router, public auth: AuthService) {
+
+  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
     this.pauseBackgroundMusic = false;
-    this.playBackgroundMusic = true;
+
   }
 
   toggleState() {
@@ -91,32 +94,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Initialize parallax background.
     // https://www.jqueryscript.net/animation/Interactive-Mouse-Hover-Parallax-Effect-with-jQuery-Mouse-Parallax.html
     const background = $('.backImg');
-    background.mouseParallax({ moveFactor: 5 });
+    background.mouseParallax({moveFactor: 5});
+  }
+  continue(){
+    this.txtDisplayName = document.getElementById('inputGuestName');
+    const displayName = this.txtDisplayName.value;
+
+    let currUserId = this.auth.getCurrentUser();
+    this.afs.collection('users').doc(currUserId).set({
+      displayName: displayName,
+      uid: currUserId
+    }).then(() => {
+      this.router.navigateByUrl('main-menu');
+    });
   }
 
-  anonymousLogin(){
-    this.auth.anonymousLogin();
-    this.router.navigateByUrl('guest-info');
-  }
-
-  gameBoard() {
-    this.router.navigateByUrl('board');
-  }
-  intro() {
-    this.router.navigateByUrl('intro');
-  }
-  multiPlayer() {
-    this.router.navigateByUrl('multi-player');
-  }
-
-  singlePlayer() {
-    this.router.navigateByUrl('single-setup');
-  }
-  signInWithEmail(){
-    this.router.navigateByUrl('/sign-in');
-  }
-
-  tutorial() {
-    this.router.navigateByUrl('tutorial');
-  }
 }

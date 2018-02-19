@@ -16,19 +16,14 @@
       <div>
         <img  class="w3-display-topmiddle" style="width: 200%; position: relative;" src="assets/logos/systemBreakLogoSmall.png">
       </div>
-
-      <div class=" w3-opacity-min">
-        <div class="w3-row w3-padding">
-          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="signInWithEmail()">Sign in with Email</button>
+      <form class="panel" onsubmit="javascript:void(0)">
+        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Create Display Name</h1></div>
+        <div class="form">
+          <input id="inputGuestName" type="text" placeholder=' Display name' autofocus required>
+          <button id="createAccount" type="submit" class="login" (click)="continue()">Continue</button>
         </div>
-        <div class="w3-row w3-padding">
-          <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="anonymousLogin()">Play as Guest</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
   <div class=" backImg"></div>
 </div>
-
-
-

@@ -19,6 +19,6 @@ returnToLeaderboard() {
 }
 
   returnToMenu(){
-    this.router.navigateByUrl(('login'));
+    this.router.navigateByUrl(('main-menu'));
   }
 }
