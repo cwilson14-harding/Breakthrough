@@ -103,9 +103,10 @@ export class GameBoardComponent implements OnInit {
         if (winner) {
           const winnerData: PlayerData = (winner === 1) ? this.gameService.playerOne : this.gameService.playerTwo;
           setTimeout(() => {
-            this.router.navigateByUrl(('game-over'));
+            // this.router.navigateByUrl(('game-over'));
             // TODO: Go to game over screen.
             alert(winnerData.name + ' [' + winner + '] has won!');
+            this.router.navigateByUrl(('main-menu'));
           }, 1000);
         } else {
           this.getMove();
@@ -192,7 +193,8 @@ export class GameBoardComponent implements OnInit {
   }
   forfeitClicked(Null: null) {
     // TODO: CONFIRM before forfeit
-    this.router.navigateByUrl(('game-over'));
+    // this.router.navigateByUrl(('game-over'));
+    this.router.navigateByUrl(('main-menu'));
   }
 
   ngOnInit() {}
