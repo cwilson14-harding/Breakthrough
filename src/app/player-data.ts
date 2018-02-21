@@ -1,6 +1,8 @@
 export enum PlayerType {
   Local, // Player on the local machine.
-  AI, // Computer player.
+  AIRandom,
+  AIMCTSRandom,
+  AIMCTSDef, // Computer player.
   Network // Player on a foreign machine.
 }
 

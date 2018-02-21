@@ -6,7 +6,7 @@ import {AuthService, Game, User} from '../core/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {Player} from '../models/player';
 import {LocalPlayer} from '../models/local-player';
-import {AIPlayer} from '../models/ai-player';
+import {AIPlayerMCTSDefensive} from '../models/ai-player-mcts-def';
 import { GameService } from '../game.service';
 import {PlayerData, PlayerType} from '../player-data';
 import {Board} from '../models/board';
@@ -15,6 +15,8 @@ import {Move} from '../models/move';
 import {Router} from '@angular/router';
 import {HostListener} from '@angular/core';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import {AIPlayerRandom} from '../models/ai-player-random';
+import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
 
 @Component({
   selector: 'app-game-board',
@@ -65,13 +67,17 @@ export class GameBoardComponent implements OnInit {
     const p2 = this.gameService.playerTwo;
 
     switch (p1.type) {
-      case PlayerType.AI: this.player1 = new AIPlayer(); break;
+      case PlayerType.AIRandom: this.player1 = new AIPlayerRandom(); break;
+      case PlayerType.AIMCTSDef: this.player1 = new AIPlayerMCTSDefensive(); break;
+      case PlayerType.AIMCTSRandom: this.player1 = new AIPlayerMCTSRandom(); break;
       case PlayerType.Local: this.player1 = new LocalPlayer(1); break;
       case PlayerType.Network: this.player1 = new NetworkPlayer(this.game); break;
     }
 
     switch (p2.type) {
-      case PlayerType.AI: this.player2 = new AIPlayer(); break;
+      case PlayerType.AIRandom: this.player2 = new AIPlayerRandom(); break;
+      case PlayerType.AIMCTSDef: this.player2 = new AIPlayerMCTSDefensive(); break;
+      case PlayerType.AIMCTSRandom: this.player2 = new AIPlayerMCTSRandom(); break;
       case PlayerType.Local: this.player2 = new LocalPlayer(2); break;
       case PlayerType.Network: this.player2 = new NetworkPlayer(this.game); break;
     }
@@ -133,14 +139,14 @@ export class GameBoardComponent implements OnInit {
 
     if (this.player1 instanceof LocalPlayer) {
       this.player1 = new LocalPlayer(1);
-    } else if (this.player1 instanceof AIPlayer) {
-      this.player1 = new AIPlayer();
+    } else if (this.player1 instanceof AIPlayerMCTSDefensive) {
+      this.player1 = new AIPlayerMCTSDefensive();
     }
 
     if (this.player2 instanceof LocalPlayer) {
       this.player2 = new LocalPlayer(2);
-    } else if (this.player2 instanceof AIPlayer) {
-      this.player2 = new AIPlayer();
+    } else if (this.player2 instanceof AIPlayerMCTSDefensive) {
+      this.player2 = new AIPlayerMCTSDefensive();
     }
 
     // Start the game.

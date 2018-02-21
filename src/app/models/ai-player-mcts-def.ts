@@ -3,7 +3,7 @@ import {GameBoardComponent} from '../game-board/game-board.component';
 import {Move} from './move';
 import {MCTS} from './ai/mcts';
 
-export class AIPlayer implements Player {
+export class AIPlayerMCTSDefensive implements Player {
   board: GameBoardComponent;
   private resolve: Function;
   private reject: Function;
@@ -28,7 +28,6 @@ export class AIPlayer implements Player {
             this.reject();
           }
         }, 5950);
-      // this.chooseRandomMove(board.board);
     });
   }
 }
