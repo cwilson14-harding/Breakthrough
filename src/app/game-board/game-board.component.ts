@@ -133,7 +133,7 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  newGameClicked(Null: null) {
+  newGameClicked() {
     // Initialize variables.
     this.board.newGame();
 
