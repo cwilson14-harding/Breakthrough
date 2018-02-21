@@ -141,12 +141,20 @@ export class GameBoardComponent implements OnInit {
       this.player1 = new LocalPlayer(1);
     } else if (this.player1 instanceof AIPlayerMCTSDefensive) {
       this.player1 = new AIPlayerMCTSDefensive();
+    } else if (this.player1 instanceof  AIPlayerMCTSRandom) {
+      this.player1 = new AIPlayerMCTSRandom();
+    } else if (this.player1 instanceof AIPlayerRandom) {
+      this.player1 = new AIPlayerRandom();
     }
 
     if (this.player2 instanceof LocalPlayer) {
       this.player2 = new LocalPlayer(2);
     } else if (this.player2 instanceof AIPlayerMCTSDefensive) {
       this.player2 = new AIPlayerMCTSDefensive();
+    } else if (this.player2 instanceof  AIPlayerMCTSRandom) {
+      this.player2 = new AIPlayerMCTSRandom();
+    } else if (this.player2 instanceof AIPlayerRandom) {
+      this.player2 = new AIPlayerRandom();
     }
 
     // Start the game.
