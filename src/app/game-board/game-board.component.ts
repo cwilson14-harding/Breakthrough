@@ -37,6 +37,8 @@ export class GameBoardComponent implements OnInit {
   playBackgroundMusic: boolean;
   p1wins = 0;
   p2wins = 0;
+  p1type;
+  p2type;
   @HostListener('document: keypress', ['$event'])
   playPauseBackgroundMusic(event: KeyboardEvent) {
     const audio = document.getElementById('audioPlayer') as any;
@@ -84,6 +86,9 @@ export class GameBoardComponent implements OnInit {
       case PlayerType.Network: this.player2 = new NetworkPlayer(this.game); break;
     }
 
+    this.p1type = this.player1.constructor.name;
+    this.p2type = this.player2.constructor.name;
+
     this.getMove();
 
   }
@@ -118,9 +123,9 @@ export class GameBoardComponent implements OnInit {
             const tempPlayer = this.player1;
             this.player1 = this.player2;
             this.player2 = tempPlayer;
-            (winner === 1) ? this.p1wins++ : this.p2wins++;
+            (this.currentPlayer.constructor.name === this.p1type) ? this.p1wins++ : this.p2wins++;
             this.newGameClicked();
-            console.log(this.p1wins + ' - ' + this.p2wins);
+            console.log('('+this.p1type +')'+ this.p1wins + ' - ' + this.p2wins + '('+this.p2type+')');
             // this.router.navigateByUrl(('main-menu'));
           }, 1000);
         } else {
