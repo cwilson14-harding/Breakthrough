@@ -35,6 +35,8 @@ export class GameBoardComponent implements OnInit {
   board: Board;
   pauseBackgroundMusic: boolean;
   playBackgroundMusic: boolean;
+  p1wins = 0;
+  p2wins = 0;
   @HostListener('document: keypress', ['$event'])
   playPauseBackgroundMusic(event: KeyboardEvent) {
     const audio = document.getElementById('audioPlayer') as any;
@@ -111,8 +113,15 @@ export class GameBoardComponent implements OnInit {
           setTimeout(() => {
             // this.router.navigateByUrl(('game-over'));
             // TODO: Go to game over screen.
-            alert(winnerData.name + ' [' + winner + '] has won!');
-            this.router.navigateByUrl(('main-menu'));
+            // alert(winnerData.name + ' [' + winner + '] has won!');
+            // TODO: Delete, do not push!
+            const tempPlayer = this.player1;
+            this.player1 = this.player2;
+            this.player2 = tempPlayer;
+            (winner === 1) ? this.p1wins++ : this.p2wins++;
+            this.newGameClicked();
+            console.log(this.p1wins + ' - ' + this.p2wins);
+            // this.router.navigateByUrl(('main-menu'));
           }, 1000);
         } else {
           this.getMove();
