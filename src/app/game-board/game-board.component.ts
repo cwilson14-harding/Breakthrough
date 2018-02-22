@@ -40,11 +40,9 @@ export class GameBoardComponent implements OnInit {
     const audio = document.getElementById('audioPlayer') as any;
     const key = event.keyCode;
     if (key === 32 && this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = true;
       this.playBackgroundMusic = false;
       audio.pause();
     } else if (key === 32 && !this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = false;
       this.playBackgroundMusic = true;
       audio.play();
     }
