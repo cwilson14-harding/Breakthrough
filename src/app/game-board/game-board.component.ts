@@ -116,7 +116,7 @@ export class GameBoardComponent implements OnInit {
         if (winner) {
           const winnerData: PlayerData = (winner === 1) ? this.gameService.playerOne : this.gameService.playerTwo;
           setTimeout(() => {
-            // this.router.navigateByUrl(('game-over'));
+            this.router.navigateByUrl(('game-over'));
             // TODO: Go to game over screen.
             // alert(winnerData.name + ' [' + winner + '] has won!');
             // TODO: Delete, do not push!
@@ -124,7 +124,7 @@ export class GameBoardComponent implements OnInit {
             this.player1 = this.player2;
             this.player2 = tempPlayer;
             (this.currentPlayer.constructor.name === this.p1type) ? this.p1wins++ : this.p2wins++;
-            this.newGameClicked();
+            // this.newGameClicked();
             console.log('('+this.p1type +')'+ this.p1wins + ' - ' + this.p2wins + '('+this.p2type+')');
             // this.router.navigateByUrl(('main-menu'));
           }, 1000);

@@ -112,8 +112,8 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   }
 
   playGame() {
-    const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.AIMCTSRandom);
-    const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
+    const playerOne = new PlayerData('JME', '', PlayerType.Local);
+    const playerTwo = new PlayerData('CJ', '', PlayerType.AIMCTSRandom);
     this.gameService.newGame(playerOne, playerTwo);
     // this.router.navigateByUrl('single-setup');
      this.router.navigateByUrl('board');
