@@ -40,6 +40,6 @@ export class TutorialComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restartTextAnimation()
+    this.restartTextAnimation();
   }
 }

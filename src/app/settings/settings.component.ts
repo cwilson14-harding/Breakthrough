@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-settings',
@@ -11,7 +12,6 @@ import { Router } from '@angular/router';
 export class SettingsComponent implements OnInit {
   constructor(public auth: AuthService, public db: AngularFirestore, private router: Router) {
   }
-
   ngOnInit() {
   }
   logOff() {

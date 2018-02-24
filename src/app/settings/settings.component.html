@@ -1,7 +1,10 @@
   <p>
-    <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle">Volume</button>
-  </p>
-  <p>
     <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="logOff()">Logout</button>
   </p>
-
+  <audio id="demo" src="assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton's.mp3" type="audio/mpeg"></audio>
+  <div>
+    <button onclick="document.getElementById('demo').play()">Play the Audio</button>
+    <button onclick="document.getElementById('demo').pause()">Pause the Audio</button>
+    <button onclick="document.getElementById('demo').volume+=0.1">Increase Volume</button>
+    <button onclick="document.getElementById('demo').volume-=0.1">Decrease Volume</button>
+  </div>
