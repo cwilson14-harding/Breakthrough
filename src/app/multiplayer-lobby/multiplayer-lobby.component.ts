@@ -182,15 +182,6 @@ export class MultiplayerLobbyComponent implements OnInit {
   createGame(userId) {
     let chatRoomsRef = this.db.collection('chat-rooms');
     let chatRoomsDoc = chatRoomsRef.doc(userId);
-    let chatRoomsInfo = chatRoomsDoc.valueChanges();
-    chatRoomsDoc.set({
-      message: "",
-      sender: "",
-      timeSent: new Date()
-    });
-    chatRoomsInfo.subscribe(res => {
-
-    });
     let gamesRef = this.db.collection('games');
     let userDoc = this.db.collection('users').doc(userId);
     let userInfo = userDoc.valueChanges();
