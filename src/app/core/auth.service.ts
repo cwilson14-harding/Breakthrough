@@ -5,7 +5,6 @@ import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
-import {ChatComponent} from "../chat/chat.component";
 
 export interface User {
   displayName?: string;
@@ -41,7 +40,7 @@ export class AuthService {
   password = 'E3UdZuQ@02ixfa3J##us4ZbY29Azh8Iiwv46gsbBU#o%4XMqIfrW$EqW7fYU^#b3';
   anonymousInfo;
 
-  constructor(public afAuth: AngularFireAuth, public db: AngularFirestore, public router: Router, private chat: ChatComponent) {
+  constructor(public afAuth: AngularFireAuth, public db: AngularFirestore, public router: Router) {
     //// Get auth data, then get firestore user document || null
     this.user = this.afAuth.authState
       .switchMap(user => {
@@ -59,6 +58,7 @@ export class AuthService {
   */
   createGame(user: User): [string, Promise<void>] {
     this.gameId = this.generateRandomNumber().toString();
+
     return [this.gameId, this.db.collection('games').doc(user.uid).set({
       creatorId: user.uid,
       creatorName: user.displayName,
