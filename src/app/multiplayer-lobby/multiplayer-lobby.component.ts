@@ -184,6 +184,7 @@ export class MultiplayerLobbyComponent implements OnInit {
     userInfo.subscribe(res => {
       this.currUserName = res['displayName'];
       this.currAvatar = res['pic'];
+      let messagesRef = this.db.collection('message-logs').add({
         gameId: userId,
         player1DisplayName: this.currUserName,
         player1Id: userId,
