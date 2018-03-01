@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
+import {ChatComponent} from "../chat/chat.component";
 
 export interface User {
   displayName?: string;
@@ -58,7 +59,17 @@ export class AuthService {
   */
   createGame(user: User): [string, Promise<void>] {
     this.gameId = this.generateRandomNumber().toString();
-
+   /* let createdGame: Game = {
+      creatorId: user.uid,
+      creatorName: user.displayName,
+      gameId: this.gameId,
+      joinerId: '',
+      joinerName: '',
+      playerTurn: 1,
+      state: 'open',
+      winner: '0'
+    };
+    */
     return [this.gameId, this.db.collection('games').doc(user.uid).set({
       creatorId: user.uid,
       creatorName: user.displayName,
@@ -71,7 +82,7 @@ export class AuthService {
     })];
   }
   anonymousLogin(){
-   // firebase.auth().signInAnonymously();
+    // firebase.auth().signInAnonymously();
     this.afAuth.auth.signInAnonymously();
   }
 

@@ -71,7 +71,7 @@ export class MultiplayerLobbyComponent implements OnInit {
     }
   }
 
-  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
+  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService,) {
     this.isGameCreated = false;
   }
 
@@ -184,6 +184,12 @@ export class MultiplayerLobbyComponent implements OnInit {
     userInfo.subscribe(res => {
       this.currUserName = res['displayName'];
       this.currAvatar = res['pic'];
+        gameId: userId,
+        player1DisplayName: this.currUserName,
+        player1Id: userId,
+        player2DisplayName: '',
+        player2Id: ''
+      });
 
       this.db.collection('games').doc(userId).set({
         creatorName: this.currUserName,

@@ -38,6 +38,7 @@ import { GuestInfoComponent } from './guest-info/guest-info.component';
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
   { path: 'home', pathMatch: 'full', component: HomeComponent},
+  { path: 'chat', pathMatch: 'full', component: ChatComponent},
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
   { path: 'main-menu', pathMatch: 'full', component: MainMenuComponent},
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
@@ -87,7 +88,7 @@ const appRoutes: Routes = [
     NgxSlideshowModule.forRoot(),
     NgbModule.forRoot()
   ],
-  providers: [AuthService, GameService, NgbTab, NgbTabset],
+  providers: [AuthService, GameService, NgbTab, NgbTabset, ChatComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
