@@ -17,13 +17,15 @@ import {HostListener} from '@angular/core';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import {AIPlayerRandom} from '../models/ai-player-random';
 import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
+import {ChatComponent} from "../chat/chat.component";
+import {auth} from "firebase/app";
 
 @Component({
   selector: 'app-game-board',
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.scss']
 })
-
+  chat: ChatComponent;
 export class GameBoardComponent implements OnInit {
 
   user: Observable<User>;
@@ -48,7 +50,8 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
+  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth,
+              private gameService: GameService) {
     this.board = new Board();
     this.board.newGame();
 
@@ -83,7 +86,6 @@ export class GameBoardComponent implements OnInit {
     this.getMove();
 
   }
-
   /* movePiece: function(){}
      Moves a piece from one coordinate to the other if the move was valid.
      Returns a boolean that is true if the move was made, or false if the move was not valid.
@@ -120,7 +122,6 @@ export class GameBoardComponent implements OnInit {
       });
     }
   }
-
   get currentPlayer(): Player {
     if (this.board.playerTurn === 1) {
       return this.player1;
@@ -130,7 +131,6 @@ export class GameBoardComponent implements OnInit {
       return undefined;
     }
   }
-
   newGameClicked() {
     // Initialize variables.
     this.board.newGame();
@@ -194,6 +194,10 @@ export class GameBoardComponent implements OnInit {
     // this.currentUserName = this.afAuth.auth.currentUser.displayName;
     // alert(this.currentUserName);
     this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
+  }
+
+  sendMessage(){
+    // this.chat.newMessage() Need to get the gameId and the Message.
   }
 
   getCurrentGame(user, game) {
