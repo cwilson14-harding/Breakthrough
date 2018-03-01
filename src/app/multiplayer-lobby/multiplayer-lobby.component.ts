@@ -9,6 +9,7 @@ import * as firebase from 'firebase/app';
 // import DocumentChange = firebase.firestore.DocumentChange;
 import {Observable} from 'rxjs/Observable';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {timestamp} from "rxjs/operator/timestamp";
 // import DocumentChangeType = firebase.firestore.DocumentChangeType;
 
 @Component({
@@ -71,8 +72,9 @@ export class MultiplayerLobbyComponent implements OnInit {
     }
   }
 
-  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService,) {
+  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
+    let messageLogsRef = db.collection('message-logs')
   }
 
   ngOnInit() {
@@ -178,28 +180,33 @@ export class MultiplayerLobbyComponent implements OnInit {
   }
 
   createGame(userId) {
+    let chatRoomsRef = this.db.collection('chat-rooms');
+    let chatRoomsDoc = chatRoomsRef.doc(userId);
+    let chatRoomsInfo = chatRoomsDoc.valueChanges();
+    chatRoomsDoc.set({
+      message: "",
+      sender: "",
+      timeSent: new Date()
+    });
+    chatRoomsInfo.subscribe(res => {
 
+    });
+    let gamesRef = this.db.collection('games');
     let userDoc = this.db.collection('users').doc(userId);
     let userInfo = userDoc.valueChanges();
     userInfo.subscribe(res => {
       this.currUserName = res['displayName'];
       this.currAvatar = res['pic'];
-      let messagesRef = this.db.collection('message-logs').add({
-        gameId: userId,
-        player1DisplayName: this.currUserName,
-        player1Id: userId,
-        player2DisplayName: '',
-        player2Id: ''
-      });
-
-      this.db.collection('games').doc(userId).set({
-        creatorName: this.currUserName,
-        pic: this.currAvatar,
+      gamesRef.doc(userId).set({
         creatorId: userId,
-        state: 'open',
-        type: 'multi',
+        creatorName: this.currUserName,
         gameId: userId,
-      })
+        joinerId: '',
+        joinerName: '',
+        pic: this.currAvatar,
+        state: 'open',
+        type: 'multi'
+      });
     });
   }
   deleteGame(userId) {
