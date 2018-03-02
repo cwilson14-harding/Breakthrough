@@ -25,9 +25,8 @@ import {auth} from "firebase/app";
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.scss']
 })
-  chat: ChatComponent;
-export class GameBoardComponent implements OnInit {
 
+export class GameBoardComponent implements OnInit {
   user: Observable<User>;
   game: AngularFirestoreDocument<Game>;
   games: any;
@@ -50,8 +49,7 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth,
-              private gameService: GameService) {
+  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
     this.board = new Board();
     this.board.newGame();
 
@@ -198,6 +196,7 @@ export class GameBoardComponent implements OnInit {
 
   sendMessage(){
     // this.chat.newMessage() Need to get the gameId and the Message.
+    // Unsure how to create a Message object. It's defined inside of the chatComponent.
   }
 
   getCurrentGame(user, game) {
