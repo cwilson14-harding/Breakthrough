@@ -32,16 +32,16 @@ playBackgroundMusic: boolean = true;
   playPauseBackgroundMusic(){
     const audio = document.getElementById('audioPlayer') as any;
     const playPauseButton = document.getElementById('musicControlButton');
-    if(this.playBackgroundMusic === true){
-      if(playPauseButton.textContent == "PAUSE MUSIC"){
-        playPauseButton.textContent = "PLAY MUSIC";
+    if (this.playBackgroundMusic === true) {
+      if (playPauseButton.textContent === 'PAUSE MUSIC') {
+        playPauseButton.textContent = 'PLAY MUSIC';
       }
       this.playBackgroundMusic = false;
       audio.pause();
     }
     else if(this.playBackgroundMusic === false){
-      if(playPauseButton.textContent == "PLAY MUSIC"){
-        playPauseButton.textContent = "PAUSE MUSIC";
+      if (playPauseButton.textContent === 'PLAY MUSIC') {
+        playPauseButton.textContent = 'PAUSE MUSIC';
       }
       this.playBackgroundMusic = true;
       audio.play();

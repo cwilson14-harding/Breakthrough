@@ -35,18 +35,6 @@ export class GameBoardComponent implements OnInit {
   player1: Player;
   player2: Player;
   user: Observable<User>;
-  @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent) {
-    const audio = document.getElementById('audioPlayer') as any;
-    const key = event.keyCode;
-    if (key === 32 && this.playBackgroundMusic) {
-      this.playBackgroundMusic = false;
-      audio.pause();
-    } else if (key === 32 && !this.playBackgroundMusic) {
-      this.playBackgroundMusic = true;
-      audio.play();
-    }
-  }
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
               public afAuth: AngularFireAuth, private gameService: GameService, public chat: ChatComponent) {
     this.board = new Board();
