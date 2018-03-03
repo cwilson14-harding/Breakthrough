@@ -17,8 +17,8 @@ import {HostListener} from '@angular/core';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import {AIPlayerRandom} from '../models/ai-player-random';
 import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
-import {ChatComponent} from "../chat/chat.component";
-import {auth} from "firebase/app";
+import {ChatComponent} from '../chat/chat.component';
+import {auth} from 'firebase/app';
 
 @Component({
   selector: 'app-game-board',
@@ -27,15 +27,14 @@ import {auth} from "firebase/app";
 })
 
 export class GameBoardComponent implements OnInit {
-  user: Observable<User>;
+  board: Board;
   game: AngularFirestoreDocument<Game>;
   games: any;
   currentUserName: any;
+  playBackgroundMusic: boolean;
   player1: Player;
   player2: Player;
-  board: Board;
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
+  user: Observable<User>;
   @HostListener('document: keypress', ['$event'])
   playPauseBackgroundMusic(event: KeyboardEvent) {
     const audio = document.getElementById('audioPlayer') as any;
@@ -48,8 +47,8 @@ export class GameBoardComponent implements OnInit {
       audio.play();
     }
   }
-
-  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService, public afAuth: AngularFireAuth, private gameService: GameService) {
+  constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
+              public afAuth: AngularFireAuth, private gameService: GameService, public chat: ChatComponent) {
     this.board = new Board();
     this.board.newGame();
 
@@ -194,9 +193,28 @@ export class GameBoardComponent implements OnInit {
     this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
   }
 
-  sendMessage(){
-    // this.chat.newMessage() Need to get the gameId and the Message.
-    // Unsure how to create a Message object. It's defined inside of the chatComponent.
+  sendChatMessage() {
+    interface IMessage {
+      message: string;
+      sender: string;
+      time: any;
+    }
+    // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
+    const messageBoxValue = ((document.getElementById('messageBox') as HTMLInputElement).value);
+    // Get the person who sent the message.
+    const messageSender = this.currentUserName;
+    // Get the time when the message was sent.
+    const time = Date.now();
+
+    const message: IMessage = {
+      message: messageBoxValue,
+      sender: messageSender,
+      time: time
+    };
+
+    // Create a message object.
+    this.chat.newMessage(message, this.gameService.gameId);
+    // TODO Clear the chat box;
   }
 
   getCurrentGame(user, game) {

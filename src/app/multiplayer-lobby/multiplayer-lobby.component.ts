@@ -8,8 +8,8 @@ import {PlayerData, PlayerType} from '../player-data';
 import * as firebase from 'firebase/app';
 // import DocumentChange = firebase.firestore.DocumentChange;
 import {Observable} from 'rxjs/Observable';
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {timestamp} from "rxjs/operator/timestamp";
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {timestamp} from 'rxjs/operator/timestamp';
 // import DocumentChangeType = firebase.firestore.DocumentChangeType;
 
 @Component({
@@ -74,7 +74,6 @@ export class MultiplayerLobbyComponent implements OnInit {
 
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
-    let messageLogsRef = db.collection('message-logs')
   }
 
   ngOnInit() {
@@ -180,11 +179,11 @@ export class MultiplayerLobbyComponent implements OnInit {
   }
 
   createGame(userId) {
-    let chatRoomsRef = this.db.collection('chat-rooms');
-    let chatRoomsDoc = chatRoomsRef.doc(userId);
-    let gamesRef = this.db.collection('games');
-    let userDoc = this.db.collection('users').doc(userId);
-    let userInfo = userDoc.valueChanges();
+    const chatRoomsRef = this.db.collection('chat-rooms');
+    const chatRoomsDoc = chatRoomsRef.doc(userId);
+    const gamesRef = this.db.collection('games');
+    const userDoc = this.db.collection('users').doc(userId);
+    const userInfo = userDoc.valueChanges();
     userInfo.subscribe(res => {
       this.currUserName = res['displayName'];
       this.currAvatar = res['pic'];

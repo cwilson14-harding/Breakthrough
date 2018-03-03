@@ -11,6 +11,6 @@
 
   </textarea>
   </div>
-  <input type="text" class="messageBox" #message placeholder="Your message...">
-  <button class="w3-right btn">Send Message</button>
+  <input id="messageBox" type="text" class="messageBox" #message placeholder="Your message...">
+  <button class="w3-right btn" (click)="sendChatMessage()">Send Message</button>
 </div>
