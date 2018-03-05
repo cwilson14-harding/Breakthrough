@@ -181,7 +181,7 @@ export class GameBoardComponent implements OnInit {
     this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
   }
 
-  sendChatMessage() {
+  /*sendChatMessage() {
     interface IMessage {
       message: string;
       sender: string;
@@ -203,7 +203,7 @@ export class GameBoardComponent implements OnInit {
     // Create a message object.
     this.chat.newMessage(message, this.gameService.gameId);
     // TODO Clear the chat box;
-  }
+  }*/
 
   getCurrentGame(user, game) {
     if (user.displayName === game.creatorName) {

@@ -5,7 +5,7 @@ import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
-import {ChatComponent} from "../chat/chat.component";
+import {ChatComponent} from '../chat/chat.component';
 
 export interface User {
   displayName?: string;
@@ -51,7 +51,9 @@ export class AuthService {
           return Observable.of(null);
         }
       });
+    this.gameId = this.generateRandomNumber().toString();
   }
+
   /* createGame: function(){}
      Parameters: user
      createGame calls the generateRandomNumber function to get a unique gameId. It then accesses the database, and sets
@@ -59,17 +61,17 @@ export class AuthService {
   */
   createGame(user: User): [string, Promise<void>] {
     this.gameId = this.generateRandomNumber().toString();
-   /* let createdGame: Game = {
-      creatorId: user.uid,
-      creatorName: user.displayName,
-      gameId: this.gameId,
-      joinerId: '',
-      joinerName: '',
-      playerTurn: 1,
-      state: 'open',
-      winner: '0'
-    };
-    */
+    /* let createdGame: Game = {
+       creatorId: user.uid,
+       creatorName: user.displayName,
+       gameId: this.gameId,
+       joinerId: '',
+       joinerName: '',
+       playerTurn: 1,
+       state: 'open',
+       winner: '0'
+     };
+     */
     return [this.gameId, this.db.collection('games').doc(user.uid).set({
       creatorId: user.uid,
       creatorName: user.displayName,
@@ -81,13 +83,18 @@ export class AuthService {
       winner: 0
     })];
   }
-  anonymousLogin(){
+
+  getGameId() {
+    return this.gameId;
+  }
+
+  anonymousLogin() {
     // firebase.auth().signInAnonymously();
     this.afAuth.auth.signInAnonymously();
   }
 
-  createAccountWithEmail(email){
-    firebase.auth().createUserWithEmailAndPassword(email, this.password).then((credential)=>{
+  createAccountWithEmail(email) {
+    firebase.auth().createUserWithEmailAndPassword(email, this.password).then((credential) => {
       this.updateUserData(credential.user);
     });
 
@@ -111,7 +118,7 @@ export class AuthService {
   }
 
   getAnonymousInfo(id) {
-    this.anonymousInfo = this.db.doc('/users/'+id).valueChanges();
+    this.anonymousInfo = this.db.doc('/users/' + id).valueChanges();
     return this.anonymousInfo;
   }
 
@@ -178,7 +185,8 @@ export class AuthService {
   logout() {
     return this.afAuth.auth.signOut();
   }
-  loginUserWithEmail(email){
+
+  loginUserWithEmail(email) {
     firebase.auth().signInWithEmailAndPassword(email, this.password);
   }
 
@@ -188,6 +196,7 @@ export class AuthService {
         this.updateUserData(credential.user);
       });
   }
+
   updateGameTypeMulti(user) {
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
     userRef.update({gameType: 'multi', isOnline: true});
@@ -239,9 +248,10 @@ export class AuthService {
       'open')).valueChanges();
     return this.open;
   }
+}
   // Calling this function will get the gameId. The gameId is == to the currentUser's unique identifier.
   // The gameId is created in the createGame function.
-  getGameId() {
+  /*getGameId() {
     this.gameRef = this.db.collection('games', ref => ref.where('creatorId', '==',
       'gameId'));
     // Current user is whatever user is logged in at the time. This is part of Firebase.
@@ -249,4 +259,4 @@ export class AuthService {
     const currentUserId = currentUser.uid;
     console.log(currentUserId);
   }
-}
+}*/

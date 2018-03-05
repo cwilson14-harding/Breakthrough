@@ -14,7 +14,6 @@ export class GameService {
     this.playerTwo = playerTwo;
     this.gameId = gameId;
   }
-
 }
 
 

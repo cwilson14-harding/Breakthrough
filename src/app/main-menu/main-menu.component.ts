@@ -51,7 +51,7 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
       'right': 0,
       'bottom': 0,
     };
-    //const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
+    // const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
     this.myParams = {
       particles: {
         number: {
@@ -65,7 +65,7 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
         },
         line_linked: {
           // Neon color palette: http://www.colourlovers.com/palette/2652343/*Neon-Palette*
-          color:'#2FB5F3', //colorPalette[Math.floor(Math.random() * colorPalette.length)],
+          color: '#2FB5F3', // colorPalette[Math.floor(Math.random() * colorPalette.length)],
           opacity: .6,
           width: 2
         }
