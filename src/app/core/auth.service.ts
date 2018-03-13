@@ -30,14 +30,17 @@ export interface Game {
 
 @Injectable()
 export class AuthService {
-
+  currUserName: any;
+  currAvatar: any;
   user: Observable<User>;
   game: Observable<Game>;
   avaliable: Observable<User[]>;
   open;
   gameRef;
   joinerId;
+  creatorId;
   gameId: string;
+  userId: string;
   password = 'E3UdZuQ@02ixfa3J##us4ZbY29Azh8Iiwv46gsbBU#o%4XMqIfrW$EqW7fYU^#b3';
   anonymousInfo;
 
@@ -51,7 +54,6 @@ export class AuthService {
           return Observable.of(null);
         }
       });
-    this.gameId = this.generateRandomNumber().toString();
   }
 
   /* createGame: function(){}
@@ -59,33 +61,36 @@ export class AuthService {
      createGame calls the generateRandomNumber function to get a unique gameId. It then accesses the database, and sets
      the document name to this random number, and it sets all of the parameters defined in the game interface.
   */
-  createGame(user: User): [string, Promise<void>] {
-    this.gameId = this.generateRandomNumber().toString();
-    /* let createdGame: Game = {
-       creatorId: user.uid,
-       creatorName: user.displayName,
-       gameId: this.gameId,
-       joinerId: '',
-       joinerName: '',
-       playerTurn: 1,
-       state: 'open',
-       winner: '0'
-     };
-     */
-    return [this.gameId, this.db.collection('games').doc(user.uid).set({
-      creatorId: user.uid,
-      creatorName: user.displayName,
-      joinerId: '',
-      joinerName: '',
-      state: 'open',
-      gameId: user.uid,
-      playerTurn: 1,
-      winner: 0
-    })];
+
+  createGame(userId) {
+    this.userId = userId;
+    const chatRoomsRef = this.db.collection('chat-rooms');
+    const chatRoomsDoc = chatRoomsRef.doc(userId);
+    const gamesRef = this.db.collection('games');
+    const userDoc = this.db.collection('users').doc(userId);
+    const userInfo = userDoc.valueChanges();
+    userInfo.subscribe(res => {
+      this.currUserName = res['displayName'];
+      this.currAvatar = res['pic'];
+      this.creatorId = userId;
+      gamesRef.doc(userId).set({
+        creatorId: userId,
+        creatorName: this.currUserName,
+        gameId: userId,
+        joinerId: '',
+        joinerName: '',
+        pic: this.currAvatar,
+        state: 'open',
+        type: 'multi'
+      });
+    });
   }
 
-  getGameId() {
-    return this.gameId;
+  getCreatorId() {
+    return this.creatorId;
+  }
+  getDisplayName(){
+    return this.currUserName;
   }
 
   anonymousLogin() {
@@ -173,11 +178,10 @@ export class AuthService {
     */
   }
 
-  joinGame(user, game) { // gameId, creatorId
-    this.gameId = game.gameId;
-    this.db.collection('games').doc(game.gameId).update({
-      joinerId: user.uid,
-      joinerName: user.displayName,
+  joinGame(userId: string, displayName: string, gameId: string) { // gameId, creatorId
+    this.db.collection('games').doc(gameId).update({
+      joinerId: userId,
+      joinerName: displayName,
       state: 'closed'
     });
   }

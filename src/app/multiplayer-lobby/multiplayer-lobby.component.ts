@@ -37,7 +37,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   createdGame: Observable<Game>;
   isGameCreated: boolean;
   joinerId: string;
-  gameUid: string;
+  gameId: string;
   showLobby = true;
   showLeaderboard = false;
   currAvatar;
@@ -179,25 +179,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   }
 
   createGame(userId) {
-    const chatRoomsRef = this.db.collection('chat-rooms');
-    const chatRoomsDoc = chatRoomsRef.doc(userId);
-    const gamesRef = this.db.collection('games');
-    const userDoc = this.db.collection('users').doc(userId);
-    const userInfo = userDoc.valueChanges();
-    userInfo.subscribe(res => {
-      this.currUserName = res['displayName'];
-      this.currAvatar = res['pic'];
-      gamesRef.doc(userId).set({
-        creatorId: userId,
-        creatorName: this.currUserName,
-        gameId: userId,
-        joinerId: '',
-        joinerName: '',
-        pic: this.currAvatar,
-        state: 'open',
-        type: 'multi'
-      });
-    });
+    this.auth.createGame(userId);
   }
   deleteGame(userId) {
     this.db.collection('games').doc(userId).delete();
@@ -215,16 +197,17 @@ export class MultiplayerLobbyComponent implements OnInit {
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
 
-  /*  this.auth.joinGame(user, game);
-    const localPlayer = new PlayerData(game.creatorName, user.photoURL, PlayerType.Local);
-    const remotePlayer = new PlayerData(game.joinerName, '', PlayerType.Local); // TODO: PlayerType.Network);
+    //this.auth.joinGame(this.auth.userId, this.auth.getDisplayName(), this.createdGame);
+    this.createGame(this.auth.userId);
+    const localPlayer = new PlayerData(/*game.creatorName, user.photoURL*/'Local player', '', PlayerType.Local);
+    const remotePlayer = new PlayerData(/*game.joinerName*/ 'Remote player', '', PlayerType.Local); // TODO: PlayerType.Network);
 
-    if (user.uid === game.creatorName) {
-      this.gameService.newGame(localPlayer, remotePlayer, game.gameId);
+    if (this.auth.userId === this.auth.creatorId) {
+      this.gameService.newGame(localPlayer, remotePlayer, this.gameId);
     } else {
-      this.gameService.newGame(remotePlayer, localPlayer, game.gameId);
+      this.gameService.newGame(remotePlayer, localPlayer, this.gameId);
     }
-    */
+
     this.router.navigateByUrl(('multi-setup'));
     // if (user.uid === game.creatorId) {
     //   alert('Can\'t join your own game.')

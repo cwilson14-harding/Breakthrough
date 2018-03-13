@@ -25,7 +25,7 @@ export class ChatComponent implements OnInit {
               public auth: AuthService) {
     this.chatMessages = this.db.collection('chats').valueChanges();
     this.games = this.db.collection('games').valueChanges();
-    this.currentUserName = this.afAuth.auth.currentUser.displayName;
+    this.currentUserName = this.auth.getDisplayName();
   }
 
   ngOnInit() {
@@ -62,7 +62,7 @@ export class ChatComponent implements OnInit {
     };
     // Send the message.
     // TODO Clear the chat box;
-    this.sendMessage(message, this.auth.getGameId());
+    this.sendMessage(message, this.auth.getCreatorId());
   }
 
 }
