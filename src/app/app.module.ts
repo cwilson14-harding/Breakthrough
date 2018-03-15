@@ -46,7 +46,7 @@ const appRoutes: Routes = [
   { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: 'game-over', pathMatch: 'full', component: GameOverComponent},
   { path: 'single-setup', pathMatch: 'full', component: SingleSetupComponent},
-  { path: 'multi-setup', pathMatch: 'full', component: MultiSetupComponent},
+  { path: 'multi-setup/:id', pathMatch: 'full', component: MultiSetupComponent},
   { path: 'leaderboard', pathMatch: 'full', component: LeaderboardComponent},
   { path: 'sign-in', pathMatch: 'full', component: SignInComponent},
   { path: 'guest-info', pathMatch: 'full', component: GuestInfoComponent},

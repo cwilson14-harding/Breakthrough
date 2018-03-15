@@ -49,6 +49,10 @@ export class MultiplayerLobbyComponent implements OnInit {
   width: 100;
   height: 100;
 
+  // createGame vars
+  creatorName: string;
+  joinerName: string;
+
   // Vars for Prototype
   luke = true;
   cj = false;
@@ -178,9 +182,38 @@ export class MultiplayerLobbyComponent implements OnInit {
      });
   }
 
-  createGame(userId) {
-    this.auth.createGame(userId);
+  createRandomId() {
+    return Math.floor(Math.random() * 1000000) + 1;
   }
+
+  createGame() {
+    const userId = this.auth.getCurrentUser();
+    const randomId = this.createRandomId().toString();
+
+    this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
+      this.creatorName = data['displayName'];
+    });
+    // this.auth.createGame(userId);
+    this.db.collection('games').doc(randomId).set({
+      gameId: randomId,
+      creatorId: userId,
+      creatorName: this.creatorName,
+      joinerId: '',
+      joinerName: '',
+      gameType: 'multi',
+      isOpen: true,
+      state: 'STATE.OPEN',
+      turn: true
+    }).then(after => alert('a game has been created'));
+
+    this.db.collection('users').doc(userId).update({
+      currentGameId: randomId
+    }).then(goTo => {
+      this.router.navigateByUrl(`multi-setup/${randomId}`);
+    });
+  }
+
+
   deleteGame(userId) {
     this.db.collection('games').doc(userId).delete();
   }
@@ -193,28 +226,46 @@ export class MultiplayerLobbyComponent implements OnInit {
      If the user's uid property does not match the game's creatorId property then the person joining the game is
      navigated to the board where gameplay can commence.
   */
-  joinGame() { // creatorId, gameId // used to be user: User, game: Game
+  joinGame(gameId) { // creatorId, gameId // used to be user: User, game: Game
   //  this.gameUid = gameId;
   //  this.joinerId = user.uid;
 
-    //this.auth.joinGame(this.auth.userId, this.auth.getDisplayName(), this.createdGame);
-    this.createGame(this.auth.userId);
-    const localPlayer = new PlayerData(/*game.creatorName, user.photoURL*/'Local player', '', PlayerType.Local);
-    const remotePlayer = new PlayerData(/*game.joinerName*/ 'Remote player', '', PlayerType.Local); // TODO: PlayerType.Network);
+    // this.auth.joinGame(this.auth.userId, this.auth.getDisplayName(), this.createdGame);
+    // this.createGame(this.auth.userId);
 
-    if (this.auth.userId === this.auth.creatorId) {
-      this.gameService.newGame(localPlayer, remotePlayer, this.gameId);
-    } else {
-      this.gameService.newGame(remotePlayer, localPlayer, this.gameId);
-    }
+    // const localPlayer = new PlayerData(/*game.creatorName, user.photoURL*/'Local player', '', PlayerType.Local);
+    // const remotePlayer = new PlayerData(/*game.joinerName*/ 'Remote player', '', PlayerType.Local); // TODO: PlayerType.Network);
+    //
+    // if (this.auth.userId === this.auth.creatorId) {
+    //   this.gameService.newGame(localPlayer, remotePlayer, this.gameId);
+    // } else {
+    //   this.gameService.newGame(remotePlayer, localPlayer, this.gameId);
+    // }
 
-    this.router.navigateByUrl(('multi-setup'));
+    // this.router.navigateByUrl(('multi-setup'));
     // if (user.uid === game.creatorId) {
     //   alert('Can\'t join your own game.')
     // } else {
     //   this.auth.joinGame(user, game);
     //   this.router.navigateByUrl('board');
     // }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const userId = this.auth.getCurrentUser();
+
+    this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
+      this.joinerName = data['displayName'];
+    });
+
+    this.db.collection('games').doc(gameId).update({
+      joinerId: userId,
+      joinerName: this.joinerName,
+      isOpen: false,
+      state: 'STATE.CLOSED',
+    });
+
+    this.db.collection('users').doc(userId).update({
+      currentGameId: gameId
+    }).then(res => this.router.navigate(['multi-setup', gameId]));
   }
 
 

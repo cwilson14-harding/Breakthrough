@@ -248,8 +248,8 @@ export class AuthService {
      This function queries the database and returns all games where the state property is equal to open.
   */
   viewOpenGames() {
-    this.open = this.db.collection('games', ref => ref.where('state', '==',
-      'open')).valueChanges();
+    this.open = this.db.collection('games', ref => ref.where('isOpen', '==',
+      true)).valueChanges();
     return this.open;
   }
 }
