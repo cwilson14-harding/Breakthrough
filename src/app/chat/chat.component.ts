@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {AuthService, Game} from '../core/auth.service';
 import {GameService} from '../game.service';
 import {AngularFireAuth} from 'angularfire2/auth';
+import {PlayerType} from '../player-data';
 
 @Component({
   selector: 'app-chat',
@@ -12,36 +13,29 @@ import {AngularFireAuth} from 'angularfire2/auth';
 
 })
 export class ChatComponent implements OnInit {
-  chatRoomsCollection: AngularFirestoreCollection<any>; // Removed array brackets Don't know if this will break stuff. // I wasn't able to add a message to type any[]
+  chatRoomsDoc: AngularFirestoreDocument<any>;
+  chatRoomsSubCollection: AngularFirestoreCollection<any>;
   currentUserName: any;
   game: AngularFirestoreDocument<Game>;
   games: any;
   gameId: any;
-  messages: Observable<any[]>;
-  showStyle = false;
-  chatMessages: any;
 
   constructor(public db: AngularFirestore, private gameService: GameService, public afAuth: AngularFireAuth,
               public auth: AuthService) {
-    this.chatMessages = this.db.collection('chats').valueChanges();
     this.games = this.db.collection('games').valueChanges();
-    this.currentUserName = this.auth.getDisplayName();
+    this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
   }
 
   ngOnInit() {
-    this.getChatData();
-  }
-
-  getChatData() {
-    this.chatRoomsCollection = this.db.collection<any>('chat-rooms');
-    this.messages = this.chatRoomsCollection.valueChanges();
+    const chatRoomsCollection: AngularFirestoreCollection<any> = this.db.collection<any>('chat-rooms');
+    this.chatRoomsDoc = chatRoomsCollection.doc(this.gameService.gameId);
+    this.chatRoomsSubCollection = this.chatRoomsDoc.collection('messages');
   }
 
   sendMessage(message, gameId) {
-    const chatRoomsDoc = this.chatRoomsCollection.doc(gameId);
-    const chatRoomsSubCollection = chatRoomsDoc.collection('messages');
-    chatRoomsSubCollection.add(message);
+    this.chatRoomsSubCollection.add(message);
   }
+
   newMessage() {
     interface IMessage {
       message: string;
@@ -62,7 +56,7 @@ export class ChatComponent implements OnInit {
     };
     // Send the message.
     // TODO Clear the chat box;
-    this.sendMessage(message, this.auth.getCreatorId());
+    this.sendMessage(message, this.gameService.gameId);
   }
 
 }

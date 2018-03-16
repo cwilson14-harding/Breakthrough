@@ -39,8 +39,7 @@ export class MultiSetupComponent implements OnInit {
       if (this.auth.getCurrentUser() === this.creatorId) {
         this.player1 = true;
         this.player2 = false;
-      }
-      else if (this.auth.getCurrentUser() === this.joinerId) {
+      } else if (this.auth.getCurrentUser() === this.joinerId) {
         this.player2 = true;
         this.player1 = false;
       }
@@ -54,9 +53,9 @@ export class MultiSetupComponent implements OnInit {
   goToBoard() {
     // TODO: Set player order.
     // TODO: Change remote player (relative to self, who is local) to PlayerType.Network and finish NetworkPlayer implementation.
-    const playerOne = new PlayerData('Creator', '', PlayerType.Local);
-    const playerTwo = new PlayerData('Joiner', '', PlayerType.Local);
-    this.gameService.newGame(playerOne, playerTwo, this.gameId); // TODO: Supply game ID.
+    const playerOne = new PlayerData(this.creatorName, '', PlayerType.Local);
+    const playerTwo = new PlayerData(this.joinerName, '', PlayerType.Local);
+    this.gameService.newGame(playerOne, playerTwo, this.gameId);
 
     setTimeout(() => {
       this.router.navigate(['board', this.gameId]);
