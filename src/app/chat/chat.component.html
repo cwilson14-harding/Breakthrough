@@ -6,9 +6,11 @@
   <h1 class="textStroke">Chat</h1>
   <div class="roundedCorners chatHistory">
     <p *ngFor="let message of messages | async" class="chat">
-      <span class="sender">{{message.sender}}</span>: {{message.message}}
+      <span class="{{ (message.sender === currentUserName) ? 'self' : 'opponent' }}">{{message.sender}}</span>: {{message.message}}
     </p>
   </div>
-  <input id="messageBox" type="text" class="messageBox" #message placeholder="Your message...">
-  <button class="w3-right btn" (click)="newMessage()">Send Message</button>
+  <form onsubmit="event.preventDefault();">
+    <input id="messageBox" type="text" class="messageBox" #message placeholder="Your message..." />
+    <input type="submit" class="w3-right btn" (click)="newMessage()" value="Send Message" />
+  </form>
 </div>

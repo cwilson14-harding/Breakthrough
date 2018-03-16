@@ -25,8 +25,10 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    const chatRoomsCollection: AngularFirestoreCollection<any> = this.db.collection<any>('chat-rooms');
-    this.messagesCollection = chatRoomsCollection.doc(this.gameService.gameId).collection('messages');
+    // Get the messages list for this game.
+    this.messagesCollection = this.db.collection<any>('chat-rooms').doc(this.gameService.gameId).collection('messages');
+
+    // Subscribe to the messages list.
     this.messages = this.messagesCollection.valueChanges();
   }
 
@@ -36,25 +38,29 @@ export class ChatComponent implements OnInit {
 
   newMessage() {
     // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
-    const messageBox = (document.getElementById('messageBox') as HTMLInputElement);
+    const messageBox: HTMLInputElement = document.getElementById('messageBox') as HTMLInputElement;
+
     // Get the person who sent the message.
     const messageSender = this.currentUserName;
+
     // Get the time when the message was sent.
     const time = Date.now();
+
     // Create a message object.
     const message: IMessage = {
       message: messageBox.value,
       sender: messageSender,
       time: time
     };
+
     // Send the message.
-    // TODO Clear the chat box;
-    messageBox.value = '';
     this.sendMessage(message);
+
+    // Clear the text box.
+    messageBox.value = '';
   }
 
 }
-
 
 interface IMessage {
   message: string;
