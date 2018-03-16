@@ -12,53 +12,52 @@ import {PlayerType} from '../player-data';
   styleUrls: ['./chat.component.scss'],
 
 })
+
 export class ChatComponent implements OnInit {
-  chatRoomsDoc: AngularFirestoreDocument<any>;
-  chatRoomsSubCollection: AngularFirestoreCollection<any>;
-  currentUserName: any;
+  messagesCollection: AngularFirestoreCollection<any>;
+  messages: Observable<IMessage[]>;
   game: AngularFirestoreDocument<Game>;
-  games: any;
-  gameId: any;
+  currentUserName: string;
 
   constructor(public db: AngularFirestore, private gameService: GameService, public afAuth: AngularFireAuth,
               public auth: AuthService) {
-    this.games = this.db.collection('games').valueChanges();
     this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
   }
 
   ngOnInit() {
     const chatRoomsCollection: AngularFirestoreCollection<any> = this.db.collection<any>('chat-rooms');
-    this.chatRoomsDoc = chatRoomsCollection.doc(this.gameService.gameId);
-    this.chatRoomsSubCollection = this.chatRoomsDoc.collection('messages');
+    this.messagesCollection = chatRoomsCollection.doc(this.gameService.gameId).collection('messages');
+    this.messages = this.messagesCollection.valueChanges();
   }
 
-  sendMessage(message, gameId) {
-    this.chatRoomsSubCollection.add(message);
+  sendMessage(message) {
+    this.messagesCollection.add(message);
   }
 
   newMessage() {
-    interface IMessage {
-      message: string;
-      sender: string;
-      time: any;
-    }
     // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
-    let messageBox = (document.getElementById('messageBox') as HTMLInputElement);
-    let messageBoxValue = messageBox.value;
+    const messageBox = (document.getElementById('messageBox') as HTMLInputElement);
     // Get the person who sent the message.
     const messageSender = this.currentUserName;
     // Get the time when the message was sent.
     const time = Date.now();
     // Create a message object.
     const message: IMessage = {
-      message: messageBoxValue,
+      message: messageBox.value,
       sender: messageSender,
       time: time
     };
     // Send the message.
     // TODO Clear the chat box;
-    messageBox.value = "";
-    this.sendMessage(message, this.gameService.gameId);
+    messageBox.value = '';
+    this.sendMessage(message);
   }
 
+}
+
+
+interface IMessage {
+  message: string;
+  sender: string;
+  time: any;
 }

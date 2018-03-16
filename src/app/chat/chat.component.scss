@@ -25,6 +25,22 @@ textarea{
   overflow-y: scroll;
 }
 
+.chat {
+  word-wrap: break-word;
+  color: whitesmoke;
+}
+
+.chat .sender {
+  color: red;
+  font-weight: bold;
+}
+
+.chatHistory {
+  height: 60%;
+  background-color: #666666;
+  padding: 4px;
+}
+
 .roundedCorners{
   border-radius: 20px;
 }
