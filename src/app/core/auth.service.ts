@@ -62,21 +62,18 @@ export class AuthService {
      the document name to this random number, and it sets all of the parameters defined in the game interface.
   */
 
-  createGame(userId) {
-    this.userId = userId;
-    const chatRoomsRef = this.db.collection('chat-rooms');
-    const chatRoomsDoc = chatRoomsRef.doc(userId);
+  createGame() {
     const gamesRef = this.db.collection('games');
-    const userDoc = this.db.collection('users').doc(userId);
+    const userDoc = this.db.collection('users').doc(this.userId);
     const userInfo = userDoc.valueChanges();
     userInfo.subscribe(res => {
       this.currUserName = res['displayName'];
       this.currAvatar = res['pic'];
-      this.creatorId = userId;
-      gamesRef.doc(userId).set({
-        creatorId: userId,
+      this.creatorId = this.userId;
+      gamesRef.doc(this.userId).set({
+        creatorId: this.userId,
         creatorName: this.currUserName,
-        gameId: userId,
+        gameId: this.userId, // TODO: gameId = userId, should be random number.
         joinerId: '',
         joinerName: '',
         pic: this.currAvatar,
@@ -89,7 +86,7 @@ export class AuthService {
   getCreatorId() {
     return this.creatorId;
   }
-  getDisplayName(){
+  getDisplayName() {
     return this.currUserName;
   }
 

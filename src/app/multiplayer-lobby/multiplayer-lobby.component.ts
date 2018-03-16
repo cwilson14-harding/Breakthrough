@@ -167,7 +167,7 @@ export class MultiplayerLobbyComponent implements OnInit {
 
   createNewGame(user: User) {
      this.isGameCreated = true;
-     const createdGame = this.auth.createGame(user);
+     const createdGame = this.auth.createGame();
      const gameId: string = createdGame[0];
      createdGame[1].then(() => {
        this.createdGame = this.db.collection('games').doc<Game>(gameId).valueChanges();
@@ -192,24 +192,26 @@ export class MultiplayerLobbyComponent implements OnInit {
 
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.creatorName = data['displayName'];
-    });
-    // this.auth.createGame(userId);
-    this.db.collection('games').doc(randomId).set({
-      gameId: randomId,
-      creatorId: userId,
-      creatorName: this.creatorName,
-      joinerId: '',
-      joinerName: '',
-      gameType: 'multi',
-      isOpen: true,
-      state: 'STATE.OPEN',
-      turn: true
-    }).then(after => alert('a game has been created'));
 
-    this.db.collection('users').doc(userId).update({
-      currentGameId: randomId
-    }).then(goTo => {
-      this.router.navigateByUrl(`multi-setup/${randomId}`);
+      // this.auth.createGame(userId);
+      this.db.collection('games').doc(randomId).set({
+        gameId: randomId,
+        creatorId: userId,
+        creatorName: this.creatorName,
+        joinerId: '',
+        joinerName: '',
+        gameType: 'multi',
+        isOpen: true,
+        state: 'STATE.OPEN',
+        turn: true
+      }).then(after => {
+        this.db.collection('users').doc(userId).update({
+          currentGameId: randomId
+        }).then(goTo => {
+          alert('a game has been created');
+          this.router.navigateByUrl(`multi-setup/${randomId}`);
+        });
+      });
     });
   }
 
