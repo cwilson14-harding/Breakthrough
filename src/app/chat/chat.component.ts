@@ -43,7 +43,8 @@ export class ChatComponent implements OnInit {
       time: any;
     }
     // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
-    const messageBoxValue = ((document.getElementById('messageBox') as HTMLInputElement).value);
+    let messageBox = (document.getElementById('messageBox') as HTMLInputElement);
+    let messageBoxValue = messageBox.value;
     // Get the person who sent the message.
     const messageSender = this.currentUserName;
     // Get the time when the message was sent.
@@ -56,6 +57,7 @@ export class ChatComponent implements OnInit {
     };
     // Send the message.
     // TODO Clear the chat box;
+    messageBox.value = "";
     this.sendMessage(message, this.gameService.gameId);
   }
 
