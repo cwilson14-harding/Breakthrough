@@ -57,7 +57,10 @@ export class MultiSetupComponent implements OnInit {
     const playerOne = new PlayerData('Creator', '', PlayerType.Local);
     const playerTwo = new PlayerData('Joiner', '', PlayerType.Local);
     this.gameService.newGame(playerOne, playerTwo, this.gameId); // TODO: Supply game ID.
-    this.router.navigateByUrl('board');
+
+    setTimeout(() => {
+      this.router.navigate(['board', this.gameId]);
+    }, 2000);
   }
 
   returnToMenu() {

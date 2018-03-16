@@ -42,7 +42,7 @@ const appRoutes: Routes = [
   { path: 'chat', pathMatch: 'full', component: ChatComponent},
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
   { path: 'main-menu', pathMatch: 'full', component: MainMenuComponent},
-  { path: 'board', pathMatch: 'full', component: GameBoardComponent},
+  { path: 'board/:id', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
   { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: 'game-over-lose', pathMatch: 'full', component: GameOverLoseComponent},

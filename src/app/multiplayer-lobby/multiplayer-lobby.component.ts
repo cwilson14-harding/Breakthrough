@@ -256,18 +256,18 @@ export class MultiplayerLobbyComponent implements OnInit {
 
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.joinerName = data['displayName'];
-    });
 
-    this.db.collection('games').doc(gameId).update({
-      joinerId: userId,
-      joinerName: this.joinerName,
-      isOpen: false,
-      state: 'STATE.CLOSED',
+      this.db.collection('games').doc(gameId).update({
+        joinerId: userId,
+        joinerName: this.joinerName,
+        isOpen: false,
+        state: 'STATE.CLOSED',
+      }).then(goTo => {
+        this.db.collection('users').doc(userId).update({
+          currentGameId: gameId
+        }).then(res => this.router.navigate(['multi-setup', gameId]));
+      });
     });
-
-    this.db.collection('users').doc(userId).update({
-      currentGameId: gameId
-    }).then(res => this.router.navigate(['multi-setup', gameId]));
   }
 
 
