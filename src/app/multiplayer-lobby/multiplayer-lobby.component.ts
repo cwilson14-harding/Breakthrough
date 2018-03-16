@@ -208,7 +208,6 @@ export class MultiplayerLobbyComponent implements OnInit {
         this.db.collection('users').doc(userId).update({
           currentGameId: randomId
         }).then(goTo => {
-          alert('a game has been created');
           this.router.navigateByUrl(`multi-setup/${randomId}`);
         });
       });
