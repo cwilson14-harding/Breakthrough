@@ -15,7 +15,7 @@ import {PlayerType} from '../player-data';
 
 export class ChatComponent implements OnInit {
   messagesCollection: AngularFirestoreCollection<any>;
-  messages: Observable<IMessage[]>;
+  messages: IMessage[] = [];
   game: AngularFirestoreDocument<Game>;
   currentUserName: string;
 
@@ -29,7 +29,33 @@ export class ChatComponent implements OnInit {
     this.messagesCollection = this.db.collection<any>('chat-rooms').doc(this.gameService.gameId).collection('messages');
 
     // Subscribe to the messages list.
-    this.messages = this.messagesCollection.valueChanges();
+    this.messagesCollection.valueChanges().subscribe(messages => {
+      // Clear the display list of messages.
+      this.messages = [];
+
+      // Parse through the new list of messages and add each one to the display list.
+      for (const data of messages) {
+        const message: IMessage = {
+          message: data['message'],
+          sender: data['sender'],
+          time: new Date(data['time'])
+        };
+
+        // Add this message to the list of messages.
+        this.messages.push(message);
+      }
+
+      // Sort the list of messages by time sent.
+      this.messages.sort((a, b) => {
+        if (a.time > b.time) {
+          return -1;
+        } else if (a.time < b.time) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    });
   }
 
   sendMessage(message) {

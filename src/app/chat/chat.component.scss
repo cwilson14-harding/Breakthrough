@@ -31,6 +31,7 @@ textarea{
 .chat {
   word-wrap: break-word;
   color: whitesmoke;
+  margin: 0;
 }
 .chat .opponent {
   color: #D2691E;
@@ -43,8 +44,9 @@ textarea{
 
 .chatHistory {
   height: 60%;
-  background-color: #666666;
+  background-color: #222222;
   padding: 4px;
+  overflow: auto;
 }
 
 .roundedCorners{
