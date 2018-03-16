@@ -3,11 +3,11 @@ import {Router} from '@angular/router';
 import {AuthService} from '../core/auth.service';
 
 @Component({
-  selector: 'app-game-over',
-  templateUrl: './game-over.component.html',
-  styleUrls: ['./game-over.component.scss']
+  selector: 'app-game-over-lose',
+  templateUrl: './game-over-lose.component.html',
+  styleUrls: ['./game-over-lose.component.scss']
 })
-export class GameOverComponent implements OnInit {
+export class GameOverLoseComponent implements OnInit {
 
   constructor(public auth: AuthService, private router: Router) { }
 

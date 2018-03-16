@@ -29,7 +29,8 @@ import {NgxSlideshowModule} from 'ngx-slideshow';
 import {FormsModule} from "@angular/forms";
 import {NgbModule, NgbTab, NgbTabContent, NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { GameOverComponent } from './game-over/game-over.component';
+import { GameOverWinComponent } from './game-over-win/game-over-win.component';
+import { GameOverLoseComponent } from './game-over-lose/game-over-lose.component';
 import { SingleSetupComponent } from './single-setup/single-setup.component';
 import { MultiSetupComponent } from './multi-setup/multi-setup.component';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -44,7 +45,8 @@ const appRoutes: Routes = [
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
   { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
-  { path: 'game-over', pathMatch: 'full', component: GameOverComponent},
+  { path: 'game-over-lose', pathMatch: 'full', component: GameOverComponent},
+  { path: 'game-over-win', pathMatch: 'full', component: GameOverComponent},
   { path: 'single-setup', pathMatch: 'full', component: SingleSetupComponent},
   { path: 'multi-setup/:id', pathMatch: 'full', component: MultiSetupComponent},
   { path: 'leaderboard', pathMatch: 'full', component: LeaderboardComponent},
