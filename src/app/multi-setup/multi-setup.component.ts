@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import {GameService} from '../game.service';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatButtonToggle} from '@angular/material/button-toggle';
 import {AuthService} from '../core/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
 
