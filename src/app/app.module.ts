@@ -37,8 +37,6 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { GuestInfoComponent } from './guest-info/guest-info.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
-
-
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
   { path: 'home', pathMatch: 'full', component: HomeComponent},
