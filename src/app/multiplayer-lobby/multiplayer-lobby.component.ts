@@ -144,43 +144,6 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.dylan = false;
     this.alaina = false;
   }
-  click_dylan() {
-    this.luke = false;
-    this.cj = false;
-    this.brad = false;
-    this.dylan = true;
-    this.alaina = false;
-  }
-  click_alaina() {
-    this.luke = false;
-    this.cj = false;
-    this.brad = false;
-    this.dylan = false;
-    this.alaina = true;
-  }
-
-  /* createNewGame: function(){}
-     Parameters: user
-     This function takes a user and sets the isGameCreated property to true. Then the function calls the
-     createGame function from the auth.service to create a new game an store it in the database.
-  */
-
-  createNewGame(user: User) {
-     this.isGameCreated = true;
-     const createdGame = this.auth.createGame();
-     const gameId: string = createdGame[0];
-     createdGame[1].then(() => {
-       this.createdGame = this.db.collection('games').doc<Game>(gameId).valueChanges();
-       /* TODO: Auto join game
-       this.createdGame.subscribe(game => {
-         console.log(game);
-         if (game !== null) {
-           console.log('joining');
-           this.joinGame(user, game);
-         }
-       });*/
-     });
-  }
 
   createRandomId() {
     return Math.floor(Math.random() * 1000000) + 1;
@@ -208,7 +171,6 @@ export class MultiplayerLobbyComponent implements OnInit {
         this.db.collection('users').doc(userId).update({
           currentGameId: randomId
         }).then(goTo => {
-          alert('a game has been created');
           this.router.navigateByUrl(`multi-setup/${randomId}`);
         });
       });
@@ -221,8 +183,8 @@ export class MultiplayerLobbyComponent implements OnInit {
   }
 
   /* joinGame: function(){}
-     Parameters: user, game
-     This function takes two parameters, a user and a game. The function checks to see if the creator of the game
+     Parameters: gameId
+     This function takes one parameter, a gameId. The function checks to see if the creator of the game
      is trying to join his/her own game. A javascript alert appears if this happens and the operation fails.
 
      If the user's uid property does not match the game's creatorId property then the person joining the game is
@@ -256,18 +218,18 @@ export class MultiplayerLobbyComponent implements OnInit {
 
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.joinerName = data['displayName'];
-    });
 
-    this.db.collection('games').doc(gameId).update({
-      joinerId: userId,
-      joinerName: this.joinerName,
-      isOpen: false,
-      state: 'STATE.CLOSED',
+      this.db.collection('games').doc(gameId).update({
+        joinerId: userId,
+        joinerName: this.joinerName,
+        isOpen: false,
+        state: 'STATE.CLOSED',
+      }).then(goTo => {
+        this.db.collection('users').doc(userId).update({
+          currentGameId: gameId
+        }).then(res => this.router.navigate(['multi-setup', gameId]));
+      });
     });
-
-    this.db.collection('users').doc(userId).update({
-      currentGameId: gameId
-    }).then(res => this.router.navigate(['multi-setup', gameId]));
   }
 
 

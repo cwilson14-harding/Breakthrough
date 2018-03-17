@@ -116,7 +116,8 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
     const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
     this.gameService.newGame(playerOne, playerTwo);
     // this.router.navigateByUrl('single-setup');
-     this.router.navigateByUrl('board');
+    // TODO: Navigate with the Game ID: Create a Game for the single player in the DB so we can track wins/losses
+     this.router.navigate(['board', 'singlePlayer']);
   }
   // set settings to true. settings div will appear
   goToSettings() {

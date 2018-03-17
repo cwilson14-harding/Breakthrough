@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {AuthService, Game} from '../core/auth.service';
 import {GameService} from '../game.service';
 import {AngularFireAuth} from 'angularfire2/auth';
+import {PlayerType} from '../player-data';
 
 @Component({
   selector: 'app-chat',
@@ -11,58 +12,84 @@ import {AngularFireAuth} from 'angularfire2/auth';
   styleUrls: ['./chat.component.scss'],
 
 })
+
 export class ChatComponent implements OnInit {
-  chatRoomsCollection: AngularFirestoreCollection<any>; // Removed array brackets Don't know if this will break stuff. // I wasn't able to add a message to type any[]
-  currentUserName: any;
+  messagesCollection: AngularFirestoreCollection<any>;
+  messages: IMessage[] = [];
   game: AngularFirestoreDocument<Game>;
-  games: any;
-  gameId: any;
-  messages: Observable<any[]>;
-  showStyle = false;
-  chatMessages: any;
+  currentUserName: string;
 
   constructor(public db: AngularFirestore, private gameService: GameService, public afAuth: AngularFireAuth,
               public auth: AuthService) {
-    this.chatMessages = this.db.collection('chats').valueChanges();
-    this.games = this.db.collection('games').valueChanges();
-    this.currentUserName = this.auth.getDisplayName();
+    this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
   }
 
   ngOnInit() {
-    this.getChatData();
+    // Get the messages list for this game.
+    this.messagesCollection = this.db.collection<any>('chat-rooms').doc(this.gameService.gameId).collection('messages');
+
+    // Subscribe to the messages list.
+    this.messagesCollection.valueChanges().subscribe(messages => {
+      // Clear the display list of messages.
+      this.messages = [];
+
+      // Parse through the new list of messages and add each one to the display list.
+      for (const data of messages) {
+        const message: IMessage = {
+          message: data['message'],
+          sender: data['sender'],
+          time: new Date(data['time'])
+        };
+
+        // Add this message to the list of messages.
+        this.messages.push(message);
+      }
+
+      // Sort the list of messages by time sent.
+      this.messages.sort((a, b) => {
+        if (a.time > b.time) {
+          return -1;
+        } else if (a.time < b.time) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    });
   }
 
-  getChatData() {
-    this.chatRoomsCollection = this.db.collection<any>('chat-rooms');
-    this.messages = this.chatRoomsCollection.valueChanges();
+  sendMessage(message) {
+    this.messagesCollection.add(message);
   }
 
-  sendMessage(message, gameId) {
-    const chatRoomsDoc = this.chatRoomsCollection.doc(gameId);
-    const chatRoomsSubCollection = chatRoomsDoc.collection('messages');
-    chatRoomsSubCollection.add(message);
-  }
   newMessage() {
-    interface IMessage {
-      message: string;
-      sender: string;
-      time: any;
-    }
     // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
-    const messageBoxValue = ((document.getElementById('messageBox') as HTMLInputElement).value);
+    const messageBox: HTMLInputElement = document.getElementById('messageBox') as HTMLInputElement;
+
     // Get the person who sent the message.
     const messageSender = this.currentUserName;
+
     // Get the time when the message was sent.
     const time = Date.now();
+
     // Create a message object.
     const message: IMessage = {
-      message: messageBoxValue,
+      message: messageBox.value,
       sender: messageSender,
       time: time
     };
+
     // Send the message.
-    // TODO Clear the chat box;
-    this.sendMessage(message, this.auth.getCreatorId());
+    this.sendMessage(message);
+
+    // Clear the text box.
+    messageBox.value = '';
   }
 
+}
+
+interface IMessage {
+  message: string;
+  sender: string;
+  time: any;
 }

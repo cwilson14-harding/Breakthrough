@@ -1,16 +1,12 @@
-<head>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-</head>
-<div *ngFor="let message of messages | async">
-  {{message.$value}}
-</div>
 <div id="chatContainer" class=" w3-container w3-border-color-grey w3-left w3-bottom roundedCorners" style="height: 60vh; width: 25vw; background: #2c2c2c; z-index: 1; opacity: .9; display: none;">
   <h1 class="textStroke">Chat</h1>
-  <div>
-    <textarea rows="15" cols="80" readonly>Messages go here...
-
-  </textarea>
+  <div class="roundedCorners chatHistory">
+    <p *ngFor="let message of messages" class="chat">
+      <span class="{{ (message.sender === currentUserName) ? 'self' : 'opponent' }}">{{message.sender}}</span>: {{message.message}}
+    </p>
   </div>
-  <input id="messageBox" type="text" class="messageBox" #message placeholder="Your message...">
-  <button class="w3-right btn" (click)="newMessage()">Send Message</button>
+  <form onsubmit="event.preventDefault();">
+    <input id="messageBox" type="text" class="messageBox" #message placeholder="Your message..." />
+    <input type="submit" class="w3-right btn" (click)="newMessage()" value="Send Message" />
+  </form>
 </div>

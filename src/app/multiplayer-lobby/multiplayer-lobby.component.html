@@ -258,7 +258,7 @@
           </li> -->
 
           <!-- Using Firebase -->
-          <li *ngFor="let open of openGames | async" class="w3-bar greyBackground" [@flyInOut]="state">
+          <li *ngFor="let open of openGames | async" class="w3-bar greyBackground"> <!-- [@flyInOut]="state" -->
             <span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="joinGame(open.gameId)"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
             <img src='{{open.pic}}' class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
             <div class="w3-bar-item">
