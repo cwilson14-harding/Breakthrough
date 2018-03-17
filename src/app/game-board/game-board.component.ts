@@ -177,6 +177,7 @@ export class GameBoardComponent implements OnInit {
       div.style.display = 'none';
     } else {
       div.style.display = 'block';
+      document.getElementById('messageBox').focus();
     }
   }
 

@@ -32,6 +32,13 @@ describe('AIBoard', () => {
     expect(board.isValidMove(move)).toBeTruthy();
   }));
 
+  it('should detect invalid moves to the next row', inject([], () => {
+    const board: AIBoard = new AIBoard();
+    board.newGame();
+    const move: Move = new Move(new Coordinate(1, 0), new Coordinate(2, 6));
+    expect(board.isValidMove(move)).toBeFalsy();
+  }));
+
   it('should detect valid diagonal moves', inject([], () => {
     const board: AIBoard = new AIBoard();
     board.newGame();
