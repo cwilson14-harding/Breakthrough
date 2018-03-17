@@ -2,7 +2,7 @@
   <h1 class="textStroke">Chat</h1>
   <div class="roundedCorners chatHistory">
     <p *ngFor="let message of messages" class="chat">
-      <span class="{{ (message.sender === currentUserName) ? 'self' : 'opponent' }}">{{message.sender}}</span>: {{message.message}}
+      <span class="{{ (message.senderId === this.auth.userId) ? 'self' : 'opponent' }}">{{message.senderName}}</span>: {{message.message}}
     </p>
   </div>
   <form onsubmit="event.preventDefault();">

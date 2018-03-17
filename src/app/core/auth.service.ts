@@ -114,7 +114,7 @@ export class AuthService {
     alert(currentGame);
   }
 
-  getCurrentUser() {
+  getCurrentUser(): string {
     const currentUser = this.afAuth.auth.currentUser;
     return currentUser.uid;
   }

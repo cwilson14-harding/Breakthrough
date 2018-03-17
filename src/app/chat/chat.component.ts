@@ -19,9 +19,12 @@ export class ChatComponent implements OnInit {
   game: AngularFirestoreDocument<Game>;
   currentUserName: string;
 
-  constructor(public db: AngularFirestore, private gameService: GameService, public afAuth: AngularFireAuth,
-              public auth: AuthService) {
-    this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
+  constructor(private db: AngularFirestore, private gameService: GameService, private auth: AuthService) {
+    // this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
+    const sub = auth.user.subscribe(data => {
+      this.currentUserName = data['displayName'];
+      sub.unsubscribe();
+    });
   }
 
   ngOnInit() {
@@ -37,7 +40,8 @@ export class ChatComponent implements OnInit {
       for (const data of messages) {
         const message: IMessage = {
           message: data['message'],
-          sender: data['sender'],
+          senderName: data['senderName'],
+          senderId: data['senderId'],
           time: new Date(data['time'])
         };
 
@@ -66,16 +70,14 @@ export class ChatComponent implements OnInit {
     // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
     const messageBox: HTMLInputElement = document.getElementById('messageBox') as HTMLInputElement;
 
-    // Get the person who sent the message.
-    const messageSender = this.currentUserName;
-
     // Get the time when the message was sent.
     const time = Date.now();
-
+    console.log(this.auth.getCurrentUser());
     // Create a message object.
     const message: IMessage = {
       message: messageBox.value,
-      sender: messageSender,
+      senderName: this.currentUserName,
+      senderId: this.auth.getCurrentUser(),
       time: time
     };
 
@@ -90,6 +92,7 @@ export class ChatComponent implements OnInit {
 
 interface IMessage {
   message: string;
-  sender: string;
+  senderName: string;
+  senderId: string;
   time: any;
 }
