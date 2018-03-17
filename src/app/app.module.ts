@@ -34,6 +34,7 @@ import { SingleSetupComponent } from './single-setup/single-setup.component';
 import { MultiSetupComponent } from './multi-setup/multi-setup.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { GuestInfoComponent } from './guest-info/guest-info.component';
+import {MusicComponent} from './music/music.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -74,6 +75,7 @@ const appRoutes: Routes = [
     MultiSetupComponent,
     SignInComponent,
     GuestInfoComponent,
+    MusicComponent,
   ],
   imports: [
     BrowserModule,
