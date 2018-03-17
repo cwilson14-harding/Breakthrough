@@ -23,6 +23,7 @@ export class MultiSetupComponent implements OnInit {
   joinerName;
   player1 = false;
   player2 = false;
+  playerOrderGroup: string;
 
   ngOnInit() {
     this.gameId = this.route.snapshot.params['id'];
@@ -53,12 +54,33 @@ export class MultiSetupComponent implements OnInit {
 
 
   goToBoard() {
-    // TODO: Set player order.
-    // TODO: Change remote player (relative to self, who is local) to PlayerType.Network and finish NetworkPlayer implementation.
-    const playerOne = new PlayerData(this.creatorName, '', PlayerType.Local);
-    const playerTwo = new PlayerData(this.joinerName, '', PlayerType.Local);
+    let playerOne: PlayerData;
+    let playerTwo: PlayerData;
+
+    // Determine who is local and who is remote.
+    const isJoining = (this.joinerId === this.auth.getCurrentUser());
+    const creatorType: PlayerType = (isJoining) ? PlayerType.Network : PlayerType.Local;
+    const joinerType: PlayerType = (isJoining) ? PlayerType.Local : PlayerType.Network;
+
+    // Determine the starting player if random.
+    if (this.playerOrderGroup === 'rand') {
+      this.playerOrderGroup = ['p1', 'p2'][Math.floor(Math.random() % 2)];
+    }
+
+    // Set up the game data and player order for who is going first.
+    if (this.playerOrderGroup === 'p1') {
+      playerOne = new PlayerData(this.creatorName, '', creatorType);
+      playerTwo = new PlayerData(this.joinerName, '', joinerType);
+    } else {
+      playerOne = new PlayerData(this.joinerName, '', joinerType);
+      playerTwo = new PlayerData(this.creatorName, '', creatorType);
+    }
+
+    // Set the game data.
     this.gameService.newGame(playerOne, playerTwo, this.gameId);
 
+    // Start the game.
+    // TODO: Move to a button on the host's screen.
     setTimeout(() => {
       this.router.navigate(['board', this.gameId]);
     }, 2000);

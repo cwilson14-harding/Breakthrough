@@ -55,12 +55,11 @@
 
         <div class="w3-row w3-padding w3-center">
             Who goes first?
-              <mat-button-toggle-group>
-                <mat-button-toggle>Player 1</mat-button-toggle>
-                <mat-button-toggle>Random</mat-button-toggle>
-                <mat-button-toggle>Player 2</mat-button-toggle>
+              <mat-button-toggle-group [(ngModel)]="playerOrderGroup">
+                <mat-button-toggle value="p1">Player 1</mat-button-toggle>
+                <mat-button-toggle value="rand">Random</mat-button-toggle>
+                <mat-button-toggle value="p2">Player 2</mat-button-toggle>
               </mat-button-toggle-group>
-
           </div>
 
     <div class="w3-container w3-padding w3-display-bottomleft">
