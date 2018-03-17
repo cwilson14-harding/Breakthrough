@@ -13,12 +13,9 @@ import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
 import {Move} from '../models/move';
 import {Router} from '@angular/router';
-import {HostListener} from '@angular/core';
-import { ToolbarComponent } from '../toolbar/toolbar.component';
 import {AIPlayerRandom} from '../models/ai-player-random';
 import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
 import {ChatComponent} from '../chat/chat.component';
-import {auth} from 'firebase/app';
 
 @Component({
   selector: 'app-game-board',
@@ -30,28 +27,27 @@ export class GameBoardComponent implements OnInit {
   board: Board;
   game: AngularFirestoreDocument<Game>;
   games: any;
-  currentUserName: any;
   playBackgroundMusic: boolean;
   player1: Player;
   player2: Player;
   user: Observable<User>;
+
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
-              public afAuth: AngularFireAuth, private gameService: GameService, public chat: ChatComponent) {
+              private gameService: GameService, public chat: ChatComponent) {
+
     this.board = new Board();
     this.board.newGame();
 
-    this.currentUserName = this.afAuth.auth.currentUser.displayName;
-    // this.board = db.collection('board').valueChanges();
-    // Compare the user.uid field with the game.creatorId field.
-    // this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
-    this.games = this.db.collection('games').valueChanges();
+    // Get the game reference if multiplayer.
     if (this.gameService.gameId !== '') {
       this.game = this.db.collection('games').doc<Game>(this.gameService.gameId);
     }
 
+    // Get the player data.
     const p1 = this.gameService.playerOne;
     const p2 = this.gameService.playerTwo;
 
+    // Create the player objects.
     switch (p1.type) {
       case PlayerType.AIRandom: this.player1 = new AIPlayerRandom(); break;
       case PlayerType.AIMCTSDef: this.player1 = new AIPlayerMCTSDefensive(); break;
@@ -59,7 +55,6 @@ export class GameBoardComponent implements OnInit {
       case PlayerType.Local: this.player1 = new LocalPlayer(1); break;
       case PlayerType.Network: this.player1 = new NetworkPlayer(this.game); break;
     }
-
     switch (p2.type) {
       case PlayerType.AIRandom: this.player2 = new AIPlayerRandom(); break;
       case PlayerType.AIMCTSDef: this.player2 = new AIPlayerMCTSDefensive(); break;
@@ -68,6 +63,7 @@ export class GameBoardComponent implements OnInit {
       case PlayerType.Network: this.player2 = new NetworkPlayer(this.game); break;
     }
 
+    // Get the move from the first player.
     this.getMove();
 
   }
@@ -97,6 +93,7 @@ export class GameBoardComponent implements OnInit {
           // Send the winning move if multiplayer.
           if (this.currentPlayer instanceof NetworkPlayer) {
             (this.currentPlayer as NetworkPlayer).sendWinningMove(this.board.lastMove, winnerData.name);
+            // TODO: Update leaderboard.
           }
 
           // Show the game over.
@@ -174,7 +171,7 @@ export class GameBoardComponent implements OnInit {
 
     // Ignore if a non-local player.
   }
-  showChatClicked(Null: null) {
+  showChatClicked() {
     const div = document.getElementById('chatContainer');
     if (div.style.display !== 'none') {
       div.style.display = 'none';
@@ -182,35 +179,6 @@ export class GameBoardComponent implements OnInit {
       div.style.display = 'block';
     }
   }
-  getCurrName() {
-    // this.currentUserName = this.afAuth.auth.currentUser.displayName;
-    // alert(this.currentUserName);
-    this.games = this.db.collection('games', ref => ref.where('creatorName', '==', this.currentUserName));
-  }
-
-  /*sendChatMessage() {
-    interface IMessage {
-      message: string;
-      sender: string;
-      time: any;
-    }
-    // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
-    const messageBoxValue = ((document.getElementById('messageBox') as HTMLInputElement).value);
-    // Get the person who sent the message.
-    const messageSender = this.currentUserName;
-    // Get the time when the message was sent.
-    const time = Date.now();
-
-    const message: IMessage = {
-      message: messageBoxValue,
-      sender: messageSender,
-      time: time
-    };
-
-    // Create a message object.
-    this.chat.newMessage(message, this.gameService.gameId);
-    // TODO Clear the chat box;
-  }*/
 
   getCurrentGame(user, game) {
     if (user.displayName === game.creatorName) {
@@ -219,7 +187,7 @@ export class GameBoardComponent implements OnInit {
       alert('This is ' + game.creatorName + ' game.');
     }
   }
-  forfeitClicked(Null: null) {
+  forfeitClicked() {
     // TODO: CONFIRM before forfeit
     // this.router.navigateByUrl(('game-over'));
     this.router.navigateByUrl(('main-menu'));
