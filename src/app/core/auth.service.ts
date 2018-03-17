@@ -26,6 +26,7 @@ export interface Game {
   playerTurn: number;
   state: string;
   winner: string;
+  lastMove: string;
 }
 
 @Injectable()

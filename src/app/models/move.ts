@@ -10,4 +10,8 @@ export class Move {
   get fromIndex(): number {
     return this.from.row * 8 + this.from.column;
   }
+
+  toString(): string {
+    return '' + this.from.row.toString() + +this.from.column.toString() + +this.to.row.toString() + +this.to.column.toString();
+  }
 }

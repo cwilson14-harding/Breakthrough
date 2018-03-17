@@ -7,6 +7,7 @@ export class Board {
   public boardClass: string[][];
   public selectedCoordinate: Coordinate = undefined;
   public playerTurn = 1;
+  public lastMove: Move = undefined;
 
   constructor() {}
   /* findAvailableMoves: function(): Coordinate[] {}
@@ -206,6 +207,8 @@ export class Board {
 
       // Deselect the piece.
       this.selectedCoordinate = undefined;
+
+      this.lastMove = move;
 
       // Update the win status.
       // this.winner = this.isGameFinished();

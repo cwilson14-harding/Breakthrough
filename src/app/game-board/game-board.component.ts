@@ -77,7 +77,7 @@ export class GameBoardComponent implements OnInit {
   */
   getMove() {
     const currentPlayer = this.currentPlayer;
-    if (currentPlayer !== undefined) {
+    if (currentPlayer) {
       const movePromise: Promise<Move> = currentPlayer.getMove(this);
 
       movePromise.then((move: Move) => {
@@ -97,7 +97,7 @@ export class GameBoardComponent implements OnInit {
             // this.router.navigateByUrl(('game-over'));
             // TODO: Go to game over screen.
             alert(winnerData.name + ' [' + winner + '] has won!');
-            this.router.navigateByUrl(('main-menu'));
+            this.router.navigateByUrl('main-menu');
           }, 1000);
         } else {
           this.getMove();

@@ -10,28 +10,50 @@ export class NetworkPlayer implements Player {
   board: GameBoardComponent;
   private resolve: Function;
   private reject: Function;
+  private sub;
 
   constructor(private game: AngularFirestoreDocument<Game>) {}
 
   getMove(board: GameBoardComponent): Promise<Move> {
+    // Send the last move to the database.
+
+
+    // Get the new move back.
     return new Promise<Move>((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
       this.board = board;
 
       // Send new move.
-      this.game.update({
-        playerTurn: this.board.board.playerTurn
-      });
+      if (this.board.board.lastMove) {
+        this.game.update({
+          playerTurn: this.board.board.playerTurn,
+          lastMove: this.board.board.lastMove.toString()
+        }).then(() => {
+          this.makeRemoteMove();
+        });
+      } else {
+        // Called on first move when the remote player is first.
+        this.makeRemoteMove();
+      }
+    });
+  }
 
-      /* TODO: Fix network listener not working?
-      // Wait for a new one.
-      this.subscription = this.game.valueChanges().subscribe(game => {
-        this.board.board.playerTurn = game.playerTurn.valueOf();
-        console.log('move made!');
-        this.resolve();
-        this.subscription.unsubscribe();
-      });*/
+  private makeRemoteMove() {
+    // Wait for a new move.
+    this.sub = this.game.valueChanges().subscribe(data => {
+      // Get the move.
+      if (data['lastMove']) {
+        const c1: Coordinate = new Coordinate(+data['lastMove'][0], +data['lastMove'][1]);
+        const c2: Coordinate = new Coordinate(+data['lastMove'][2], +data['lastMove'][3]);
+        const move: Move = new Move(c1, c2);
+
+        // The first move retrieved will always be the last move made, so make sure we get a valid one back.
+        if (this.board.board.isMoveValid(move)) {
+          this.sub.unsubscribe();
+          this.resolve(move);
+        }
+      }
     });
   }
 }
