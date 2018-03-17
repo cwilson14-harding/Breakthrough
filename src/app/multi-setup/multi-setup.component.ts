@@ -61,6 +61,8 @@ export class MultiSetupComponent implements OnInit {
     const isJoining = (this.joinerId === this.auth.getCurrentUser());
     const creatorType: PlayerType = (isJoining) ? PlayerType.Network : PlayerType.Local;
     const joinerType: PlayerType = (isJoining) ? PlayerType.Local : PlayerType.Network;
+    const creatorPlayer = new PlayerData(this.creatorName, '', creatorType);
+    const joinerPlayer = new PlayerData(this.joinerName, '', joinerType);
 
     // Determine the starting player if random.
     if (this.playerOrderGroup === 'rand') {
@@ -69,11 +71,11 @@ export class MultiSetupComponent implements OnInit {
 
     // Set up the game data and player order for who is going first.
     if (this.playerOrderGroup === 'p1') {
-      playerOne = new PlayerData(this.creatorName, '', creatorType);
-      playerTwo = new PlayerData(this.joinerName, '', joinerType);
+      playerOne = creatorPlayer;
+      playerTwo = joinerPlayer;
     } else {
-      playerOne = new PlayerData(this.joinerName, '', joinerType);
-      playerTwo = new PlayerData(this.creatorName, '', creatorType);
+      playerOne = joinerPlayer;
+      playerTwo = creatorPlayer;
     }
 
     // Set the game data.
