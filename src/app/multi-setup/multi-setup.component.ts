@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import {GameService} from '../game.service';
-// import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-multi-setup',
@@ -15,6 +15,8 @@ export class MultiSetupComponent implements OnInit {
 
   ngOnInit() {
   }
+
+
 
   goToBoard() {
     // TODO: Set player order.

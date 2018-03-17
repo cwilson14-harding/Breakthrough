@@ -35,6 +35,9 @@ import { SingleSetupComponent } from './single-setup/single-setup.component';
 import { MultiSetupComponent } from './multi-setup/multi-setup.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { GuestInfoComponent } from './guest-info/guest-info.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -45,8 +48,8 @@ const appRoutes: Routes = [
   { path: 'board', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
   { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
-  { path: 'game-over-lose', pathMatch: 'full', component: GameOverComponent},
-  { path: 'game-over-win', pathMatch: 'full', component: GameOverComponent},
+  { path: 'game-over-lose', pathMatch: 'full', component: GameOverLoseComponent},
+  { path: 'game-over-win', pathMatch: 'full', component: GameOverWinComponent},
   { path: 'single-setup', pathMatch: 'full', component: SingleSetupComponent},
   { path: 'multi-setup/:id', pathMatch: 'full', component: MultiSetupComponent},
   { path: 'leaderboard', pathMatch: 'full', component: LeaderboardComponent},
@@ -71,7 +74,8 @@ const appRoutes: Routes = [
     SettingsComponent,
     SplashScreenComponent,
     ToolbarComponent,
-    GameOverComponent,
+    GameOverWinComponent,
+    GameOverLoseComponent,
     SingleSetupComponent,
     MultiSetupComponent,
     SignInComponent,
@@ -87,6 +91,7 @@ const appRoutes: Routes = [
     FormsModule,
     TypingAnimationModule,
     ParticlesModule,
+    MatButtonToggleModule,
     NgxSlideshowModule.forRoot(),
     NgbModule.forRoot()
   ],
