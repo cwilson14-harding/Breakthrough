@@ -5,14 +5,12 @@ import {Move} from '../app/models/move';
 import {AIBoard} from '../app/models/ai/aiboard';
 
 describe('GameBoard', function () {
-    it('approves given location', function() {
-        const board: Board = new Board();
-        const location: Coordinate = new Coordinate(2, 3);
-        const isValidated: boolean = board.isLocationValid(location);
-        expect(isValidated).toBeTruthy();
-    });
-
-
+  it('approves given location', function() {
+    const board: Board = new Board();
+    const location: Coordinate = new Coordinate(2, 3);
+    const isValidated: boolean = board.isLocationValid(location);
+    expect(isValidated).toBeTruthy();
+  });
 
   it('should be created', inject([], () => {
     expect(new Board()).toBeTruthy();
@@ -65,11 +63,28 @@ describe('GameBoard', function () {
     expect(board.isMoveValid(move)).toBeFalsy();
   }));
 
+  it('should detect invalid moves to anywhere on the next row', inject([], () => {
+    const board: Board = new Board();
+    board.newGame();
+    const move: Move = new Move(new Coordinate(1, 0), new Coordinate(2, 5));
+    expect(board.isMoveValid(move)).toBeFalsy();
+  }));
+
   it('should detect invalid diagonal moves', inject([], () => {
     const board: Board = new Board();
     board.newGame();
     const move: Move = new Move(new Coordinate(1, 0), new Coordinate(1, 7));
     expect(board.isMoveValid(move)).toBeFalsy();
+  }));
+
+
+  it('should detect valid moves by the second player', inject([], () => {
+    const board: Board = new Board();
+    board.newGame();
+    let move: Move = new Move(new Coordinate(1, 0), new Coordinate(2, 1));
+    board.makeMove(move);
+    move = new Move(new Coordinate(6, 7), new Coordinate(5, 7));
+    expect(board.isMoveValid(move)).toBeTruthy();
   }));
 
   it('should make valid moves', inject([], () => {

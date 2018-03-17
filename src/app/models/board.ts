@@ -133,7 +133,7 @@ export class Board {
     }
 
     // Check to see if the move is within range and direction of piece.
-    if (Math.abs(move.to.column - move.to.column) > 1) {
+    if (Math.abs(move.from.column - move.to.column) > 1) {
       return false;
     }
 
