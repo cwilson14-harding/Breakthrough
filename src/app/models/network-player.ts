@@ -26,16 +26,26 @@ export class NetworkPlayer implements Player {
 
       // Send new move.
       if (this.board.board.lastMove) {
-        this.game.update({
-          playerTurn: this.board.board.playerTurn,
-          lastMove: this.board.board.lastMove.toString()
-        }).then(() => {
+        this.sendMove(this.board.board.lastMove).then(() => {
           this.makeRemoteMove();
         });
       } else {
         // Called on first move when the remote player is first.
         this.makeRemoteMove();
       }
+    });
+  }
+
+  sendWinningMove(move: Move, winnerName: string) {
+    this.game.update({
+      lastMove: move.toString(),
+      winner: winnerName
+    });
+  }
+
+  private sendMove(move: Move): Promise<void> {
+    return this.game.update({
+      lastMove: move.toString()
     });
   }
 

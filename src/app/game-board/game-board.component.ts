@@ -93,6 +93,13 @@ export class GameBoardComponent implements OnInit {
         const winner: number = this.board.isGameFinished();
         if (winner) {
           const winnerData: PlayerData = (winner === 1) ? this.gameService.playerOne : this.gameService.playerTwo;
+
+          // Send the winning move if multiplayer.
+          if (this.currentPlayer instanceof NetworkPlayer) {
+            (this.currentPlayer as NetworkPlayer).sendWinningMove(this.board.lastMove, winnerData.name);
+          }
+
+          // Show the game over.
           setTimeout(() => {
             // this.router.navigateByUrl(('game-over'));
             // TODO: Go to game over screen.
