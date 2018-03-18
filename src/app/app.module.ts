@@ -36,6 +36,7 @@ import { MultiSetupComponent } from './multi-setup/multi-setup.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { GuestInfoComponent } from './guest-info/guest-info.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { EmailUserInfoComponent } from './email-user-info/email-user-info.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
   { path: 'leaderboard', pathMatch: 'full', component: LeaderboardComponent},
   { path: 'sign-in', pathMatch: 'full', component: SignInComponent},
   { path: 'guest-info', pathMatch: 'full', component: GuestInfoComponent},
+  { path: 'email-user-info', pathMatch: 'full', component: EmailUserInfoComponent},
   { path: '**', redirectTo: 'home'}
 ];
 
@@ -78,6 +80,7 @@ const appRoutes: Routes = [
     MultiSetupComponent,
     SignInComponent,
     GuestInfoComponent,
+    EmailUserInfoComponent,
   ],
   imports: [
     BrowserModule,

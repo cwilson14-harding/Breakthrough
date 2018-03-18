@@ -110,7 +110,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
       losses: losses,
       wins: wins
     }).then(() => {
-      this.router.navigateByUrl('guest-info');
+      this.router.navigate(['email-user-info']);
     });
   }
   signInWithEmail() {
@@ -118,6 +118,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const email = this.txtEmail.value;
     this.btnLogin = document.getElementById('loginButton');
     const promise = this.auth.loginUserWithEmail(email);
-    this.router.navigateByUrl('guest-info');
+    this.router.navigateByUrl('home');
   }
 }

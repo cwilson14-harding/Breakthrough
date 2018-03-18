@@ -263,5 +263,4 @@ export class MultiplayerLobbyComponent implements OnInit {
   getOverallLeaders() {
     this.overallLeaders = this.db.collection('users', ref => ref.where('wins', '>=', 0).orderBy('wins', 'desc').limit(10)).valueChanges();
   }
-
 }
