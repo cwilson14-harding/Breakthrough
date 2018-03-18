@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
-import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
