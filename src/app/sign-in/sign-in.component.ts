@@ -97,6 +97,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
     background.mouseParallax({moveFactor: 5});
   }
   createAccount() {
+    // TODO: If an account already exists under the inputed email, alert them that they have made an account
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     const wins = 0;
