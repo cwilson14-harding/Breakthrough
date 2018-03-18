@@ -97,8 +97,25 @@ export class AuthService {
   }
 
   createAccountWithEmail(email) {
-    firebase.auth().createUserWithEmailAndPassword(email, this.password).then((credential) => {
-      this.updateUserData(credential.user);
+    // firebase.auth().createUserWithEmailAndPassword(email, this.password).then((credential) => {
+    // this.updateUserData(credential.user);
+    // });
+    firebase.auth().createUserWithEmailAndPassword(email, this.password).catch(function(error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      switch (errorCode) {
+        case(errorCode === 'auth/email-already-in-use'): {
+          alert('This email is already in use. Try logging in.');
+          break;
+        }
+        case(errorCode === 'auth/invalid-email'): {
+          alert('The email address provided is not valid.');
+          break;
+        }
+        default: console.log('account created successfully!');
+        break;
+      }
     });
 
   }
@@ -189,7 +206,23 @@ export class AuthService {
   }
 
   loginUserWithEmail(email) {
-    firebase.auth().signInWithEmailAndPassword(email, this.password);
+    firebase.auth().signInWithEmailAndPassword(email, this.password).catch(function(error) {
+      // Handle errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    switch (errorCode) {
+      case(errorCode === 'auth/invalid-email'): {
+        alert('The email address provided is invalid.');
+        break;
+      }
+      case(errorCode === 'auth/user-not-found'): {
+        alert('The user does not exist. Try creating an account.');
+        break;
+      }
+      default: console.log('account created successfully!');
+      break;
+    }
+    });
   }
 
   oAuthLogin(provider) {

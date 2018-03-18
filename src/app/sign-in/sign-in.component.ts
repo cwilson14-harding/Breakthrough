@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {Router} from "@angular/router";
-import {AuthService} from "../core/auth.service";
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Router} from '@angular/router';
+import {AuthService} from '../core/auth.service';
 declare var $: any;
 
 @Component({
@@ -67,7 +67,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
       'right': 0,
       'bottom': 0,
     };
-    //const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
+    // const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
     this.myParams = {
       particles: {
         number: {
@@ -81,7 +81,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
         },
         line_linked: {
           // Neon color palette: http://www.colourlovers.com/palette/2652343/*Neon-Palette*
-          color: '#2FB5F3', //colorPalette[Math.floor(Math.random() * colorPalette.length)]
+          color: '#2FB5F3', // colorPalette[Math.floor(Math.random() * colorPalette.length)]
           opacity: .6,
           width: 2
         }
@@ -95,18 +95,21 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const background = $('.backImg');
     background.mouseParallax({moveFactor: 5});
   }
-  createAccount(){
+  createAccount() {
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     this.btnCreateAccount = document.getElementById('createAccount');
     const promise = this.auth.createAccountWithEmail(email);
+    // Update the user info.
+    // Route the user to a page similar to guest-info.
   }
-  signInWithEmail(){
+  signInWithEmail() {
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     this.btnLogin = document.getElementById('loginButton');
     const promise = this.auth.loginUserWithEmail(email);
-
+    // Update the user info.
+    // Route the user to a page similar to guest-info.
   }
 
 }

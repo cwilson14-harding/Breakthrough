@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFirestore} from "angularfire2/firestore";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {Router} from "@angular/router";
-import {AuthService} from "../core/auth.service";
+import {AngularFirestore} from 'angularfire2/firestore';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Router} from '@angular/router';
+import {AuthService} from '../core/auth.service';
 declare var $: any;
 
 @Component({
@@ -75,7 +75,7 @@ export class GuestInfoComponent implements OnInit {
       'right': 0,
       'bottom': 0,
     };
-    //const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
+    // const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
     this.myParams = {
       particles: {
         number: {
@@ -89,7 +89,7 @@ export class GuestInfoComponent implements OnInit {
         },
         line_linked: {
           // Neon color palette: http://www.colourlovers.com/palette/2652343/*Neon-Palette*
-          color: '#2FB5F3', //colorPalette[Math.floor(Math.random() * colorPalette.length)]
+          color: '#2FB5F3', // colorPalette[Math.floor(Math.random() * colorPalette.length)]
           opacity: .6,
           width: 2
         }
@@ -105,11 +105,11 @@ export class GuestInfoComponent implements OnInit {
   }
   continue() {
 
-    if (this.avatar1Selected == true) {
+    if (this.avatar1Selected === true) {
       this.currentPic = 'assets/avatars/circle.png';
-    } else if (this.avatar2Selected == true) {
+    } else if (this.avatar2Selected === true) {
       this.currentPic = 'assets/avatars/virus.png';
-    } else if (this.avatar3Selected == true) {
+    } else if (this.avatar3Selected === true) {
       this.currentPic = 'assets/avatars/virus2.png';
     } else {
       alert('Please choose an avatar!');
