@@ -67,6 +67,7 @@ export class ChatComponent implements OnInit {
 
   sendMessage(message) {
     if (this.gameService.gameId) {
+      // Send online message.
       this.messagesCollection.add(message);
     } else {
       // Send offline message.
@@ -87,14 +88,18 @@ export class ChatComponent implements OnInit {
     // Get what is inside of the message box. This value will be stored inside of the message property inside of the Message interface.
     const messageBox: HTMLInputElement = document.getElementById('messageBox') as HTMLInputElement;
 
-    // Create a message object.
-    const message: IMessage = this.makeMessage(messageBox.value);
+    // Don't allow a message to be sent if blank.
+    if (messageBox.value.trim()) {
 
-    // Send the message.
-    this.sendMessage(message);
+      // Create a message object.
+      const message: IMessage = this.makeMessage(messageBox.value.trim());
 
-    // Clear the text box.
-    messageBox.value = '';
+      // Send the message.
+      this.sendMessage(message);
+
+      // Clear the text box.
+      messageBox.value = '';
+    }
   }
 
 }
