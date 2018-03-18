@@ -343,6 +343,16 @@
       </div>
 
     </div>
+
+    <div>
+      <h1>
+        LEADERBOARD
+      </h1>
+      <h3 *ngFor="let leader of overallLeaders | async">
+        {{leader.displayName}}
+      </h3>
+    </div>
+
   </div>
 </div>
 

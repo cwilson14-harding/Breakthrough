@@ -94,6 +94,28 @@ export class GameBoardComponent implements OnInit {
           if (this.currentPlayer instanceof NetworkPlayer) {
             (this.currentPlayer as NetworkPlayer).sendWinningMove(this.board.lastMove, winnerData.name);
             // TODO: Update leaderboard.
+            this.game.valueChanges().subscribe( data => {
+              const creatorName = data['creatorName'];
+              const creatorId = data['creatorId'];
+              const joinerName = data['joinerName'];
+              const joinerId = data['joinerId'];
+              if (winnerData.name === creatorName) {
+                this.db.collection('users').doc(creatorId).update({
+                  wins: +1
+                });
+                this.db.collection('users').doc(joinerId).update({
+                  losses: +1
+                });
+              }
+              else if (winnerData.name === joinerName) {
+                this.db.collection('users').doc(joinerId).update({
+                  wins: +1
+                });
+                this.db.collection('users').doc(creatorId).update({
+                  losses: +1
+                });
+              }
+            });
           }
 
           // Show the game over.
