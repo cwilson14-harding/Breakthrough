@@ -1,15 +1,13 @@
-import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {AngularFirestore} from 'angularfire2/firestore';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../core/auth.service';
+import { AngularFirestore } from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
-import {AuthService} from '../core/auth.service';
-declare var $: any;
 
 @Component({
-  selector: 'app-guest-info',
-  templateUrl: './guest-info.component.html',
-  styleUrls: ['./guest-info.component.scss'],
+  selector: 'app-email-user-info',
+  templateUrl: './email-user-info.component.html',
+  styleUrls: ['./email-user-info.component.scss'],
   animations: [
     trigger('flyInOut', [
       state('in', style({transform: 'translateX(100)'})),
@@ -23,8 +21,12 @@ declare var $: any;
     ])
   ]
 })
-export class GuestInfoComponent implements OnInit {
-  btnContinue;
+export class EmailUserInfoComponent implements OnInit {
+
+  avatar1Selected = true;
+  avatar2Selected = false;
+  avatar3Selected = false;
+  currentPic: string;
   txtDisplayName;
   height = 100;
   myParams: object = {};
@@ -34,34 +36,8 @@ export class GuestInfoComponent implements OnInit {
   state = 'inactive';
   width = 100;
 
-  // avatar Css bools
-  avatar1Selected = true;
-  avatar2Selected = false;
-  avatar3Selected = false;
-  currentPic: string;
-
-  @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent) {
-    const audio = document.getElementById('audioPlayer') as any;
-    const key = event.keyCode;
-    if (key === 32 && this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = true;
-      this.playBackgroundMusic = false;
-      audio.pause();
-    } else if (key === 32 && !this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = false;
-      this.playBackgroundMusic = true;
-      audio.play();
-    }
-  }
-
-  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
+  constructor(public auth: AuthService, public db: AngularFirestore, public router: Router) {
     this.pauseBackgroundMusic = false;
-
-  }
-
-  toggleState() {
-    this.state = this.state === 'active' ? 'inactive' : 'active';
   }
 
   ngOnInit() {
@@ -97,12 +73,14 @@ export class GuestInfoComponent implements OnInit {
     };
   }
 
-  ngAfterViewInit() {
-    // Initialize parallax background.
-    // https://www.jqueryscript.net/animation/Interactive-Mouse-Hover-Parallax-Effect-with-jQuery-Mouse-Parallax.html
-    const background = $('.backImg');
-    background.mouseParallax({moveFactor: 5});
+  updateName() {
+    const currUserId = this.auth.getCurrentUser();
+
+    this.db.collection('users').doc(currUserId).update({
+        displayName: 'Luke'
+    });
   }
+
   continue() {
 
     if (this.avatar1Selected === true) {
@@ -119,8 +97,8 @@ export class GuestInfoComponent implements OnInit {
     this.txtDisplayName = document.getElementById('inputGuestName');
     const displayName = this.txtDisplayName.value;
 
-    let currUserId = this.auth.getCurrentUser();
-    this.afs.collection('users').doc(currUserId).set({
+    const currUserId = this.auth.getCurrentUser();
+    this.db.collection('users').doc(currUserId).update({
       displayName: displayName,
       uid: currUserId,
       pic: this.currentPic,

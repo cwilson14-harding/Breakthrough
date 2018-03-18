@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     background.mouseParallax({ moveFactor: 5 });
   }
 
-  anonymousLogin(){
+  anonymousLogin() {
     this.auth.anonymousLogin();
     this.router.navigateByUrl('guest-info');
   }
@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   singlePlayer() {
     this.router.navigateByUrl('single-setup');
   }
-  signInWithEmail(){
+  signInWithEmail() {
     this.router.navigateByUrl('/sign-in');
   }
 

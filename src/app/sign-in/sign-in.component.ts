@@ -2,6 +2,7 @@ import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {AuthService} from '../core/auth.service';
+import {AngularFirestore} from 'angularfire2/firestore';
 declare var $: any;
 
 @Component({
@@ -47,7 +48,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(private router: Router, public auth: AuthService) {
+  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
     this.pauseBackgroundMusic = false;
 
   }
@@ -96,20 +97,28 @@ export class SignInComponent implements OnInit, AfterViewInit {
     background.mouseParallax({moveFactor: 5});
   }
   createAccount() {
+    // TODO: If an account already exists under the inputed email, alert them that they have made an account
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
+    const wins = 0;
+    const losses = 0;
     this.btnCreateAccount = document.getElementById('createAccount');
     const promise = this.auth.createAccountWithEmail(email);
     // Update the user info.
-    // Route the user to a page similar to guest-info.
+    const currUserId = this.auth.getCurrentUser();
+    this.afs.collection('users').doc(currUserId).set({
+      email: email,
+      losses: losses,
+      wins: wins
+    }).then(() => {
+      this.router.navigate(['email-user-info']);
+    });
   }
   signInWithEmail() {
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     this.btnLogin = document.getElementById('loginButton');
     const promise = this.auth.loginUserWithEmail(email);
-    // Update the user info.
-    // Route the user to a page similar to guest-info.
+    this.router.navigateByUrl('home');
   }
-
 }

@@ -53,6 +53,8 @@ export class MultiplayerLobbyComponent implements OnInit {
   creatorName: string;
   joinerName: string;
 
+  overallLeaders;
+
   // Vars for Prototype
   luke = true;
   cj = false;
@@ -78,6 +80,7 @@ export class MultiplayerLobbyComponent implements OnInit {
 
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
     this.isGameCreated = false;
+    this.getOverallLeaders();
   }
 
   ngOnInit() {
@@ -257,4 +260,7 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.openGames = this.auth.viewOpenGames();
   }
 
+  getOverallLeaders() {
+    this.overallLeaders = this.db.collection('users', ref => ref.where('wins', '>=', 0).orderBy('wins', 'desc').limit(10)).valueChanges();
+  }
 }
