@@ -1,5 +1,5 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
-import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {Coordinate} from '../models/game-core/coordinate';
 import {AuthService, Game, User} from '../core/auth.service';
@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 import {AIPlayerRandom} from '../models/ai-player-random';
 import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
 import {ChatComponent} from '../chat/chat.component';
+import {HostListener} from "@angular/core";
 
 @Component({
   selector: 'app-game-board',
@@ -31,6 +32,27 @@ export class GameBoardComponent implements OnInit {
   player1: Player;
   player2: Player;
   user: Observable<User>;
+  gameReference: AngularFirestoreDocument<any>;
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event) {
+    this.forfeitClicked();
+    this.router.navigateByUrl(('main-menu'));
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHander(event) {
+    return false;
+  }
+  forfeitClicked() {
+    // TODO: CONFIRM before forfeit
+    // this.router.navigateByUrl(('game-over'));
+    return this.gameReference.update({
+      state: "STATE.FORFEIT"
+    })
+
+
+  }
+
 
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
               private gameService: GameService, public chat: ChatComponent) {
@@ -210,11 +232,7 @@ export class GameBoardComponent implements OnInit {
       alert('This is ' + game.creatorName + ' game.');
     }
   }
-  forfeitClicked() {
-    // TODO: CONFIRM before forfeit
-    // this.router.navigateByUrl(('game-over'));
-    this.router.navigateByUrl(('main-menu'));
+  ngOnInit() {
+    this.gameReference = this.db.collection<any>('games').doc(this.gameService.gameId);
   }
-
-  ngOnInit() {}
 }
