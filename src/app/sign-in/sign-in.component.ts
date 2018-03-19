@@ -103,7 +103,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const wins = 0;
     const losses = 0;
     this.btnCreateAccount = document.getElementById('createAccount');
-    const promise = this.auth.createAccountWithEmail(email);
+   this.auth.createAccountWithEmail(email);
     // Update the user info.
     const currUserId = this.auth.getCurrentUser();
     this.afs.collection('users').doc(currUserId).set({
@@ -118,7 +118,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     this.btnLogin = document.getElementById('loginButton');
-    const promise = this.auth.loginUserWithEmail(email);
-    this.router.navigateByUrl('home');
+    this.auth.loginUserWithEmail(email);
+    // TODO: If the email isn't in the database, DONT push to this page
+    this.router.navigateByUrl('main-menu')
   }
 }
