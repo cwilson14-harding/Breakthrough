@@ -15,6 +15,10 @@ export class SettingsComponent implements OnInit {
   changeAvatar = false;
   credits = false;
   volume = false;
+  avatar1Selected = false;
+  avatar2Selected = false;
+  avatar3Selected = false;
+  currentPic;
 
   constructor(public auth: AuthService, public db: AngularFirestore, private router: Router) {
   }
@@ -53,5 +57,35 @@ export class SettingsComponent implements OnInit {
   }
   logout() {
     this.auth.logout().then(() => this.router.navigateByUrl('home'));
+  }
+  circleSelected() {
+    this.avatar1Selected = true;
+    this.avatar2Selected = false;
+    this.avatar3Selected = false;
+  }
+  virusSelected() {
+    this.avatar1Selected = false;
+    this.avatar2Selected = true;
+    this.avatar3Selected = false;
+  }
+  virus2Selected() {
+    this.avatar1Selected = false;
+    this.avatar2Selected = false;
+    this.avatar3Selected = true;
+  }
+  selectAvatar() {
+    if (this.avatar1Selected === true) {
+      this.currentPic = 'assets/avatars/circle.png';
+    } else if (this.avatar2Selected === true) {
+      this.currentPic = 'assets/avatars/virus.png';
+    } else if (this.avatar3Selected === true) {
+      this.currentPic = 'assets/avatars/virus2.png';
+    }
+    this.db.collection('users').doc(this.auth.getCurrentUser()).update({
+      pic: this.currentPic
+    }).then(() => {
+      this.changeAvatar = false;
+      this.showSettings = true;
+    });
   }
 }
