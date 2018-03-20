@@ -37,6 +37,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { GuestInfoComponent } from './guest-info/guest-info.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { EmailUserInfoComponent } from './email-user-info/email-user-info.component';
+import {MatSliderModule} from '@angular/material';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -94,7 +95,8 @@ const appRoutes: Routes = [
     ParticlesModule,
     MatButtonToggleModule,
     NgxSlideshowModule.forRoot(),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    MatSliderModule
   ],
   providers: [AuthService, GameService, NgbTab, NgbTabset, ChatComponent],
   bootstrap: [AppComponent]

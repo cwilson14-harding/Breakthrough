@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
+import {MatSlider } from '@angular/material';
+
 declare var $: any;
 
 @Component({
