@@ -11,64 +11,18 @@
 
 
 <ng-template #guest>
-  <!-- <div class="w3-container w3-center w3-display-middle">
-    <h1 class="w3-opacity-min">Login with Google</h1>
 
-    <div class="w3-row w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="loginGoogle()">
-        LOGIN
-      </button>
-    </div>
-    <div class="w3-row w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min">
-        PLAY AS GUEST
-      </button>
-    </div>
-  </div>
-  <div class="w3-container w3-display-bottomright">
-    <div class="w3-row w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity" (click)="toHome()">
-        <i class="fa fa-home"></i>
-      </button>
-    </div>
-  </div> -->
 </ng-template>
 
 <div class="vignette"></div>
 <!-- User logged in -->
 <ng-template #authenticated>
   <div *ngIf="auth.user | async as user">
-    <!--<div class="w3-container w3-center w3-display-middle">-->
-      <!--<div class="w3-row">-->
-        <!--<h1> {{ user.displayName | uppercase }} </h1>-->
-        <!--<img  [src]='user.photoURL' class="proPic w3-padding">-->
-      <!--</div>-->
-      <!--&lt;!&ndash;<div class="w3-row w3-padding">&ndash;&gt;-->
-        <!--&lt;!&ndash;<button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="playGame()" style="width: 40%">PLAY</button>&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--<div class="w3-row w3-padding">-->
-        <!--<button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="goToMulti(user)" style="width: 40%">MULTI-PLAYER</button>-->
-      <!--</div>-->
-      <!--<div class="w3-row w3-padding">-->
-        <!--<button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle w3-opacity-min" (click)="logOff(user)" style="width: 40%">LOGOUT</button>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="w3-container w3-padding-64">-->
-
-    <!--</div>-->
-
-    <!--<p>UID: {{ user.uid }}</p>-->
-
-  <!--  <h3>Online Users:</h3>
-    <div *ngFor="let available of availableUsers | async" class="w3-padding w3-hover-blue">
-      <img [src]="available.photoURL" style="width: 5%"> <span (click)="startGame(available.uid, available.displayName)">Start Game with {{available.displayName}}</span>
-    </div>
-    <br> -->
 
     <div *ngIf="!showSettings && !showTutorial" >
       <div class="w3-container w3-padding-64">
         <div class="w3-display-topright" style="z-index: 1">
-          <i class="fa fa-cog w3-padding w3-xxlarge settingsCog" style="color:#F2F2F2" (click)="goToSettings()"></i>
+          <i class="fa fa-cog w3-padding w3-xxxlarge settingsCog" style="color:#F2F2F2" (click)="goToSettings()"></i>
         </div>
 
         <div class="w3-container w3-center w3-display-middle" style="height: 17vh; width: 55vw; z-index: 1">
@@ -100,10 +54,10 @@
     <div *ngIf="showSettings">
       <div class="w3-container w3-padding-64">
         <div class="w3-container w3-center w3-display-middle" style="height: 100vh; width: 100vw; z-index: 1">
-          <div class="w3-btn w3-black w3-round-xlarge w3-display-topright">
-            <i class="fa fa-chevron-circle-left w3-padding w3-xxxlarge w3-hover-opacity w3-text-white" (click)="goBack()"></i>
-          </div>
-          <div class="w3-center w3-display-middle">
+          <div class="w3-center w3-display-middle" style="background-color: rgba(84, 168, 223, .6); border-radius: 20px; height: 500px; width: 900px">
+            <div class="w3-display-topright">
+              <i class="fa fa-times-circle w3-padding w3-xxxlarge w3-hover-opacity w3-text-white" (click)="goBack()"></i>
+            </div>
             <app-settings></app-settings>
           </div>
         </div>

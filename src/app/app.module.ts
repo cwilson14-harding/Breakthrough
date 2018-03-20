@@ -85,7 +85,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
