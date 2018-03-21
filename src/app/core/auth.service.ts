@@ -96,7 +96,7 @@ export class AuthService {
     this.afAuth.auth.signInAnonymously();
   }
 
-  createAccountWithEmail(email) {
+  createAccountWithEmail(email, wins, losses) {
     // firebase.auth().createUserWithEmailAndPassword(email, this.password).then((credential) => {
     // this.updateUserData(credential.user);
     // });
@@ -104,20 +104,23 @@ export class AuthService {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      switch (errorCode) {
-        case(errorCode === 'auth/email-already-in-use'): {
-          alert('This email is already in use. Try logging in.');
-          break;
-        }
-        case(errorCode === 'auth/invalid-email'): {
-          alert('The email address provided is not valid.');
-          break;
-        }
-        default: console.log('account created successfully!');
-        break;
+      if (errorCode === 'auth/email-already-in-use') {
+        alert('This email is already in use. Try logging in.');
+      } else if (errorCode === 'auth/invalid-email') {
+        alert('The email address provided is not valid.');
+      } else {
+        console.log('account created successfully');
       }
+    }).then(() => {
+      const currUserId = this.getCurrentUser();
+      this.db.collection('users').doc(currUserId).set({
+        email: email,
+        losses: losses,
+        wins: wins
+      }).then(() => {
+        this.router.navigate(['email-user-info']);
+      });
     });
-
   }
 
   facebookLogin() {

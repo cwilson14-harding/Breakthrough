@@ -103,16 +103,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const wins = 0;
     const losses = 0;
     this.btnCreateAccount = document.getElementById('createAccount');
-   this.auth.createAccountWithEmail(email);
+   this.auth.createAccountWithEmail(email, wins, losses);
     // Update the user info.
-    const currUserId = this.auth.getCurrentUser();
-    this.afs.collection('users').doc(currUserId).set({
-      email: email,
-      losses: losses,
-      wins: wins
-    }).then(() => {
-      this.router.navigate(['email-user-info']);
-    });
   }
   signInWithEmail() {
     this.txtEmail = document.getElementById('inputEmail');
@@ -120,6 +112,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.btnLogin = document.getElementById('loginButton');
     this.auth.loginUserWithEmail(email);
     // TODO: If the email isn't in the database, DONT push to this page
-    this.router.navigateByUrl('main-menu')
+    this.router.navigateByUrl('main-menu');
   }
 }

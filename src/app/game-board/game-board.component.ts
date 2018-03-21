@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
 import {AIPlayerRandom} from '../models/ai-player-random';
 import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
 import {ChatComponent} from '../chat/chat.component';
-import {HostListener} from "@angular/core";
+import {HostListener} from '@angular/core';
 
 @Component({
   selector: 'app-game-board',
@@ -35,7 +35,7 @@ export class GameBoardComponent implements OnInit {
   gameReference: AngularFirestoreDocument<any>;
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
-    this.forfeitClicked();
+    this.browserClosed();
     this.router.navigateByUrl(('main-menu'));
   }
 
@@ -43,14 +43,12 @@ export class GameBoardComponent implements OnInit {
   beforeUnloadHander(event) {
     return false;
   }
-  forfeitClicked() {
+  browserClosed() {
     // TODO: CONFIRM before forfeit
     // this.router.navigateByUrl(('game-over'));
     return this.gameReference.update({
-      state: "STATE.FORFEIT"
-    })
-
-
+      state: 'STATE.FORFEIT'
+    });
   }
 
 
