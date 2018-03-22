@@ -39,3 +39,10 @@
 
 </div> -->
 <app-toolbar (newGameClicked)="newGameClicked($event)" (showChatClicked)="showChatClicked($event)" (forfeitClicked)="forfeitClicked($event)" ></app-toolbar>
+
+<div *ngIf="connectionLost" class="connectionLost">
+  <div class="w3-black">
+    <p class="connectionLostText">Connection Has Been Lost, Game is Over!</p>
+    <img src="/assets/sadRobot.png" style="position: relative; left: 33%;">
+  </div>
+</div>

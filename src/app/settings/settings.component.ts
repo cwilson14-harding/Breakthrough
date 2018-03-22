@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
@@ -21,6 +21,9 @@ export class SettingsComponent implements OnInit {
   avatar2Selected = false;
   avatar3Selected = false;
   currentPic;
+
+  @Input()
+  music: any;
 
   constructor(public auth: AuthService, public db: AngularFirestore, private router: Router) {
   }
@@ -89,5 +92,8 @@ export class SettingsComponent implements OnInit {
       this.changeAvatar = false;
       this.showSettings = true;
     });
+  }
+  changeVolumeLevel() {
+    console.log('volumeUpdated');
   }
 }

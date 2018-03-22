@@ -22,6 +22,7 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   showTutorial = false;
   pauseBackgroundMusic: boolean;
   playBackgroundMusic: boolean;
+  music;
   @HostListener('document: keypress', ['$event'])
   playPauseBackgroundMusic(event: KeyboardEvent) {
     const audio = document.getElementById('audioPlayer') as any;

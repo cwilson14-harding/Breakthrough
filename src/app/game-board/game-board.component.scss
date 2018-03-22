@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker|Rajdhani');
+
 .board {
   //background-color: #a45632;
   background-color: black;
@@ -80,4 +82,20 @@
   background-size: cover;
   width: 100vw;
   height: 100vh;
+}
+
+.connectionLost {
+  position: relative;
+  height: 500px;
+  width: 800px;
+  top: -670px;
+  left: 22.3%;
+}
+
+.connectionLostText {
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  color: white;
+  font-size: 350%;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
 }

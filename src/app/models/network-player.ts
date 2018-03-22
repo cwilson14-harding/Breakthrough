@@ -5,12 +5,14 @@ import {Game} from '../core/auth.service';
 import {AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Subscription} from 'rxjs/Subscription';
 import {Move} from './move';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 export class NetworkPlayer implements Player {
   board: GameBoardComponent;
   private resolve: Function;
   private reject: Function;
   private sub;
+  isNetworkOut = false;
 
   constructor(private game: AngularFirestoreDocument<Game>) {}
 
@@ -44,12 +46,20 @@ export class NetworkPlayer implements Player {
   }
 
   private sendMove(move: Move): Promise<void> {
+   // this.checkConnection();
     return this.game.update({
       lastMove: move.toString()
     });
   }
 
   private makeRemoteMove() {
+
+    // Set a timeout: If the user doesn't get a move after 60 seconds, then either the wifi has gone out.
+    setTimeout(() => {
+      // alert('The WiFi Connection has been lost, unfortunately the Game is Over');
+      this.isNetworkOut = true;
+    }, 60000);
+
     // Wait for a new move.
     this.sub = this.game.valueChanges().subscribe(data => {
       // Get the move.
@@ -65,5 +75,16 @@ export class NetworkPlayer implements Player {
         }
       }
     });
+  }
+
+  // checks to see if there is wifi
+  checkConnection() {
+    if (navigator.onLine) {
+      // alert('You have a connection');
+    }
+    else {
+      this.isNetworkOut = true;
+      // alert('connection has been lost, the game is now over!');
+    }
   }
 }

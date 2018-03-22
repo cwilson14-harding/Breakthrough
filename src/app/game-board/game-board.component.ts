@@ -33,6 +33,7 @@ export class GameBoardComponent implements OnInit {
   player2: Player;
   user: Observable<User>;
   gameReference: AngularFirestoreDocument<any>;
+  connectionLost = false;
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
     this.browserClosed();
@@ -93,8 +94,34 @@ export class GameBoardComponent implements OnInit {
   */
   getMove() {
     const currentPlayer = this.currentPlayer;
+
+    // Connection lost
+    if (this.currentPlayer instanceof NetworkPlayer) {
+      setTimeout(() => {
+        // alert('The WiFi Connection has been lost, unfortunately the Game is Over');
+        this.connectionLost = true;
+      }, 60000);
+      setTimeout(() => {
+        this.router.navigate(['main-menu']);
+      }, 62000);
+    }
+
     if (currentPlayer) {
       const movePromise: Promise<Move> = currentPlayer.getMove(this);
+
+      // connection lost
+      if (this.currentPlayer instanceof NetworkPlayer) {
+        // check for the connection
+        if (navigator.onLine) {
+          // alert('You have a connection');
+        } else {
+          // alert('connection has been lost, the game is now over!');
+          this.connectionLost = true;
+          setTimeout(() => {
+            this.router.navigate(['main-menu']);
+          }, 2000);
+        }
+      }
 
       movePromise.then((move: Move) => {
         // Make the move on the game board.
