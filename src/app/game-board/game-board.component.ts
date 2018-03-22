@@ -103,7 +103,7 @@ export class GameBoardComponent implements OnInit {
       }, 60000);
       setTimeout(() => {
         this.router.navigate(['main-menu']);
-      }, 62000);
+      }, 63000);
     }
 
     if (currentPlayer) {
@@ -119,7 +119,7 @@ export class GameBoardComponent implements OnInit {
           this.connectionLost = true;
           setTimeout(() => {
             this.router.navigate(['main-menu']);
-          }, 2000);
+          }, 3000);
         }
       }
 

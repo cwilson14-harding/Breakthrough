@@ -41,8 +41,8 @@
 <app-toolbar (newGameClicked)="newGameClicked($event)" (showChatClicked)="showChatClicked($event)" (forfeitClicked)="forfeitClicked($event)" ></app-toolbar>
 
 <div *ngIf="connectionLost" class="connectionLost">
-  <div class="w3-black">
-    <p class="connectionLostText">Connection Has Been Lost, Game is Over!</p>
-    <img src="/assets/sadRobot.png" style="position: relative; left: 33%;">
+  <div class="w3-black" style="border-radius: 10px;">
+    <p class="connectionLostText">The A.I. has compromised the connection. Game Over!</p>
+    <img src="/assets/hacked.png" class="imgShake" style="position: relative; left: 27%; top: -20px; width: 40%">
   </div>
 </div>
