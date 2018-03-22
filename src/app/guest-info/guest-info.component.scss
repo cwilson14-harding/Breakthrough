@@ -89,6 +89,7 @@ input{
   -moz-border-radius: 45px;
   border-radius: 45px;
   position: relative;
+  top: -35px;
   line-height: 45px;
   text-align: center;
   font-weight: bold;
@@ -123,7 +124,7 @@ input[type=text]:focus, textarea:focus {
   background-color: #6646FF;
   color: #fff;
   left: 0;
-  top: 0;
+  top: 0px;
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);

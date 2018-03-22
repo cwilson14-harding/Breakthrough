@@ -41,6 +41,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   showLobby = true;
   showLeaderboard = false;
   currAvatar;
+  pic;
 
   // user vars
   currUserName;
@@ -158,6 +159,7 @@ export class MultiplayerLobbyComponent implements OnInit {
 
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.creatorName = data['displayName'];
+      this.pic = data['pic'];
 
       // this.auth.createGame(userId);
       this.db.collection('games').doc(randomId).set({
@@ -169,7 +171,8 @@ export class MultiplayerLobbyComponent implements OnInit {
         gameType: 'multi',
         isOpen: true,
         state: 'STATE.OPEN',
-        turn: true
+        turn: true,
+        pic: this.pic
       }).then(after => {
         this.db.collection('users').doc(userId).update({
           currentGameId: randomId

@@ -106,11 +106,11 @@ export class GuestInfoComponent implements OnInit {
   continue() {
 
     if (this.avatar1Selected === true) {
-      this.currentPic = 'assets/avatars/circle.png';
+      this.currentPic = 'assets/avatars/hackerAvatar1.png';
     } else if (this.avatar2Selected === true) {
-      this.currentPic = 'assets/avatars/virus.png';
+      this.currentPic = 'assets/avatars/hackerAvatar2.png';
     } else if (this.avatar3Selected === true) {
-      this.currentPic = 'assets/avatars/virus2.png';
+      this.currentPic = 'assets/avatars/hackerAvatar3.png';
     } else {
       // TODO: Get rid of the Alert
       alert('Please choose an avatar!');
