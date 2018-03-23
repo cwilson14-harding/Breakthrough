@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { trigger, transition, useAnimation, state, animate, style } from '@angular/animations';
 import { bounce } from 'ng-animate';
-import {HostListener, AfterViewInit} from '@angular/core';
+import {AfterViewInit} from '@angular/core';
+import {MusicService} from '../music.service';
 declare var $: any;
 
 @Component({
@@ -27,27 +28,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   height = 100;
   myParams: object = {};
   myStyle: object = {};
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
   state = 'inactive';
   width = 100;
-  @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent) {
-    const audio = document.getElementById('audioPlayer') as any;
-    const key = event.keyCode;
-    if (key === 32 && this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = true;
-      this.playBackgroundMusic = false;
-      audio.pause();
-    } else if (key === 32 && !this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = false;
-      this.playBackgroundMusic = true;
-      audio.play();
-    }
-  }
-  constructor(private router: Router, public auth: AuthService) {
-    this.pauseBackgroundMusic = false;
-    this.playBackgroundMusic = true;
+  constructor(private router: Router, public auth: AuthService, public audio: MusicService) {
+    audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton\'s.mp3');
   }
 
   toggleState() {
@@ -65,7 +49,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       'right': 0,
       'bottom': 0,
     };
-    //const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
+    // const colorPalette: string[] = ['#18DD00', '#E1C829', '#2FB5F3', '#FC82C3', '#1E023F'];
     this.myParams = {
       particles: {
         number: {
@@ -79,7 +63,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         },
         line_linked: {
           // Neon color palette: http://www.colourlovers.com/palette/2652343/*Neon-Palette*
-          color: '#2FB5F3', //colorPalette[Math.floor(Math.random() * colorPalette.length)]
+          color: '#2FB5F3', // colorPalette[Math.floor(Math.random() * colorPalette.length)]
           opacity: .6,
           width: 2
         }

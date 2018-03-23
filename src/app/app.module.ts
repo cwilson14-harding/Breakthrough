@@ -11,6 +11,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { AuthService } from './core/auth.service';
+import {MusicService} from './music.service';
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -98,7 +99,7 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     MatSliderModule
   ],
-  providers: [AuthService, GameService, NgbTab, NgbTabset, ChatComponent],
+  providers: [AuthService, GameService, NgbTab, NgbTabset, ChatComponent, MusicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {AuthService} from '../core/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
+import {MusicService} from '../music.service';
 declare var $: any;
 
 @Component({
@@ -29,28 +30,11 @@ export class SignInComponent implements OnInit, AfterViewInit {
   height = 100;
   myParams: object = {};
   myStyle: object = {};
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
   state = 'inactive';
   width = 100;
-  @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent) {
-    const audio = document.getElementById('audioPlayer') as any;
-    const key = event.keyCode;
-    if (key === 32 && this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = true;
-      this.playBackgroundMusic = false;
-      audio.pause();
-    } else if (key === 32 && !this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = false;
-      this.playBackgroundMusic = true;
-      audio.play();
-    }
-  }
 
-  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
-    this.pauseBackgroundMusic = false;
-
+  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore, public audio: MusicService) {
+    audio.getAudio();
   }
 
   toggleState() {

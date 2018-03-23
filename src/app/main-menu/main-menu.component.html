@@ -1,13 +1,10 @@
-<audio autoplay loop id="audioPlayer">
-  <source src="assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton's.mp3" type="audio/mpeg">
-</audio>
 <particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height">
 </particles>
 <div class="w3-container">
   <div *ngIf="auth.user | async; then authenticated else guest">
 
   </div>
-</div>
+</div>s
 
 
 <ng-template #guest>
