@@ -30,8 +30,6 @@ export class GuestInfoComponent implements OnInit {
   height = 100;
   myParams: object = {};
   myStyle: object = {};
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
   state = 'inactive';
   width = 100;
 

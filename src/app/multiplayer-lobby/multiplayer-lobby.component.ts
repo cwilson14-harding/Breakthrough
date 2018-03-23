@@ -10,6 +10,7 @@ import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs/Observable';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {timestamp} from 'rxjs/operator/timestamp';
+import {MusicService} from '../music.service';
 // import DocumentChangeType = firebase.firestore.DocumentChangeType;
 
 @Component({
@@ -62,24 +63,9 @@ export class MultiplayerLobbyComponent implements OnInit {
   brad = false;
   dylan = false;
   alaina = false;
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
-  @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent) {
-    const audio = document.getElementById('audioPlayer') as any;
-    const key = event.keyCode;
-    if (key === 32 && this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = true;
-      this.playBackgroundMusic = false;
-      audio.pause();
-    } else if (key === 32 && !this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = false;
-      this.playBackgroundMusic = true;
-      audio.play();
-    }
-  }
-
-  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService) {
+  constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService,
+              public audio: MusicService) {
+    audio.getAudio();
     this.isGameCreated = false;
     this.getOverallLeaders();
   }
