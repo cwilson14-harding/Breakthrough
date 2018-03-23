@@ -29,6 +29,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(public auth: AuthService, public db: AngularFirestore, private router: Router, public audio: MusicService) {
     this.audioElement = audio.getAudio();
+    this.sliderVolume = 1;
 
   }
   ngOnInit() {
@@ -97,8 +98,9 @@ export class SettingsComponent implements OnInit {
       this.showSettings = true;
     });
   }
-  changeVolumeLevel() {
+  changeVolumeLevel(newValue) {
     console.log('volumeUpdated');
+    this.sliderVolume = newValue;
     this.audioElement.volume = this.sliderVolume;
   }
 }
