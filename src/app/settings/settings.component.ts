@@ -3,6 +3,7 @@ import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import {MatSlider } from '@angular/material';
+import {MusicService} from "../music.service";
 
 declare var $: any;
 
@@ -12,7 +13,7 @@ declare var $: any;
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-
+  audioElement: HTMLAudioElement;
   showSettings = true;
   changeAvatar = false;
   credits = false;
@@ -21,11 +22,14 @@ export class SettingsComponent implements OnInit {
   avatar2Selected = false;
   avatar3Selected = false;
   currentPic;
+  sliderVolume;
 
   @Input()
   music: any;
 
-  constructor(public auth: AuthService, public db: AngularFirestore, private router: Router) {
+  constructor(public auth: AuthService, public db: AngularFirestore, private router: Router, public audio: MusicService) {
+    this.audioElement = audio.getAudio();
+
   }
   ngOnInit() {
   }
@@ -95,5 +99,6 @@ export class SettingsComponent implements OnInit {
   }
   changeVolumeLevel() {
     console.log('volumeUpdated');
+    this.audioElement.volume = this.sliderVolume;
   }
 }
