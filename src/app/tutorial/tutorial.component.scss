@@ -9,8 +9,8 @@ body {
 
 .messageBox {
   position: relative;
-  top: 80px;
-  left: 600px;
+  top: 100px;
+  left: -756px;
   transform: translate(-50%, -50%);
   font-family: 'Lucidia Console', monospace;
   font-size: 20px;
@@ -18,8 +18,19 @@ body {
   background-color: black;
   text-align: left;
   color: whitesmoke;
-  width: 728px; // To match the image width.
+  width: 628px; // To match the image width. 728
   padding: 1px 12px 8px;
+  z-index: 1;
+}
+
+.blackDiv {
+  position: relative;
+  top: -520px;
+  right: -73px;
+  width: 750px;
+  height: 470px;
+  background-color: black;
+  z-index: 0;
 }
 
 .message {
@@ -40,4 +51,14 @@ body {
 }
 .handRight{
   right: 100px;
+}
+
+img {
+  width: 628px;
+  height: 270px;
+  border-radius: 10px;
+  position: relative;
+  right: 13%;
+  top: 17px;
+  z-index: 1;
 }

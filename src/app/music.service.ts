@@ -32,7 +32,7 @@ export class MusicService {
     this.setTimeElapsed(ct);
     this.setPercentElapsed(d, ct);
     this.setTimeRemaining(d, ct);
-  }
+  };
 
   private calculatePercentLoaded = (evt) => {
     if (this.audio.duration > 0) {
@@ -44,7 +44,7 @@ export class MusicService {
         }
       }
     }
-  }
+  };
 
   private setPlayerStatus = (evt) => {
     switch (evt.type) {
