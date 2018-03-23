@@ -4,6 +4,7 @@ import {AngularFirestore} from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {AuthService} from '../core/auth.service';
+import {MusicService} from '../music.service';
 declare var $: any;
 
 @Component({
@@ -29,8 +30,6 @@ export class GuestInfoComponent implements OnInit {
   height = 100;
   myParams: object = {};
   myStyle: object = {};
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
   state = 'inactive';
   width = 100;
 
@@ -39,25 +38,8 @@ export class GuestInfoComponent implements OnInit {
   avatar2Selected = false;
   avatar3Selected = false;
   currentPic: string;
-
-  @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent) {
-    const audio = document.getElementById('audioPlayer') as any;
-    const key = event.keyCode;
-    if (key === 32 && this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = true;
-      this.playBackgroundMusic = false;
-      audio.pause();
-    } else if (key === 32 && !this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = false;
-      this.playBackgroundMusic = true;
-      audio.play();
-    }
-  }
-
-  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
-    this.pauseBackgroundMusic = false;
-
+  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore, public audio: MusicService) {
+    audio.getAudio();
   }
 
   toggleState() {
@@ -119,7 +101,7 @@ export class GuestInfoComponent implements OnInit {
     this.txtDisplayName = document.getElementById('inputGuestName');
     const displayName = this.txtDisplayName.value;
 
-    let currUserId = this.auth.getCurrentUser();
+    const currUserId = this.auth.getCurrentUser();
     this.afs.collection('users').doc(currUserId).set({
       displayName: displayName,
       uid: currUserId,

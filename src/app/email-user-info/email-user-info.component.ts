@@ -3,6 +3,7 @@ import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
+import {MusicService} from '../music.service';
 
 @Component({
   selector: 'app-email-user-info',
@@ -31,13 +32,11 @@ export class EmailUserInfoComponent implements OnInit {
   height = 100;
   myParams: object = {};
   myStyle: object = {};
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
   state = 'inactive';
   width = 100;
 
-  constructor(public auth: AuthService, public db: AngularFirestore, public router: Router) {
-    this.pauseBackgroundMusic = false;
+  constructor(public auth: AuthService, public db: AngularFirestore, public router: Router, public audio: MusicService) {
+    audio.getAudio();
   }
 
   ngOnInit() {

@@ -17,6 +17,7 @@ import {AIPlayerRandom} from '../models/ai-player-random';
 import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
 import {ChatComponent} from '../chat/chat.component';
 import {HostListener} from '@angular/core';
+import {MusicService} from '../music.service';
 
 @Component({
   selector: 'app-game-board',
@@ -28,7 +29,6 @@ export class GameBoardComponent implements OnInit {
   board: Board;
   game: AngularFirestoreDocument<Game>;
   games: any;
-  playBackgroundMusic: boolean;
   player1: Player;
   player2: Player;
   user: Observable<User>;
@@ -54,8 +54,9 @@ export class GameBoardComponent implements OnInit {
 
 
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
-              private gameService: GameService, public chat: ChatComponent) {
+              private gameService: GameService, public chat: ChatComponent, public audio: MusicService) {
 
+    audio.getAudio();
     this.board = new Board();
     this.board.newGame();
 
@@ -153,8 +154,7 @@ export class GameBoardComponent implements OnInit {
                 this.db.collection('users').doc(joinerId).update({
                   losses: +1
                 });
-              }
-              else if (winnerData.name === joinerName) {
+              } else if (winnerData.name === joinerName) {
                 this.db.collection('users').doc(joinerId).update({
                   wins: +1
                 });

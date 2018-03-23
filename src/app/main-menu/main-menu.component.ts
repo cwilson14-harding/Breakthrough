@@ -4,6 +4,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import { GameService } from '../game.service';
+import {MusicService} from '../music.service';
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -20,25 +21,10 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   width = 100;
   height = 100;
   showTutorial = false;
-  pauseBackgroundMusic: boolean;
-  playBackgroundMusic: boolean;
-  music;
-  @HostListener('document: keypress', ['$event'])
-  playPauseBackgroundMusic(event: KeyboardEvent) {
-    const audio = document.getElementById('audioPlayer') as any;
-    const key = event.keyCode;
-    if (key === 32 && this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = true;
-      this.playBackgroundMusic = false;
-      audio.pause();
-    } else if (key === 32 && !this.playBackgroundMusic) {
-      this.pauseBackgroundMusic = false;
-      this.playBackgroundMusic = true;
-      audio.play();
-    }
-  }
-  constructor(public auth: AuthService, private db: AngularFirestore, private router: Router, private gameService: GameService) {
+  constructor(public auth: AuthService, private db: AngularFirestore, private router: Router, private gameService: GameService,
+              public audio: MusicService) {
     this.onlineUsers();
+    audio.getAudio();
   }
 
   ngOnInit() {

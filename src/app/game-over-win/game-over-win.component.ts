@@ -18,7 +18,7 @@ returnToLeaderboard() {
   this.router.navigateByUrl(('multiPlayerLobby'));
 }
 
-  returnToMenu(){
+  returnToMenu() {
     this.router.navigateByUrl(('main-menu'));
   }
 }
