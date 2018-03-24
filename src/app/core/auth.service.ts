@@ -118,7 +118,7 @@ export class AuthService {
         losses: losses,
         wins: wins
       }).then(() => {
-        this.router.navigate(['email-user-info']);
+        this.router.navigateByUrl('email-user-info');
       });
     });
   }
@@ -141,7 +141,7 @@ export class AuthService {
           break;
       }
     }).then(() => {
-      this.router.navigate((['main-menu']));
+      this.router.navigateByUrl('main-menu');
     })
   }
 
