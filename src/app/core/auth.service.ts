@@ -118,10 +118,33 @@ export class AuthService {
         losses: losses,
         wins: wins
       }).then(() => {
-        this.router.navigate(['email-user-info']);
+        this.router.navigateByUrl('email-user-info');
       });
     });
   }
+
+  loginUserWithEmail(email) {
+    firebase.auth().signInWithEmailAndPassword(email, this.password).catch(function(error) {
+      // Handle errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      switch (errorCode) {
+        case(errorCode === 'auth/invalid-email'): {
+          alert('The email address provided is invalid.');
+          break;
+        }
+        case(errorCode === 'auth/user-not-found'): {
+          alert('The user does not exist. Try creating an account.');
+          break;
+        }
+        default: console.log('account created successfully!');
+          break;
+      }
+    }).then(() => {
+      this.router.navigateByUrl('main-menu');
+    })
+  }
+
 
   facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
@@ -206,26 +229,6 @@ export class AuthService {
 
   logout() {
     return this.afAuth.auth.signOut();
-  }
-
-  loginUserWithEmail(email) {
-    firebase.auth().signInWithEmailAndPassword(email, this.password).catch(function(error) {
-      // Handle errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    switch (errorCode) {
-      case(errorCode === 'auth/invalid-email'): {
-        alert('The email address provided is invalid.');
-        break;
-      }
-      case(errorCode === 'auth/user-not-found'): {
-        alert('The user does not exist. Try creating an account.');
-        break;
-      }
-      default: console.log('account created successfully!');
-      break;
-    }
-    });
   }
 
   oAuthLogin(provider) {

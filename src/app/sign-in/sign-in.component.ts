@@ -96,6 +96,5 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.btnLogin = document.getElementById('loginButton');
     this.auth.loginUserWithEmail(email);
     // TODO: If the email isn't in the database, DONT push to this page
-    this.router.navigateByUrl('main-menu');
   }
 }
