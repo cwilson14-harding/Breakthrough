@@ -6,16 +6,15 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 export class MusicService {
 
   public audio: HTMLAudioElement;
-  public gameBoardAudio: HTMLAudioElement;
   public timeElapsed: BehaviorSubject<string> = new BehaviorSubject('00:00');
   public timeRemaining: BehaviorSubject<string> = new BehaviorSubject('-00:00');
   public percentElapsed: BehaviorSubject<number> = new BehaviorSubject(0);
   public percentLoaded: BehaviorSubject<number> = new BehaviorSubject(0);
   public playerStatus: BehaviorSubject<string> = new BehaviorSubject('paused');
+  private currentURL: string;
 
   constructor() {
     this.audio = new Audio();
-    this.gameBoardAudio = new Audio();
     this.attachListeners();
   }
 
@@ -26,12 +25,6 @@ export class MusicService {
     this.audio.addEventListener('progress', this.calculatePercentLoaded, false);
     this.audio.addEventListener('waiting', this.setPlayerStatus, false);
     this.audio.addEventListener('ended', this.setPlayerStatus, false);
-    this.gameBoardAudio.addEventListener('timeupdate', this.calculateTime, false);
-    this.gameBoardAudio.addEventListener('playing', this.setPlayerStatus, false);
-    this.gameBoardAudio.addEventListener('pause', this.setPlayerStatus, false);
-    this.gameBoardAudio.addEventListener('progress', this.calculatePercentLoaded, false);
-    this.gameBoardAudio.addEventListener('waiting', this.setPlayerStatus, false);
-    this.gameBoardAudio.addEventListener('ended', this.setPlayerStatus, false);
   }
 
   private calculateTime = (evt) => {
@@ -86,14 +79,13 @@ export class MusicService {
    * @param src
 */
   public setAudio(src: string): void {
-    this.audio.src = src;
-    this.playAudio();
+    if(this.currentURL != src) {
+      this.currentURL = src;
+      this.audio.src = src;
+      this.playAudio();
+    }
   }
 
-  public setGameAudio (src: string): void {
-    this.gameBoardAudio.src = src;
-    this.playGameAudio();
-  }
 
   /**
    * The method to play audio
@@ -101,9 +93,7 @@ export class MusicService {
   public playAudio(): void {
     this.audio.play();
   }
-  public playGameAudio(): void {
-    this.gameBoardAudio.play();
-  }
+
   /**
    * The method to pause audio
 */

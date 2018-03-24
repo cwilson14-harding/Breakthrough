@@ -55,6 +55,7 @@ export class GameBoardComponent implements OnInit {
 
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
               private gameService: GameService, public chat: ChatComponent, public audio: MusicService) {
+    audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 26 Those Who Dwell in Shadows.mp3');
     this.board = new Board();
     this.board.newGame();
 

@@ -3,6 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {AuthService} from '../core/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
+import {MusicService} from "../music.service";
 declare var $: any;
 
 @Component({
@@ -32,7 +33,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
   state = 'inactive';
   width = 100;
 
-  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
+  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore, public audio: MusicService) {
+    audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton\'s.mp3')
   }
 
   toggleState() {

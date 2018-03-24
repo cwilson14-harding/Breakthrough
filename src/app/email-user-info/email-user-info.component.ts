@@ -3,6 +3,7 @@ import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
+import {MusicService} from "../music.service";
 
 @Component({
   selector: 'app-email-user-info',
@@ -34,7 +35,8 @@ export class EmailUserInfoComponent implements OnInit {
   state = 'inactive';
   width = 100;
 
-  constructor(public auth: AuthService, public db: AngularFirestore, public router: Router) {
+  constructor(public auth: AuthService, public db: AngularFirestore, public router: Router, public audio: MusicService) {
+    audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton\'s.mp3');
   }
 
   ngOnInit() {
