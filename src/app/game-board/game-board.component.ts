@@ -55,8 +55,6 @@ export class GameBoardComponent implements OnInit {
 
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
               private gameService: GameService, public chat: ChatComponent, public audio: MusicService) {
-
-    audio.getAudio();
     this.board = new Board();
     this.board.newGame();
 
