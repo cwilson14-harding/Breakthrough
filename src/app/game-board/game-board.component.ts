@@ -250,6 +250,10 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
+  forfeitClicked() {
+    this.router.navigateByUrl('game-over-lose');
+  }
+
   getCurrentGame(user, game) {
     if (user.displayName === game.creatorName) {
       alert('This is your game.');
