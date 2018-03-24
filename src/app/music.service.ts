@@ -26,7 +26,7 @@ export class MusicService {
     this.audio.addEventListener('ended', this.setPlayerStatus, false);
   }
 
-  private calculateTime (evt) {
+  private calculateTime = (evt) => {
     const ct = this.audio.currentTime;
     const d = this.audio.duration;
     this.setTimeElapsed(ct);
@@ -34,7 +34,7 @@ export class MusicService {
     this.setTimeRemaining(d, ct);
   };
 
-  private calculatePercentLoaded (evt) {
+  private calculatePercentLoaded = (evt) => {
     if (this.audio.duration > 0) {
       for (let i = 0; i < this.audio.buffered.length; i++) {
         if (this.audio.buffered.start(this.audio.buffered.length - 1 - i) < this.audio.currentTime) {
@@ -46,7 +46,7 @@ export class MusicService {
     }
   };
 
-  private setPlayerStatus (evt) {
+  private setPlayerStatus = (evt) => {
     switch (evt.type) {
       case 'playing':
         this.playerStatus.next('playing');
@@ -64,7 +64,7 @@ export class MusicService {
         this.playerStatus.next('paused');
         break;
     }
-  }
+  };
 
   /**
    * If you need the audio instance in your component for some reason, use this.
