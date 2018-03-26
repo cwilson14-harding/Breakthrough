@@ -65,7 +65,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   alaina = false;
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService,
               public audio: MusicService) {
-    audio.getAudio();
+    audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 9 Lifebeat of Lilim.mp3');
     this.isGameCreated = false;
     this.getOverallLeaders();
   }

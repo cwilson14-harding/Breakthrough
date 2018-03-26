@@ -11,6 +11,7 @@ export class MusicService {
   public percentElapsed: BehaviorSubject<number> = new BehaviorSubject(0);
   public percentLoaded: BehaviorSubject<number> = new BehaviorSubject(0);
   public playerStatus: BehaviorSubject<string> = new BehaviorSubject('paused');
+  private currentURL: string;
 
   constructor() {
     this.audio = new Audio();
@@ -78,9 +79,13 @@ export class MusicService {
    * @param src
 */
   public setAudio(src: string): void {
-    this.audio.src = src;
-    this.playAudio();
+    if(this.currentURL != src) {
+      this.currentURL = src;
+      this.audio.src = src;
+      this.playAudio();
+    }
   }
+
 
   /**
    * The method to play audio

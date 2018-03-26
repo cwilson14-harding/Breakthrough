@@ -4,7 +4,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import { GameService } from '../game.service';
-import {MusicService} from '../music.service';
+import {MusicService} from "../music.service";
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -22,9 +22,9 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   height = 100;
   showTutorial = false;
   constructor(public auth: AuthService, private db: AngularFirestore, private router: Router, private gameService: GameService,
-              public audio: MusicService) {
+  public audio: MusicService) {
+    audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton\'s.mp3');
     this.onlineUsers();
-    audio.getAudio();
   }
 
   ngOnInit() {
