@@ -77,32 +77,36 @@
       </div>
     </div>
   </div>
-
   <div *ngIf="changeAvatar">
     <h1 class="headingFont">Change Your Avatar</h1>
     <div class="w3-container w3-padding-16">
       <div class="w3-container">
-
+        <ngx-slideshow class="w3-text-white" #carousel [cards]="3" [cardSize]="'350px'">
+          <li>
         <div class="w3-third" style="padding-top: 2%; position: relative; left: 1%; top: -5px">
           <div (click)="circleSelected()">
             <div *ngIf="avatar1Selected" style="position: relative; top: 5px" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-              <img src="assets/avatars/hackerAvatar1.png" width="55%">
+              <img src="assets/avatars/cyberpunk boy.png" width="55%">
             </div>
             <div *ngIf="!avatar1Selected">
-              <img src="assets/avatars/hackerAvatar1.png" width="55%">
+              <img src="assets/avatars/cyberpunk boy.png" width="55%">
             </div>
           </div>
         </div>
+          </li>
+          <li>
         <div class="w3-third" style="padding-top: 2%; padding-bottom: 10%">
           <div (click)="virusSelected()">
             <div *ngIf="avatar2Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-              <img src="assets/avatars/hackerAvatar2.png" width="70%">
+              <img src="assets/avatars/cyberpunk girl.png" width="70%">
             </div>
             <div *ngIf="!avatar2Selected">
-              <img src="assets/avatars/hackerAvatar2.png" width="70%">
+              <img src="assets/avatars/cyberpunk girl.png" width="70%">
             </div>
           </div>
         </div>
+          </li>
+          <li>
         <div class="w3-third" style="padding-top: 2%; position: relative; right: 0%">
           <div (click)="virus2Selected()">
             <div *ngIf="avatar3Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px; padding-bottom: 25px">
@@ -113,7 +117,8 @@
             </div>
           </div>
         </div>
-
+          </li>
+  </ngx-slideshow>
         <div class="w3-container w3-padding">
           <div class="w3-half" style="position: relative; top: -50px;">
             <button class="buttonStyle" style="position: relative; left: 22.5%" (click)="selectAvatar()">Select</button>
