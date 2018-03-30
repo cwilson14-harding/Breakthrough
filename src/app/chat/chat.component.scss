@@ -17,6 +17,26 @@ h1{
   font-family: 'Raleway', sans-serif;
   border-radius: 5px;
 }
+.messageBox2 {
+  display:block;
+  position: absolute;
+  width: 290px;
+  height: 35px;
+  //top: 643px;
+  top: 630px;
+  //left: 35px;
+  right: 25px;
+  z-index: 1;
+
+  background:none;
+  border-left: 0;
+  border-top: 0;
+  border-right: 0 ;
+  padding: 12px 20px ;
+  color:#fff;
+  font-family: 'Raleway', sans-serif;
+  border-radius: 5px;
+}
 textarea{
   background: transparent;
   max-width:325px;
@@ -49,6 +69,22 @@ textarea{
   overflow: auto;
 }
 
+.chatHistory2 {
+  position: absolute;
+  //height: 220px;
+  height: 170px;
+  width: 290px;
+  //left: 35px;
+  right: 25px;
+  //top: 410px;
+  top: 445px;
+  border-radius: 10px;
+  background-color: #222222;
+  opacity: .8;
+  z-index: 1;
+  overflow: auto;
+}
+
 .roundedCorners{
   border-radius: 20px;
 }
@@ -77,7 +113,13 @@ input[type=text]:focus, textarea:focus {
   background:linear-gradient( 45deg, #fff 50%, #6646FF 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: whitesmoke;
-  position:relative;
+  position:absolute;
+   left: 178px;
+  // right: 95px;
+  height: 35px;
+   top: 672px;
+  // top: 662px;
+  z-index: 1;
   font-family: Raleway;
 }
 .btn:after{
@@ -108,4 +150,12 @@ input[type=text]:focus, textarea:focus {
   -1px -1px 0 #6646FF
   -1px -1px 0 #6646FF
   -1px -1px 0 #6646FF
+}
+
+.name {
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  color: white;
+  font-size: 250%;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
 }
