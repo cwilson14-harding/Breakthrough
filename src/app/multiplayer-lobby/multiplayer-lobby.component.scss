@@ -21,6 +21,12 @@
    background-color: 	#696969;
 }
 
+.openGameBar {
+  position: absolute;
+  top: 30px;
+  border-radius: 10px;
+}
+
 .selectedButton {
   background-color: #494949;
   color: white;
@@ -59,4 +65,54 @@
 
 .ulOpacity {
   opacity: .9;
+}
+
+.createGameBtn {
+  height: 75px;
+  width: 250px;
+  background-color: cadetblue;
+  border-radius: 10px;
+  position: absolute;
+  top: 500px;
+  left: 230px;
+  opacity: 1;
+  cursor: pointer;
+}
+.createGameBtn:hover {
+  opacity: 1;
+  box-shadow: 0px 0px 20px rgb(216,65,201);
+}
+.createGameBtnText {
+  color: white;
+  position: relative;
+  top: -5px;
+  left: 35px;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 18pt;
+}
+
+.joinGameBtn {
+  position: relative;
+  left: 220px;
+  top: 15px;
+  height: 55px;
+  width: 200px;
+  background-color: cadetblue;
+  border-radius: 10px;
+  opacity: 1;
+  cursor: pointer;
+}
+.joinGameBtn:hover {
+  opacity: 1;
+  box-shadow: 0px 0px 20px rgb(216,65,201);
+}
+.joinGameBtnText {
+  color: white;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 18pt;
+  position: relative;
+  top: -7px;
+  left: 32px;
 }

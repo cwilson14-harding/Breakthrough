@@ -13,6 +13,12 @@ declare var $: any;
 })
 export class MainMenuComponent implements OnInit, AfterViewInit {
 
+  userName;
+  userWins;
+  userLosses;
+  userPic;
+  userUid;
+
   availableUsers: any;
   showSettings = false;
   state = 'inactive';
@@ -28,6 +34,15 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    const currUserId = this.auth.getCurrentUser();
+    this.db.collection('users').doc(currUserId).snapshotChanges().subscribe( data => {
+     this.userUid = data.payload.get('uid');
+     this.userName = data.payload.get('displayName');
+     this.userPic = data.payload.get('pic');
+     this.userWins = data.payload.get('wins');
+     this.userLosses = data.payload.get('losses');
+    });
+
     this.myStyle = {
       'position': 'fixed',
       'width': '100%',
@@ -95,7 +110,7 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   goToMulti(user) {
     this.auth.updateGameTypeMulti(user);
    // alert(userId);
-    this.router.navigateByUrl('multiPlayerLobby');
+    this.router.navigate(['multiPlayerLobby', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
   }
 
   createRandomId() {

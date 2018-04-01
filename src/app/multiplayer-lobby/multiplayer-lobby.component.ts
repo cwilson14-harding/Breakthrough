@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {AuthService, Game, User} from '../core/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { GameService } from '../game.service';
 import {HostListener} from '@angular/core';
@@ -34,7 +34,7 @@ export class MultiplayerLobbyComponent implements OnInit {
 
   gameType;
   availableUsers: any;
-  openGames: any;
+  openGames: Observable<any[]>;
   createdGame: Observable<Game>;
   isGameCreated: boolean;
   joinerId: string;
@@ -44,6 +44,14 @@ export class MultiplayerLobbyComponent implements OnInit {
   currAvatar;
   creatorPic;
   joinerPic;
+  creatorWins;
+  creatorLosses;
+
+  userUid;
+  userWins;
+  userLosses;
+  userPic;
+  userName;
 
   // user vars
   currUserName;
@@ -65,14 +73,23 @@ export class MultiplayerLobbyComponent implements OnInit {
   dylan = false;
   alaina = false;
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService,
-              public audio: MusicService) {
+              public audio: MusicService, public route: ActivatedRoute) {
+
     audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 9 Lifebeat of Lilim.mp3');
     this.isGameCreated = false;
     this.getOverallLeaders();
+
   }
 
   ngOnInit() {
-    this.viewOpenGames();
+
+    this.userName = this.route.snapshot.params['id'];
+    this.userUid = this.route.snapshot.params['id2'];
+    this.userPic = this.route.snapshot.params['id3'];
+    this.userWins = this.route.snapshot.params['id4'];
+    this.userLosses = this.route.snapshot.params['id5'];
+
+     this.viewOpenGames();
 
     this.myStyle = {
       'position': 'fixed',
@@ -113,40 +130,20 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.showLeaderboard = true;
   }
 
-  // Methods For PROTOTYPE
-  click_luke() {
-    this.luke = true;
-    this.cj = false;
-    this.brad = false;
-    this.dylan = false;
-    this.alaina = false;
-  }
-  click_cj() {
-    this.luke = false;
-    this.cj = true;
-    this.brad = false;
-    this.dylan = false;
-    this.alaina = false;
-  }
-  click_brad() {
-    this.luke = false;
-    this.cj = false;
-    this.brad = true;
-    this.dylan = false;
-    this.alaina = false;
-  }
-
   createRandomId() {
     return Math.floor(Math.random() * 1000000) + 1;
   }
 
   createGame() {
+    alert(this.userName);
     const userId = this.auth.getCurrentUser();
     const randomId = this.createRandomId().toString();
 
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.creatorName = data['displayName'];
       this.creatorPic = data['pic'];
+      this.creatorWins = data['wins'];
+      this.creatorLosses = data['losses'];
 
       // this.auth.createGame(userId);
       this.db.collection('games').doc(randomId).set({
@@ -160,7 +157,9 @@ export class MultiplayerLobbyComponent implements OnInit {
         isOpen: true,
         state: 'STATE.OPEN',
         turn: true,
-        creatorPic: this.creatorPic
+        creatorPic: this.creatorPic,
+        creatorWins: this.creatorWins,
+        creatorLosses: this.creatorLosses
       }).then(after => {
         this.db.collection('users').doc(userId).update({
           currentGameId: randomId
@@ -184,29 +183,7 @@ export class MultiplayerLobbyComponent implements OnInit {
      If the user's uid property does not match the game's creatorId property then the person joining the game is
      navigated to the board where gameplay can commence.
   */
-  joinGame(gameId) { // creatorId, gameId // used to be user: User, game: Game
-  //  this.gameUid = gameId;
-  //  this.joinerId = user.uid;
-
-    // this.auth.joinGame(this.auth.userId, this.auth.getDisplayName(), this.createdGame);
-    // this.createGame(this.auth.userId);
-
-    // const localPlayer = new PlayerData(/*game.creatorName, user.photoURL*/'Local player', '', PlayerType.Local);
-    // const remotePlayer = new PlayerData(/*game.joinerName*/ 'Remote player', '', PlayerType.Local); // TODO: PlayerType.Network);
-    //
-    // if (this.auth.userId === this.auth.creatorId) {
-    //   this.gameService.newGame(localPlayer, remotePlayer, this.gameId);
-    // } else {
-    //   this.gameService.newGame(remotePlayer, localPlayer, this.gameId);
-    // }
-
-    // this.router.navigateByUrl(('multi-setup'));
-    // if (user.uid === game.creatorId) {
-    //   alert('Can\'t join your own game.')
-    // } else {
-    //   this.auth.joinGame(user, game);
-    //   this.router.navigateByUrl('board');
-    // }
+  joinGame(gameId) {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const userId = this.auth.getCurrentUser();
 

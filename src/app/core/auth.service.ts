@@ -36,7 +36,7 @@ export class AuthService {
   user: Observable<User>;
   game: Observable<Game>;
   avaliable: Observable<User[]>;
-  open;
+  open: Observable<any[]>;
   gameRef;
   joinerId;
   creatorId;

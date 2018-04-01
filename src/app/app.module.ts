@@ -48,7 +48,7 @@ const appRoutes: Routes = [
   { path: 'main-menu', pathMatch: 'full', component: MainMenuComponent},
   { path: 'board/:id/:id2/:id3', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
-  { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
+  { path: 'multiPlayerLobby/:id/:id2/:id3/:id4/:id5', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: 'game-over-lose', pathMatch: 'full', component: GameOverLoseComponent},
   { path: 'game-over-win', pathMatch: 'full', component: GameOverWinComponent},
   { path: 'single-setup', pathMatch: 'full', component: SingleSetupComponent},
