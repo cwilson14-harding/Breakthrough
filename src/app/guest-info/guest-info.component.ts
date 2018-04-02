@@ -126,5 +126,9 @@ export class GuestInfoComponent implements OnInit {
     this.avatar2Selected = false;
     this.avatar3Selected = true;
   }
+  goBack(){
+    this.router.navigateByUrl('home');
+    this.auth.logout();
+  }
 
 }
