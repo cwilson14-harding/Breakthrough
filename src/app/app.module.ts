@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { AuthService } from './core/auth.service';
 import {MusicService} from './music.service';
+import {MusicComponent} from "./music/music.component";
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -83,6 +84,7 @@ const appRoutes: Routes = [
     SignInComponent,
     GuestInfoComponent,
     EmailUserInfoComponent,
+    MusicComponent
   ],
   imports: [
     BrowserModule,
