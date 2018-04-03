@@ -67,7 +67,7 @@
         <ul class="w3-ul w3-card-4 ulOpacity">
           <!-- Using Firebase --> <!-- <div class="openGameBar"></div> -->
           <div>
-            <li class="w3-bar w3-round-large greyBackground" *ngFor="let open of openGames | async"><!-- [@flyInOut]="state" -->
+            <li class="w3-bar w3-round-large greyBackground"  *ngFor="let open of openGames | async"><!-- [@flyInOut]="state" -->
               <!--<span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="joinGame(open.gameId)"><i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
               <span (click)="joinGame(open.gameId)"><i class=" fa joinGameBtn"><p class="joinGameBtnText">Join Game</p></i></span>
               <img src='{{open.creatorPic}}' class="w3-bar-item w3-circle w3-hide-small" style="width:85px">

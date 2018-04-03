@@ -8,14 +8,14 @@
 
   <div class="w3-container w3-center w3-display-middle " style="height: 50vh; width: 55vw; position: fixed; z-index: 1" [@flyInOut]="state">
     <!--<h1>SYSTEM.BREAK();</h1> -->
-    <div class="w3-display-topright">
-      <i class="fa fa-times-circle w3-padding w3-xxxlarge w3-hover-opacity w3-text-white" (click)="goBack()"></i>
+    <div style="position: relative; z-index: 2; top: 6px; left: 173px;">
+      <i class="fa fa-times-circle w3-padding w3-xxxlarge w3-hover-opacity w3-text-white" style="cursor: pointer;" (click)="goBack()"></i>
     </div>
     <div class="w3-center w3-display-middle">
       <div>
-        <img  class="w3-display-topmiddle" style="width: 200%; position: relative;" src="assets/logos/systemBreakLogoSmall.png">
+        <img style="width: 200%; position: relative; top: 90px; right: 200px" src="assets/logos/systemBreakLogoSmall.png">
       </div>
-      <form class="panel" onsubmit="javascript:void(0)">
+      <form class="panel" onsubmit="javascript:void(0)" autocomplete="off">
         <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Create Display Name</h1></div>
         <div class="form">
           <input id="inputGuestName" type="text" placeholder=' Display name' autofocus required>
