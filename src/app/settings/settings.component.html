@@ -81,49 +81,55 @@
     <h1 class="headingFont">Change Your Avatar</h1>
     <div class="w3-container w3-padding-16">
       <div class="w3-container">
-        <ngx-slideshow class="w3-text-white" #carousel [cards]="3" [cardSize]="'350px'">
+        <ngx-slideshow class="w3-text-white" #carousel [cards]="2" [cardSize]="'250px'" [padding]="'10px'">
           <li>
-        <div class="w3-third" style="padding-top: 2%; position: relative; left: 1%; top: -5px">
           <div (click)="circleSelected()">
-            <div *ngIf="avatar1Selected" style="position: relative; top: 5px" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-              <img src="assets/avatars/cyberpunk boy.png" width="55%">
+            <div *ngIf="avatar1Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
+              <img src='assets/avatars/hackerAvatar1.png' height = "200px" width="150px">
             </div>
             <div *ngIf="!avatar1Selected">
-              <img src="assets/avatars/cyberpunk boy.png" width="55%">
+              <img src='assets/avatars/hackerAvatar1.png' height = "200px" width="150px">
             </div>
           </div>
-        </div>
           </li>
           <li>
-        <div class="w3-third" style="padding-top: 2%; padding-bottom: 10%">
           <div (click)="virusSelected()">
             <div *ngIf="avatar2Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-              <img src="assets/avatars/cyberpunk girl.png" width="70%">
+              <img src='assets/avatars/hackerAvatar2.png' height = "200px" width="150px">
             </div>
             <div *ngIf="!avatar2Selected">
-              <img src="assets/avatars/cyberpunk girl.png" width="70%">
+              <img src='assets/avatars/hackerAvatar2.png' height = "200px" width="150px">
             </div>
           </div>
-        </div>
           </li>
           <li>
-        <div class="w3-third" style="padding-top: 2%; position: relative; right: 0%">
           <div (click)="virus2Selected()">
-            <div *ngIf="avatar3Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px; padding-bottom: 25px">
-              <img src="assets/avatars/hackerAvatar3.png" width="65%">
+            <div *ngIf="avatar3Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
+              <img src="assets/avatars/hackerAvatar3.png" height = "200px" width="150px">
             </div>
             <div *ngIf="!avatar3Selected">
-              <img src="assets/avatars/hackerAvatar3.png" width="65%">
+              <img src="assets/avatars/hackerAvatar3.png" height = "200px" width="150px">
             </div>
           </div>
-        </div>
+          </li>
+          <li>
+            <div (click)="cyberPunkBoySelected()">
+              <div *ngIf="avatar4Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
+                <img src="assets/avatars/cyberpunk boy.png" height = "200px" width="150px">
+              </div>
+              <div *ngIf="!avatar4Selected">
+                <img src="assets/avatars/cyberpunk boy.png" height = "200px" width="150px">
+              </div>
+            </div>
           </li>
   </ngx-slideshow>
+     <p class="w3-padding w3-xxxlarge w3-display-left w3-text-white w3-hover-opacity w3-round-xlarge fa fa-chevron-circle-left"(click)="carousel.left();" style="z-index: 1"></p>
+        <p class="w3-padding w3-xxxlarge w3-display-right w3-text-white w3-hover-opacity w3-round-xlarge fa fa-chevron-circle-right"(click)="carousel.right();" style="z-index: 1"></p>
         <div class="w3-container w3-padding">
-          <div class="w3-half" style="position: relative; top: -50px;">
+          <div class="w3-half" style="position: relative;">
             <button class="buttonStyle" style="position: relative; left: 22.5%" (click)="selectAvatar()">Select</button>
           </div>
-          <div class="w3-half" style="position: relative; top: -50px;">
+          <div class="w3-half" style="position: relative;">
             <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="goBack()">Back</button>
           </div>
         </div>

@@ -21,6 +21,7 @@ export class SettingsComponent implements OnInit {
   avatar1Selected = false;
   avatar2Selected = false;
   avatar3Selected = false;
+  avatar4Selected = false;
   currentPic;
   sliderVolume;
 
@@ -72,16 +73,25 @@ export class SettingsComponent implements OnInit {
     this.avatar1Selected = true;
     this.avatar2Selected = false;
     this.avatar3Selected = false;
+    this.avatar4Selected = false;
   }
   virusSelected() {
     this.avatar1Selected = false;
     this.avatar2Selected = true;
     this.avatar3Selected = false;
+    this.avatar4Selected = false;
   }
   virus2Selected() {
     this.avatar1Selected = false;
     this.avatar2Selected = false;
     this.avatar3Selected = true;
+    this.avatar4Selected = false;
+  }
+  cyberPunkBoySelected() {
+    this.avatar1Selected = false;
+    this.avatar2Selected = false;
+    this.avatar3Selected = false;
+    this.avatar4Selected = true;
   }
   selectAvatar() {
     if (this.avatar1Selected === true) {
@@ -90,6 +100,8 @@ export class SettingsComponent implements OnInit {
       this.currentPic = 'assets/avatars/hackerAvatar2.png';
     } else if (this.avatar3Selected === true) {
       this.currentPic = 'assets/avatars/hackerAvatar3.png';
+    } else if (this.avatar4Selected === true) {
+      this.currentPic = 'assets/avatars/cyberpunk boy.png';
     }
     this.db.collection('users').doc(this.auth.getCurrentUser()).update({
       pic: this.currentPic
