@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {Coordinate} from '../models/game-core/coordinate';
@@ -12,7 +12,7 @@ import {PlayerData, PlayerType} from '../player-data';
 import {Board} from '../models/board';
 import {NetworkPlayer} from '../models/network-player';
 import {Move} from '../models/move';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {AIPlayerRandom} from '../models/ai-player-random';
 import {AIPlayerMCTSRandom} from '../models/ai-player-mcts-random';
 import {ChatComponent} from '../chat/chat.component';
@@ -26,6 +26,18 @@ import {MusicService} from '../music.service';
 })
 
 export class GameBoardComponent implements OnInit {
+  // variables for the game Gui
+  picTest;
+  gameId: string;
+  creatorName;
+  creatorPic;
+  creatorId;
+  joinerName;
+  joinerPic;
+  joinerId;
+  isLoading = true;
+
+  // other variables
   board: Board;
   game: AngularFirestoreDocument<Game>;
   games: any;
@@ -54,7 +66,7 @@ export class GameBoardComponent implements OnInit {
 
 
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
-              private gameService: GameService, public chat: ChatComponent, public audio: MusicService) {
+              private gameService: GameService, public chat: ChatComponent, public audio: MusicService, public route: ActivatedRoute) {
     audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 26 Those Who Dwell in Shadows.mp3');
     this.board = new Board();
     this.board.newGame();
@@ -87,6 +99,25 @@ export class GameBoardComponent implements OnInit {
     // Get the move from the first player.
     this.getMove();
 
+  }
+  ngOnInit() {
+
+    setTimeout(() => {
+        this.isLoading = false;
+      }, 2000);
+
+    this.gameReference = this.db.collection<any>('games').doc(this.gameService.gameId);
+    // this.gameId = this.route.snapshot.params['id'];
+    this.creatorPic = this.route.snapshot.params['id2'];
+    this.joinerPic = this.route.snapshot.params['id3'];
+    this.gameReference.snapshotChanges().subscribe(data => {
+      this.joinerName = data.payload.get('joinerName');
+      this.joinerId = data.payload.get('joinerId');
+      // this.joinerPic = data.payload.get('joinerPic');
+      this.creatorName = data.payload.get('creatorName');
+      this.creatorId = data.payload.get('creatorId');
+      // this.creatorPic = data.payload.get('creatorPic');
+    });
   }
   /* movePiece: function(){}
      Moves a piece from one coordinate to the other if the move was valid.
@@ -249,6 +280,18 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
+  hideLegendClicked() {
+    const div = document.getElementById('legend');
+    if (div.style.display !== 'none') {
+      div.style.display = 'none';
+    } else {
+      div.style.display = 'block';
+      document.getElementById('legend').focus();
+    }
+  }
+
+
+
   forfeitClicked() {
     this.router.navigateByUrl('game-over-lose');
   }
@@ -260,7 +303,5 @@ export class GameBoardComponent implements OnInit {
       alert('This is ' + game.creatorName + ' game.');
     }
   }
-  ngOnInit() {
-    this.gameReference = this.db.collection<any>('games').doc(this.gameService.gameId);
-  }
+
 }

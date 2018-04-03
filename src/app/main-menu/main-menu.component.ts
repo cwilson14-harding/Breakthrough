@@ -13,6 +13,12 @@ declare var $: any;
 })
 export class MainMenuComponent implements OnInit, AfterViewInit {
 
+  userName;
+  userWins;
+  userLosses;
+  userPic;
+  userUid;
+
   availableUsers: any;
   showSettings = false;
   state = 'inactive';
@@ -28,6 +34,15 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    const currUserId = this.auth.getCurrentUser();
+    this.db.collection('users').doc(currUserId).snapshotChanges().subscribe( data => {
+     this.userUid = data.payload.get('uid');
+     this.userName = data.payload.get('displayName');
+     this.userPic = data.payload.get('pic');
+     this.userWins = data.payload.get('wins');
+     this.userLosses = data.payload.get('losses');
+    });
+
     this.myStyle = {
       'position': 'fixed',
       'width': '100%',
@@ -92,19 +107,46 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   toHome() {
     this.router.navigateByUrl('home');
   }
-  goToMulti(user) {
-    this.auth.updateGameTypeMulti(user);
+  goToMulti() {
+    this.auth.updateGameTypeMulti(this.userUid);
    // alert(userId);
-    this.router.navigateByUrl('multiPlayerLobby');
+    this.router.navigate(['multiPlayerLobby', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
+  }
+
+  createRandomId() {
+    return Math.floor(Math.random() * 1000000) + 1;
   }
 
   playGame() {
     const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
     const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
-    this.gameService.newGame(playerOne, playerTwo);
+    const currUserId = this.auth.getCurrentUser();
+    const gameId = this.createRandomId().toString();
+    this.gameService.newGame(playerOne, playerTwo, gameId);
     // this.router.navigateByUrl('single-setup');
+
+    this.db.collection('users').doc(currUserId).valueChanges().subscribe(data => {
+      const creatorPic = data['pic'];
+      const creatorName = data['displayName'];
+      const joinerPic = 'assets/avatars/virusAvatar.png';
+
+      this.db.collection('games').doc(gameId).set({
+        gameId: gameId,
+        gameType: 'single',
+        isOpen: false,
+        state: 'STATE.OPEN',
+        creatorPic: creatorPic,
+        creatorId: currUserId,
+        creatorName: creatorName,
+        joinerPic: 'assets/avatars/virusAvatar.png',
+        joinerName: 'A.I.',
+      }).then(next => this.router.navigate(['board', gameId, creatorPic, joinerPic])); // 'singlePlayer'
+    });
+
+    // this.db.collection('users').doc(currUserId).update({
+    //   currGameType: 'single'
+    // }).then(next => this.router.navigate(['board', 'singlePlayer']));
     // TODO: Navigate with the Game ID: Create a Game for the single player in the DB so we can track wins/losses
-     this.router.navigate(['board', 'singlePlayer']);
   }
   // set settings to true. settings div will appear
   goToSettings() {

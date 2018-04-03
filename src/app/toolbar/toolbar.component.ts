@@ -11,7 +11,11 @@ export class ToolbarComponent implements OnInit {
 @Output() newGameClicked = new EventEmitter<any>();
 @Output() showChatClicked = new EventEmitter<any>();
 @Output() forfeitClicked = new EventEmitter<any>();
+@Output() showLegendClicked = new EventEmitter<any>();
 playBackgroundMusic: boolean = true;
+
+showChat = true;
+showLegend = true;
 
   constructor() { }
 
@@ -24,6 +28,12 @@ playBackgroundMusic: boolean = true;
 
   showHideChat() {
     this.showChatClicked.emit(null);
+    this.showChat = !this.showChat;
+  }
+
+  showHideLegend() {
+    this.showLegendClicked.emit(null);
+    this.showLegend = !this.showLegend;
   }
 
   forfeitGame() {

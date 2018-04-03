@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { AuthService } from './core/auth.service';
 import {MusicService} from './music.service';
+import {MusicComponent} from "./music/music.component";
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -46,9 +47,9 @@ const appRoutes: Routes = [
   { path: 'chat', pathMatch: 'full', component: ChatComponent},
   { path: 'tutorial', pathMatch: 'full', component: TutorialComponent},
   { path: 'main-menu', pathMatch: 'full', component: MainMenuComponent},
-  { path: 'board/:id', pathMatch: 'full', component: GameBoardComponent},
+  { path: 'board/:id/:id2/:id3', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
-  { path: 'multiPlayerLobby', pathMatch: 'full', component: MultiplayerLobbyComponent},
+  { path: 'multiPlayerLobby/:id/:id2/:id3/:id4/:id5', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: 'game-over-lose', pathMatch: 'full', component: GameOverLoseComponent},
   { path: 'game-over-win', pathMatch: 'full', component: GameOverWinComponent},
   { path: 'single-setup', pathMatch: 'full', component: SingleSetupComponent},
@@ -83,6 +84,7 @@ const appRoutes: Routes = [
     SignInComponent,
     GuestInfoComponent,
     EmailUserInfoComponent,
+    MusicComponent
   ],
   imports: [
     BrowserModule,

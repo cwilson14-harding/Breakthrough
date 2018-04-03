@@ -8,38 +8,77 @@
   </div>
 </div>
 -->
-
-<div *ngIf="auth.user | async as user">
-  <div>
-    <app-chat></app-chat>
-  </div>
-  <div class="backImg">
-    <div class="w3-container w3-display-middle">
-      <div class="board">
-        <div class="row" *ngFor="let row of [7,6,5,4,3,2,1,0]">
-          <app-cell class="cell" *ngFor="let col of [0,1,2,3,4,5,6,7]"
-                    [state]="board.board[row][col]"
-                    [boardClass]="board.boardClass[row][col]"
-                    [legend]="row.toString()+col.toString()"
-                    (click)="selectRowCol([row, col]);">
-          </app-cell>
+<div>
+  <div class="backImg"> <!-- *ngIf="auth.user | async as user" -->
+    <div>
+      <app-chat></app-chat>
+    </div>
+    <!--<div class="backImg">-->
+    <!-- BACKGROUND IMAGE LAYERS -->
+    <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: -0px; transform: scaleX(-1); opacity: .5">-->
+    <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: 720px; opacity: .5">-->
+    <!--<img src="assets/backgrounds/chessBoard.jpg" style="position: absolute; height: 680px; width: 679px; left: 380px; top: 26px; opacity: .5">-->
+      <div> <!-- class="w3-container w3-display-middle" -->
+        <div> <!-- style="position: relative; bottom: 9px" -->
+          <div class="row" *ngFor="let row of [7,6,5,4,3,2,1,0]">
+              <app-cell class="cell" *ngFor="let col of [0,1,2,3,4,5,6,7]"
+                        [state]="board.board[row][col]"
+                        [boardClass]="board.boardClass[row][col]"
+                        [legend]="row.toString()+col.toString()"
+                        (click)="selectRowCol([row, col]);">
+              </app-cell>
+          </div>
         </div>
       </div>
-    </div>
-    <div *ngFor="let game of games | async">
-      <!-- <button (click)="getCurrentGame(user,game)">Get Game</button> -->
-      <!-- <button (click)="updateTurn()">Update Turn</button> -->
+    <!--</div>-->
+  </div>
+
+<!-- DO NOT DELETE -->
+  <!--<div style="position: absolute; width: 300px; height: 690px; top: 26px; left: 30px; background-color: black; opacity: .75; border-radius: 20px">-->
+    <!--&lt;!&ndash; DIV FOR CREATOR BACKGROUND&ndash;&gt;-->
+  <!--</div>-->
+  <!--&lt;!&ndash;<div style="position: absolute; width: 300px; height: 300px; top: 26px; right: 20px; background-color: black; opacity: .8; border-radius: 20px">&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash; DIV FOR JOINER BACKGROUND&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--<div style="position: absolute; width: 300px; height: 320px; z-index: 2; top: 30px; left: 50px;">-->
+    <!--<span class="name" style="position: relative; left: 85px; ">{{creatorName}}</span>-->
+    <!--<img src='{{creatorPic}}' style="width: 250px; height: 260px;">-->
+  <!--</div>-->
+  <!--&lt;!&ndash;<div style="position: absolute; width: 300px; height: 300px; z-index: 2; top: 30px; right: 20px;">&ndash;&gt;-->
+    <!--&lt;!&ndash;<span class="name" style="position: relative; left: 75px">{{joinerName}}</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;<img src='{{joinerPic}}' style="width: 240px; height: 250px;">&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--<span class="name2" style="position: absolute; left: 100px; top: 320px;">Versus</span>-->
+  <!--<div style="position: absolute; width: 300px; height: 300px; z-index: 2; top: 390px; left: 50px;">-->
+    <!--<span class="name" style="position: relative; left: 85px">{{joinerName}}</span>-->
+    <!--<img src='{{joinerPic}}' style="width: 240px; height: 250px;">-->
+  <!--</div>-->
+
+  <app-toolbar (newGameClicked)="newGameClicked()" (showChatClicked)="showChatClicked()" (forfeitClicked)="forfeitClicked()" ></app-toolbar>
+
+  <!--<div style="position: absolute; background-color: black; opacity: .5; height: 380px; width: 300px; left: 30px; top: 345px; border-radius: 20px">-->
+    <!--&lt;!&ndash; DIV FOR CHAT &ndash;&gt;-->
+  <!--</div>-->
+  <!--<span class="name" style="position: absolute; top: 355px; left: 135px">chat</span>-->
+
+  <!-- TOOL BAR -->
+  <!--<app-toolbar (showChatClicked)="showChatClicked($event)" (hideLegendClicked)="hideLegendClicked($event)"></app-toolbar>-->
+
+  <div *ngIf="connectionLost" class="connectionLost">
+    <div class="w3-black" style="border-radius: 10px;">
+      <p class="connectionLostText">The A.I. has compromised the connection. Game Over!</p>
+      <img src="/assets/hacked.png" class="imgShake" style="position: relative; left: 27%; top: -20px; width: 40%">
     </div>
   </div>
 </div>
-<!-- <div class="gameStatus">
 
-</div> -->
-<app-toolbar (newGameClicked)="newGameClicked($event)" (showChatClicked)="showChatClicked($event)" (forfeitClicked)="forfeitClicked($event)" ></app-toolbar>
-
-<div *ngIf="connectionLost" class="connectionLost">
-  <div class="w3-black" style="border-radius: 10px;">
-    <p class="connectionLostText">The A.I. has compromised the connection. Game Over!</p>
-    <img src="/assets/hacked.png" class="imgShake" style="position: relative; left: 27%; top: -20px; width: 40%">
-  </div>
+<div *ngIf="isLoading" style="position: absolute; top: 0px; background-color: black; height: 100vh; width: 100vw; z-index: 3">
+ <div class="w3-display-middle w3-black">
+   <img src="assets/logos/systemBreakLogoSmall.png">
+   <p class="loadingText">Preparing Your Game...</p>
+   <div>
+     <i class="fa fa-spinner w3-padding w3-xxxlarge settingsCog" style="color:#F2F2F2; position: absolute; left: 400px"></i>
+   </div>
+ </div>
 </div>
+

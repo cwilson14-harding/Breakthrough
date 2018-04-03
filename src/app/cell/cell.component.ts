@@ -1,4 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AuthService } from '../core/auth.service';
+import {GameService} from '../game.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cell',
@@ -6,6 +10,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./cell.component.scss']
 })
 export class CellComponent implements OnInit {
+
+  gameReference;
+  joinerPic;
+  creatorPic;
+
   @Input()
   state: number;
   @Input()
@@ -27,9 +36,17 @@ export class CellComponent implements OnInit {
       case '7': return 'H';
     }
   }
-  constructor() { }
+  constructor(public auth: AuthService, public db: AngularFirestore, public gameService: GameService, public route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.creatorPic = this.route.snapshot.params['id2'];
+    this.joinerPic = this.route.snapshot.params['id3'];
+    // TODO: Make the pictures change based on who is P1 or P2
+    this.gameReference = this.db.collection<any>('games').doc(this.gameService.gameId);
+    this.gameReference.snapshotChanges().subscribe(data => {
+      // this.joinerPic = data.payload.get('joinerPic');
+      // this.creatorPic = data.payload.get('creatorPic');
+    });
   }
 
 }
