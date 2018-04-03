@@ -7,6 +7,15 @@
   //opacity: 0.75;
 }
 
+.shapeBoard {
+  padding-top: 20px;
+  border-bottom: 500px solid red;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  height: 0;
+  width: 500px;
+}
+
 .row{
   display: table;//flex;
   flex-direction: row;

@@ -43,7 +43,7 @@
           <!--</div>-->
         </div>
       </div>
-    <div style="position: absolute; background-color: #696969; border-radius: 10px; top: 165px; left: 120px; width: 470px; height: 500px; opacity: .9"></div>
+    <div style="position: absolute; background-color: #696969; border-radius: 0px; top: 165px; left: 120px; width: 470px; height: 500px; opacity: .9"></div>
     <div class="createGameBtn" style="z-index: 2" (click)="createGame()">
       <p class="createGameBtnText">Create A Game</p>
     </div>
@@ -64,20 +64,49 @@
       <!--</div>-->
 
       <div class="scrollGames">
-        <ul class="w3-ul w3-card-4 ulOpacity">
+        <!--<ul class="w3-ul w3-card-4 ulOpacity">-->
+          <!--&lt;!&ndash; Using Firebase &ndash;&gt; &lt;!&ndash; <div class="openGameBar"></div> &ndash;&gt;-->
+          <!--<div>-->
+            <!--<li class="w3-bar w3-round-large greyBackground"  *ngFor="let open of openGames | async">&lt;!&ndash; [@flyInOut]="state" &ndash;&gt;-->
+              <!--&lt;!&ndash;<span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="joinGame(open.gameId)"><i class="fa fa-angle-right" aria-hidden="true"></i></span>&ndash;&gt;-->
+              <!--<span (click)="joinGame(open.gameId)"><i class=" fa joinGameBtn"><p class="joinGameBtnText">Join Game</p></i></span>-->
+              <!--<img src='{{open.creatorPic}}' class="w3-bar-item w3-circle w3-hide-small" style="width:85px">-->
+              <!--<div class="w3-bar-item">-->
+                <!--<span class="gameListHeading">{{open.creatorName}}</span><br>-->
+                <!--<span class="gameListText">{{open.creatorWins}} wins; {{open.creatorLosses}} Losses</span>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</div>-->
+        <!--</ul>-->
+        <table style="width: 620px; color: red">
+          <tr *ngFor="let open of openGames | async" style="width: 620px; height: 50px; position: relative; background-color: #696969; opacity: .9; border-radius: 10px;">
+            <td>
+              <div>
+                <div class="w3-half">
+                  <img src='{{open.creatorPic}}' style="width: 25%; position: relative; top: 15px;">
+                  <span class="creatorNameGame">{{open.creatorName}}</span>
+                  <div>
+                    <span class="newGameWins">Wins: {{open.creatorWins}}</span>
+                    <span class="newGameLosses">Losses: {{open.creatorLosses}}</span>
+                  </div>
+                </div>
+                <div class="w3-half">
+                  <span (click)="joinGame(open.gameId)"><i class=" fa joinGameBtn"><span class="joinGameBtnText">Join Game</span></i></span>
+                </div>
+              </div>
 
-          <!-- Using Firebase -->
-          <li *ngFor="let open of openGames | async" class="w3-bar greyBackground openGameBar"> <!-- [@flyInOut]="state" -->
-            <!--<span class="w3-bar-item w3-button w3-white w3-xlarge w3-right" (click)="joinGame(open.gameId)"><i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-           <span><i class=" fa joinGameBtn"><p class="joinGameBtnText">Join Game</p></i></span>
-            <img src='{{open.creatorPic}}' class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-              <span class="gameListHeading">{{open.creatorName}}</span><br>
-              <span class="gameListText">{{open.creatorWins}} wins; {{open.creatorLosses}} Losses</span>
-            </div>
-          </li>
-        </ul>
+            </td>
+          </tr>
+        </table>
       </div>
+
+      <!--<div class="scrollGames" style="background: #696969; opacity: .9; width: 570px; height: 500px; border-radius: 10px; position: absolute; top: 200px;">-->
+        <!--<div *ngFor="let open of openGames | async">-->
+          <!--<li style="position: relative; width: 510px; left: 30px; height: 50px; background-color: cadetblue; border-radius: 10px; list-style-type: none; margin: 0; padding: 0;">-->
+            <!--<p>{{open.creatorName}}</p>-->
+          <!--</li>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div class="w3-padding-64">
 
@@ -163,7 +192,6 @@
         <!--{{leader.displayName}}-->
       <!--</h3>-->
     <!--</div>-->
-
   </div>
 </div>
 </div>

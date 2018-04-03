@@ -238,8 +238,8 @@ export class AuthService {
       });
   }
 
-  updateGameTypeMulti(user) {
-    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
+  updateGameTypeMulti(userId) {
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${userId}`);
     userRef.update({gameType: 'multi', isOnline: true});
   }
 

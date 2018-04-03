@@ -18,8 +18,8 @@
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: -0px; transform: scaleX(-1); opacity: .5">-->
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: 720px; opacity: .5">-->
     <!--<img src="assets/backgrounds/chessBoard.jpg" style="position: absolute; height: 680px; width: 679px; left: 380px; top: 26px; opacity: .5">-->
-      <div class="w3-container w3-display-middle">
-        <div class="board" style="position: relative; bottom: 9px">
+      <div> <!-- class="w3-container w3-display-middle" -->
+        <div> <!-- style="position: relative; bottom: 9px" -->
           <div class="row" *ngFor="let row of [7,6,5,4,3,2,1,0]">
               <app-cell class="cell" *ngFor="let col of [0,1,2,3,4,5,6,7]"
                         [state]="board.board[row][col]"
@@ -54,7 +54,7 @@
     <!--<img src='{{joinerPic}}' style="width: 240px; height: 250px;">-->
   <!--</div>-->
 
-  <app-toolbar (newGameClicked)="newGameClicked($event)" (showChatClicked)="showChatClicked($event)" (forfeitClicked)="forfeitClicked($event)" ></app-toolbar>
+  <app-toolbar (newGameClicked)="newGameClicked()" (showChatClicked)="showChatClicked()" (forfeitClicked)="forfeitClicked()" ></app-toolbar>
 
   <!--<div style="position: absolute; background-color: black; opacity: .5; height: 380px; width: 300px; left: 30px; top: 345px; border-radius: 20px">-->
     <!--&lt;!&ndash; DIV FOR CHAT &ndash;&gt;-->

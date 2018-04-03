@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=VT323');
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker|Rajdhani');
 
 .font{
   font-family: 'VT323', monospace;
@@ -8,4 +9,14 @@
 .typingText {
   position: relative;
   top: 75%;
+}
+
+.buttonText {
+  color: white;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 35pt;
+}
+.buttonText:hover{
+  cursor: pointer;
 }

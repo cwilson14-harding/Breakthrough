@@ -107,8 +107,8 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   toHome() {
     this.router.navigateByUrl('home');
   }
-  goToMulti(user) {
-    this.auth.updateGameTypeMulti(user);
+  goToMulti() {
+    this.auth.updateGameTypeMulti(this.userUid);
    // alert(userId);
     this.router.navigate(['multiPlayerLobby', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
   }
