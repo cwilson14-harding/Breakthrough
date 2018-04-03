@@ -122,6 +122,16 @@
               </div>
             </div>
           </li>
+          <li>
+            <div (click)="cyberPunkGirlSelected()">
+              <div *ngIf="avatar5Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
+                <img src="assets/avatars/cyberpunk girl.png" height = "200px" width="150px">
+              </div>
+              <div *ngIf="!avatar5Selected">
+                <img src="assets/avatars/cyberpunk girl.png" height = "200px" width="150px">
+              </div>
+            </div>
+          </li>
   </ngx-slideshow>
      <p class="w3-padding w3-xxxlarge w3-display-left w3-text-white w3-hover-opacity w3-round-xlarge fa fa-chevron-circle-left"(click)="carousel.left();" style="z-index: 1"></p>
         <p class="w3-padding w3-xxxlarge w3-display-right w3-text-white w3-hover-opacity w3-round-xlarge fa fa-chevron-circle-right"(click)="carousel.right();" style="z-index: 1"></p>
