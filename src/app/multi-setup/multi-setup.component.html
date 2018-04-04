@@ -10,13 +10,13 @@
 <div class="w3-row-padding" style="padding-top: 100px; padding-left: 100px; height: 90%;">
 
     <div class="w3-third w3-display-container w3-left" style="height: 85%">
-        <img src="assets/avatars/luke.png" class="w3-twothird w3-display-topmiddle">
+        <img src="assets/avatars/hackerAvatar2.png" class="w3-twothird w3-display-topmiddle">
         <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle" style="clear:both;">
           {{creatorName}}
           <br>
-          Wins: 0
+          Wins: {{creatorWins}}
           <br>
-          Losses: 25
+          Losses: {{creatorLosses}}
         </div>
 
       <div class="w3-row w3-padding w3-display-bottommiddle">
@@ -36,7 +36,7 @@
         </div>
       </div>-->
 
-      <div class="w3-third w3-container w3-center" style="background-color: rgb(39, 39, 39); color: white; min-width: 285px;">
+      <div class="w3-third w3-container w3-center" style="background-color: rgb(75, 75, 75); color: rgb(208, 232, 253); min-width: 285px;">
         Who goes first?<br>
           <mat-button-toggle-group [(ngModel)]="playerOrderGroup">
             <mat-button-toggle value="p1" style="color: white;">Player 1</mat-button-toggle>
@@ -46,13 +46,13 @@
       </div>
 
       <div class="w3-third w3-display-container w3-right" style="height: 85%">
-              <img src="assets/avatars/dylanAvatar.png" class="w3-twothird w3-display-topmiddle">
+              <img src="assets/avatars/hackerAvatar2.png" class="w3-twothird w3-display-topmiddle">
               <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle" style="clear:both;">
                 {{joinerName}}
                 <br>
-                Wins: 1
+                Wins: {{joinerWins}}
                 <br>
-                Losses: 1
+                Losses: {{joinerLosses}}
             </div>
 
             <div class="w3-row w3-padding w3-display-bottommiddle">
