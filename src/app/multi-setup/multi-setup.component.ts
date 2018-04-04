@@ -25,6 +25,8 @@ export class MultiSetupComponent implements OnInit {
   creatorLosses;
   joinerWins;
   joinerLosses;
+  creatorPic;
+  joinerPic;
   player1 = false;
   player2 = false;
   playerOrderGroup: string;
@@ -44,6 +46,8 @@ export class MultiSetupComponent implements OnInit {
       this.creatorLosses = data['creatorLosses'];
       this.joinerWins = data['joinerWins'];
       this.joinerLosses = data['joinerLosses'];
+      this.creatorPic = data['creatorPic'];
+      this.joinerPic = data['joinerPic'];
 
       if (this.auth.getCurrentUser() === this.creatorId) {
         this.player1 = true;
