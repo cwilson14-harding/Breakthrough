@@ -27,7 +27,6 @@
     "@angular/platform-browser-dynamic": "^5.1.0",
     "@angular/router": "^5.1.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
-    "angular-particle": "^1.0.4",
     "angular-typing-animation": "^0.4.7",
     "angular-video-background": "^1.0.3",
     "angularfire2": "^5.0.0-rc.4",

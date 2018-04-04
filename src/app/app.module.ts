@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { AuthService } from './core/auth.service';
 import {MusicService} from './music.service';
-import {MusicComponent} from "./music/music.component";
+import {MusicComponent} from './music/music.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -25,10 +25,10 @@ import { MultiplayerLobbyComponent } from './multiplayer-lobby/multiplayer-lobby
 import { SettingsComponent } from './settings/settings.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { TypingAnimationModule } from 'angular-typing-animation';
-import { ParticlesModule } from 'angular-particle';
+import { ParticlesModule } from './angular-particle';
 import {GameService} from './game.service';
 import {NgxSlideshowModule} from 'ngx-slideshow';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 import {NgbModule, NgbTab, NgbTabContent, NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { GameOverWinComponent } from './game-over-win/game-over-win.component';
