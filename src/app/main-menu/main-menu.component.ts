@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras, ExtraOptions, ParamMap} from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import { GameService } from '../game.service';
 import {MusicService} from "../music.service";
@@ -12,12 +12,12 @@ declare var $: any;
   styleUrls: ['./main-menu.component.scss']
 })
 export class MainMenuComponent implements OnInit, AfterViewInit {
-
   userName;
   userWins;
   userLosses;
   userPic;
   userUid;
+// this.userUid, this.userPic, this.userWins, this.userLosses
 
   availableUsers: any;
   showSettings = false;
@@ -108,9 +108,19 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('home');
   }
   goToMulti() {
-    this.auth.updateGameTypeMulti(this.userUid);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'id': this.userName,
+        'id2': this.userUid,
+        'id3': this.userPic,
+        'id4': this.userWins,
+        'id5': this.userLosses
+      }
+    };
    // alert(userId);
-    this.router.navigate(['multiPlayerLobby', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
+   this.router.navigate(['multiPlayerLobby', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
+   //  this.router.navigateByUrl('multiPlayerLobby' + this.userName);
+    this.auth.updateGameTypeMulti(this.userUid);
   }
 
   createRandomId() {
