@@ -1,69 +1,54 @@
 <div class="background">
-  <h1>Single Player Game</h1>
-<div class="w3-row">
-    <div class="w3-third">
-      <div class="w3-left">
-        <img src="assets/avatars/luke.png" class="w3-twothird w3-display-top">
-        <div class = "infoText" class="w3-row">
-          Luke Uebelein
-          <br>
-          Wins: 0
-          <br>
-          Losses: 25
+
+  <!-- some kind of animations - background is plain
+  // TODO: page header, background for settings, clean up -->
+ <!-- 
+  <div class="w3-row-padding" style="padding-top: 80px; padding-left: 10px; height: 90%;">
+  
+      <div class="w3-third w3-display-container w3-left" style="height: 90%; background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); margin: 5px; margin-right: 7px; opacity: 0.9;">
+          <img src='{{playerPic}}' class="w3-half w3-display-topmiddle">
+          <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
+              <p style="clear:both;">{{playerName}}</p>
+              <p style="clear:both;">Wins: {{playerWins}}</p>
+              <p style="clear:both;">Losses: {{playerLosses}}</p>
+          Defeat the rogue AI!
+      </div>
+      </div>
+  
+      <div class="w3-third w3-container w3-center" style="background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); width: 31%; opacity: 0.9;">
+          Choose AI difficulty:<br>
+            <mat-button-toggle-group [(ngModel)]="AiDifficultyGroup">
+              <mat-button-toggle value="easy" style="color: white;">Unfriendly</mat-button-toggle>
+              <mat-button-toggle value="hard" style="color: white;">Wrathful</mat-button-toggle>
+            </mat-button-toggle-group>
         </div>
-      </div>
-
-      <div class="w3-padding">
-        Defeat the rogue AI!
-      </div>
-    </div>
-
-      <div class="w3-third">
-        <div class="w3-padding w3-third w3-center w3-display-top">
-          Choose AI Difficulty
-          <div>
-            <!--<mat-button-toggle-group>
-              <mat-button-toggle>Unfriendly</mat-button-toggle>
-              <mat-button-toggle>Wrathful</mat-button-toggle>
-            </mat-button-toggle-group>-->
+  
+        <div class="w3-third w3-container w3-center" style="background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); width: 31%; opacity: 0.9;">
+          Who goes first?<br>
+            <mat-button-toggle-group [(ngModel)]="playerOrderGroup">
+              <mat-button-toggle value="player" style="color: white;">Player</mat-button-toggle>
+              <mat-button-toggle value="rand" style="color: white;">Random</mat-button-toggle>
+              <mat-button-toggle value="ai" style="color: white;">AI</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+  
+        <div class="w3-third w3-display-container w3-right" style="height: 90%; background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); margin: 5px;  opacity: 0.9;">
+                <img src='{{joinerPic}}' class="w3-half w3-display-topmiddle">
+                <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
+                  <p>AI</p>
+                  <P>Difficulty: {{AiDifficulty}}</P>
+                  <p>Wins: ???</p>
+                  <p>Losses: 0</p>
+                Crush the Corporation!
+                </div>
           </div>
-        </div>
-      </div>
-
-      <div class="w3-third">
-          <div>
-            <div class="w3-right">
-              <img src="assets/avatars/circle.png" class="w3-twothird w3-display-top">
-              <div class = "infoText" class="w3-row">
-                Rogue AI
-                <br>
-                Wins: ???
-                <br>
-                Losses: 0
-              </div>
-            </div>
-
-            <div class="w3-padding">
-              "I will crush you."
-            </div>
-          </div>
-        </div>
-</div>
-
-    <div class="w3-row w3-padding w3-center">
-      Who goes first?
-        <!--<mat-button-toggle-group>
-          <mat-button-toggle>Player 1</mat-button-toggle>
-          <mat-button-toggle>Random</mat-button-toggle>
-          <mat-button-toggle>Player 2</mat-button-toggle>
-        </mat-button-toggle-group>-->
-
-    </div>
-
-    <div class="w3-container w3-padding w3-display-bottomleft">
-      <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="returnToMenu()">Return to Menu</button>
-    </div>
-    <div class="w3-container w3-padding w3-display-bottomright">
-        <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="goToBoard()">Play Game</button>
-      </div>
   </div>
+-->
+      <div class="w3-container w3-padding w3-display-bottomleft">
+        <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="returnToMenu()">Return to Menu</button>
+      </div>
+      <div class="w3-container w3-padding w3-display-bottomright">
+          <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="goToBoard()">Play Game</button>
+        </div>
+    </div>
+  
