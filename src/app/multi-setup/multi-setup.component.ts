@@ -21,6 +21,10 @@ export class MultiSetupComponent implements OnInit {
   creatorId;
   joinerId;
   joinerName;
+  creatorWins;
+  creatorLosses;
+  joinerWins;
+  joinerLosses;
   player1 = false;
   player2 = false;
   playerOrderGroup: string;
@@ -36,6 +40,10 @@ export class MultiSetupComponent implements OnInit {
       this.joinerId = data['joinerId'];
       this.creatorName = data['creatorName'];
       this.creatorId = data['creatorId'];
+      this.creatorWins = data['creatorWins'];
+      this.creatorLosses = data['creatorLosses'];
+      this.joinerWins = data['joinerWins'];
+      this.joinerLosses = data['joinerLosses'];
 
       if (this.auth.getCurrentUser() === this.creatorId) {
         this.player1 = true;
