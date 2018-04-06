@@ -41,6 +41,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { EmailUserInfoComponent } from './email-user-info/email-user-info.component';
 import {MatSliderModule} from '@angular/material';
 import { OpenGamesComponent } from './open-games/open-games.component';
+import { Intro2Component } from './intro2/intro2.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
   { path: 'main-menu', pathMatch: 'full', component: MainMenuComponent},
   { path: 'board/:id/:id2/:id3', pathMatch: 'full', component: GameBoardComponent},
   { path: 'intro', pathMatch: 'full', component: IntroComponent},
+  { path: 'intro2', pathMatch: 'full', component: Intro2Component},
   { path: 'multiPlayerLobby/:id/:id2/:id3/:id4/:id5', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: 'game-over-lose', pathMatch: 'full', component: GameOverLoseComponent},
   { path: 'game-over-win', pathMatch: 'full', component: GameOverWinComponent},
@@ -86,7 +88,8 @@ const appRoutes: Routes = [
     GuestInfoComponent,
     EmailUserInfoComponent,
     MusicComponent,
-    OpenGamesComponent
+    OpenGamesComponent,
+    Intro2Component
   ],
   imports: [
     BrowserModule,
