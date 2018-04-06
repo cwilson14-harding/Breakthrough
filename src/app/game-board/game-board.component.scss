@@ -1,8 +1,8 @@
 .board {
-  //background-color: #a45632;
-  //background-color: black;
-  //color: black;
-  //opacity: 0.75;
+  position: absolute;
+  left: 350px;
+  top: 30px;
+
 }
 
 .shapeBoard {
@@ -141,7 +141,7 @@
   text-shadow: 4px 4px 8px rgb(216,65,201);
 }
 
-.settingsCog {
+.settingsCog:hover {
   animation: fa-spin 2.5s infinite linear;
 }
 

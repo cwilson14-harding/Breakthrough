@@ -25,6 +25,7 @@ export class SettingsComponent implements OnInit {
   avatar5Selected = false;
   currentPic;
   sliderVolume;
+  showIntroVid = false;
 
   @Input()
   music: any;
@@ -45,27 +46,36 @@ export class SettingsComponent implements OnInit {
     this.changeAvatar = false;
     this.volume = true;
     this.credits = false;
+    this.showIntroVid = false;
   }
   showCredits() {
     this.showSettings = false;
     this.changeAvatar = false;
     this.volume = false;
     this.credits = true;
+    this.showIntroVid = false;
   }
   showChangeAvatar() {
+    this.showIntroVid = false;
     this.showSettings = false;
     this.changeAvatar = true;
     this.volume = false;
     this.credits = false;
   }
   goBack() {
+    this.showIntroVid = false;
     this.showSettings = true;
     this.changeAvatar = false;
     this.credits = false;
     this.volume = false;
   }
   goToIntro() {
-    this.auth.logout().then(() => this.router.navigateByUrl('intro'));
+    // this.auth.logout().then(() => this.router.navigateByUrl('intro2'));
+    this.showIntroVid = true;
+    this.showSettings = false;
+    this.changeAvatar = false;
+    this.credits = false;
+    this.volume = false;
   }
   logout() {
     this.auth.logout().then(() => this.router.navigateByUrl('home'));

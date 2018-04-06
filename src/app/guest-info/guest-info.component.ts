@@ -4,6 +4,7 @@ import {AngularFirestore} from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {AuthService} from '../core/auth.service';
+import {Observable} from 'rxjs/Observable';
 declare var $: any;
 
 @Component({
@@ -38,6 +39,7 @@ export class GuestInfoComponent implements OnInit {
   avatar3Selected = false;
   currentPic: string;
   constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
+
   }
 
   toggleState() {
@@ -126,7 +128,7 @@ export class GuestInfoComponent implements OnInit {
     this.avatar2Selected = false;
     this.avatar3Selected = true;
   }
-  goBack(){
+  goBack() {
     this.router.navigateByUrl('home');
     this.auth.logout();
   }
