@@ -76,6 +76,14 @@ export class SettingsComponent implements OnInit {
     this.changeAvatar = false;
     this.credits = false;
     this.volume = false;
+
+    this.timeout = setTimeout(() => {
+      this.showIntroVid = false;
+      this.showSettings = true;
+      this.changeAvatar = false;
+      this.credits = false;
+      this.volume = false;
+    }, 16500);
   }
   logout() {
     this.auth.logout().then(() => this.router.navigateByUrl('home'));

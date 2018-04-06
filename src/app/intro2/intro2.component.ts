@@ -12,14 +12,6 @@ export class Intro2Component implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.timeout = setTimeout(() => {
-      this.router.navigateByUrl('main-menu');
-    }, 16500);
-  }
-
-  toHomePage() {
-    clearTimeout(this.timeout);
-    this.router.navigateByUrl('main-menu');
   }
 
 }
