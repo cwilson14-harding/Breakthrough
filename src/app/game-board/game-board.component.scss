@@ -87,7 +87,7 @@
   background-color:#FFFFFF;
 }
 .backImg{
-  background-image: url("../../assets/backgrounds/darkBackground.jpg");
+  background-image: url("../../assets/backgrounds/abstract.jpg");
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -143,7 +143,7 @@
   text-shadow: 4px 4px 8px rgb(216,65,201);
 }
 
-.settingsCog {
+.settingsCog:hover {
   animation: fa-spin 2.5s infinite linear;
 }
 

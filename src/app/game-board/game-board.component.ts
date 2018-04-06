@@ -36,6 +36,10 @@ export class GameBoardComponent implements OnInit {
   joinerPic;
   joinerId;
   isLoading = true;
+  gameSettings = false;
+  sliderVolume;
+  volume = false;
+  audioElement: HTMLAudioElement;
 
   // other variables
   board: Board;
@@ -98,6 +102,9 @@ export class GameBoardComponent implements OnInit {
 
     // Get the move from the first player.
     this.getMove();
+
+    this.audioElement = audio.getAudio();
+    this.sliderVolume = 1;
 
   }
   ngOnInit() {
@@ -303,5 +310,25 @@ export class GameBoardComponent implements OnInit {
       alert('This is ' + game.creatorName + ' game.');
     }
   }
-
+  goToGameSettings() {
+    this.gameSettings = true;
+  }
+  goBack() {
+    this.gameSettings = false;
+    this.volume = false;
+  }
+  showVolume() {
+    this.gameSettings = false;
+    this.volume = true;
+  }
+  changeVolumeLevel(newValue) {
+    console.log('volumeUpdated');
+    this.sliderVolume = newValue;
+    this.audioElement.volume = this.sliderVolume;
+  }
+  logOff(user) {
+    // this.updateUserStatus(user);
+    this.auth.logout();
+    this.router.navigateByUrl('home');
+  }
 }

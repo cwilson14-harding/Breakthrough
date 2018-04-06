@@ -68,12 +68,21 @@ export class MultiplayerLobbyComponent implements OnInit {
 
   // Vars for Prototype
   luke = true;
+  cats;
   cj = false;
   brad = false;
   dylan = false;
   alaina = false;
   constructor(public auth: AuthService, private router: Router, public db: AngularFirestore, private gameService: GameService,
               public audio: MusicService, public route: ActivatedRoute) {
+
+    // this.route.queryParams.subscribe(params => {
+    //   this.userName = params['id'];
+    //   this.userUid = params['id2'];
+    //   this.userPic = params['id3'];
+    //   this.userWins = params['id4'];
+    //   this.userLosses = params['id5'];
+    // });
 
     audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 9 Lifebeat of Lilim.mp3');
     this.isGameCreated = false;
@@ -82,14 +91,13 @@ export class MultiplayerLobbyComponent implements OnInit {
   }
 
   ngOnInit() {
-
+   this.cats = this.db.collection('users').valueChanges();
+    this.viewOpenGames();
     this.userName = this.route.snapshot.params['id'];
     this.userUid = this.route.snapshot.params['id2'];
     this.userPic = this.route.snapshot.params['id3'];
     this.userWins = this.route.snapshot.params['id4'];
     this.userLosses = this.route.snapshot.params['id5'];
-
-     this.viewOpenGames();
 
     this.myStyle = {
       'position': 'fixed',
@@ -204,8 +212,6 @@ export class MultiplayerLobbyComponent implements OnInit {
       });
     });
   }
-
-
 
   /* logOff: function(){}
      Parameters: none

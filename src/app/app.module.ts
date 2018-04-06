@@ -40,6 +40,7 @@ import { GuestInfoComponent } from './guest-info/guest-info.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { EmailUserInfoComponent } from './email-user-info/email-user-info.component';
 import {MatSliderModule} from '@angular/material';
+import { OpenGamesComponent } from './open-games/open-games.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -84,7 +85,8 @@ const appRoutes: Routes = [
     SignInComponent,
     GuestInfoComponent,
     EmailUserInfoComponent,
-    MusicComponent
+    MusicComponent,
+    OpenGamesComponent
   ],
   imports: [
     BrowserModule,
