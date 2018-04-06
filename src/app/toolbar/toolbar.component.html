@@ -1,39 +1,39 @@
-<div class="w3-row-padding w3-quarter w3-display-right">
-    <div class="w3-container w3-display-top w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="newGame()">NEW GAME</button>
-    </div>
-    <div class="w3-container w3-display-center w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="showHideChat()">SHOW/HIDE CHAT</button>
-    </div>
-    <div class="w3-container w3-display-bottom w3-padding">
-      <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="forfeitGame()">FORFEIT</button>
-    </div>
-  <div class="w3-container w3-display-bottom w3-padding">
-    <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" id="musicControlButton" (click)="playPauseBackgroundMusic()">PAUSE MUSIC</button>
-  </div>
-  </div>
+<!--<div class="w3-row-padding w3-quarter w3-display-right">-->
+    <!--<div class="w3-container w3-display-top w3-padding">-->
+      <!--<button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="newGame()">NEW GAME</button>-->
+    <!--</div>-->
+    <!--<div class="w3-container w3-display-center w3-padding">-->
+      <!--<button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="showHideChat()">SHOW/HIDE CHAT</button>-->
+    <!--</div>-->
+    <!--<div class="w3-container w3-display-bottom w3-padding">-->
+      <!--<button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="forfeitGame()">FORFEIT</button>-->
+    <!--</div>-->
+  <!--<div class="w3-container w3-display-bottom w3-padding">-->
+    <!--<button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" id="musicControlButton" (click)="playPauseBackgroundMusic()">PAUSE MUSIC</button>-->
+  <!--</div>-->
+  <!--</div>-->
 
 <!-- DO NOT DELETE -->
-<!--<div style="position: absolute; background-color: black; opacity: .7; height: 380px; width: 300px; right: 30px; top: 345px; border-radius: 20px">-->
-  <!--&lt;!&ndash; DIV FOR SETTINGS &ndash;&gt;-->
-<!--</div>-->
+<div style="position: absolute; background-color: black; opacity: .7; height: 380px; width: 300px; right: 30px; top: 345px; border-radius: 20px">
+  <!-- DIV FOR SETTINGS -->
+</div>
 <!--<div style="position: absolute; background-color: black; opacity: .7; height: 330px; width: 300px; right: 20px; top: 26px; border-radius: 20px">-->
   <!--&lt;!&ndash; DIV FOR SETTINGS &ndash;&gt;-->
 <!--</div>-->
 
 
 <!-- SETTINGS TOOLS -->
-<!--<span class="name" style="position: absolute; top: 355px; right: 110px">toolbar</span>-->
-<!--<div style="top: 420px; " class="toolButtons" (click)="showHideChat()">-->
-  <!--<p class="toolButtonText" *ngIf="!showChat">Show Chat</p>-->
-  <!--<p class="toolButtonText" *ngIf="showChat">Hide Chat</p>-->
-<!--</div>-->
-<!--<div style="top: 495px; " class="toolButtons" (click)="showHideLegend()">-->
-  <!--<p class="toolButtonText" *ngIf="showLegend">Hide Legend</p>-->
-  <!--<p class="toolButtonText" *ngIf="!showLegend">Show Legend</p>-->
-<!--</div>-->
-<!--<div style="top: 570px; " class="toolButtons"><p class="toolButtonText">Pause Music</p></div>-->
-<!--<div style="top: 645px; " class="toolButtons"><p class="toolButtonText">Forfeit</p></div>-->
+<span class="name" style="position: absolute; top: 355px; right: 110px">toolbar</span>
+<div style="top: 420px; " class="toolButtons" (click)="showHideChat()">
+  <p class="toolButtonText" *ngIf="!showChat">Show Chat</p>
+  <p class="toolButtonText" *ngIf="showChat">Hide Chat</p>
+</div>
+<div style="top: 495px; " class="toolButtons" (click)="showHideLegend()">
+  <p class="toolButtonText" *ngIf="showLegend">Hide Legend</p>
+  <p class="toolButtonText" *ngIf="!showLegend">Show Legend</p>
+</div>
+<div style="top: 570px; " class="toolButtons"><p class="toolButtonText">Pause Music</p></div>
+<div style="top: 645px; " class="toolButtons"><p class="toolButtonText">Forfeit</p></div>
 
 
 
@@ -51,25 +51,25 @@
 <!--<div style="top: 215px; " class="toolButtons2"><p class="toolButtonText">Pause Music</p></div>-->
 <!--<div style="top: 280px; " class="toolButtons2"><p class="toolButtonText">Forfeit</p></div>-->
 
-<!--&lt;!&ndash; LEGEND &ndash;&gt;-->
-<!--<div id="legend" *ngIf="showLegend">-->
-  <!--&lt;!&ndash; LETTERS &ndash;&gt;-->
-  <!--<span style="position: absolute; bottom: 5px; left: 420px" class="legendNums">A</span>-->
-  <!--<span style="color: white; position: absolute; bottom: 5px; left: 505px" class="legendNums">B</span>-->
-  <!--<span style="color: white; position: absolute; bottom: 5px; left: 590px" class="legendNums">C</span>-->
-  <!--<span style="color: white; position: absolute; bottom: 5px; left: 675px" class="legendNums">D</span>-->
-  <!--<span style="color: white; position: absolute; bottom: 5px; left: 760px" class="legendNums">E</span>-->
-  <!--<span style="color: white; position: absolute; bottom: 5px; left: 845px" class="legendNums">F</span>-->
-  <!--<span style="color: white; position: absolute; bottom: 5px; left: 930px" class="legendNums">G</span>-->
-  <!--<span style="color: white; position: absolute; bottom: 5px; left: 1015px" class="legendNums">H</span>-->
+<!-- LEGEND -->
+<div id="legend" *ngIf="showLegend">
+  <!-- LETTERS -->
+  <span style="position: absolute; bottom: 5px; left: 420px" class="legendNums">A</span>
+  <span style="color: white; position: absolute; bottom: 5px; left: 505px" class="legendNums">B</span>
+  <span style="color: white; position: absolute; bottom: 5px; left: 590px" class="legendNums">C</span>
+  <span style="color: white; position: absolute; bottom: 5px; left: 675px" class="legendNums">D</span>
+  <span style="color: white; position: absolute; bottom: 5px; left: 760px" class="legendNums">E</span>
+  <span style="color: white; position: absolute; bottom: 5px; left: 845px" class="legendNums">F</span>
+  <span style="color: white; position: absolute; bottom: 5px; left: 930px" class="legendNums">G</span>
+  <span style="color: white; position: absolute; bottom: 5px; left: 1015px" class="legendNums">H</span>
 
-  <!--&lt;!&ndash; NUMBERS &ndash;&gt;-->
-  <!--<span style="position: absolute; bottom: 65px; left: 360px" class="legendNums">1</span>-->
-  <!--<span style="position: absolute; bottom: 150px; left: 356px" class="legendNums">2</span>-->
-  <!--<span style="position: absolute; bottom: 235px; left: 356px" class="legendNums">3</span>-->
-  <!--<span style="position: absolute; bottom: 320px; left: 356px" class="legendNums">4</span>-->
-  <!--<span style="position: absolute; bottom: 405px; left: 356px" class="legendNums">5</span>-->
-  <!--<span style="position: absolute; bottom: 490px; left: 356px" class="legendNums">6</span>-->
-  <!--<span style="position: absolute; bottom: 575px; left: 356px" class="legendNums">7</span>-->
-  <!--<span style="position: absolute; bottom: 660px; left: 356px" class="legendNums">8</span>-->
-<!--</div>-->
+  <!-- NUMBERS -->
+  <span style="position: absolute; bottom: 65px; left: 360px" class="legendNums">1</span>
+  <span style="position: absolute; bottom: 150px; left: 356px" class="legendNums">2</span>
+  <span style="position: absolute; bottom: 235px; left: 356px" class="legendNums">3</span>
+  <span style="position: absolute; bottom: 320px; left: 356px" class="legendNums">4</span>
+  <span style="position: absolute; bottom: 405px; left: 356px" class="legendNums">5</span>
+  <span style="position: absolute; bottom: 490px; left: 356px" class="legendNums">6</span>
+  <span style="position: absolute; bottom: 575px; left: 356px" class="legendNums">7</span>
+  <span style="position: absolute; bottom: 660px; left: 356px" class="legendNums">8</span>
+</div>
