@@ -64,8 +64,6 @@ export class MultiSetupComponent implements OnInit {
     });
   }
 
-
-
   goToBoard() {
     let playerOne: PlayerData;
     let playerTwo: PlayerData;
