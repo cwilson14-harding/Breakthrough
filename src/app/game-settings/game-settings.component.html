@@ -1,0 +1,31 @@
+<div *ngIf="showSettings">
+  <h1 class="headingFont">SETTINGS</h1>
+  <div class="w3-container w3-padding-16">
+    <div class="w3-container">
+      <div class="w3-container">
+        <div class="w3-half">
+          <button *ngIf="!showLegend" class="buttonStyle" style="position: relative; left: 22.5%" (click)="showHideLegend()">Show Legend</button>
+          <button *ngIf="showLegend" class="buttonStyle" style="position: relative; left: 22.5%" (click)="showHideLegend()">Hide Legend</button>
+        </div>
+        <div class="w3-half">
+          <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="showVolume()">Volume</button>
+        </div>
+      </div>
+      <div class="w3-container w3-padding-16">
+        <div class="w3-half">
+          <button *ngIf="!showChat" class="buttonStyle" style="position: relative; left: 22.5%" (click)="showHideChat()">Show Chat</button>
+          <button *ngIf="showChat" class="buttonStyle" style="position: relative; left: 22.5%" (click)="showHideChat()">Hide Chat</button>
+        </div>
+        <div class="w3-half">
+          <button class="buttonStyle" style="position: relative; right: 22.5%">Forfeit</button>
+        </div>
+      </div>
+      <!--<div class="w3-container">-->
+        <!--<div>-->
+          <!--<button class="buttonStyle" (click)="logout()">Logout</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    </div>
+  </div>
+</div>
+

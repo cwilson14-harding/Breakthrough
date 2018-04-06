@@ -13,12 +13,15 @@
     <div>
       <app-chat></app-chat>
     </div>
+    <div>
+      <app-legend></app-legend>
+    </div>
     <!--<div class="backImg">-->
     <!-- BACKGROUND IMAGE LAYERS -->
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: -0px; transform: scaleX(-1); opacity: .5">-->
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: 720px; opacity: .5">-->
     <!--<img src="assets/backgrounds/chessBoard.jpg" style="position: absolute; height: 680px; width: 679px; left: 380px; top: 26px; opacity: .5">-->
-      <div> <!-- class="w3-container w3-display-middle" -->
+      <div *ngIf="showGame"> <!-- class="w3-container w3-display-middle" -->
         <div class = 'board'> <!-- style="position: relative; bottom: 9px" -->
           <div class="row" *ngFor="let row of [7,6,5,4,3,2,1,0]">
               <app-cell class="cell" *ngFor="let col of [0,1,2,3,4,5,6,7]"
@@ -55,7 +58,7 @@
   <!--</div>-->
 
   <!--<app-toolbar (newGameClicked)="newGameClicked()" (showChatClicked)="showChatClicked()" (forfeitClicked)="forfeitClicked()" ></app-toolbar>-->
-  <div class="w3-display-topright" style="z-index: 1">
+  <div *ngIf="showGame" class="w3-display-topright" style="z-index: 1">
     <i class="fa fa-cog w3-padding w3-xxxlarge settingsCog" style="color:#F2F2F2" (click)="goToGameSettings()"></i>
   </div>
   <!--<div style="position: absolute; background-color: black; opacity: .5; height: 380px; width: 300px; left: 30px; top: 345px; border-radius: 20px">-->
@@ -79,53 +82,66 @@
    <img src="assets/logos/systemBreakLogoSmall.png">
    <p class="loadingText">Preparing Your Game...</p>
    <div>
-     <i class="fa fa-spinner w3-padding w3-xxxlarge settingsCog" style="color:#F2F2F2; position: absolute; left: 400px"></i>
+     <i  class="fa fa-spinner w3-padding w3-xxxlarge introSpin" style="color:#F2F2F2; position: absolute; left: 400px"></i>
    </div>
  </div>
 </div>
 
-<div *ngIf="gameSettings" >
-    <div class="w3-container w3-center w3-display-middle" style="height: 17vh; width: 55vw; z-index: 1">
-      <h1 class="headingFont">SETTINGS</h1>
-      <div class="w3-container w3-padding-16">
-        <div class="w3-container">
-          <div class="w3-container">
-            <div class="w3-half">
-              <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="showVolume()">Volume</button>
-            </div>
-          </div>
-          <div class="w3-container">
-            <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="logOff()">Logout</button>
-          </div>
-          <div class="w3-container">
-            <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="newGameClicked()">New Game</button>
-          </div>
-          <div class="w3-container">
-            <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="showChatClicked()">Show/Hide Chat</button>
-          </div>
-          <div class="w3-container">
-            <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="forfeitClicked()">Forfeit</button>
-          </div>
-          <div class="w3-display-topright">
-            <i class="fa fa-times-circle w3-padding w3-xxxlarge w3-hover-opacity w3-text-white" (click)="goBack()"></i>
-          </div>
+<div *ngIf="gameSettings">
+  <div class="w3-container w3-padding-64">
+    <div class="w3-container w3-center w3-display-middle" style="height: 100vh; width: 100vw; z-index: 1">
+      <div class="w3-center w3-display-middle" style="background-color: rgba(84, 168, 223, .8); border-radius: 20px; height: 500px; width: 900px">
+        <div class="w3-display-topright">
+          <i class="fa fa-times-circle w3-padding w3-xxxlarge w3-hover-opacity w3-text-white" (click)="goBack()"></i>
         </div>
-      </div>
-    </div>
-</div>
-
-<div *ngIf="volume">
-  <h1 class="headingFont">Volume Level</h1>
-  <div class="w3-container w3-padding-16">
-    <div class="w3-container">
-      <div class="w3-container">
-        <div class="w3-container">
-          <mat-slider [min]="0" [max]="1" [step]=".1" [(ngModel)]="sliderVolume" (ngModelChange)="changeVolumeLevel($event)" ></mat-slider>
-        </div>
-        <div class="w3-padding-32">
-          <button class="buttonStyle" (click)="goBack()">Back</button>
-        </div>
+        <app-game-settings (showChatClicked)="showChatClicked()" (hideLegendClicked)="hideLegendClicked()"></app-game-settings>
       </div>
     </div>
   </div>
 </div>
+
+<!--<div *ngIf="gameSettings" >-->
+    <!--<div class="w3-container w3-center w3-display-middle" style="height: 17vh; width: 55vw; z-index: 1">-->
+      <!--<h1 class="headingFont">SETTINGS</h1>-->
+      <!--<div class="w3-container w3-padding-16">-->
+        <!--<div class="w3-container">-->
+          <!--<div class="w3-container">-->
+            <!--<div class="w3-half">-->
+              <!--<button class="buttonStyle" style="position: relative; right: 22.5%" (click)="showVolume()">Volume</button>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="w3-container">-->
+            <!--<button class="buttonStyle" style="position: relative; right: 22.5%" (click)="logOff()">Logout</button>-->
+          <!--</div>-->
+          <!--<div class="w3-container">-->
+            <!--<button class="buttonStyle" style="position: relative; right: 22.5%" (click)="newGameClicked()">New Game</button>-->
+          <!--</div>-->
+          <!--<div class="w3-container">-->
+            <!--<button class="buttonStyle" style="position: relative; right: 22.5%" (click)="showChatClicked()">Show/Hide Chat</button>-->
+          <!--</div>-->
+          <!--<div class="w3-container">-->
+            <!--<button class="buttonStyle" style="position: relative; right: 22.5%" (click)="forfeitClicked()">Forfeit</button>-->
+          <!--</div>-->
+          <!--<div class="w3-display-topright">-->
+            <!--<i class="fa fa-times-circle w3-padding w3-xxxlarge w3-hover-opacity w3-text-white" (click)="goBack()"></i>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div *ngIf="volume">-->
+  <!--<h1 class="headingFont">Volume Level</h1>-->
+  <!--<div class="w3-container w3-padding-16">-->
+    <!--<div class="w3-container">-->
+      <!--<div class="w3-container">-->
+        <!--<div class="w3-container">-->
+          <!--<mat-slider [min]="0" [max]="1" [step]=".1" [(ngModel)]="sliderVolume" (ngModelChange)="changeVolumeLevel($event)" ></mat-slider>-->
+        <!--</div>-->
+        <!--<div class="w3-padding-32">-->
+          <!--<button class="buttonStyle" (click)="goBack()">Back</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

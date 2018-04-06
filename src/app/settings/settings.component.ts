@@ -70,14 +70,14 @@ export class SettingsComponent implements OnInit {
     this.volume = false;
   }
   goToIntro() {
-    // this.auth.logout().then(() => this.router.navigateByUrl('intro2'));
     this.showIntroVid = true;
     this.showSettings = false;
     this.changeAvatar = false;
     this.credits = false;
     this.volume = false;
 
-    this.timeout = setTimeout(() => {
+    // after the video, go back to the settings home
+    setTimeout(() => {
       this.showIntroVid = false;
       this.showSettings = true;
       this.changeAvatar = false;

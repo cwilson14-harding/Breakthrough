@@ -37,6 +37,7 @@ export class GameBoardComponent implements OnInit {
   joinerId;
   isLoading = true;
   gameSettings = false;
+  showGame = true;
   sliderVolume;
   volume = false;
   audioElement: HTMLAudioElement;
@@ -312,10 +313,12 @@ export class GameBoardComponent implements OnInit {
   }
   goToGameSettings() {
     this.gameSettings = true;
+    this.showGame = false;
   }
   goBack() {
     this.gameSettings = false;
-    this.volume = false;
+    this.showGame = true;
+    // this.volume = false;
   }
   showVolume() {
     this.gameSettings = false;

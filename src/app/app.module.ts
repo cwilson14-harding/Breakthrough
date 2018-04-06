@@ -42,6 +42,8 @@ import { EmailUserInfoComponent } from './email-user-info/email-user-info.compon
 import {MatSliderModule} from '@angular/material';
 import { OpenGamesComponent } from './open-games/open-games.component';
 import { Intro2Component } from './intro2/intro2.component';
+import { GameSettingsComponent } from './game-settings/game-settings.component';
+import { LegendComponent } from './legend/legend.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
@@ -89,7 +91,9 @@ const appRoutes: Routes = [
     EmailUserInfoComponent,
     MusicComponent,
     OpenGamesComponent,
-    Intro2Component
+    Intro2Component,
+    GameSettingsComponent,
+    LegendComponent
   ],
   imports: [
     BrowserModule,
