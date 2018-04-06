@@ -58,7 +58,8 @@ export class MultiSetupComponent implements OnInit {
       }
 
       if (this.joinerName !== '') {
-        this.goToBoard();
+        document.getElementById("playButton").removeAttribute("disabled");
+        // this.goToBoard();
       }
     });
   }
@@ -95,9 +96,7 @@ export class MultiSetupComponent implements OnInit {
 
     // Start the game.
     // TODO: Move to a button on the host's screen.
-    //setTimeout(() => {
-    //  this.router.navigate(['board', this.gameId]);
-    //}, 7000);
+    this.router.navigate(['board', this.gameId, this.creatorPic, this.joinerPic]);
   }
 
   returnToMenu() {
