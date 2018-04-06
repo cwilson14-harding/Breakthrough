@@ -46,6 +46,8 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinerPic;
   creatorWins;
   creatorLosses;
+  joinerWins;
+  joinerLosses;
 
   userUid;
   userWins;
@@ -198,11 +200,15 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.joinerName = data['displayName'];
       this.joinerPic = data['pic'];
+      this.joinerWins= data['wins'];
+      this.joinerLosses = data['losses'];
 
       this.db.collection('games').doc(gameId).update({
         joinerId: userId,
         joinerName: this.joinerName,
         joinerPic: this.joinerPic,
+        joinerWins: this.joinerWins,
+        joinerLosses: this.joinerLosses,
         isOpen: false,
         state: 'STATE.CLOSED',
       }).then(goTo => {
