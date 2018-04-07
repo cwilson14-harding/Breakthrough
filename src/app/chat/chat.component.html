@@ -12,10 +12,10 @@
 <!--</div>-->
 
 <div id="chatContainer">
-  <div style="position: absolute; background-color: black; opacity: .7; z-index: 1; height: 330px; width: 300px; right: 20px; top: 386px; border-radius: 20px">
+  <div style="position: absolute; background-color: black; opacity: .7; z-index: 1; height: 330px; width: 300px; left: 10px; top: 386px; border-radius: 20px">
     <!-- DIV FOR CHAT -->
   </div>
-  <span class="name" style="position: absolute; top: 390px; right: 130px; z-index: 1;">chat</span>
+  <span class="name" style="position: absolute; top: 390px; left: 120px; z-index: 1;">chat</span>
   <div class="chatHistory2">
     <p *ngFor="let message of messages" class="chat">
       <span class="{{ (message.senderId === this.auth.getCurrentUser()) ? 'self' : 'opponent' }}">{{message.senderName}}</span>: {{message.message}}
@@ -26,7 +26,6 @@
     <input type="submit" class="w3-right btn" (click)="newMessage()" value="Send Message" />
   </form>
 </div>
-
 
 <!--<div id="chatContainer" class=" w3-container w3-border-color-grey w3-left w3-bottom roundedCorners" style="height: 300px; width: 200px; background: #2c2c2c; z-index: 1; opacity: .9; display: none;">-->
   <!--<div class="roundedCorners chatHistory">-->

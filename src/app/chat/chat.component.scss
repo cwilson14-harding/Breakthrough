@@ -22,8 +22,8 @@ h1{
   height: 35px;
   //top: 643px;
   top: 630px;
-  //left: 35px;
-  right: 25px;
+   left: 15px;
+  // right: 25px;
   z-index: 1;
 
   background:none;
@@ -72,8 +72,8 @@ textarea{
   //height: 220px;
   height: 170px;
   width: 290px;
-  //left: 35px;
-  right: 25px;
+  left: 15px;
+ // right: 15px;
   //top: 410px;
   top: 445px;
   border-radius: 10px;
@@ -112,8 +112,8 @@ input[type=text]:focus, textarea:focus {
   -webkit-background-clip: text;
   -webkit-text-fill-color: whitesmoke;
   position:absolute;
-  // left: 178px;
-   right: 95px;
+   left: 155px;
+   //right: 95px;
   height: 35px;
   // top: 672px;
    top: 662px;
