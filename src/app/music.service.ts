@@ -15,6 +15,7 @@ export class MusicService {
 
   constructor() {
     this.audio = new Audio();
+    this.audio.loop = true;
     this.attachListeners();
   }
 
