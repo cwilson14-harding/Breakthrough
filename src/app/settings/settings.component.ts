@@ -26,6 +26,7 @@ export class SettingsComponent implements OnInit {
   currentPic;
   sliderVolume;
   showIntroVid = false;
+  movieTimeout: number;
 
   @Input()
   music: any;
@@ -68,8 +69,11 @@ export class SettingsComponent implements OnInit {
     this.changeAvatar = false;
     this.credits = false;
     this.volume = false;
+    this.audioElement.play();
+    clearTimeout(this.movieTimeout);
   }
   goToIntro() {
+    this.audioElement.pause();
     this.showIntroVid = true;
     this.showSettings = false;
     this.changeAvatar = false;
@@ -77,13 +81,10 @@ export class SettingsComponent implements OnInit {
     this.volume = false;
 
     // after the video, go back to the settings home
-    setTimeout(() => {
-      this.showIntroVid = false;
-      this.showSettings = true;
-      this.changeAvatar = false;
-      this.credits = false;
-      this.volume = false;
+    this.movieTimeout = setTimeout(() => {
+      this.goBack();
     }, 16500);
+
   }
   logout() {
     this.auth.logout().then(() => this.router.navigateByUrl('home'));
