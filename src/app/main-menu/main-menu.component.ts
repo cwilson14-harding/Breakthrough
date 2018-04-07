@@ -57,7 +57,7 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
     this.myParams = {
       particles: {
         number: {
-          value: 200,
+          value: 85,
         },
         color: {
           value: '#ff0000'
