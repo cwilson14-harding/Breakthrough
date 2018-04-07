@@ -17,7 +17,7 @@
           <button *ngIf="showChat" class="buttonStyle" style="position: relative; left: 22.5%" (click)="showHideChat()">Hide Chat</button>
         </div>
         <div class="w3-half">
-          <button class="buttonStyle" style="position: relative; right: 22.5%">Forfeit</button>
+          <button class="buttonStyle" style="position: relative; right: 22.5%" (click)="forfeitGame()">Forfeit</button>
         </div>
       </div>
       <!--<div class="w3-container">-->
@@ -25,6 +25,46 @@
           <!--<button class="buttonStyle" (click)="logout()">Logout</button>-->
         <!--</div>-->
       <!--</div>-->
+    </div>
+  </div>
+</div>
+
+<div *ngIf="volume">
+  <h1 class="headingFont">Volume Level</h1>
+  <div class="w3-container w3-padding-16">
+    <div class="w3-container">
+
+      <div class="w3-container">
+        <div class="w3-container">
+          <mat-slider [min]="0" [max]="1" [step]=".1" [(ngModel)]="sliderVolume" (ngModelChange)="changeVolumeLevel($event)" ></mat-slider>
+        </div>
+        <div class="w3-padding-32">
+          <button class="buttonStyle" (click)="goBack()">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="forfeit">
+  <h1 class="headingFont">Forfeit?</h1>
+  <div class="w3-container w3-padding-16">
+    <div class="w3-container">
+
+      <div class="w3-container">
+
+        <div class="w3-padding-32">
+          <!--<button class="buttonStyle" (click)="goBack()">Back</button>-->
+          <div class="w3-container">
+            <div class="w3-half">
+              <button class="buttonStyle" (click)="goBack()" style="position: relative; left: 85px;">Yes</button>
+            </div>
+            <div class="w3-half">
+              <button class="buttonStyle" (click)="goBack()" style="position: relative; right: 85px;">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

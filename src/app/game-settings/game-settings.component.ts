@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MusicService} from "../music.service";
 
 @Component({
   selector: 'app-game-settings',
@@ -11,8 +12,15 @@ export class GameSettingsComponent implements OnInit {
   showSettings = true;
   showChat = true;
   showLegend = true;
+  audioElement: HTMLAudioElement;
+  sliderVolume;
+  volume = false;
+  forfeit = false;
 
-  constructor() { }
+  constructor(public audio: MusicService) {
+    this.audioElement = audio.getAudio();
+    this.sliderVolume = 1;
+  }
 
   ngOnInit() {
   }
@@ -25,6 +33,30 @@ export class GameSettingsComponent implements OnInit {
   showHideLegend() {
     this.hideLegendClicked.emit(null);
     this.showLegend = !this.showLegend;
+  }
+
+  changeVolumeLevel(newValue) {
+    console.log('volumeUpdated');
+    this.sliderVolume = newValue;
+    this.audioElement.volume = this.sliderVolume;
+  }
+
+  showVolume() {
+    this.volume = true;
+    this.showSettings = false;
+    this.forfeit = false;
+  }
+
+  forfeitGame() {
+    this.forfeit = true;
+    this.showSettings = false;
+    this.volume = false;
+  }
+
+  goBack() {
+    this.showSettings = true;
+    this.volume = false;
+    this.forfeit = false;
   }
 
 }
