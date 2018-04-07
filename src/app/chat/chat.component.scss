@@ -100,44 +100,45 @@ input[type=text]:focus, textarea:focus {
   box-shadow: 0 0 5px #6646FF;
   border: 1px solid #6646FF;
 }
-.btn{
-  padding:8px 16px;
-  margin: 10px 0 0 10px;
-  border-radius: 5px;
-  font-weight: bold;
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  color: #ffffff;
-  border: 2px solid lightslategray;
-  background:linear-gradient( 45deg, #fff 50%, #6646FF 50%);
+  border: 2px solid #6646FF;
+  background: linear-gradient(45deg, #fff 50%, #6646FF 50%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: whitesmoke;
-  position:absolute;
-   left: 155px;
-   //right: 95px;
-  height: 35px;
-  // top: 672px;
-   top: 662px;
-  z-index: 1;
-  font-family: Raleway;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+
+  color: #fff; /*For IE*/
 }
-.btn:after{
-  content:"";
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  background:linear-gradient(45deg, #6646FF 50%, transparent 50%);
-  z-index:-1;
+
+.btn:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(45deg, #6646FF 50%, transparent 50%);
+  z-index: -1;
 }
-.btn,.btn:after{
-  background-size:300%;
-  background-position:100%;
-  transition:0.3s;
+
+.btn,
+.btn:after {
+  background-size: 300%;
+  background-position: 100%;
+  transition: 1s, font-size 0.2s;
 }
-.btn:hover,.btn:hover:after{
-  background-position:0;
+
+.btn:hover,
+.btn:hover:after {
+  background-position: 0;
+  font-size: 1.1em;
+
+  color: #6646FF; /*For IE*/
 }
+
 .textStroke{
   color:#FFF;
 }
