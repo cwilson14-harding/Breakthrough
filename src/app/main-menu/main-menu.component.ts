@@ -169,6 +169,9 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   goBack() {
     this.showSettings = false;
     this.showTutorial = false;
+
+    // TODO: Decide what to do about this weird audio issue.
+    this.audio.playAudio();
   }
 
 }
