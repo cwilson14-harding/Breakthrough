@@ -102,15 +102,16 @@ input[type=text]:focus, textarea:focus {
 }
 .btn {
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
   border: 2px solid #6646FF;
   background: linear-gradient(45deg, #fff 50%, #6646FF 50%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: #fff;
   position: relative;
-
-  color: #fff; /*For IE*/
+  top: 670px;
+  z-index: 1;
 }
 
 .btn:after {
@@ -124,19 +125,15 @@ input[type=text]:focus, textarea:focus {
   z-index: -1;
 }
 
-.btn,
-.btn:after {
+.btn,.btn:after {
   background-size: 300%;
   background-position: 100%;
   transition: 1s, font-size 0.2s;
 }
 
-.btn:hover,
-.btn:hover:after {
+.btn:hover,.btn:hover:after {
   background-position: 0;
   font-size: 1.1em;
-
-  color: #6646FF; /*For IE*/
 }
 
 .textStroke{
