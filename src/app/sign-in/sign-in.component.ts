@@ -34,6 +34,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
   state = 'inactive';
   width = 100;
   emailError = false;
+  createAccountError = false;
+  showLogin = true;
   errorMessage: string;
   errorCode;
   isError = false;
@@ -93,7 +95,21 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const wins = 0;
     const losses = 0;
     this.btnCreateAccount = document.getElementById('createAccount');
-   this.auth.createAccountWithEmail(email, wins, losses);
+    this.auth.createAccountWithEmail(email, wins, losses).catch(error => {
+     this.createAccountError = true;
+     this.showLogin = false;
+     this.emailError = false;
+   }).then(next => {
+     if (this.createAccountError === true) {
+       // show error
+     } else {
+       this.afs.collection('users').doc(this.auth.getCurrentUser()).set({
+         email: email,
+         losses: losses,
+         wins: wins
+       }).then(() => this.router.navigateByUrl('email-user-info'));
+     }
+    });
     // Update the user info.
   }
   signInWithEmail() {
@@ -101,7 +117,11 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const email = this.txtEmail.value;
     this.btnLogin = document.getElementById('loginButton');
 
-    this.auth.loginUserWithEmail(email).catch(error => this.emailError = true).then(next => {
+    this.auth.loginUserWithEmail(email).catch(error => {
+      this.createAccountError = false;
+      this.showLogin = false;
+      this.emailError = true;
+    }).then(next => {
       if (this.emailError === true) {
         // alert('not going on.. email wrong');
       } else {
@@ -143,5 +163,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
   backToLogin() {
     this.emailError = false;
+    this.createAccountError = false;
+    this.showLogin = true;
   }
 }
