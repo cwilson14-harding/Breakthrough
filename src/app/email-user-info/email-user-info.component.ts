@@ -54,7 +54,7 @@ export class EmailUserInfoComponent implements OnInit {
     this.myParams = {
       particles: {
         number: {
-          value: 200,
+          value: 85,
         },
         color: {
           value: '#ff0000'
