@@ -5,6 +5,7 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1360,
     height: 768,
+    fullscreen: true, // Set to false to make a window.
     backgroundColor: '#ffffff',
     icon: `file://${__dirname}/dist/assets/logo.png`
   });
@@ -15,6 +16,7 @@ function createWindow () {
   win.on('closed', function () {
     win = null
   });
+  win.setMenu(null); // Comment this to show the toolbar (for development).
 }
 // Create window on electron intialization
 app.on('ready', createWindow);
