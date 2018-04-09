@@ -124,25 +124,27 @@ export class AuthService {
   }
 
   loginUserWithEmail(email) {
-    firebase.auth().signInWithEmailAndPassword(email, this.password).catch(function(error) {
-      // Handle errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      switch (errorCode) {
-        case(errorCode === 'auth/invalid-email'): {
-          alert('The email address provided is invalid.');
-          break;
-        }
-        case(errorCode === 'auth/user-not-found'): {
-          alert('The user does not exist. Try creating an account.');
-          break;
-        }
-        default: console.log('account created successfully!');
-          break;
-      }
-    }).then(() => {
-      this.router.navigateByUrl('main-menu');
-    })
+    return firebase.auth().signInWithEmailAndPassword(email, this.password);
+
+  // .catch(function(error) {
+  //     // Handle errors here.
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     switch (errorCode) {
+  //       case(errorCode === 'auth/invalid-email'): {
+  //         alert('The email address provided is invalid.');
+  //         break;
+  //       }
+  //       case(errorCode === 'auth/user-not-found'): {
+  //         alert('The user does not exist. Try creating an account.');
+  //         break;
+  //       }
+  //       default: console.log('account created successfully!');
+  //         break;
+  //     }
+  //   }).then(() => {
+  //     this.router.navigateByUrl('main-menu');
+  //   });
   }
 
 

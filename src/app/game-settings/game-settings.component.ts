@@ -1,5 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MusicService} from "../music.service";
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireAuth } from 'angularfire2/auth';
+import {GameService} from '../game.service';
 
 @Component({
   selector: 'app-game-settings',
@@ -16,10 +19,16 @@ export class GameSettingsComponent implements OnInit {
   sliderVolume;
   volume = false;
   forfeit = false;
+  leaveGame = false;
+  currUser;
+  currGameId;
 
-  constructor(public audio: MusicService) {
+  constructor(public audio: MusicService, public db: AngularFirestore, public auth: AngularFireAuth, private gameService: GameService) {
     this.audioElement = audio.getAudio();
     this.sliderVolume = 1;
+
+    this.currUser = this.auth.auth.currentUser.uid;
+    this.currGameId = this.gameService.gameId;
   }
 
   ngOnInit() {
@@ -51,6 +60,13 @@ export class GameSettingsComponent implements OnInit {
     this.forfeit = true;
     this.showSettings = false;
     this.volume = false;
+  }
+
+  quitGame() {
+    this.leaveGame = true;
+    this.db.collection('games').doc(this.currGameId).update({
+      forfeit: true
+    }).then(next => alert('Game Over!'));
   }
 
   goBack() {

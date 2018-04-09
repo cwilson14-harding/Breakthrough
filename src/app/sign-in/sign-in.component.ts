@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../core/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {MusicService} from "../music.service";
+import { AngularFireAuth } from 'angularfire2/auth';
 declare var $: any;
 
 @Component({
@@ -32,8 +33,13 @@ export class SignInComponent implements OnInit, AfterViewInit {
   myStyle: object = {};
   state = 'inactive';
   width = 100;
+  emailError = false;
+  errorMessage: string;
+  errorCode;
+  isError = false;
 
-  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore, public audio: MusicService) {
+  constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore, public audio: MusicService,
+              public afAuth: AngularFireAuth) {
     audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton\'s.mp3')
   }
 
@@ -94,11 +100,48 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     this.btnLogin = document.getElementById('loginButton');
-    this.auth.loginUserWithEmail(email);
+
+    this.auth.loginUserWithEmail(email).catch(error => this.emailError = true).then(next => {
+      if (this.emailError === true) {
+        // alert('not going on.. email wrong');
+      } else {
+        // this.router.navigateByUrl('main-menu');
+        // alert(this.auth.getCurrentUser());
+        this.router.navigate(['main-menu']); // , this.auth.getCurrentUser()
+      }
+    });
+
+    //   .catch((error) => {
+    //     this.errorCode = error.code;
+    //     this.errorMessage = error.message;
+    //     switch (this.errorCode) {
+    //       case(this.errorCode === 'auth/invalid-email'): {
+    //         this.errorMessage = 'The email address provided is invalid.';
+    //         this.isError = true;
+    //         break;
+    //       }
+    //       case(this.errorCode === 'auth/user-not-found'): {
+    //         this.errorMessage = 'The user does not exist. Try creating an account.';
+    //         this.isError = true;
+    //         break;
+    //       }
+    //     }
+    //   }).then(next => {
+    //   if (this.isError) {
+    //     alert('There is an error');
+    //   } else {
+    //     alert('No error, you have logged in correctly!');
+    //   }
+    // });
     // TODO: If the email isn't in the database, DONT push to this page
   }
-  goBack(){
+
+  goBack() {
     this.router.navigateByUrl('home');
     this.auth.logout();
+  }
+
+  backToLogin() {
+    this.emailError = false;
   }
 }
