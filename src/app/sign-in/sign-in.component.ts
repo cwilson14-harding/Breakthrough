@@ -36,6 +36,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
   emailError = false;
   createAccountError = false;
   showLogin = true;
+  isEmailInUse = false;
+  isEmailCorrect = false;
   errorMessage: string;
   errorCode;
   isError = false;
@@ -96,9 +98,22 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const losses = 0;
     this.btnCreateAccount = document.getElementById('createAccount');
     this.auth.createAccountWithEmail(email, wins, losses).catch(error => {
-     this.createAccountError = true;
-     this.showLogin = false;
-     this.emailError = false;
+      alert(error.code);
+      if (error.code === 'auth/invalid-email' ) {
+        // alert('this email is not valid');
+        this.isEmailCorrect = true;
+        this.isEmailInUse = false;
+        this.showLogin = false;
+        this.emailError = false;
+        this.createAccountError = true;
+      } else if (error.code === 'auth/email-already-in-use') {
+        // alert('email is in use already');
+        this.isEmailCorrect = false;
+        this.isEmailInUse = true;
+        this.showLogin = false;
+        this.emailError = false;
+        this.createAccountError = true;
+      }
    }).then(next => {
      if (this.createAccountError === true) {
        // show error
@@ -121,6 +136,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
       this.createAccountError = false;
       this.showLogin = false;
       this.emailError = true;
+      this.isEmailCorrect = false;
+      this.isEmailInUse = false;
     }).then(next => {
       if (this.emailError === true) {
         // alert('not going on.. email wrong');
@@ -165,5 +182,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.emailError = false;
     this.createAccountError = false;
     this.showLogin = true;
+    this.isEmailInUse = false;
+    this.isEmailCorrect = false;
   }
 }
