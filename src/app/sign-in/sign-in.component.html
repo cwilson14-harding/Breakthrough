@@ -25,28 +25,22 @@
       </form>
 
       <form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="emailError">
-        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Log in</h1></div>
+        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Error</h1></div>
         <div class="form">
           <h5 style="color: white; text-align: center">Login failed, please try again.</h5>
           <button class="login" (click)="backToLogin()">OK</button>
         </div>
       </form>
-      <!--<form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="createAccountError">-->
-        <!--<div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Log in</h1></div>-->
-        <!--<div class="form">-->
-          <!--<h5 style="color: white; text-align: center">Email is already in use.</h5>-->
-          <!--<button class="login" (click)="backToLogin()">OK</button>-->
-        <!--</div>-->
-      <!--</form>-->
+
       <form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="isEmailInUse">
-        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Log in</h1></div>
+        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Error</h1></div>
         <div class="form">
           <h5 style="color: white; text-align: center">Email is already in use. Try logging in.</h5>
           <button class="login" (click)="backToLogin()">OK</button>
         </div>
       </form>
       <form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="isEmailCorrect">
-        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Log in</h1></div>
+        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Error</h1></div>
         <div class="form">
           <h5 style="color: white; text-align: center">Please enter your email in the correct format</h5>
           <button class="login" (click)="backToLogin()">OK</button>

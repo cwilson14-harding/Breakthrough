@@ -11,6 +11,20 @@
 button{
   border:none;
   outline: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14pt;
+}
+h1 {
+  // font-family: 'Rajdhani', sans-serif;
+  font-family: 'Permanent Marker', cursive;
+  color: white;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
+  font-size: 35pt;
+}
+h5 {
+  font-family: 'Rajdhani', sans-serif;
+  color: white;
+  font-size: 14pt;
 }
 input{
   outline:none;
