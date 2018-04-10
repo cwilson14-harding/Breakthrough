@@ -194,7 +194,6 @@ export class MultiplayerLobbyComponent implements OnInit {
      navigated to the board where gameplay can commence.
   */
   joinGame(gameId) {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const userId = this.auth.getCurrentUser();
 
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
