@@ -54,7 +54,7 @@ export class EmailUserInfoComponent implements OnInit {
     this.myParams = {
       particles: {
         number: {
-          value: 200,
+          value: 85,
         },
         color: {
           value: '#ff0000'
@@ -123,9 +123,4 @@ export class EmailUserInfoComponent implements OnInit {
     this.avatar2Selected = false;
     this.avatar3Selected = true;
   }
-  goBack() {
-    this.auth.logout().then(next => this.router.navigateByUrl('home'));
-  }
-
-
 }
