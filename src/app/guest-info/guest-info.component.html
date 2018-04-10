@@ -15,7 +15,7 @@
       <div>
         <img style="width: 200%; position: relative; top: 90px; right: 200px" src="assets/logos/systemBreakLogoSmall.png">
       </div>
-      <form class="panel" onsubmit="javascript:void(0)" autocomplete="off">
+      <form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="!noName">
         <div class="state" style="position: relative; top: 5px"><br><i class="fa fa-unlock-alt"></i><br><h1>Create Display Name</h1></div>
         <div class="form">
           <input id="inputGuestName" type="text" placeholder=' Display name' autofocus required>
@@ -53,6 +53,14 @@
             </div>
           </div>
           <button id="createAccount" type="submit" class="login" (click)="continue()">Continue</button>
+        </div>
+      </form>
+
+      <form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="noName">
+        <div class="state" style="position: relative; top: 5px"><br><i class="fa fa-unlock-alt"></i><br><h1>Error</h1></div>
+        <div class="form">
+            <h5>Please Enter a Display Name</h5>
+          <button class="login" (click)="tryAgain()" style="position: relative; top: 10px;">OK</button>
         </div>
       </form>
     </div>

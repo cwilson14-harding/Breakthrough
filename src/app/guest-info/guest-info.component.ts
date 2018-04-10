@@ -38,6 +38,7 @@ export class GuestInfoComponent implements OnInit {
   avatar2Selected = false;
   avatar3Selected = false;
   currentPic: string;
+  noName = false;
   constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
 
   }
@@ -102,15 +103,20 @@ export class GuestInfoComponent implements OnInit {
     const displayName = this.txtDisplayName.value;
 
     const currUserId = this.auth.getCurrentUser();
-    this.afs.collection('users').doc(currUserId).set({
-      displayName: displayName,
-      uid: currUserId,
-      pic: this.currentPic,
-      wins: 0,
-      losses: 0
-    }).then(() => {
-      this.router.navigateByUrl('main-menu');
-    });
+
+    if (displayName === '') {
+      this.noName = true;
+    } else {
+      this.afs.collection('users').doc(currUserId).set({
+        displayName: displayName,
+        uid: currUserId,
+        pic: this.currentPic,
+        wins: 0,
+        losses: 0
+      }).then(() => {
+        this.router.navigateByUrl('main-menu');
+      });
+    }
   }
 
   circleSelected() {
@@ -131,6 +137,10 @@ export class GuestInfoComponent implements OnInit {
   goBack() {
     this.router.navigateByUrl('home');
     this.auth.logout();
+  }
+
+  tryAgain() {
+    this.noName = false;
   }
 
 }
