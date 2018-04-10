@@ -25,7 +25,6 @@ declare var $: any;
   ]
 })
 export class GuestInfoComponent implements OnInit {
-  btnContinue;
   txtDisplayName;
   height = 100;
   myParams: object = {};
@@ -38,6 +37,7 @@ export class GuestInfoComponent implements OnInit {
   avatar2Selected = false;
   avatar3Selected = false;
   currentPic: string;
+  noName = false;
   constructor(private router: Router, public auth: AuthService, public afs: AngularFirestore) {
 
   }
@@ -86,13 +86,13 @@ export class GuestInfoComponent implements OnInit {
     background.mouseParallax({moveFactor: 5});
   }
   continue() {
-
+    $("button").removeClass("login").addClass("continue");
     if (this.avatar1Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar1.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure3.png';
     } else if (this.avatar2Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar2.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure.png';
     } else if (this.avatar3Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar3.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure4.png';
     } else {
       // TODO: Get rid of the Alert
       alert('Please choose an avatar!');
@@ -102,15 +102,20 @@ export class GuestInfoComponent implements OnInit {
     const displayName = this.txtDisplayName.value;
 
     const currUserId = this.auth.getCurrentUser();
-    this.afs.collection('users').doc(currUserId).set({
-      displayName: displayName,
-      uid: currUserId,
-      pic: this.currentPic,
-      wins: 0,
-      losses: 0
-    }).then(() => {
-      this.router.navigateByUrl('main-menu');
-    });
+
+    if (displayName === '') {
+      this.noName = true;
+    } else {
+      this.afs.collection('users').doc(currUserId).set({
+        displayName: displayName,
+        uid: currUserId,
+        pic: this.currentPic,
+        wins: 0,
+        losses: 0
+      }).then(() => {
+        this.router.navigateByUrl('main-menu');
+      });
+    }
   }
 
   circleSelected() {
@@ -131,6 +136,11 @@ export class GuestInfoComponent implements OnInit {
   goBack() {
     this.router.navigateByUrl('home');
     this.auth.logout();
+  }
+
+  tryAgain() {
+    this.noName = false;
+
   }
 
 }

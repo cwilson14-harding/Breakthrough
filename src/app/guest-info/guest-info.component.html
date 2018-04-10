@@ -15,39 +15,57 @@
       <div>
         <img style="width: 200%; position: relative; top: 90px; right: 200px" src="assets/logos/systemBreakLogoSmall.png">
       </div>
-      <form class="panel" onsubmit="javascript:void(0)" autocomplete="off">
-        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Create Display Name</h1></div>
+      <form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="!noName">
+        <div class="state" style="position: relative; top: 5px"><br><i class="fa fa-unlock-alt"></i><br><h1>Create Display Name</h1></div>
         <div class="form">
           <input id="inputGuestName" type="text" placeholder=' Display name' autofocus required>
           <div style="padding-top: 3%">
             <h3 style="color: white;">Select an Avatar </h3>
             <div class="w3-third" style="padding-top: 5%">
               <div (click)="circleSelected()">
-                <div *ngIf="avatar1Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-                  <img src="assets/avatars/cyberpunk boy.png" width="70%">
-                </div>
+                  <div *ngIf="avatar1Selected"> <!-- style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;" -->
+                    <!--<img src="assets/avatars/cyberpunk boy.png" width="70%">-->
+                    <img src="assets/avatars/cyberPunkFigure3.png" width="70%" style="position: relative; z-index: 2">
+
+                    <div style="position: absolute; height: 115px; width: 90px; background-color: rgba(228, 186, 230, .7); border-radius: 50%;
+                                       bottom: 160.5px; left: 41.8px; z-index: 1">
+                    </div>
+
+                  </div>
+
                 <div *ngIf="!avatar1Selected">
-                  <img src="assets/avatars/cyberpunk boy.png" width="70%">
+                  <!--<img src="assets/avatars/cyberpunk boy.png" width="70%">-->
+                  <img src="assets/avatars/cyberPunkFigure3.png" width="70%">
                 </div>
               </div>
             </div>
             <div class="w3-third" style="padding-top: 5%; padding-bottom: 10%">
               <div (click)="virusSelected()">
-                <div *ngIf="avatar2Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-                  <img src="assets/avatars/hackerAvatar2.png" width="95%">
+                <div *ngIf="avatar2Selected">
+                  <!--<img src="assets/avatars/hackerAvatar2.png" width="95%">-->
+                  <img src="assets/avatars/cyberPunkFigure.png" width="70%" style="position: relative; z-index: 2">
+                  <div style="position: absolute; height: 115px; width: 90px; background-color: rgba(228, 186, 230, .7); border-radius: 50%;
+                                       bottom: 160.5px; left: 155px; z-index: 1">
+                  </div>
                 </div>
                 <div *ngIf="!avatar2Selected">
-                  <img src="assets/avatars/hackerAvatar2.png" width="95%">
+                  <!--<img src="assets/avatars/hackerAvatar2.png" width="95%">-->
+                  <img src="assets/avatars/cyberPunkFigure.png" width="70%">
                 </div>
               </div>
             </div>
             <div class="w3-third" style="padding-top: 5%">
               <div (click)="virus2Selected()">
-                <div *ngIf="avatar3Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px; padding-bottom: 18px; padding-right: 1px">
-                  <img src="assets/avatars/hackerAvatar3.png" width="80%">
+                <div *ngIf="avatar3Selected">
+                  <!--<img src="assets/avatars/hackerAvatar3.png" width="80%">-->
+                  <img src="assets/avatars/cyberPunkFigure4.png" width="70%" style="position: relative; z-index: 2">
+                  <div style="position: absolute; height: 115px; width: 90px; background-color: rgba(228, 186, 230, .7); border-radius: 50%;
+                                       bottom: 160.5px; left: 268.8px; z-index: 1">
+                  </div>
                 </div>
                 <div *ngIf="!avatar3Selected">
-                  <img src="assets/avatars/hackerAvatar3.png" width="80%">
+                  <!--<img src="assets/avatars/hackerAvatar3.png" width="80%">-->
+                  <img src="assets/avatars/cyberPunkFigure4.png" width="70%">
                 </div>
               </div>
             </div>
@@ -55,7 +73,16 @@
           <button id="createAccount" type="submit" class="login" (click)="continue()">Continue</button>
         </div>
       </form>
+
+      <form class="panel" onsubmit="javascript:void(0)" autocomplete="off" *ngIf="noName">
+        <div class="state" style="position: relative; top: 5px"><br><i class="fa fa-unlock-alt"></i><br><h1>Error</h1></div>
+        <div class="form">
+            <h5>Please Enter a Display Name</h5>
+          <button class="login" (click)="tryAgain()" style="position: relative; top: 10px;">OK</button>
+        </div>
+      </form>
     </div>
   </div>
+
   <div class=" backImg"></div>
 </div>

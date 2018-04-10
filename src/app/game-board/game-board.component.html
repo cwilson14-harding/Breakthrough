@@ -20,7 +20,7 @@
     <!-- BACKGROUND IMAGE LAYERS -->
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: -0px; transform: scaleX(-1); opacity: .5">-->
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: 720px; opacity: .5">-->
-    <!--<img src="assets/backgrounds/chessBoard.jpg" style="position: absolute; height: 680px; width: 679px; left: 380px; top: 26px; opacity: .5">-->
+    <img src="assets/backgrounds/chessBoard.jpg" style="position: absolute; height: 680px; width: 679px; left: 350px; top: 30px; opacity: .5">
       <div *ngIf="showGame"> <!-- class="w3-container w3-display-middle" -->
         <div class = 'board'> <!-- style="position: relative; bottom: 9px" -->
           <div class="row" *ngFor="let row of [7,6,5,4,3,2,1,0]">
@@ -37,25 +37,21 @@
   </div>
 
 <!-- DO NOT DELETE -->
-  <!--<div style="position: absolute; width: 300px; height: 690px; top: 26px; left: 30px; background-color: black; opacity: .75; border-radius: 20px">-->
-    <!--&lt;!&ndash; DIV FOR CREATOR BACKGROUND&ndash;&gt;-->
-  <!--</div>-->
-  <!--&lt;!&ndash;<div style="position: absolute; width: 300px; height: 300px; top: 26px; right: 20px; background-color: black; opacity: .8; border-radius: 20px">&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash; DIV FOR JOINER BACKGROUND&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
-  <!--<div style="position: absolute; width: 300px; height: 320px; z-index: 2; top: 30px; left: 50px;">-->
-    <!--<span class="name" style="position: relative; left: 85px; ">{{creatorName}}</span>-->
-    <!--<img src='{{creatorPic}}' style="width: 250px; height: 260px;">-->
-  <!--</div>-->
-  <!--&lt;!&ndash;<div style="position: absolute; width: 300px; height: 300px; z-index: 2; top: 30px; right: 20px;">&ndash;&gt;-->
-    <!--&lt;!&ndash;<span class="name" style="position: relative; left: 75px">{{joinerName}}</span>&ndash;&gt;-->
-    <!--&lt;!&ndash;<img src='{{joinerPic}}' style="width: 240px; height: 250px;">&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <div style="position: absolute; width: 300px; height: 100px; top: 55px; left: 10px; background-color: black; opacity: .75; border-radius: 20px">
+    <!-- DIV FOR CREATOR BACKGROUND-->
+  </div>
+  <div style="position: absolute; width: 300px; height: 100px; top: 55px; right: 10px; background-color: black; opacity: .8; border-radius: 20px">
+    <!-- DIV FOR JOINER BACKGROUND-->
+  </div>
+  <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; left: 10px;">
+    <span class="name" style="position: relative; left: 150px; top: 18px">{{creatorName}}</span>
+    <img src='{{creatorPic}}' style="width: 60px; height: 70px; position: relative; top: 10px;">
+  </div>
   <!--<span class="name2" style="position: absolute; left: 100px; top: 320px;">Versus</span>-->
-  <!--<div style="position: absolute; width: 300px; height: 300px; z-index: 2; top: 390px; left: 50px;">-->
-    <!--<span class="name" style="position: relative; left: 85px">{{joinerName}}</span>-->
-    <!--<img src='{{joinerPic}}' style="width: 240px; height: 250px;">-->
-  <!--</div>-->
+  <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; right: 10px;">
+    <span class="name" style="position: relative; left: 150px; top: 18px">{{joinerName}}</span>
+    <img src='{{joinerPic}}' style="width: 60px; height: 70px; position: relative; right: 20px; top: 10px;">
+  </div>
 
   <!--<app-toolbar (newGameClicked)="newGameClicked()" (showChatClicked)="showChatClicked()" (forfeitClicked)="forfeitClicked()" ></app-toolbar>-->
   <div *ngIf="showGame" class="w3-display-topright" style="z-index: 1">
@@ -72,6 +68,13 @@
   <div *ngIf="connectionLost" class="connectionLost">
     <div class="w3-black" style="border-radius: 10px;">
       <p class="connectionLostText">The A.I. has compromised the connection. Game Over!</p>
+      <img src="/assets/hacked.png" class="imgShake" style="position: relative; left: 27%; top: -20px; width: 40%">
+    </div>
+  </div>
+
+  <div *ngIf="didForfeit" class="connectionLost">
+    <div class="w3-black" style="border-radius: 10px;">
+      <p class="connectionLostText">Your opponent has forfeited. Game Over!</p>
       <img src="/assets/hacked.png" class="imgShake" style="position: relative; left: 27%; top: -20px; width: 40%">
     </div>
   </div>

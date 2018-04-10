@@ -51,6 +51,7 @@ export class GameBoardComponent implements OnInit {
   user: Observable<User>;
   gameReference: AngularFirestoreDocument<any>;
   connectionLost = false;
+  didForfeit = false;
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
     this.browserClosed();
@@ -136,6 +137,16 @@ export class GameBoardComponent implements OnInit {
 
     // Connection lost
     if (this.currentPlayer instanceof NetworkPlayer) {
+
+      this.db.collection('games').doc(this.gameService.gameId).valueChanges().subscribe(data => {
+        if (data['forfeit'] === true) {
+          this.didForfeit = true;
+          setTimeout(() => {
+            this.router.navigate(['main-menu']);
+          }, 2000);
+        }
+      });
+
       setTimeout(() => {
         // alert('The WiFi Connection has been lost, unfortunately the Game is Over');
         this.connectionLost = true;

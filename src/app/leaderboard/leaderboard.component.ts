@@ -21,7 +21,6 @@ export class LeaderboardComponent implements OnInit {
   }
 
   getOverallLeaders() {
-    this.overallLeaders = this.db.collection('users', ref => ref.where('wins', '>=', 0).orderBy('wins')).valueChanges();
+    this.overallLeaders = this.db.collection('users', ref => ref.where('wins', '>=', 0).orderBy('wins').limit(4)).valueChanges();
   }
-
 }

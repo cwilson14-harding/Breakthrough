@@ -4,6 +4,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {MusicService} from "../music.service";
+declare var $: any;
 
 @Component({
   selector: 'app-email-user-info',
@@ -81,7 +82,7 @@ export class EmailUserInfoComponent implements OnInit {
   }
 
   continue() {
-
+    $("button").removeClass("login").addClass("continue");
     if (this.avatar1Selected === true) {
       this.currentPic = 'assets/avatars/hackerAvatar1.png';
     } else if (this.avatar2Selected === true) {
