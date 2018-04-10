@@ -4,7 +4,6 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {MusicService} from "../music.service";
-import {$} from "../sign-in/sign-in.component";
 declare var $: any;
 
 @Component({
@@ -85,11 +84,11 @@ export class EmailUserInfoComponent implements OnInit {
   continue() {
     $("button").removeClass("login").addClass("continue");
     if (this.avatar1Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar1.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure3.png';
     } else if (this.avatar2Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar2.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure.png';
     } else if (this.avatar3Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar3.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure4.png';
     } else {
       // TODO: Get rid of the Alert
       alert('Please choose an avatar!');
