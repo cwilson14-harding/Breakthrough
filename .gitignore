@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /dist-server
+/release-builds
 /tmp
 /out-tsc
 

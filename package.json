@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "package": "electron-packager . SystemBreak --platform=win32 --arch=ia32 --out release-builds/ --overwrite",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -54,6 +55,7 @@
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
     "electron": "^1.7.10",
+    "electron-packager": "^12.0.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
