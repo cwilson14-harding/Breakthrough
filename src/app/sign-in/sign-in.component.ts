@@ -92,6 +92,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
   }
   createAccount() {
     // TODO: If an account already exists under the inputed email, alert them that they have made an account
+    $("button").removeClass("login").addClass("continue");
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     const wins = 0;
@@ -99,6 +100,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
     this.btnCreateAccount = document.getElementById('createAccount');
     this.auth.createAccountWithEmail(email, wins, losses).catch(error => {
      // alert(error.code);
+      $("button").removeClass("continue").addClass("login");
       if (error.code === 'auth/invalid-email' ) {
         // alert('this email is not valid');
         this.isEmailCorrect = true;
@@ -122,12 +124,14 @@ export class SignInComponent implements OnInit, AfterViewInit {
          email: email,
          losses: losses,
          wins: wins
-       }).then(() => this.router.navigateByUrl('email-user-info'));
+       }).then(() =>
+         this.router.navigateByUrl('email-user-info'));
      }
     });
     // Update the user info.
   }
   signInWithEmail() {
+    $("button").removeClass("login").addClass("continue");
     this.txtEmail = document.getElementById('inputEmail');
     const email = this.txtEmail.value;
     this.btnLogin = document.getElementById('loginButton');

@@ -25,8 +25,6 @@ declare var $: any;
   ]
 })
 export class GuestInfoComponent implements OnInit {
-  afterSelector;
-  btnContinue;
   txtDisplayName;
   height = 100;
   myParams: object = {};
@@ -142,6 +140,7 @@ export class GuestInfoComponent implements OnInit {
 
   tryAgain() {
     this.noName = false;
+
   }
 
 }
