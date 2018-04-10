@@ -93,7 +93,6 @@ export class MultiplayerLobbyComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.cats = this.db.collection('users').valueChanges();
     this.viewOpenGames();
     this.userName = this.route.snapshot.params['id'];
     this.userUid = this.route.snapshot.params['id2'];
@@ -145,7 +144,7 @@ export class MultiplayerLobbyComponent implements OnInit {
   }
 
   createGame() {
-    alert(this.userName);
+    // alert(this.userName);
     const userId = this.auth.getCurrentUser();
     const randomId = this.createRandomId().toString();
 
