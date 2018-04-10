@@ -3,6 +3,7 @@ import {MusicService} from "../music.service";
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {GameService} from '../game.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-game-settings',
@@ -23,7 +24,8 @@ export class GameSettingsComponent implements OnInit {
   currUser;
   currGameId;
 
-  constructor(public audio: MusicService, public db: AngularFirestore, public auth: AngularFireAuth, private gameService: GameService) {
+  constructor(public audio: MusicService, public db: AngularFirestore, public auth: AngularFireAuth, private gameService: GameService,
+              public router: Router) {
     this.audioElement = audio.getAudio();
     this.sliderVolume = 1;
 
@@ -66,7 +68,9 @@ export class GameSettingsComponent implements OnInit {
     this.leaveGame = true;
     this.db.collection('games').doc(this.currGameId).update({
       forfeit: true
-    }).then(next => alert('Game Over!'));
+    }).then(next => {
+      this.router.navigateByUrl('main-menu');
+    });
   }
 
   goBack() {

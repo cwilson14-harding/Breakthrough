@@ -20,7 +20,7 @@
     <!-- BACKGROUND IMAGE LAYERS -->
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: -0px; transform: scaleX(-1); opacity: .5">-->
     <!--<img src="/assets/backgrounds/boardBack2.png" style="width: 50%; position: absolute; top: -50px; height: 800px; left: 720px; opacity: .5">-->
-    <!--<img src="assets/backgrounds/chessBoard.jpg" style="position: absolute; height: 680px; width: 679px; left: 380px; top: 26px; opacity: .5">-->
+    <img src="assets/backgrounds/chessBoard.jpg" style="position: absolute; height: 680px; width: 679px; left: 350px; top: 30px; opacity: .4">
       <div *ngIf="showGame"> <!-- class="w3-container w3-display-middle" -->
         <div class = 'board'> <!-- style="position: relative; bottom: 9px" -->
           <div class="row" *ngFor="let row of [7,6,5,4,3,2,1,0]">
@@ -72,6 +72,13 @@
   <div *ngIf="connectionLost" class="connectionLost">
     <div class="w3-black" style="border-radius: 10px;">
       <p class="connectionLostText">The A.I. has compromised the connection. Game Over!</p>
+      <img src="/assets/hacked.png" class="imgShake" style="position: relative; left: 27%; top: -20px; width: 40%">
+    </div>
+  </div>
+
+  <div *ngIf="didForfeit" class="connectionLost">
+    <div class="w3-black" style="border-radius: 10px;">
+      <p class="connectionLostText">Your opponent has forfeited. Game Over!</p>
       <img src="/assets/hacked.png" class="imgShake" style="position: relative; left: 27%; top: -20px; width: 40%">
     </div>
   </div>
