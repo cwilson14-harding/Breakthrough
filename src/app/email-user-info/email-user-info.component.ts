@@ -4,7 +4,6 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
 import {MusicService} from "../music.service";
-import {$} from "../sign-in/sign-in.component";
 declare var $: any;
 
 @Component({
