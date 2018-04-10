@@ -98,7 +98,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
     const losses = 0;
     this.btnCreateAccount = document.getElementById('createAccount');
     this.auth.createAccountWithEmail(email, wins, losses).catch(error => {
-      alert(error.code);
+     // alert(error.code);
       if (error.code === 'auth/invalid-email' ) {
         // alert('this email is not valid');
         this.isEmailCorrect = true;
