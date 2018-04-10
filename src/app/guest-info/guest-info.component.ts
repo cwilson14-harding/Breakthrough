@@ -25,7 +25,6 @@ declare var $: any;
   ]
 })
 export class GuestInfoComponent implements OnInit {
-  btnContinue;
   txtDisplayName;
   height = 100;
   myParams: object = {};
@@ -87,7 +86,7 @@ export class GuestInfoComponent implements OnInit {
     background.mouseParallax({moveFactor: 5});
   }
   continue() {
-
+    $("button").removeClass("login").addClass("continue");
     if (this.avatar1Selected === true) {
       this.currentPic = 'assets/avatars/cyberPunkFigure3.png';
     } else if (this.avatar2Selected === true) {
@@ -141,6 +140,7 @@ export class GuestInfoComponent implements OnInit {
 
   tryAgain() {
     this.noName = false;
+
   }
 
 }

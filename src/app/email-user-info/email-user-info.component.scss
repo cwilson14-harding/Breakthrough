@@ -112,6 +112,43 @@ input{
   transition: background .2s;
   cursor: pointer;
 }
+.continue{
+  height: 45px;
+  width: 100%;
+  background-color: #696969;
+  -webkit-border-radius: 45px;
+  -moz-border-radius: 45px;
+  border-radius: 45px;
+  position: relative;
+  top: -35px;
+  line-height: 45px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.continue:after{
+  content: "\f084";
+  font-family: 'Raleway', sans-serif;
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background-color: #696969;
+  color: #fff;
+  left: 0;
+  top: 0;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 45px;
+}
 input[type=text]:focus, textarea:focus {
   box-shadow: 0 0 5px #6646FF;
   border: 1px solid #6646FF;
