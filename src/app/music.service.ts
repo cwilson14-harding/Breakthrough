@@ -68,6 +68,12 @@ export class MusicService {
     }
   };
 
+  public playSoundEffect(src: string) {
+    const audio = new Audio();
+    audio.src = src;
+    audio.play();
+  }
+
   /**
    * If you need the audio instance in your component for some reason, use this.
    */

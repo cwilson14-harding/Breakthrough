@@ -34,6 +34,12 @@ export class MultiSetupComponent implements OnInit {
   ngOnInit() {
     this.gameId = this.route.snapshot.params['id'];
     this.getGameInfo();
+
+    if (this.joinerName !== '') {
+      setTimeout(() => {
+        this.goToBoard();
+      }, 3000);
+    }
   }
 
   getGameInfo() {

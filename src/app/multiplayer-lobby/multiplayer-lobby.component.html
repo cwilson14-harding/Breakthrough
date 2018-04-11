@@ -21,13 +21,15 @@
     <!-- DIV FOR LUKE -->
     <div class="w3-half" style="position: relative; z-index: 1">
       <h1 class="headingText">Choose Your Opponent!</h1> <!-- {{userName}}, -->
-
         <div>
           <div class="w3-center">
-            <img src="{{userPic}}" style="width: 40%;">
+            <img src="{{userPic}}" style="height: 275px; width: 250px; position: absolute; left:230px; top: 175px;">
           </div>
         </div>
       </div>
+    <div class="userName">
+      <h2> {{userName}}</h2>
+    </div>
     <div style="position: absolute; background-color: #696969; border-radius: 0px; top: 165px; left: 120px; width: 470px; height: 500px; opacity: .9"></div>
     <div class="createGameBtn" style="z-index: 2" (click)="createGame()">
       <p class="createGameBtnText">Create A Game</p>
