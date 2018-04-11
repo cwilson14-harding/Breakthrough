@@ -25,6 +25,7 @@ creatorWins;
 creatorLosses;
 AiWins;
 AiLosses;
+AiDifficulty;
 creatorPic;
 AiPic;
 player1 = false;
@@ -67,8 +68,12 @@ aiPlayer;
 
     if (this.AiDifficultyGroup === 'easy') {
       this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSRandom);
+      this.AiDifficulty = 'Unfriendly';
+      document.getElementById('aiDiff').innerHTML = 'AI Difficulty: Unfriendly';
     } else {
       this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
+      this.AiDifficulty = 'Wrathful';
+      document.getElementById('aiDiff').innerHTML = 'AI Difficulty: Wrathful';
     }
     
 // Determine the starting player if random.

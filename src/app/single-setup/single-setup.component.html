@@ -5,11 +5,11 @@
   <div class="w3-row-padding" style="padding-top: 80px; padding-left: 10px; height: 90%;">
   
       <div class="w3-third w3-display-container w3-left cardStyleLeft" style="height: 90%; margin: 5px; margin-right: 7px;">
-          <img src='{{playerPic}}' class="w3-half w3-display-topmiddle">
+          <img src='{{creatorPic}}' class="w3-half w3-display-topmiddle">
           <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
-              <p style="clear:both;">{{playerName}}</p>
-              <p style="clear:both;">Wins: {{playerWins}}</p>
-              <p style="clear:both;">Losses: {{playerLosses}}</p>
+              <p style="clear:both;">{creatorName}}</p>
+              <p style="clear:both;">Wins: {{creatorWins}}</p>
+              <p style="clear:both;">Losses: {{creatorLosses}}</p>
           Defeat the rogue AI!
       </div>
       </div>
@@ -35,7 +35,7 @@
                 <img src='{{joinerPic}}' class="w3-half w3-display-topmiddle">
                 <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
                   <p>AI</p>
-                  <P>Difficulty: {{AiDifficulty}}</P>
+                  <P id="aiDiff">Difficulty: {{AiDifficulty}}</P>
                   <p>Wins: ???</p>
                   <p>Losses: 0</p>
                 Crush the Corporation!

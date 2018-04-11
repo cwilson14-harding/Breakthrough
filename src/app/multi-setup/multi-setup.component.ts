@@ -58,6 +58,7 @@ export class MultiSetupComponent implements OnInit {
       if (this.auth.getCurrentUser() === this.creatorId) {
         this.player1 = true;
         this.player2 = false;
+        document.getElementById('playerOrderGroup').removeAttribute('disabled');
       } else if (this.auth.getCurrentUser() === this.joinerId) {
         this.player2 = true;
         this.player1 = false;
@@ -65,7 +66,6 @@ export class MultiSetupComponent implements OnInit {
 
       if (this.joinerName !== '') {
         document.getElementById('playButton').removeAttribute('disabled');
-        // this.goToBoard();
       }
     });
   }
