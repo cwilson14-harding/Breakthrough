@@ -36,6 +36,7 @@ export class SettingsComponent implements OnInit {
     this.sliderVolume = this.audioElement.volume;
   }
   ngOnInit() {
+
   }
   logOff() {
     this.auth.logout();

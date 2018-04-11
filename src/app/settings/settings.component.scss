@@ -18,6 +18,19 @@
   height: 75px;
 }
 
+.disabledButtonStyle{
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 150%;
+  color: white;
+  // background-color: #6B5B95;
+  background-color: rgba(69, 69, 69, .7);
+  border-width: 1px;
+  border-color: rgb(216,65,201);
+  border-radius: 5px;
+  width: 200px;
+  height: 75px;
+}
+
 .buttonStyle:hover {
   border-width: 2.5px;
   border-color: rgba(239, 74, 223, .7);
