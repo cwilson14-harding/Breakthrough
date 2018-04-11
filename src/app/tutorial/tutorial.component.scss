@@ -9,8 +9,8 @@ body {
 
 .messageBox {
   position: relative;
-  top: 100px;
-  left: -756px;
+  top: 120px;
+  left: 444px;
   transform: translate(-50%, -50%);
   font-family: 'Lucidia Console', monospace;
   font-size: 20px;
@@ -20,7 +20,6 @@ body {
   color: whitesmoke;
   width: 628px; // To match the image width. 728
   padding: 1px 12px 8px;
-  z-index: 1;
 }
 
 .blackDiv {
@@ -55,10 +54,10 @@ body {
 
 img {
   width: 628px;
-  height: 270px;
+  height: 300px;
   border-radius: 10px;
   position: relative;
   right: 13%;
-  top: 17px;
+  top: 10px;
   z-index: 1;
 }
