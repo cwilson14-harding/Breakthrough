@@ -5,6 +5,7 @@ import {AuthService, Game} from '../core/auth.service';
 import {GameService} from '../game.service';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {PlayerType} from '../player-data';
+import {MusicService} from '../music.service';
 
 @Component({
   selector: 'app-chat',
@@ -18,8 +19,10 @@ export class ChatComponent implements OnInit {
   messages: IMessage[] = [];
   game: AngularFirestoreDocument<Game>;
   currentUserName: string;
+  tauntCount = 2;
 
-  constructor(private db: AngularFirestore, private gameService: GameService, private auth: AuthService) {
+  constructor(private db: AngularFirestore, private gameService: GameService, private auth: AuthService, private musicService: MusicService) {
+
     // this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
     const sub = auth.user.subscribe(data => {
       this.currentUserName = data['displayName'];
@@ -61,6 +64,14 @@ export class ChatComponent implements OnInit {
             return 0;
           }
         });
+
+        // Check if we need to play a taunt.
+        if (this.messages.length > 0) {
+          const number = parseInt(this.messages[this.messages.length - 1].message, 10);
+          if (number && number > 0 && number <= this.tauntCount) {
+            this.musicService.playSoundEffect('assets/taunts/' + number + '.mp3');
+          }
+        }
       });
     }
   }
