@@ -67,8 +67,9 @@ export class ChatComponent implements OnInit {
 
         // Check if we need to play a taunt.
         if (this.messages.length > 0) {
-          const number = parseInt(this.messages[this.messages.length - 1].message, 10);
-          if (number && number > 0 && number <= this.tauntCount) {
+          const message = this.messages[this.messages.length - 1].message;
+          const number = parseInt(message, 10);
+          if (number.toString() === message && number > 0 && number <= this.tauntCount) {
             this.musicService.playSoundEffect('assets/taunts/' + number + '.mp3');
           }
         }

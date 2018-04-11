@@ -71,6 +71,7 @@ export class MusicService {
   public playSoundEffect(src: string) {
     const audio = new Audio();
     audio.src = src;
+    audio.volume = this.audio.volume;
     audio.play();
   }
 
@@ -86,7 +87,7 @@ export class MusicService {
    * @param src
 */
   public setAudio(src: string): void {
-    if(this.currentURL != src) {
+    if(this.currentURL !== src) {
       this.currentURL = src;
       this.audio.src = src;
       this.playAudio();
