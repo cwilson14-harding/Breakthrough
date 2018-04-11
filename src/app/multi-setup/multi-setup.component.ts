@@ -58,7 +58,7 @@ export class MultiSetupComponent implements OnInit {
       }
 
       if (this.joinerName !== '') {
-        document.getElementById("playButton").removeAttribute("disabled");
+        document.getElementById('playButton').removeAttribute('disabled');
         // this.goToBoard();
       }
     });
