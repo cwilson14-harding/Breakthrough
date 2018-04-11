@@ -27,7 +27,6 @@ import {MusicService} from '../music.service';
 
 export class GameBoardComponent implements OnInit {
   // variables for the game Gui
-  picTest;
   gameId: string;
   creatorName;
   creatorPic;
@@ -55,7 +54,7 @@ export class GameBoardComponent implements OnInit {
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
     this.browserClosed();
-    this.router.navigateByUrl(('main-menu'));
+    this.router.navigateByUrl('main-menu');
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -64,7 +63,7 @@ export class GameBoardComponent implements OnInit {
   }
   browserClosed() {
     // TODO: CONFIRM before forfeit
-    // this.router.navigateByUrl(('game-over'));
+    // this.router.navigateByUrl('game-over');
     return this.gameReference.update({
       state: 'STATE.FORFEIT'
     });
