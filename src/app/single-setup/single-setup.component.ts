@@ -30,6 +30,9 @@ AiPic;
 player1 = false;
 player2 = false;
 playerOrderGroup: string;
+AiDifficultyGroup: string;
+humanPlayer;
+aiPlayer;
 
   ngOnInit() {
     this.gameId = this.route.snapshot.params['id'];
@@ -42,19 +45,46 @@ playerOrderGroup: string;
 
   getGameInfo(){
 
+    this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
+      this.AiName = data['joinerName'];
+      this.AiId = data['joinerId'];
+      this.creatorName = data['creatorName'];
+      this.creatorId = data['creatorId'];
+      this.creatorWins = data['creatorWins'];
+      this.creatorLosses = data['creatorLosses'];
+      this.AiWins = data['joinerWins'];
+      this.AiLosses = data['joinerLosses'];
+      this.creatorPic = data['creatorPic'];
+      this.AiPic = data['joinerPic'];
 
-  }
+  });
+}
   goToBoard(){
-    // TODO: check AI difficulty first, then AI type!
+    let playerOne: PlayerData;
+    let playerTwo: PlayerData;
 
-    const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
+    this.humanPlayer = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
 
     if (this.AiDifficultyGroup === 'easy') {
-      const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSRandom);
+      this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSRandom);
     } else {
-      const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
+      this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
     }
     
+// Determine the starting player if random.
+if (this.playerOrderGroup === 'rand') {
+  this.playerOrderGroup = ['human', 'ai'][Math.floor(Math.random() % 2)];
+}
+
+// Set up the game data and player order for who is going first.
+if (this.playerOrderGroup === 'human') {
+  playerOne = this.humanPlayer;
+  playerTwo = this.aiPlayer;
+} else if (this.playerOrderGroup === 'ai') {
+  playerOne = this.aiPlayer;
+  playerTwo = this.humanPlayer;
+}
+
     const currUserId = this.auth.getCurrentUser();
     const gameId = this.createRandomId().toString();
     this.gameService.newGame(playerOne, playerTwo, gameId);
