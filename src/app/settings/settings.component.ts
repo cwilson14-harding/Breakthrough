@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit {
   avatar4Selected = false;
   avatar5Selected = false;
   currentPic;
-  sliderVolume;
+  sliderVolume = 1;
   showIntroVid = false;
   movieTimeout: number;
 
@@ -33,8 +33,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(public auth: AuthService, public db: AngularFirestore, private router: Router, public audio: MusicService) {
     this.audioElement = audio.getAudio();
-    this.sliderVolume = 1;
-
+    this.sliderVolume = this.audioElement.volume;
   }
   ngOnInit() {
   }
@@ -144,7 +143,6 @@ export class SettingsComponent implements OnInit {
     });
   }
   changeVolumeLevel(newValue) {
-    console.log('volumeUpdated');
     this.sliderVolume = newValue;
     this.audioElement.volume = this.sliderVolume;
   }

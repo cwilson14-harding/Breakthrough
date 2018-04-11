@@ -17,7 +17,7 @@ export class GameSettingsComponent implements OnInit {
   showChat = true;
   showLegend = true;
   audioElement: HTMLAudioElement;
-  sliderVolume;
+  sliderVolume = 1;
   volume = false;
   forfeit = false;
   leaveGame = false;
@@ -27,7 +27,7 @@ export class GameSettingsComponent implements OnInit {
   constructor(public audio: MusicService, public db: AngularFirestore, public auth: AngularFireAuth, private gameService: GameService,
               public router: Router) {
     this.audioElement = audio.getAudio();
-    this.sliderVolume = 1;
+    this.sliderVolume = this.audioElement.volume;
 
     this.currUser = this.auth.auth.currentUser.uid;
     this.currGameId = this.gameService.gameId;
@@ -47,7 +47,6 @@ export class GameSettingsComponent implements OnInit {
   }
 
   changeVolumeLevel(newValue) {
-    console.log('volumeUpdated');
     this.sliderVolume = newValue;
     this.audioElement.volume = this.sliderVolume;
   }
