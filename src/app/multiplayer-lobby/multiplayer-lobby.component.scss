@@ -6,7 +6,21 @@
   height: 100vh;
   width: 100vw;
 }
+h2{
+  color: white;
+  font-family: 'Permanent Marker', cursive;
+  left: 121px;
+  position: absolute;
+  top: 150px;
+  width:470px;
+  text-align:center;
+  z-index:1;
 
+}
+.userName {
+  display: block;
+  position: absolute;
+}
 .scrollGames {
   width: 630px;
   height: 500px;
