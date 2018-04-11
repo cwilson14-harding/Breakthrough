@@ -3,17 +3,17 @@
   <!-- some kind of animations - background is plain
   // TODO: page header, background for settings, clean up -->
   <div class="w3-row-padding" style="padding-top: 80px; padding-left: 10px; height: 90%;">
-  
+
       <div class="w3-third w3-display-container w3-left cardStyleLeft" style="height: 90%; margin: 5px; margin-right: 7px;">
           <img src='{{creatorPic}}' class="w3-half w3-display-topmiddle">
           <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
-              <p style="clear:both;">{creatorName}}</p>
+              <p style="clear:both;">{{creatorName}}</p>
               <p style="clear:both;">Wins: {{creatorWins}}</p>
               <p style="clear:both;">Losses: {{creatorLosses}}</p>
           Defeat the rogue AI!
       </div>
       </div>
-    
+
       <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%;">
           Choose AI difficulty:<br>
             <mat-button-toggle-group [(ngModel)]="AiDifficultyGroup">
@@ -21,7 +21,7 @@
               <mat-button-toggle value="hard" style="color: white;">Wrathful</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
-  
+
         <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%;"> <!--   clear: left; margin-left: 460px; -->
           Who goes first?<br>
             <mat-button-toggle-group [(ngModel)]="playerOrderGroup">
@@ -30,7 +30,7 @@
               <mat-button-toggle value="ai" style="color: white;">AI</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
-  
+
         <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 90%; margin: 5px;">
                 <img src='{{joinerPic}}' class="w3-half w3-display-topmiddle">
                 <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
@@ -50,4 +50,3 @@
           <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="goToBoard()">Play Game</button>
         </div>
     </div>
-  
