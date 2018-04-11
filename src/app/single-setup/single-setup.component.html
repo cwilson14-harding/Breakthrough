@@ -2,10 +2,9 @@
 
   <!-- some kind of animations - background is plain
   // TODO: page header, background for settings, clean up -->
- <!-- 
   <div class="w3-row-padding" style="padding-top: 80px; padding-left: 10px; height: 90%;">
   
-      <div class="w3-third w3-display-container w3-left" style="height: 90%; background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); margin: 5px; margin-right: 7px; opacity: 0.9;">
+      <div class="w3-third w3-display-container w3-left cardStyleLeft" style="height: 90%; margin: 5px; margin-right: 7px;">
           <img src='{{playerPic}}' class="w3-half w3-display-topmiddle">
           <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
               <p style="clear:both;">{{playerName}}</p>
@@ -14,16 +13,16 @@
           Defeat the rogue AI!
       </div>
       </div>
-    -->
-      <div class="w3-third w3-container w3-center" style="background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); width: 31%; opacity: 0.9;">
+    
+      <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%;">
           Choose AI difficulty:<br>
             <mat-button-toggle-group [(ngModel)]="AiDifficultyGroup">
               <mat-button-toggle value="easy" style="color: white;">Unfriendly</mat-button-toggle> <!-- set default -->
               <mat-button-toggle value="hard" style="color: white;">Wrathful</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
-  <!--
-        <div class="w3-third w3-container w3-center" style="background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); width: 31%; opacity: 0.9;">
+  
+        <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%;"> <!--   clear: left; margin-left: 460px; -->
           Who goes first?<br>
             <mat-button-toggle-group [(ngModel)]="playerOrderGroup">
               <mat-button-toggle value="player" style="color: white;">Player</mat-button-toggle>
@@ -32,7 +31,7 @@
             </mat-button-toggle-group>
         </div>
   
-        <div class="w3-third w3-display-container w3-right" style="height: 90%; background-color: rgb(41, 41, 41); color: rgb(208, 232, 253); margin: 5px;  opacity: 0.9;">
+        <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 90%; margin: 5px;">
                 <img src='{{joinerPic}}' class="w3-half w3-display-topmiddle">
                 <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
                   <p>AI</p>
@@ -43,7 +42,7 @@
                 </div>
           </div>
   </div>
--->
+
       <div class="w3-container w3-padding w3-display-bottomleft">
         <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="returnToMenu()">Return to Menu</button>
       </div>

@@ -128,30 +128,34 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   }
 
   playGame() {
-    const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
-    const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
-    const currUserId = this.auth.getCurrentUser();
-    const gameId = this.createRandomId().toString();
-    this.gameService.newGame(playerOne, playerTwo, gameId);
-    // this.router.navigateByUrl('single-setup');
+    this.router.navigateByUrl("single-setup");
+    
+    //const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
+    //const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSRandom); // AIMCTSDef
+    //const currUserId = this.auth.getCurrentUser();
+    //const gameId = this.createRandomId().toString();
+    //this.gameService.newGame(playerOne, playerTwo, gameId);
+    //// this.router.navigateByUrl('single-setup');
 
-    this.db.collection('users').doc(currUserId).valueChanges().subscribe(data => {
-      const creatorPic = data['pic'];
-      const creatorName = data['displayName'];
-      const joinerPic = 'assets/avatars/virusAvatar.png';
+    //this.db.collection('users').doc(currUserId).valueChanges().subscribe(data => {
+      //const creatorPic = data['pic'];
+      //const creatorName = data['displayName'];
+      //const joinerPic = 'assets/avatars/virusAvatar.png';
 
-      this.db.collection('games').doc(gameId).set({
-        gameId: gameId,
-        gameType: 'single',
-        isOpen: false,
-        state: 'STATE.OPEN',
-        creatorPic: creatorPic,
-        creatorId: currUserId,
-        creatorName: creatorName,
-        joinerPic: 'assets/avatars/virusAvatar.png',
-        joinerName: 'A.I.',
-      }).then(next => this.router.navigate(['board', gameId, creatorPic, joinerPic])); // 'singlePlayer'
-    });
+      //this.db.collection('games').doc(gameId).set({
+        //gameId: gameId,
+        //gameType: 'single',
+        //isOpen: false,
+        //state: 'STATE.OPEN',
+        //creatorPic: creatorPic,
+        //creatorId: currUserId,
+        //creatorName: creatorName,
+        //joinerPic: 'assets/avatars/virusAvatar.png',
+        //joinerName: 'A.I.',
+      //}).then(next => this.router.navigate(['board', gameId, creatorPic, joinerPic])); // 'singlePlayer'
+    //});
+
+///////////////////////
 
     // this.db.collection('users').doc(currUserId).update({
     //   currGameType: 'single'
@@ -169,9 +173,6 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   goBack() {
     this.showSettings = false;
     this.showTutorial = false;
-
-    // TODO: Decide what to do about this weird audio issue.
-    this.audio.playAudio();
   }
 
 }
