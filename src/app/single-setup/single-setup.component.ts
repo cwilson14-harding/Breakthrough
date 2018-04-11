@@ -19,14 +19,14 @@ export class SingleSetupComponent implements OnInit {
 gameId;
 creatorName;
 creatorId;
-joinerId;
-joinerName;
+AiId;
+AiName;
 creatorWins;
 creatorLosses;
-joinerWins;
-joinerLosses;
+AiWins;
+AiLosses;
 creatorPic;
-joinerPic;
+AiPic;
 player1 = false;
 player2 = false;
 playerOrderGroup: string;
@@ -41,19 +41,28 @@ playerOrderGroup: string;
   }
 
   getGameInfo(){
-      // TODO: check AI difficulty first, then AI type!
+
+
+  }
+  goToBoard(){
+    // TODO: check AI difficulty first, then AI type!
 
     const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
-    const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSRandom); // AIMCTSDef
+
+    if (this.AiDifficultyGroup === 'easy') {
+      const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSRandom);
+    } else {
+      const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
+    }
+    
     const currUserId = this.auth.getCurrentUser();
     const gameId = this.createRandomId().toString();
     this.gameService.newGame(playerOne, playerTwo, gameId);
-    // this.router.navigateByUrl('single-setup');
 
     this.db.collection('users').doc(currUserId).valueChanges().subscribe(data => {
       const creatorPic = data['pic'];
       const creatorName = data['displayName'];
-      const joinerPic = 'assets/avatars/virusAvatar.png';
+      const AiPic = 'assets/avatars/virusAvatar.png';
 
       this.db.collection('games').doc(gameId).set({
         gameId: gameId,
@@ -63,15 +72,10 @@ playerOrderGroup: string;
         creatorPic: creatorPic,
         creatorId: currUserId,
         creatorName: creatorName,
-        joinerPic: 'assets/avatars/virusAvatar.png',
-        joinerName: 'A.I.',
-      }).then(next => this.router.navigate(['board', gameId, creatorPic, joinerPic]));
+        AiPic: 'assets/avatars/virusAvatar.png',
+        AiName: 'A.I.',
+      }).then(next => this.router.navigate(['board', gameId, creatorPic, AiPic]));
     });
-
-
-  }
-  goToBoard(){
-    this.router.navigateByUrl(('board'));
   }
 
   returnToMenu(){

@@ -58,7 +58,7 @@ export class MultiSetupComponent implements OnInit {
       }
 
       if (this.joinerName !== '') {
-        document.getElementById("playButton").removeAttribute("disabled");
+        document.getElementById('playButton').removeAttribute('disabled');
         // this.goToBoard();
       }
     });
@@ -98,7 +98,7 @@ export class MultiSetupComponent implements OnInit {
   }
 
   returnToMenu() {
-    this.router.navigateByUrl('multiPlayerLobby');
+    this.router.navigateByUrl('multiPlayerLobby'); // TODO: sometimes returns to main menu?
   }
 
 }

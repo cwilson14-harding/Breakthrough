@@ -67,6 +67,8 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinerName: string;
 
   overallLeaders;
+  joinSub;
+  createSub;
 
   // Vars for Prototype
   luke = true;
@@ -148,7 +150,7 @@ export class MultiplayerLobbyComponent implements OnInit {
     const userId = this.auth.getCurrentUser();
     const randomId = this.createRandomId().toString();
 
-    this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
+    this.createSub = this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.creatorName = data['displayName'];
       this.creatorPic = data['pic'];
       this.creatorWins = data['wins'];
@@ -173,6 +175,8 @@ export class MultiplayerLobbyComponent implements OnInit {
         this.db.collection('users').doc(userId).update({
           currentGameId: randomId
         }).then(goTo => {
+          console.log('great');
+          this.createSub.unsubscribe();
           this.router.navigateByUrl(`multi-setup/${randomId}`);
         });
       });
@@ -195,10 +199,10 @@ export class MultiplayerLobbyComponent implements OnInit {
   joinGame(gameId) {
     const userId = this.auth.getCurrentUser();
 
-    this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
+    this.joinSub = this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.joinerName = data['displayName'];
       this.joinerPic = data['pic'];
-      this.joinerWins= data['wins'];
+      this.joinerWins = data['wins'];
       this.joinerLosses = data['losses'];
 
       this.db.collection('games').doc(gameId).update({
@@ -212,7 +216,10 @@ export class MultiplayerLobbyComponent implements OnInit {
       }).then(goTo => {
         this.db.collection('users').doc(userId).update({
           currentGameId: gameId
-        }).then(res => this.router.navigate(['multi-setup', gameId]));
+        }).then(res => {
+          this.joinSub.unsubscribe();
+          return this.router.navigate(['multi-setup', gameId]);
+        });
       });
     });
   }
