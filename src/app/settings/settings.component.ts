@@ -126,11 +126,11 @@ export class SettingsComponent implements OnInit {
   }
   selectAvatar() {
     if (this.avatar1Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar1.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure3.png';
     } else if (this.avatar2Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar2.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure.png';
     } else if (this.avatar3Selected === true) {
-      this.currentPic = 'assets/avatars/hackerAvatar3.png';
+      this.currentPic = 'assets/avatars/cyberPunkFigure4.png';
     } else if (this.avatar4Selected === true) {
       this.currentPic = 'assets/avatars/cyberpunk boy.png';
     } else if (this.avatar5Selected === true) {

@@ -198,7 +198,7 @@ export class MultiplayerLobbyComponent implements OnInit {
     this.db.collection('users').doc(userId).valueChanges().subscribe(data => {
       this.joinerName = data['displayName'];
       this.joinerPic = data['pic'];
-      this.joinerWins= data['wins'];
+      this.joinerWins = data['wins'];
       this.joinerLosses = data['losses'];
 
       this.db.collection('games').doc(gameId).update({

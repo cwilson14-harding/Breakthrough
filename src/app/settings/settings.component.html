@@ -84,31 +84,40 @@
         <ngx-slideshow class="w3-text-white" #carousel [cards]="2" [cardSize]="'250px'" [padding]="'10px'">
           <li>
           <div (click)="circleSelected()">
-            <div *ngIf="avatar1Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-              <img src='assets/avatars/cyberPunkFigure3.png' height = "200px" width="150px">
+            <div *ngIf="avatar1Selected">
+              <img src='assets/avatars/cyberPunkFigure3.png' height = "180px" width="130px" style="position: relative; z-index: 2; top: 0px;">
+              <div style="position: absolute; height: 200px; width: 150px; background-color: rgba(228, 186, 230, .7); border-radius: 0%;
+                                       bottom: 0px; left: 50px; z-index: 1">
+              </div>
             </div>
             <div *ngIf="!avatar1Selected">
-              <img src='assets/avatars/cyberPunkFigure3.png' height = "200px" width="150px">
+              <img src='assets/avatars/cyberPunkFigure3.png' height = "180px" width="130px" style="position: relative; z-index: 2; top: 0px;">
             </div>
           </div>
           </li>
           <li>
           <div (click)="virusSelected()">
-            <div *ngIf="avatar2Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-              <img src='assets/avatars/cyberPunkFigure.png' height = "200px" width="150px">
+            <div *ngIf="avatar2Selected">
+              <img src='assets/avatars/cyberPunkFigure.png' height = "180px" width="130px" style="position: relative; z-index: 2; top: 0px;">
+              <div style="position: absolute; height: 200px; width: 150px; background-color: rgba(228, 186, 230, .7); border-radius: 0%;
+                                       bottom: 0px; left: 50px; z-index: 1">
+              </div>
             </div>
             <div *ngIf="!avatar2Selected">
-              <img src='assets/avatars/cyberPunkFigure.png' height = "200px" width="150px">
+              <img src='assets/avatars/cyberPunkFigure.png' height = "180px" width="130px" style="position: relative; z-index: 2; top: 0px;">
             </div>
           </div>
           </li>
           <li>
           <div (click)="virus2Selected()">
-            <div *ngIf="avatar3Selected" style="background-color: rgba(228, 186, 230, .7); border-radius: 1300px;">
-              <img src="assets/avatars/cyberPunkFigure4.png" height = "200px" width="150px">
+            <div *ngIf="avatar3Selected">
+              <img src="assets/avatars/cyberPunkFigure4.png" height = "180px" width="130px" style="position: relative; z-index: 2; top: 0px;">
+              <div style="position: absolute; height: 200px; width: 150px; background-color: rgba(228, 186, 230, .7); border-radius: 0%;
+                                       bottom: 0px; left: 50px; z-index: 1">
+              </div>
             </div>
             <div *ngIf="!avatar3Selected">
-              <img src="assets/avatars/cyberPunkFigure4.png" height = "200px" width="150px">
+              <img src="assets/avatars/cyberPunkFigure4.png" height = "180px" width="130px" style="position: relative; z-index: 2; top: 0px;">
             </div>
           </div>
           </li>
