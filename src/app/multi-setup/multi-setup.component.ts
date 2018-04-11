@@ -98,7 +98,7 @@ export class MultiSetupComponent implements OnInit {
   }
 
   returnToMenu() {
-    this.router.navigateByUrl('multiPlayerLobby');
+    this.router.navigateByUrl('multiPlayerLobby'); // TODO: sometimes returns to main menu?
   }
 
 }
