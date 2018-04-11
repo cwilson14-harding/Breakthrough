@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
   messages: IMessage[] = [];
   game: AngularFirestoreDocument<Game>;
   currentUserName: string;
-  tauntCount = 2;
+  tauntCount = 5;
 
   constructor(private db: AngularFirestore, private gameService: GameService, private auth: AuthService, private musicService: MusicService) {
 
