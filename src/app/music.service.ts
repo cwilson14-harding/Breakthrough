@@ -72,7 +72,6 @@ export class MusicService {
     const audio = new Audio();
     audio.src = src;
     audio.play();
-    audio.getAudio().volume = 2;
   }
 
   /**
