@@ -168,6 +168,8 @@ export class MultiplayerLobbyComponent implements OnInit {
         isOpen: true,
         state: 'STATE.OPEN',
         turn: true,
+        creatorReady: false,
+        joinerReady: false,
         creatorPic: this.creatorPic,
         creatorWins: this.creatorWins,
         creatorLosses: this.creatorLosses
@@ -212,6 +214,8 @@ export class MultiplayerLobbyComponent implements OnInit {
         joinerWins: this.joinerWins,
         joinerLosses: this.joinerLosses,
         isOpen: false,
+        creatorReady: false,
+        joinerReady: false,
         state: 'STATE.CLOSED',
       }).then(goTo => {
         this.db.collection('users').doc(userId).update({

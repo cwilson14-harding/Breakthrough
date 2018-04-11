@@ -44,7 +44,7 @@ aiPlayer;
     return Math.floor(Math.random() * 1000000) + 1;
   }
 
-  getGameInfo(){
+  getGameInfo() {
 
     this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
       this.AiName = data['joinerName'];
@@ -60,7 +60,7 @@ aiPlayer;
 
   });
 }
-  goToBoard(){
+  goToBoard() {
     let playerOne: PlayerData;
     let playerTwo: PlayerData;
 
@@ -75,7 +75,7 @@ aiPlayer;
       this.AiDifficulty = 'Wrathful';
       document.getElementById('aiDiff').innerHTML = 'AI Difficulty: Wrathful';
     }
-    
+
 // Determine the starting player if random.
 if (this.playerOrderGroup === 'rand') {
   this.playerOrderGroup = ['human', 'ai'][Math.floor(Math.random() % 2)];
@@ -113,7 +113,7 @@ if (this.playerOrderGroup === 'human') {
     });
   }
 
-  returnToMenu(){
+  returnToMenu() {
     this.router.navigateByUrl(('main-menu'));
   }
 
