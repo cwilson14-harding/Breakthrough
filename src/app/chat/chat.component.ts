@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
   messages: IMessage[] = [];
   game: AngularFirestoreDocument<Game>;
   currentUserName: string;
-  tauntCount = 7;
+  tauntCount = 10;
 
   constructor(private db: AngularFirestore, private gameService: GameService, private auth: AuthService, private musicService: MusicService) {
 
@@ -69,8 +69,10 @@ export class ChatComponent implements OnInit {
         if (this.messages.length > 0) {
           const message = this.messages[this.messages.length - 1].message;
           const number = parseInt(message, 10);
-          if (number.toString() === message && number > 0 && number <= this.tauntCount) {
-            this.musicService.playSoundEffect('assets/taunts/' + number + '.mp3');
+          if (number.toString() === message) {
+            if ((number > 0 && number <= this.tauntCount) || number === 300 || number === 420) {
+              this.musicService.playSoundEffect('assets/taunts/' + number + '.mp3');
+            }
           }
         }
       });
