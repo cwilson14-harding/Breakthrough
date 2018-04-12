@@ -25,11 +25,11 @@ export class GameOverWinComponent implements OnInit {
   }
 
   getGameInfo(){
-    this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
+    this.db.collection('users').doc(this.auth.getCurrentUser()).valueChanges().subscribe(data => {
       this.winnerName = data['displayName'];
-      this.winnerWins = data['playerWins'];
-      this.winnerLosses = data['playerLosses'];
-      this.winnerPic = data['playerPic'];
+      this.winnerWins = data['wins'];
+      this.winnerLosses = data['losses'];
+      this.winnerPic = data['pic'];
 
   });
   }

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { GameBoardComponent } from './game-board/game-board.component';
@@ -45,6 +46,7 @@ import { Intro2Component } from './intro2/intro2.component';
 import { GameSettingsComponent } from './game-settings/game-settings.component';
 import { LegendComponent } from './legend/legend.component';
 
+
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
   { path: 'home', pathMatch: 'full', component: HomeComponent},
@@ -57,7 +59,7 @@ const appRoutes: Routes = [
   { path: 'multiPlayerLobby/:id/:id2/:id3/:id4/:id5', pathMatch: 'full', component: MultiplayerLobbyComponent},
   { path: 'game-over-lose', pathMatch: 'full', component: GameOverLoseComponent},
   { path: 'game-over-win', pathMatch: 'full', component: GameOverWinComponent},
-  { path: 'single-setup', pathMatch: 'full', component: SingleSetupComponent},
+  { path: 'single-setup/:id/:id2/:id3/:id4/:id5', pathMatch: 'full', component: SingleSetupComponent},
   { path: 'multi-setup/:id', pathMatch: 'full', component: MultiSetupComponent},
   { path: 'leaderboard', pathMatch: 'full', component: LeaderboardComponent},
   { path: 'sign-in', pathMatch: 'full', component: SignInComponent},

@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   myStyle: object = {};
   state = 'inactive';
   width = 100;
+  connectionLost = false;
   constructor(private router: Router, public auth: AuthService, public audio: MusicService) {
     audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 16 JC Elton\'s.mp3');
   }
@@ -79,8 +80,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   anonymousLogin() {
-    this.auth.anonymousLogin();
-    this.router.navigateByUrl('guest-info');
+    if (navigator.onLine) {
+      // alert('You have a connection');
+      this.auth.anonymousLogin();
+      this.router.navigateByUrl('guest-info');
+    } else {
+      // alert('connection has been lost, the game is now over!');
+      this.connectionLost = true;
+    }
   }
 
   gameBoard() {
@@ -97,13 +104,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('single-setup');
   }
   signInWithEmail() {
-    this.router.navigateByUrl('/sign-in');
+    if (navigator.onLine) {
+      // alert('You have a connection');
+      this.router.navigateByUrl('/sign-in');
+    } else {
+      // alert('connection has been lost, the game is now over!');
+      this.connectionLost = true;
+    }
   }
 
+  okConnectionLost() {
+    this.connectionLost = false;
+  }
   tutorial() {
     this.router.navigateByUrl('tutorial');
   }
   exitToDesktop() {
     window.close();
+  }
+  playOffline() {
+   this.router.navigateByUrl('main-menu');
   }
 }

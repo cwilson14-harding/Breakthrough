@@ -13,10 +13,10 @@ export class GameOverLoseComponent implements OnInit {
 constructor(public auth: AuthService, private router: Router, public route: ActivatedRoute, public db: AngularFirestore) { }
 
   gameId;
-  winnerName;
-  winnerPic;
-  winnerLosses;
-  winnerWins;
+  loserName;
+  loserPic;
+  loserLosses;
+  loserWins;
 
 
   ngOnInit() {
@@ -25,11 +25,11 @@ constructor(public auth: AuthService, private router: Router, public route: Acti
   }
 
   getGameInfo(){
-    this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
-      this.winnerName = data['displayName'];
-      this.winnerWins = data['playerWins'];
-      this.winnerLosses = data['playerLosses'];
-      this.winnerPic = data['playerPic'];
+    this.db.collection('users').doc(this.auth.getCurrentUser()).valueChanges().subscribe(data => {
+      this.loserName = data['displayName'];
+      this.loserWins = data['wins'];
+      this.loserLosses = data['losses'];
+      this.loserPic = data['pic'];
 
   });
   }
