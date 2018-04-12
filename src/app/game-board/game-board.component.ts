@@ -140,6 +140,8 @@ export class GameBoardComponent implements OnInit {
   getMove() {
     const currentPlayer = this.currentPlayer;
 
+    // alert('beginning og Get Move');
+
     // Connection lost
     if (this.currentPlayer instanceof NetworkPlayer) {
       this.timer = setTimeout(() => {
@@ -174,6 +176,9 @@ export class GameBoardComponent implements OnInit {
       movePromise.then((move: Move) => {
         // Make the move on the game board.
         this.board.makeMove(move);
+       // alert('in the move promise thennn');
+        clearTimeout(this.timer);
+        clearTimeout(this.timer2);
 
         // Reset highlighting
         this.board.clearHighlighting();
