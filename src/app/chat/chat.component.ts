@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {AuthService, Game} from '../core/auth.service';
@@ -11,24 +11,20 @@ import {MusicService} from '../music.service';
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-
 })
 
 export class ChatComponent implements OnInit {
   messagesCollection: AngularFirestoreCollection<any>;
   messages: IMessage[] = [];
   game: AngularFirestoreDocument<Game>;
+
+  @Input()
   currentUserName: string;
+
   tauntCount = 34;
   chatbox: HTMLElement;
 
   constructor(private db: AngularFirestore, private gameService: GameService, public auth: AuthService, private musicService: MusicService) {
-
-    // this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
-    const sub = auth.user.subscribe(data => {
-      this.currentUserName = data['displayName'];
-      sub.unsubscribe();
-    });
   }
 
   ngOnInit() {

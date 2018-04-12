@@ -11,7 +11,7 @@
 <div>
   <div class="backImg"> <!-- *ngIf="auth.user | async as user" -->
     <div>
-      <app-chat></app-chat>
+      <app-chat [currentUserName]="localPlayerData.name"></app-chat>
     </div>
     <div>
       <app-legend></app-legend>
@@ -46,13 +46,13 @@
     <!-- DIV FOR Player 2 BACKGROUND-->
   </div>
   <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; left: 10px;" >
-    <img src='{{creatorPic}}' style="width: 60px; height: 70px; position: absolute; top: 10px; left: 10px"><br>
-    <span class="name" style="position: relative; left: 100px; top: -3px">{{creatorName}}</span>
+    <img src='{{gameService.playerOne.imageUrl}}' style="width: 60px; height: 70px; position: absolute; top: 10px; left: 10px"><br>
+    <span class="name" style="position: relative; left: 100px; top: -3px">{{gameService.playerOne.name}}</span>
   </div>
   <!--<span class="name2" style="position: absolute; left: 100px; top: 320px;">Versus</span>-->
   <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; right: 10px;">
-    <img src='{{joinerPic}}' style="width: 60px; height: 70px; position: absolute; right: 10px; top: 10px;">
-    <span class="name" style="position: relative; left: 10px; top: 18px">{{joinerName}}</span>
+    <img src='{{gameService.playerTwo.imageUrl}}' style="width: 60px; height: 70px; position: absolute; right: 10px; top: 10px;">
+    <span class="name" style="position: relative; left: 10px; top: 18px">{{gameService.playerTwo.name}}</span>
   </div>
 
   <!--<app-toolbar (newGameClicked)="newGameClicked()" (showChatClicked)="showChatClicked()" (forfeitClicked)="forfeitClicked()" ></app-toolbar>-->

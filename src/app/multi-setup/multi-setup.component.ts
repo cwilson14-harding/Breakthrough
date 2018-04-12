@@ -42,7 +42,6 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
 
   @HostListener('window:unload', ['$event'])
   closeGames(event) {
-    console.log('hi');
     this.db.collection('games').doc(this.gameId).update({
       isOpen: false
     });
@@ -88,6 +87,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
       if (this.auth.getCurrentUser() === this.creatorId) {
         this.player1 = true;
         this.player2 = false;
+        this.playerOrderGroup = 'rand';
         // document.getElementById('playerOrderGroup').removeAttribute('disabled');
       } else if (this.auth.getCurrentUser() === this.joinerId) {
         this.player2 = true;
@@ -128,8 +128,8 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
     const isJoining = (this.joinerId === this.auth.getCurrentUser());
     const creatorType: PlayerType = (isJoining) ? PlayerType.Network : PlayerType.Local;
     const joinerType: PlayerType = (isJoining) ? PlayerType.Local : PlayerType.Network;
-    const creatorPlayer = new PlayerData(this.creatorName, '', creatorType);
-    const joinerPlayer = new PlayerData(this.joinerName, '', joinerType);
+    const creatorPlayer = new PlayerData(this.creatorName, this.creatorPic, creatorType);
+    const joinerPlayer = new PlayerData(this.joinerName, this.joinerPic, joinerType);
 
     // Determine the starting player if random.
     if (this.playerOrderGroup === 'rand') {

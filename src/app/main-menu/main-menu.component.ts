@@ -35,6 +35,7 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const currUserId = this.auth.getCurrentUser();
+
     if (currUserId) {
       this.db.collection('users').doc(currUserId).snapshotChanges().subscribe(data => {
         this.userUid = data.payload.get('uid');
@@ -43,6 +44,12 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
         this.userWins = data.payload.get('wins');
         this.userLosses = data.payload.get('losses');
       });
+    } else {
+      this.userUid = '';
+      this.userName = 'Player';
+      this.userPic = 'assets/avatars/cyberPunkFigure.png';
+      this.userWins = 0;
+      this.userLosses = 0;
     }
 
     this.myStyle = {
@@ -130,44 +137,7 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   }
 
   playGame() {
-    // TODO: tried to allow offline single-player here, but still not working. See home component
-    if (navigator.onLine) {
-      this.router.navigate(['single-setup', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
-    }else{
-      this.router.navigate(['single-setup', 'Rogue Entertainment', this.createRandomId(), 'assets/avatars/cyberPunkFigure4.png', 0, 0]);
-    }
-    
-
-    //const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
-    //const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSRandom); // AIMCTSDef
-    //const currUserId = this.auth.getCurrentUser();
-    //const gameId = this.createRandomId().toString();
-    //this.gameService.newGame(playerOne, playerTwo, gameId);
-    //// this.router.navigateByUrl('single-setup');
-
-    //this.db.collection('users').doc(currUserId).valueChanges().subscribe(data => {
-      //const creatorPic = data['pic'];
-      //const creatorName = data['displayName'];
-      //const joinerPic = 'assets/avatars/virusAvatar.png';
-
-      //this.db.collection('games').doc(gameId).set({
-        //gameId: gameId,
-        //gameType: 'single',
-        //isOpen: false,
-        //state: 'STATE.OPEN',
-        //creatorPic: creatorPic,
-        //creatorId: currUserId,
-        //creatorName: creatorName,
-        //joinerPic: 'assets/avatars/virusAvatar.png',
-        //joinerName: 'A.I.',
-      //}).then(next => this.router.navigate(['board', gameId, creatorPic, joinerPic])); // 'singlePlayer'
-    //});
-
-///////////////////////
-
-    // this.db.collection('users').doc(currUserId).update({
-    //   currGameType: 'single'
-    // }).then(next => this.router.navigate(['board', 'singlePlayer']));
+    this.router.navigate(['single-setup', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
     // TODO: Navigate with the Game ID: Create a Game for the single player in the DB so we can track wins/losses
   }
   // set settings to true. settings div will appear

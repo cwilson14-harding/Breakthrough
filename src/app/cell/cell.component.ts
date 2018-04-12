@@ -39,14 +39,6 @@ export class CellComponent implements OnInit {
   constructor(public auth: AuthService, public db: AngularFirestore, public gameService: GameService, public route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.creatorPic = this.route.snapshot.params['id2'];
-    this.joinerPic = this.route.snapshot.params['id3'];
-    // TODO: Make the pictures change based on who is P1 or P2
-    this.gameReference = this.db.collection<any>('games').doc(this.gameService.gameId);
-    this.gameReference.snapshotChanges().subscribe(data => {
-      // this.joinerPic = data.payload.get('joinerPic');
-      // this.creatorPic = data.payload.get('creatorPic');
-    });
   }
 
 }

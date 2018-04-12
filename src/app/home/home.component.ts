@@ -120,7 +120,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('tutorial');
   }
   exitToDesktop() {
-    window.close();
+    this.auth.logout().then(() => {
+      window.close();
+    });
   }
   playOffline() {
    this.router.navigateByUrl('main-menu');
