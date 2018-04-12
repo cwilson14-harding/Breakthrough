@@ -37,13 +37,15 @@
   </div>
 
 <!-- DO NOT DELETE -->
-  <div style="position: absolute; width: 300px; height: 100px; top: 55px; left: 10px; background-color: black; opacity: .75; border-radius: 20px">
-    <!-- DIV FOR CREATOR BACKGROUND-->
+  <div style="position: absolute; width: 300px; height: 100px; top: 55px; left: 10px; opacity: .75; border-radius: 20px"
+  class='{{this.board.playerTurn === 1 ? "isTurnBlue":"defaultBackgroundClass"}}'>
+    <!-- DIV FOR Player 1 BACKGROUND-->
   </div>
-  <div style="position: absolute; width: 300px; height: 100px; top: 55px; right: 10px; background-color: black; opacity: .8; border-radius: 20px">
-    <!-- DIV FOR JOINER BACKGROUND-->
+  <div style="position: absolute; width: 300px; height: 100px; top: 55px; right: 10px; opacity: .8; border-radius: 20px"
+       class='{{this.board.playerTurn === 2 ? "isTurnRed":"defaultBackgroundClass"}}'>
+    <!-- DIV FOR Player 2 BACKGROUND-->
   </div>
-  <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; left: 10px;">
+  <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; left: 10px;" >
     <img src='{{creatorPic}}' style="width: 60px; height: 70px; position: absolute; top: 10px; left: 10px"><br>
     <span class="name" style="position: relative; left: 100px; top: -3px">{{creatorName}}</span>
   </div>
