@@ -12,7 +12,6 @@
   }
   .buttonStyle{
     width: 100%;
-    // font-family: 'VT323', monospace;
     font-family: 'Rajdhani', sans-serif;
     color: white;
     text-shadow: 2px 2px 4px rgb(216,65,201);
@@ -28,8 +27,9 @@
     font-family: 'Rajdhani', sans-serif;
     color: white;
     text-shadow: 2px 2px 4px rgb(113, 175, 230);
-    background-color: #e949dc;
-    font-size: 16pt;
+    background-color: #2FB5F3;
+    font-size: 18pt;
+    font-weight: bold;
     border-radius: 20px;
     border-color: black;
     border-style: solid;
@@ -39,10 +39,11 @@
   .cardStyleRight {
     opacity: .65;
     font-family: 'Rajdhani', sans-serif;
-    color: white;
+    color: black;
     text-shadow: 2px 2px 4px rgb(113, 175, 230);
-    background-color: #aedd2c;
-    font-size: 16pt;
+    background-color: #DD0048;
+    font-size: 18pt;
+    font-weight: bold;
     border-radius: 20px;
     border-color: black;
     border-style: solid;
@@ -50,7 +51,7 @@
   }
 
   .cardStyleMid {
-    opacity: .65;
+    opacity: .85;
     font-family: 'Rajdhani', sans-serif;
     color: white;
     text-shadow: 2px 2px 4px rgb(113, 175, 230);
