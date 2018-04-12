@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.auth.logout();
     this.myStyle = {
       'position': 'fixed',
       'width': '100%',
