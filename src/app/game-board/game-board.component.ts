@@ -154,7 +154,7 @@ export class GameBoardComponent implements OnInit {
         this.connectionLost = true;
       }, 60000);
       setTimeout(() => {
-        this.router.navigate(['main-menu']);
+        this.router.navigateByUrl('main-menu');
       }, 63000);
     }
 
@@ -170,7 +170,7 @@ export class GameBoardComponent implements OnInit {
           // alert('connection has been lost, the game is now over!');
           this.connectionLost = true;
           setTimeout(() => {
-            this.router.navigate(['main-menu']);
+            this.router.navigateByUrl('main-menu');
           }, 3000);
         }
       }
@@ -218,15 +218,12 @@ export class GameBoardComponent implements OnInit {
 
           // Show the game over.
           setTimeout(() => {
-            // this.router.navigateByUrl(('game-over'));
-            // TODO: Go to game over screen.
             this.gameIsOver = true;
             this.winnerName = winnerData.name;
             // alert(winnerData.name + ' [' + winner + '] has won!');
             // TODO: route to game-over based on if this player won or lost
           
-            
-            this.router.navigateByUrl('main-menu');
+            this.router.navigateByUrl('game-over-win'); // was main menu
           }, 3000);
         } else {
           this.getMove();

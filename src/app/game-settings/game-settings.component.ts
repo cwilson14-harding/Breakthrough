@@ -68,7 +68,7 @@ export class GameSettingsComponent implements OnInit {
     this.db.collection('games').doc(this.currGameId).update({
       forfeit: true
     }).then(next => {
-      this.router.navigateByUrl('main-menu');
+      this.router.navigateByUrl('game-over-win'); // TODO: change to lose
     });
   }
 
