@@ -20,8 +20,9 @@ export class ChatComponent implements OnInit {
   game: AngularFirestoreDocument<Game>;
   currentUserName: string;
   tauntCount = 34;
+  chatbox: HTMLElement;
 
-  constructor(private db: AngularFirestore, private gameService: GameService, private auth: AuthService, private musicService: MusicService) {
+  constructor(private db: AngularFirestore, private gameService: GameService, public auth: AuthService, private musicService: MusicService) {
 
     // this.currentUserName = (gameService.playerOne.type === PlayerType.Local) ? gameService.playerOne.name : gameService.playerTwo.name;
     const sub = auth.user.subscribe(data => {
@@ -31,6 +32,8 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.chatbox = document.getElementById('chatbox');
+
     // Check if this is a networked game.
     if (this.gameService.gameId) {
       // Get the messages list for this game.
@@ -65,18 +68,26 @@ export class ChatComponent implements OnInit {
           }
         });
 
-        // Check if we need to play a taunt.
         if (this.messages.length > 0) {
-          const message = this.messages[this.messages.length - 1].message;
-          const number = parseInt(message, 10);
-          if (number.toString() === message) {
-            if ((number > 0 && number <= this.tauntCount) || number === 300 || number === 420) {
-              this.musicService.playSoundEffect('assets/taunts/' + number + '.mp3');
-            }
-          }
+          this.onMessageAdded(this.messages[this.messages.length - 1]);
         }
+
       });
     }
+  }
+
+  onMessageAdded(message: IMessage) {
+    // Check if we need to play a taunt.
+    const number = parseInt(message.message, 10);
+    if (number.toString() === message.message) {
+      if ((number > 0 && number <= this.tauntCount) || number === 300 || number === 420) {
+        this.musicService.playSoundEffect('assets/taunts/' + number + '.mp3');
+      }
+    }
+
+    // Scroll to the bottom of the chatbox.
+    setTimeout(() => this.chatbox.scrollTop = this.chatbox.scrollHeight, 5);
+
   }
 
   sendMessage(message) {
@@ -86,6 +97,7 @@ export class ChatComponent implements OnInit {
     } else {
       // Send offline message.
       this.messages.push(message);
+      this.onMessageAdded(message);
     }
   }
 

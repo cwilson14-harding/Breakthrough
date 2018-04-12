@@ -221,14 +221,14 @@ export class GameBoardComponent implements OnInit {
           setTimeout(() => {
             this.gameIsOver = true;
             this.winnerName = winnerData.name;
-            
+
             // Route to game-over based on if this player won or lost
             if (winnerData.type === PlayerType.Local) {
               this.router.navigate(['game-over-win', winnerData.name, winnerData.imageUrl]);
             } else {
               this.router.navigate(['game-over-lose', winnerData.name, winnerData.imageUrl]);
             }
-          }, 3000);
+          }, 3500);
         } else {
           this.getMove();
         }
