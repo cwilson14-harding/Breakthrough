@@ -23,8 +23,8 @@ constructor(public auth: AuthService, private router: Router, public route: Acti
     this.getGameInfo();
   }
 
-  getGameInfo(){
-    this.loserId = this.auth.getCurrentUser()
+  getGameInfo() {
+    this.loserId = this.auth.getCurrentUser();
     this.loserName = this.route.snapshot.params['id'];
     this.loserPic = this.route.snapshot.params['id2'];
 

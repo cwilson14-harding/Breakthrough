@@ -202,25 +202,20 @@ export class GameBoardComponent implements OnInit {
           // Send the winning move if multiplayer.
           if (this.currentPlayer instanceof NetworkPlayer) {
             (this.currentPlayer as NetworkPlayer).sendWinningMove(this.board.lastMove, winnerData.name);
-            // TODO: Update leaderboard.
-            this.game.valueChanges().subscribe( data => {
-              const creatorName = data['creatorName'];
-              const creatorId = data['creatorId'];
-              const joinerName = data['joinerName'];
-              const joinerId = data['joinerId'];
-              if (winnerData.name === creatorName) {
-                this.db.collection('users').doc(creatorId).update({
-                  wins: +1
+          }
+
+          // Update leaderboard.
+          const id = this.auth.getCurrentUser();
+          if (id) {
+            const sub = this.db.collection('users').doc(id).valueChanges().subscribe((value) => {
+              sub.unsubscribe();
+              if (winnerData.name === this.localPlayerData.name) {
+                this.db.collection('users').doc(id).update({
+                  wins: value['wins'] + 1
                 });
-                this.db.collection('users').doc(joinerId).update({
-                  losses: +1
-                });
-              } else if (winnerData.name === joinerName) {
-                this.db.collection('users').doc(joinerId).update({
-                  wins: +1
-                });
-                this.db.collection('users').doc(creatorId).update({
-                  losses: +1
+              } else {
+                this.db.collection('users').doc(id).update({
+                  losses: value['losses'] + 1
                 });
               }
             });
@@ -332,13 +327,6 @@ export class GameBoardComponent implements OnInit {
     this.router.navigateByUrl('game-over-lose');
   }
 
-  getCurrentGame(user, game) {
-    if (user.displayName === game.creatorName) {
-      alert('This is your game.');
-    } else {
-      alert("This is " + game.creatorName + "'s game."); // added 's. is accurate?
-    }
-  }
   goToGameSettings() {
     this.gameSettings = true;
     this.showGame = false;

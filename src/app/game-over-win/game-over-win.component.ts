@@ -23,15 +23,14 @@ export class GameOverWinComponent implements OnInit {
     this.getGameInfo();
   }
 
-  getGameInfo(){
-    this.winnerId = this.auth.getCurrentUser()
+  getGameInfo() {
+    this.winnerId = this.auth.getCurrentUser();
     this.winnerName = this.route.snapshot.params['id'];
     this.winnerPic = this.route.snapshot.params['id2'];
 
     this.db.collection('users').doc(this.winnerId).valueChanges().subscribe(data => {
       this.winnerWins = data['wins'];
       this.winnerLosses = data['losses'];
-
   });
   }
 

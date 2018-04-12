@@ -38,6 +38,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
   threeSecs = false;
   twoSecs = false;
   oneSec = false;
+  sub;
 
 
   @HostListener('window:unload', ['$event'])
@@ -72,7 +73,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
   }
 
   getGameInfo() {
-    this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
+    this.sub = this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
       this.joinerName = data['joinerName'];
       this.joinerId = data['joinerId'];
       this.creatorName = data['creatorName'];
@@ -97,6 +98,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
        if (this.joinerName !== '') {
       //   // document.getElementById('playButton').removeAttribute('disabled');
          this.isGameStarting = true;
+         this.sub.unsubscribe();
          setTimeout(() => {
            this.gameStartMessage = true;
          }, 500);

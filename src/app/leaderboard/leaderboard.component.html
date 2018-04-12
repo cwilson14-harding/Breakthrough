@@ -3,14 +3,6 @@
         <div class="w3-display-middle" style="width: 50%; padding-top: 3%">
           <ul class="w3-ul w3-card-4 ulOpacity">
 
-            <li class="w3-bar greyBackground">
-              <img src="assets/avatars/circle.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                <div class="w3-bar-item">
-                  <span class="gameListHeading">AI</span><br>
-                  <span class="gameListText">2,147,483,647 wins; 0 Losses</span>
-                </div>
-            </li>
-
             <li class="w3-bar greyBackground" *ngFor="let leader of overallLeaders | async">
               <img src="{{leader.pic}}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
                 <div class="w3-bar-item">
