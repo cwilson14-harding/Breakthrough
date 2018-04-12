@@ -55,7 +55,7 @@ aiPlayer;
     this.creatorWins = this.route.snapshot.params['id4'];
     this.creatorLosses = this.route.snapshot.params['id5'];
     this.creatorPic = this.route.snapshot.params['id3'];
-    this.AiPic = 'assets/avatars/virusAvatar.png';
+    this.AiPic = 'assets/avatars/aiAvatar.png';
 
 }
 
