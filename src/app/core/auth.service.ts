@@ -145,7 +145,11 @@ export class AuthService {
 
   getCurrentUser(): string {
     const currentUser = this.afAuth.auth.currentUser;
-    return currentUser.uid;
+    if (currentUser) {
+      return currentUser.uid;
+    } else {
+      return undefined;
+    }
   }
 
   getAnonymousInfo(id) {

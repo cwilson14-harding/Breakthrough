@@ -29,7 +29,8 @@
           </div>
           <div class="buttonOpacity">
             <div class="w3-row w3-padding">
-              <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="goToMulti()">Multi-Player</button>
+              <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="goToMulti()" *ngIf="this.userUid">Multi-Player</button>
+              <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="goToMulti()" *ngIf="!this.userUid" disabled>Multi-Player</button>
             </div>
             <div class="w3-row w3-padding">
               <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle " (click)="playGame()">Single Player</button>

@@ -123,6 +123,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     window.close();
   }
   playOffline() {
-
+   this.router.navigateByUrl('main-menu');
   }
 }
