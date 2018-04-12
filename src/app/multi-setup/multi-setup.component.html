@@ -52,10 +52,10 @@
         </div>
 </div>
 
-    <div class="w3-container w3-padding w3-display-bottomleft buttonOpacity">
+    <div class="w3-container w3-padding w3-display-bottomleft buttonOpacity" *ngIf="!isGameStarting">
       <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min buttonStyle" (click)="returnToMenu()">Return to Menu</button>
     </div>
-    <div class="w3-container w3-padding w3-display-bottomright buttonOpacity">
+    <!--div class="w3-container w3-padding w3-display-bottomright buttonOpacity">
         <button id="playButton" class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min buttonStyle" disabled="true" (click)="goToBoard()">Play Game</button>
-      </div>
+      </div-->
   </div>

@@ -32,6 +32,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
   playerOrderGroup: string;
   gameNotJoined = false;
   gameNotJoinedTimer;
+  turn = true;
 
   isGameStarting = false;
   gameStartMessage = false;
@@ -53,6 +54,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.gameId = this.route.snapshot.params['id'];
     this.getGameInfo();
+    this.playerOrderGroup = 'rand';
 
     // If no joiner after 45 seconds, the game will be closed by default
     // if (this.joinerName === undefined) {
@@ -84,21 +86,35 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
       this.joinerLosses = data['joinerLosses'];
       this.creatorPic = data['creatorPic'];
       this.joinerPic = data['joinerPic'];
+      this.turn = data['turn'];
 
       if (this.auth.getCurrentUser() === this.creatorId) {
         this.player1 = true;
         this.player2 = false;
-        this.playerOrderGroup = 'rand';
         // document.getElementById('playerOrderGroup').removeAttribute('disabled');
       } else if (this.auth.getCurrentUser() === this.joinerId) {
         this.player2 = true;
         this.player1 = false;
       }
 
-       if (this.joinerName !== '') {
+       if (this.joinerName !== '' && !this.isGameStarting) {
       //   // document.getElementById('playButton').removeAttribute('disabled');
          this.isGameStarting = true;
-         this.sub.unsubscribe();
+
+         if (this.player1) {
+           // Determine the starting player if random.
+           if (this.playerOrderGroup === 'rand') {
+             this.playerOrderGroup = ['p1', 'p2'][Math.floor(Math.random() % 2)];
+           }
+
+           // Update the starting player.
+           this.turn = (this.playerOrderGroup === 'p1');
+           this.db.collection('games').doc(this.gameId).update({
+             turn: this.turn
+           });
+         }
+
+
          setTimeout(() => {
            this.gameStartMessage = true;
          }, 500);
@@ -115,6 +131,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
            this.oneSec = true;
          }, 5000);
          setTimeout(() => {
+           this.sub.unsubscribe();
            this.goToBoard();
          }, 6000);
        }
@@ -133,13 +150,9 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
     const creatorPlayer = new PlayerData(this.creatorName, this.creatorPic, creatorType);
     const joinerPlayer = new PlayerData(this.joinerName, this.joinerPic, joinerType);
 
-    // Determine the starting player if random.
-    if (this.playerOrderGroup === 'rand') {
-      this.playerOrderGroup = ['p1', 'p2'][Math.floor(Math.random() % 2)];
-    }
 
     // Set up the game data and player order for who is going first.
-    if (this.playerOrderGroup === 'p1') {
+    if (this.turn) {
       playerOne = creatorPlayer;
       playerTwo = joinerPlayer;
     } else {
