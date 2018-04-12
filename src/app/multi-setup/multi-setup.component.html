@@ -33,10 +33,19 @@
           Waiting for another player...
         </div>
 
-      <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 94%; margin: 5px; position: relative; bottom: 40px;" >
+  <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 94%; margin: 5px; position: relative; bottom: 40px;" *ngIf="!isGameStarting">
+    <img src='{{joinerPic}}' class="w3-half w3-display-topmiddle">
+    <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
+      <div>
+       Waiting for opponent
+      </div>
+    </div>
+  </div>
+
+      <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 94%; margin: 5px; position: relative; bottom: 0px;" *ngIf="isGameStarting">
               <img src='{{joinerPic}}' class="w3-half w3-display-topmiddle">
               <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
-                <div *ngIf="isGameStarting">
+                <div>
                   <p>{{joinerName}}</p>
                   <p>Wins: {{joinerWins}}</p>
                   <p>Losses: {{joinerLosses}}</p>
