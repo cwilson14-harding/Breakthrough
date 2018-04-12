@@ -14,7 +14,7 @@
     </div>
     </div>
 
-      <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%; margin-top: 250px;">
+      <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%; margin-top: 250px;" *ngIf="!isGameStarting">
         Who goes first?<br>
           <mat-button-toggle-group [(ngModel)]="playerOrderGroup" disabled=true>
             <mat-button-toggle value="p1" style="color: black;">Player 1</mat-button-toggle>
@@ -22,6 +22,12 @@
             <mat-button-toggle value="p2" style="color: black;">Player 2</mat-button-toggle>
           </mat-button-toggle-group>
       </div>
+  <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%; margin-top: 250px;" *ngIf="isGameStarting">
+    <h2 style="color: #F2F2F2" *ngIf="gameStartMessage">Your Game Will Begin In...</h2>
+    <h2 style="color: #F2F2F2" *ngIf="threeSecs">3</h2>
+    <h2 style="color: #F2F2F2" *ngIf="twoSecs">2</h2>
+    <h2 style="color: #F2F2F2" *ngIf="oneSec">1</h2>
+  </div>
 
       <div id="waiting" class="w3-third w3-container w3-center cardStyleMid" style="width: 31%; position: relative; right: 31.25%; top: 100px;">
           Waiting for another player...

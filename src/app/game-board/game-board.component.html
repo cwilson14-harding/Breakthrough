@@ -37,20 +37,22 @@
   </div>
 
 <!-- DO NOT DELETE -->
-  <div style="position: absolute; width: 300px; height: 100px; top: 55px; left: 10px; background-color: black; opacity: .75; border-radius: 20px">
-    <!-- DIV FOR CREATOR BACKGROUND-->
+  <div style="position: absolute; width: 300px; height: 100px; top: 55px; left: 10px; opacity: .75; border-radius: 20px"
+  class='{{this.board.playerTurn === 1 ? "isTurnBlue":"defaultBackgroundClass"}}'>
+    <!-- DIV FOR Player 1 BACKGROUND-->
   </div>
-  <div style="position: absolute; width: 300px; height: 100px; top: 55px; right: 10px; background-color: black; opacity: .8; border-radius: 20px">
-    <!-- DIV FOR JOINER BACKGROUND-->
+  <div style="position: absolute; width: 300px; height: 100px; top: 55px; right: 10px; opacity: .8; border-radius: 20px"
+       class='{{this.board.playerTurn === 2 ? "isTurnRed":"defaultBackgroundClass"}}'>
+    <!-- DIV FOR Player 2 BACKGROUND-->
   </div>
-  <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; left: 10px;">
-    <span class="name" style="position: relative; left: 100px; top: 18px">{{creatorName}}</span>
-    <img src='{{creatorPic}}' style="width: 60px; height: 70px; position: relative; top: 10px; right: 80px">
+  <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; left: 10px;" >
+    <img src='{{creatorPic}}' style="width: 60px; height: 70px; position: absolute; top: 10px; left: 10px"><br>
+    <span class="name" style="position: relative; left: 100px; top: -3px">{{creatorName}}</span>
   </div>
   <!--<span class="name2" style="position: absolute; left: 100px; top: 320px;">Versus</span>-->
   <div style="position: absolute; width: 300px; height: 100px; z-index: 2; top: 55px; right: 10px;">
-    <span class="name" style="position: relative; left: 150px; top: 18px">{{joinerName}}</span>
-    <img src='{{joinerPic}}' style="width: 60px; height: 70px; position: relative; right: 20px; top: 10px;">
+    <img src='{{joinerPic}}' style="width: 60px; height: 70px; position: absolute; right: 10px; top: 10px;">
+    <span class="name" style="position: relative; left: 10px; top: 18px">{{joinerName}}</span>
   </div>
 
   <!--<app-toolbar (newGameClicked)="newGameClicked()" (showChatClicked)="showChatClicked()" (forfeitClicked)="forfeitClicked()" ></app-toolbar>-->
