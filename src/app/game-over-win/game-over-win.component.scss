@@ -14,12 +14,19 @@
     text-shadow: 2px 2px 4px rgb(161, 39, 231);
   }
 
+  .largePic {
+    max-height: 50%;
+    height: auto;
+    width: auto;
+    top: 20px;
+    opacity: 1;
+  }
+
   .buttonOpacity {
     opacity: .85;
   }
   .buttonStyle{
     width: 100%;
-    // font-family: 'VT323', monospace;
     font-family: 'Rajdhani', sans-serif;
     color: white;
     text-shadow: 2px 2px 4px rgb(216,65,201);

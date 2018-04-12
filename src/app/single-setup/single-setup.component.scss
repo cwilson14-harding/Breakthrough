@@ -7,6 +7,14 @@
     width: 100vw;
   }
 
+  .largePic {
+    max-height: 50%;
+    height: auto;
+    width: auto;
+    top: 20px;
+    opacity: 1;
+  }
+
   .buttonOpacity {
     opacity: .85;
   }
@@ -26,7 +34,7 @@
     opacity: .65;
     font-family: 'Rajdhani', sans-serif;
     color: black;
-    text-shadow: 2px 2px 4px rgb(113, 175, 230);
+    text-shadow: 2px 2px 4px rgb(236, 124, 231);
     background-color: #2FB5F3;
     font-size: 16pt;
     font-weight: bold;
