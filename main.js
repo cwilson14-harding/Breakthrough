@@ -7,7 +7,7 @@ function createWindow () {
     height: 768,
     fullscreen: true, // Set to false to make a window.
     backgroundColor: '#ffffff',
-    icon: `file://${__dirname}/dist/assets/logo.png`
+    icon: `file://${__dirname}/dist/favicon.ico`
   });
   win.loadURL(`file://${__dirname}/dist/index.html`);
   //// uncomment below to open the DevTools.

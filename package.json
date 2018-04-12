@@ -1,12 +1,12 @@
 {
-  "name": "breakthrough",
-  "version": "0.0.0",
+  "name": "System.Break()",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "package": "electron-packager . SystemBreak --platform=win32 --arch=ia32 --out release-builds/ --overwrite",
+    "package": "ng build --prod && electron-packager . SystemBreak --platform=win32 --win --icon=dist/favicon.ico --version-string.CompanyName=\"Rogue Entertainment\" --version-string.CompanyName=\"Rogue Entertainment\" --arch=ia32 --asar --prune --out release-builds/ --overwrite",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
