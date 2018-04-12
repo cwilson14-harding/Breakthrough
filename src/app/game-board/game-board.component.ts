@@ -223,6 +223,9 @@ export class GameBoardComponent implements OnInit {
             this.gameIsOver = true;
             this.winnerName = winnerData.name;
             // alert(winnerData.name + ' [' + winner + '] has won!');
+            // TODO: route to game-over based on if this player won or lost
+          
+            
             this.router.navigateByUrl('main-menu');
           }, 3000);
         } else {
@@ -316,7 +319,7 @@ export class GameBoardComponent implements OnInit {
 
 
   forfeitClicked() {
-    this.router.navigateByUrl('game-over-lose');
+    this.router.navigateByUrl('game-over-win'); // TODO: change to lose once testing complete
   }
 
   getCurrentGame(user, game) {

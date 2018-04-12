@@ -48,14 +48,14 @@ aiPlayer;
 
     this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
       this.AiName = data['joinerName'];
-      this.AiId = data['joinerId'];
-      this.creatorName = data['creatorName'];
-      this.creatorId = data['creatorId'];
-      this.creatorWins = data['creatorWins'];
-      this.creatorLosses = data['creatorLosses'];
+      this.AiId = data['joinerId']; // TODO: make it work
+      this.creatorName = data['displayName'];
+      this.creatorId = data['playerId'];
+      this.creatorWins = data['playerWins'];
+      this.creatorLosses = data['playerLosses'];
       this.AiWins = data['joinerWins'];
       this.AiLosses = data['joinerLosses'];
-      this.creatorPic = data['creatorPic'];
+      this.creatorPic = data['playerPic'];
       this.AiPic = data['joinerPic'];
 
   });

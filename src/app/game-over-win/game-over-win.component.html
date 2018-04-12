@@ -1,22 +1,24 @@
 <div class="background">
-    <h1 class="headingText w3-padding w3-center" style="color:aqua;">Winner</h1>
-          <div class="w3-padding w3-center">
-            <img src="assets/avatars/luke.png">
-            <div class = "infoText" class="w3-row" style="color:black; font-size:16pt">
-              Name: Luke Uebelein
-              <br>
-              Wins: 1
-              <br>
-              Losses: 25
-            </div>
-          </div>
   
-    <div class="w3-container w3-padding w3-display-bottomleft">
-      <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="returnToLeaderboard()">Leaderboard</button>
+<p class="header">Congratulations!</p>
+
+<div class="w3-row-padding" style="padding-top: 50px; padding-left: 10px; height: 95%;">
+
+    <div class="w3-half w3-display-container w3-center cardStyleMid" style="height: 94%; margin: 5px; margin-right: 7px;">
+        <img src='{{winnerPic}}' class="w3-half w3-display-topmiddle">
+        <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
+            <p>{{winnerName}}</p>
+            <p>Wins: {{winnerWins}}</p>
+            <p>Losses: {{winnerLosses}}</p>
     </div>
-  
-    <div class="w3-container w3-padding w3-display-bottomright">
-      <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min" (click)="returnToMenu()">Return to Menu</button>
     </div>
+
+</div>
+
+    <div class="w3-container w3-padding w3-display-bottomleft buttonOpacity">
+      <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min buttonStyle" (click)="returnToLeaderboard()">Return to Leaderboard</button>
+    </div>
+    <div class="w3-container w3-padding w3-display-bottomright buttonOpacity">
+        <button id="playButton" class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min buttonStyle" (click)="returnToMenu()">Return to Menu</button>
+      </div>
   </div>
-  
