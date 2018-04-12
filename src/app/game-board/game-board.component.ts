@@ -47,6 +47,10 @@ export class GameBoardComponent implements OnInit {
   timer;
   timer2;
 
+  get localPlayerData(): PlayerData {
+    return (this.gameService.playerOne.type === PlayerType.Local) ? this.gameService.playerOne : this.gameService.playerTwo;
+  }
+
   // other variables
   board: Board;
   game: AngularFirestoreDocument<Game>;
@@ -77,7 +81,7 @@ export class GameBoardComponent implements OnInit {
 
 
   constructor(public db: AngularFirestore, private router: Router, public auth: AuthService,
-              private gameService: GameService, public chat: ChatComponent, public audio: MusicService, public route: ActivatedRoute) {
+              public gameService: GameService, public chat: ChatComponent, public audio: MusicService, public route: ActivatedRoute) {
     audio.setAudio('assets/music/Garoad - VA-11 HALL-A - Second Round - 26 Those Who Dwell in Shadows.mp3');
     this.board = new Board();
     this.board.newGame();
@@ -120,18 +124,23 @@ export class GameBoardComponent implements OnInit {
         this.isLoading = false;
       }, 2000);
 
-    this.gameReference = this.db.collection<any>('games').doc(this.gameService.gameId);
+
     // this.gameId = this.route.snapshot.params['id'];
     this.creatorPic = this.route.snapshot.params['id2'];
     this.joinerPic = this.route.snapshot.params['id3'];
-    this.gameReference.snapshotChanges().subscribe(data => {
-      this.joinerName = data.payload.get('joinerName');
-      this.joinerId = data.payload.get('joinerId');
-      // this.joinerPic = data.payload.get('joinerPic');
-      this.creatorName = data.payload.get('creatorName');
-      this.creatorId = data.payload.get('creatorId');
-      // this.creatorPic = data.payload.get('creatorPic');
-    });
+
+
+    if (this.gameService.gameId) {
+      this.gameReference = this.db.collection<any>('games').doc(this.gameService.gameId);
+      this.gameReference.snapshotChanges().subscribe(data => {
+        this.joinerName = data.payload.get('joinerName');
+        this.joinerId = data.payload.get('joinerId');
+        // this.joinerPic = data.payload.get('joinerPic');
+        this.creatorName = data.payload.get('creatorName');
+        this.creatorId = data.payload.get('creatorId');
+        // this.creatorPic = data.payload.get('creatorPic');
+      });
+    }
   }
   /* movePiece: function(){}
      Moves a piece from one coordinate to the other if the move was valid.

@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import {GameService} from '../game.service';
-import {MatButtonToggle} from '@angular/material/button-toggle';
 import {AuthService} from '../core/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
 
@@ -64,7 +63,7 @@ aiPlayer;
     let playerOne: PlayerData;
     let playerTwo: PlayerData;
 
-    this.humanPlayer = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
+    this.humanPlayer = new PlayerData(this.creatorName, this.creatorPic, PlayerType.Local);
 
     if (this.AiDifficultyGroup === 'easy') {
       this.aiPlayer = new PlayerData(this.AiName, this.AiPic, PlayerType.AIMCTSRandom);
@@ -88,27 +87,24 @@ if (this.playerOrderGroup === 'human') {
   playerTwo = this.humanPlayer;
 }
 
-    const currUserId = this.auth.getCurrentUser();
-    const gameId = this.createRandomId().toString();
+    const gameId = (this.creatorId) ? this.createRandomId().toString() : '';
     this.gameService.newGame(playerOne, playerTwo, gameId);
 
-    this.db.collection('users').doc(currUserId).valueChanges().subscribe(data => {
-      const creatorPic = data['pic'];
-      const creatorName = data['displayName'];
-      const AiPic = 'assets/avatars/virusAvatar.png';
-
+    if (this.creatorId) {
       this.db.collection('games').doc(gameId).set({
         gameId: gameId,
         gameType: 'single',
         isOpen: false,
         state: 'STATE.OPEN',
-        creatorPic: creatorPic,
-        creatorId: currUserId,
-        creatorName: creatorName,
-        AiPic: 'assets/avatars/virusAvatar.png',
-        AiName: 'A.I.',
-      }).then(next => this.router.navigate(['board', gameId, creatorPic, AiPic]));
-    });
+        creatorPic: this.creatorPic,
+        creatorId: this.creatorId,
+        creatorName: this.creatorName,
+        AiPic: this.AiPic,
+        AiName: this.AiName,
+      }).then(next => this.router.navigate(['board', gameId, this.creatorPic, this.AiPic]));
+    } else {
+      this.router.navigate(['board', gameId, this.creatorPic, this.AiPic]);
+    }
   }
 
   returnToMenu() {
