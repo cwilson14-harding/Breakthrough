@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {MusicService} from "../music.service";
+import {MusicService} from '../music.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {GameService} from '../game.service';
@@ -30,6 +30,9 @@ export class GameSettingsComponent implements OnInit {
               public router: Router) {
     this.audioElement = audio.getAudio();
     this.sliderVolume = this.audioElement.volume;
+
+    this.currUserName = this.gameService.localPlayer.name;
+    this.currUserPic = this.gameService.localPlayer.imageUrl;
 
     this.currUser = this.auth.auth.currentUser.uid;
     this.currGameId = this.gameService.gameId;
@@ -69,14 +72,8 @@ export class GameSettingsComponent implements OnInit {
     this.leaveGame = true;
     this.db.collection('games').doc(this.currGameId).update({
       forfeit: true
-    }).then(next => {
-      this.db.collection('users').doc(this.currUser).valueChanges().subscribe(data => {
-        this.currUserName = data['displayName'];
-        this.currUserPic = data['pic'];
-  
     });
-      this.router.navigate(['game-over-lose', this.currUserName, this.currUserPic]);
-    });
+    this.router.navigate(['game-over-lose', this.currUserName, this.currUserPic]);
   }
 
   goBack() {

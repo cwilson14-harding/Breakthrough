@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit {
   currentPic;
   sliderVolume = 1;
   showIntroVid = false;
-  movieTimeout: number;
+  movieTimeout;
 
   @Input()
   music: any;

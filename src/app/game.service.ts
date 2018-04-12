@@ -18,6 +18,10 @@ export class GameService {
   get isLocalGame(): boolean {
     return this.playerOne.type !== PlayerType.Network && this.playerTwo.type !== PlayerType.Network;
   }
+
+  get localPlayer(): PlayerData {
+    return (this.playerOne.type === PlayerType.Local) ? this.playerOne : this.playerTwo;
+  }
 }
 
 
