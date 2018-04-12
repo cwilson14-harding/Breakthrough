@@ -128,8 +128,8 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
     const isJoining = (this.joinerId === this.auth.getCurrentUser());
     const creatorType: PlayerType = (isJoining) ? PlayerType.Network : PlayerType.Local;
     const joinerType: PlayerType = (isJoining) ? PlayerType.Local : PlayerType.Network;
-    const creatorPlayer = new PlayerData(this.creatorName, '', creatorType);
-    const joinerPlayer = new PlayerData(this.joinerName, '', joinerType);
+    const creatorPlayer = new PlayerData(this.creatorName, this.creatorPic, creatorType);
+    const joinerPlayer = new PlayerData(this.joinerName, this.joinerPic, joinerType);
 
     // Determine the starting player if random.
     if (this.playerOrderGroup === 'rand') {
