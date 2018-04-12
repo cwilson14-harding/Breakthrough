@@ -13,7 +13,7 @@
         <img  class="w3-display-topmiddle" style="width: 200%; position: relative;" src="assets/logos/systemBreakLogoSmall.png">
       </div>
 
-      <div class="buttonOpacity">
+      <div class="buttonOpacity" *ngIf="!connectionLost">
         <div class="w3-row w3-padding">
           <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="signInWithEmail()">Sign in with Email</button>
         </div>
@@ -26,6 +26,12 @@
         <div class="w3-row w3-padding">
           <button class="w3-btn w3-round-xlarge w3-xlarge w3-black buttonStyle" (click)="exitToDesktop()">Exit to Desktop</button>
         </div>
+      </div>
+
+      <div class="buttonOpacity2" *ngIf="connectionLost" style="padding-bottom: 5px">
+        <h1 class="noWifiHeading">Error</h1>
+        <p class = "noWifiText">There is no internet connection.  You must play offline.</p>
+        <button class="errorButton" (click)="okConnectionLost()">OK</button>
       </div>
     </div>
   </div>
