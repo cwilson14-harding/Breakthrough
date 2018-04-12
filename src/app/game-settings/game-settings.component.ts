@@ -4,6 +4,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {GameService} from '../game.service';
 import {Router} from '@angular/router';
+import {AuthService} from '../core/auth.service';
 
 @Component({
   selector: 'app-game-settings',
@@ -26,7 +27,7 @@ export class GameSettingsComponent implements OnInit {
   currUserPic;
   currGameId;
 
-  constructor(public audio: MusicService, public db: AngularFirestore, public auth: AngularFireAuth, private gameService: GameService,
+  constructor(public audio: MusicService, public db: AngularFirestore, public auths: AuthService, public auth: AngularFireAuth, private gameService: GameService,
               public router: Router) {
     this.audioElement = audio.getAudio();
     this.sliderVolume = this.audioElement.volume;
@@ -34,7 +35,7 @@ export class GameSettingsComponent implements OnInit {
     this.currUserName = this.gameService.localPlayer.name;
     this.currUserPic = this.gameService.localPlayer.imageUrl;
 
-    this.currUser = this.auth.auth.currentUser.uid;
+    this.currUser = this.auths.getCurrentUser();
     this.currGameId = this.gameService.gameId;
   }
 
@@ -70,9 +71,11 @@ export class GameSettingsComponent implements OnInit {
 
   quitGame() {
     this.leaveGame = true;
-    this.db.collection('games').doc(this.currGameId).update({
-      forfeit: true
-    });
+    if (this.currGameId) {
+      this.db.collection('games').doc(this.currGameId).update({
+        forfeit: true
+      });
+    }
     this.router.navigate(['game-over-lose', this.currUserName, this.currUserPic]);
   }
 

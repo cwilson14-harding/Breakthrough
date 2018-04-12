@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-legend',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./legend.component.scss']
 })
 export class LegendComponent implements OnInit {
+  @Input()
+  reversed: boolean;
+
   constructor() { }
 
   ngOnInit() {

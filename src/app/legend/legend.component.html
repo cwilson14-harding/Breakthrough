@@ -11,12 +11,24 @@
   <span style="color: white; position: absolute; bottom: 5px; left: 970px" class="legendNums">H</span>
 
   <!-- NUMBERS -->
-  <span style="position: absolute; bottom: 65px; left: 330px" class="legendNums">1</span>
-  <span style="position: absolute; bottom: 150px; left: 321px" class="legendNums">2</span>
-  <span style="position: absolute; bottom: 235px; left: 321px" class="legendNums">3</span>
-  <span style="position: absolute; bottom: 320px; left: 321px" class="legendNums">4</span>
-  <span style="position: absolute; bottom: 405px; left: 321px" class="legendNums">5</span>
-  <span style="position: absolute; bottom: 490px; left: 321px" class="legendNums">6</span>
-  <span style="position: absolute; bottom: 575px; left: 321px" class="legendNums">7</span>
-  <span style="position: absolute; bottom: 660px; left: 321px" class="legendNums">8</span>
+  <div *ngIf="!reversed">
+    <span style="position: absolute; bottom: 65px; left: 330px" class="legendNums">1</span>
+    <span style="position: absolute; bottom: 150px; left: 321px" class="legendNums">2</span>
+    <span style="position: absolute; bottom: 235px; left: 321px" class="legendNums">3</span>
+    <span style="position: absolute; bottom: 320px; left: 321px" class="legendNums">4</span>
+    <span style="position: absolute; bottom: 405px; left: 321px" class="legendNums">5</span>
+    <span style="position: absolute; bottom: 490px; left: 321px" class="legendNums">6</span>
+    <span style="position: absolute; bottom: 575px; left: 321px" class="legendNums">7</span>
+    <span style="position: absolute; bottom: 660px; left: 321px" class="legendNums">8</span>
+  </div>
+  <div *ngIf="reversed">
+    <span style="position: absolute; bottom: 660px; left: 330px" class="legendNums">1</span>
+    <span style="position: absolute; bottom: 575px; left: 321px" class="legendNums">2</span>
+    <span style="position: absolute; bottom: 490px; left: 321px" class="legendNums">3</span>
+    <span style="position: absolute; bottom: 405px; left: 321px" class="legendNums">4</span>
+    <span style="position: absolute; bottom: 320px; left: 321px" class="legendNums">5</span>
+    <span style="position: absolute; bottom: 235px; left: 321px" class="legendNums">6</span>
+    <span style="position: absolute; bottom: 150px; left: 321px" class="legendNums">7</span>
+    <span style="position: absolute; bottom: 65px; left: 321px" class="legendNums">8</span>
+  </div>
 </div>

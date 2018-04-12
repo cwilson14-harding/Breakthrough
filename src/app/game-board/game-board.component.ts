@@ -41,6 +41,9 @@ export class GameBoardComponent implements OnInit {
   volume = false;
   audioElement: HTMLAudioElement;
 
+  rows;
+  reversed: boolean;
+
   winnerName;
   gameIsOver = false;
 
@@ -119,6 +122,14 @@ export class GameBoardComponent implements OnInit {
 
   }
   ngOnInit() {
+
+    if (this.gameService.playerOne.type === PlayerType.Local) {
+      this.rows = [7, 6, 5, 4, 3, 2, 1, 0];
+      this.reversed = false;
+    } else {
+      this.rows = [0, 1, 2, 3, 4, 5, 6, 7];
+      this.reversed = true;
+    }
 
     setTimeout(() => {
         this.isLoading = false;
