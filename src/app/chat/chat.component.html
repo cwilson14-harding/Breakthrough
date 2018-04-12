@@ -16,7 +16,7 @@
     <!-- DIV FOR CHAT -->
   </div>
   <span class="name" style="position: absolute; top: 390px; left: 120px; z-index: 1;">chat</span>
-  <div class="chatHistory2">
+  <div class="chatHistory2" id="chatbox">
     <p *ngFor="let message of messages" class="chat">
       <span class="{{ (message.senderId === this.auth.getCurrentUser()) ? 'self' : 'opponent' }}">{{message.senderName}}</span>: {{message.message}}
     </p>
