@@ -44,6 +44,9 @@ export class GameBoardComponent implements OnInit {
   winnerName;
   gameIsOver = false;
 
+  timer;
+  timer2;
+
   // other variables
   board: Board;
   game: AngularFirestoreDocument<Game>;
@@ -139,27 +142,20 @@ export class GameBoardComponent implements OnInit {
 
     // Connection lost
     if (this.currentPlayer instanceof NetworkPlayer) {
-
-      // this.db.collection('games').doc(this.gameService.gameId).valueChanges().subscribe(data => {
-      //   if (data['forfeit'] === true) {
-      //     this.didForfeit = true;
-      //     setTimeout(() => {
-      //       this.router.navigate(['main-menu']);
-      //     }, 2000);
-      //   }
-      // });
-
-      setTimeout(() => {
+      this.timer = setTimeout(() => {
         // alert('The WiFi Connection has been lost, unfortunately the Game is Over');
         this.connectionLost = true;
       }, 60000);
-      setTimeout(() => {
+      this.timer2 = setTimeout(() => {
         this.router.navigateByUrl('main-menu');
       }, 63000);
     }
 
     if (currentPlayer) {
       const movePromise: Promise<Move> = currentPlayer.getMove(this);
+
+      clearTimeout(this.timer);
+      clearTimeout(this.timer2);
 
       // connection lost
       if (this.currentPlayer instanceof NetworkPlayer) {
@@ -222,7 +218,7 @@ export class GameBoardComponent implements OnInit {
             this.winnerName = winnerData.name;
             // alert(winnerData.name + ' [' + winner + '] has won!');
             // TODO: route to game-over based on if this player won or lost
-          
+
             this.router.navigateByUrl('game-over-lose'); // was main menu
           }, 3000);
         } else {
