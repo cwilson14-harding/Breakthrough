@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {AuthService} from '../core/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
+import {GameService} from '../game.service';
 
 @Component({
   selector: 'app-game-over-lose',
@@ -10,7 +11,7 @@ import {AngularFirestore} from 'angularfire2/firestore';
 })
 export class GameOverLoseComponent implements OnInit {
 
-constructor(public auth: AuthService, private router: Router, public route: ActivatedRoute, public db: AngularFirestore) { }
+constructor(public auth: AuthService, private router: Router, public route: ActivatedRoute, public db: AngularFirestore, public gameService: GameService) { }
 
   loserName;
   loserId;
@@ -28,11 +29,14 @@ constructor(public auth: AuthService, private router: Router, public route: Acti
     this.loserName = this.route.snapshot.params['id'];
     this.loserPic = this.route.snapshot.params['id2'];
 
-    this.db.collection('users').doc(this.loserId).valueChanges().subscribe(data => {
-      this.loserWins = data['wins'];
-      this.loserLosses = data['losses'];
-
-  });
+    this.loserWins = 0;
+    this.loserLosses = 1;
+    if (this.loserId) {
+      this.db.collection('users').doc(this.loserId).valueChanges().subscribe(data => {
+        this.loserWins = data['wins'];
+        this.loserLosses = data['losses'];
+      });
+    }
   }
 
   returnToLeaderboard() {

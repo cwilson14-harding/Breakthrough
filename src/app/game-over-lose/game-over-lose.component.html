@@ -11,15 +11,14 @@
             <p>Wins: {{loserWins}}</p>
             <p>Losses: {{loserLosses}}</p>
             You were defeated by the opposing team.
+        </div>
     </div>
-    </div>
-
 </div>
 
-    <div class="w3-container w3-padding w3-display-bottomleft buttonOpacity">
+    <div *ngIf="!gameService.isLocalGame" class="w3-container w3-padding w3-display-bottomleft buttonOpacity">
       <button class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min buttonStyle" (click)="returnToLeaderboard()">Return to Lobby</button>
     </div>
     <div class="w3-container w3-padding w3-display-bottomright buttonOpacity">
         <button id="playButton" class="w3-btn w3-round-xlarge w3-large w3-black buttonStyle w3-opacity-min buttonStyle" (click)="returnToMenu()" style="margin-right: 10px;">Return to Menu</button>
-      </div>
+    </div>
   </div>

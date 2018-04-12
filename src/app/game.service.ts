@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {PlayerData} from './player-data';
+import {PlayerData, PlayerType} from './player-data';
 
 @Injectable()
 export class GameService {
@@ -13,6 +13,10 @@ export class GameService {
     this.playerOne = playerOne;
     this.playerTwo = playerTwo;
     this.gameId = gameId;
+  }
+
+  get isLocalGame(): boolean {
+    return this.playerOne.type !== PlayerType.Network && this.playerTwo.type !== PlayerType.Network;
   }
 }
 
