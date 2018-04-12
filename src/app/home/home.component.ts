@@ -106,4 +106,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   exitToDesktop() {
     window.close();
   }
+  playOffline() {
+    
+  }
 }

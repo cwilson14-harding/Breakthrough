@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { GameBoardComponent } from './game-board/game-board.component';
@@ -44,6 +45,7 @@ import { OpenGamesComponent } from './open-games/open-games.component';
 import { Intro2Component } from './intro2/intro2.component';
 import { GameSettingsComponent } from './game-settings/game-settings.component';
 import { LegendComponent } from './legend/legend.component';
+
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: SplashScreenComponent},
