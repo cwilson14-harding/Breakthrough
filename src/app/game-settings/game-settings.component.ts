@@ -22,6 +22,8 @@ export class GameSettingsComponent implements OnInit {
   forfeit = false;
   leaveGame = false;
   currUser;
+  currUserName;
+  currUserPic;
   currGameId;
 
   constructor(public audio: MusicService, public db: AngularFirestore, public auth: AngularFireAuth, private gameService: GameService,
@@ -68,7 +70,12 @@ export class GameSettingsComponent implements OnInit {
     this.db.collection('games').doc(this.currGameId).update({
       forfeit: true
     }).then(next => {
-      this.router.navigateByUrl('game-over-lose');
+      this.db.collection('users').doc(this.currUser).valueChanges().subscribe(data => {
+        this.currUserName = data['displayName'];
+        this.currUserPic = data['pic'];
+  
+    });
+      this.router.navigate(['game-over-lose', this.currUserName, this.currUserPic]);
     });
   }
 

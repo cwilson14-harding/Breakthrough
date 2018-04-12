@@ -1,12 +1,9 @@
 <div class="background">
-
-  <!-- some kind of animations - background is plain
-  // TODO: page header, background for settings, clean up -->
   <div class="w3-row-padding" style="padding-top: 80px; padding-left: 10px; height: 90%;">
 
       <div class="w3-third w3-display-container w3-left cardStyleLeft" style="height: 90%; margin: 5px; margin-right: 7px;">
-          <img src='{{creatorPic}}' class="w3-half w3-display-topmiddle">
-          <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
+          <img src='{{creatorPic}}' class="w3-half w3-display-topmiddle largePic">
+          <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle" style="text-align: center;">
               <p>{{creatorName}}</p>
               <p>Wins: {{creatorWins}}</p>
               <p>Losses: {{creatorLosses}}</p>
@@ -17,12 +14,12 @@
       <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%;">
           Choose AI difficulty:<br>
             <mat-button-toggle-group [(ngModel)]="AiDifficultyGroup">
-              <mat-button-toggle value="easy" style="color: white;">Unfriendly</mat-button-toggle> <!-- set default -->
-              <mat-button-toggle value="hard" style="color: white;">Wrathful</mat-button-toggle>
+              <mat-button-toggle value="easy" style="color: black;">Unfriendly</mat-button-toggle>
+              <mat-button-toggle value="hard" style="color: black;">Wrathful</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
 
-        <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%; position: relative; right: 31.25%; top: 100px;">
+        <div class="w3-third w3-container w3-center cardStyleMid" style="width: 31%; position: relative; right: 31.25%; top: 200px;">
           Who goes first?<br>
             <mat-button-toggle-group [(ngModel)]="playerOrderGroup">
               <mat-button-toggle value="human" style="color: white;">Human</mat-button-toggle>
@@ -32,8 +29,8 @@
         </div>
 
         <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 90%; margin: 5px; position: relative; bottom: 75px;">
-               <img src='{{AiPic}}' class="w3-half w3-display-topmiddle" style="opacity: 1;">
-                <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
+               <img src='{{AiPic}}' class="w3-half w3-display-topmiddle largePic">
+                <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle" style="text-align: center;">
                   <p>AI</p>
                   <p>Wins: ???</p>
                   <p>Losses: 0</p>

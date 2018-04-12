@@ -67,6 +67,8 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
     //     this.goToBoard();
     //   }, 3000);
     // }
+
+    this.playerOrderGroup = 'rand';
   }
 
   getGameInfo() {
@@ -113,7 +115,6 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
          setTimeout(() => {
            this.goToBoard();
          }, 6000);
-      //   // alert(this.joinerName);
        }
     });
   }

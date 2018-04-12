@@ -12,30 +12,31 @@ export class GameOverLoseComponent implements OnInit {
 
 constructor(public auth: AuthService, private router: Router, public route: ActivatedRoute, public db: AngularFirestore) { }
 
-  gameId;
   loserName;
+  loserId;
   loserPic;
   loserLosses;
   loserWins;
 
 
   ngOnInit() {
-    this.gameId = this.route.snapshot.params['id'];
     this.getGameInfo();
   }
 
   getGameInfo(){
-    this.db.collection('users').doc(this.auth.getCurrentUser()).valueChanges().subscribe(data => {
-      this.loserName = data['displayName'];
+    this.loserId = this.auth.getCurrentUser()
+    this.loserName = this.route.snapshot.params['id'];
+    this.loserPic = this.route.snapshot.params['id2'];
+
+    this.db.collection('users').doc(this.loserId).valueChanges().subscribe(data => {
       this.loserWins = data['wins'];
       this.loserLosses = data['losses'];
-      this.loserPic = data['pic'];
 
   });
   }
 
   returnToLeaderboard() {
-    this.router.navigateByUrl(('multiPlayerLobby'));
+    this.router.navigate(['multiPlayerLobby', this.loserName, this.loserId, this.loserPic, this.loserWins, this.loserLosses]);
   }
 
   returnToMenu() {
