@@ -130,7 +130,13 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   }
 
   playGame() {
-    this.router.navigate(['single-setup', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
+    // TODO: tried to allow offline single-player here, but still not working. See home component
+    if (navigator.onLine) {
+      this.router.navigate(['single-setup', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
+    }else{
+      this.router.navigate(['single-setup', 'Rogue Entertainment', this.createRandomId(), 'assets/avatars/cyberPunkFigure4.png', 0, 0]);
+    }
+    
 
     //const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
     //const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSRandom); // AIMCTSDef
