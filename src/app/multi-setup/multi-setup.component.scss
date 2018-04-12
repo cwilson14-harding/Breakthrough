@@ -7,6 +7,10 @@
     width: 100vw;
   }
 
+  .introSpin {
+    animation: fa-spin 2.5s infinite linear;
+  }
+
   .largePic {
     max-height: 50%;
     height: auto;
@@ -25,7 +29,7 @@
     text-shadow: 2px 2px 4px rgb(216,65,201);
     font-size: 20pt;
   }
-  
+
   .buttonStyle:hover {
     box-shadow: 0 0 20px rgb(216,65,201);
   }

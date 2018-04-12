@@ -151,6 +151,9 @@ export class GameBoardComponent implements OnInit {
 
     // alert('beginning og Get Move');
 
+    // clearTimeout(this.timer);
+    // clearTimeout(this.timer2);
+
     // Connection lost
     if (this.currentPlayer instanceof NetworkPlayer) {
       this.timer = setTimeout(() => {
@@ -165,8 +168,8 @@ export class GameBoardComponent implements OnInit {
     if (currentPlayer) {
       const movePromise: Promise<Move> = currentPlayer.getMove(this);
 
-      clearTimeout(this.timer);
-      clearTimeout(this.timer2);
+     // clearTimeout(this.timer);
+     // clearTimeout(this.timer2);
 
       // connection lost
       if (this.currentPlayer instanceof NetworkPlayer) {
@@ -185,9 +188,10 @@ export class GameBoardComponent implements OnInit {
       movePromise.then((move: Move) => {
         // Make the move on the game board.
         this.board.makeMove(move);
-       // alert('in the move promise thennn');
-        clearTimeout(this.timer);
-        clearTimeout(this.timer2);
+        // alert('set timer here?');
+        // clearTimeout(this.timer);
+        // clearTimeout(this.timer2);
+
 
         // Reset highlighting
         this.board.clearHighlighting();
@@ -285,6 +289,10 @@ export class GameBoardComponent implements OnInit {
 
   selectPiece(target: Coordinate) {
     const currentPlayer = this.currentPlayer;
+
+    clearTimeout(this.timer);
+    clearTimeout(this.timer2);
+
     this.board.clearHighlighting();
     if (currentPlayer instanceof LocalPlayer) {
       const localPlayer: LocalPlayer = currentPlayer as LocalPlayer;
