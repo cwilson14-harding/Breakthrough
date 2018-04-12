@@ -10,7 +10,44 @@
 }
 
 .buttonOpacity {
-  opacity: .85;
+   opacity: .85;
+ }
+
+.buttonOpacity2 {
+  opacity: .8;
+  background-color: #83E0FE;
+  border-radius: 10px;
+}
+
+.errorButton{
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 150%;
+  color: white;
+  // background-color: #6B5B95;
+  background-color: rgba(228, 186, 230, .7);
+  border-width: 1px;
+  border-color: rgb(216,65,201);
+  border-radius: 5px;
+  width: 100px;
+  height: 55px;
+}
+
+.errorButton:hover {
+  border-width: 2.5px;
+  border-color: rgba(239, 74, 223, .7);
+}
+
+.noWifiHeading {
+  font-family: 'Permanent Marker', cursive;
+  color: white;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
+  font-size: 60pt;
+}
+.noWifiText {
+  font-family: 'Rajdhani', sans-serif;
+  color: white;
+  text-shadow: 2px 2px 4px rgb(216,65,201);
+  font-size: 25px;
 }
 
 .buttonStyle{

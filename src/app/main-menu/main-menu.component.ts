@@ -35,13 +35,15 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const currUserId = this.auth.getCurrentUser();
-    this.db.collection('users').doc(currUserId).snapshotChanges().subscribe( data => {
-     this.userUid = data.payload.get('uid');
-     this.userName = data.payload.get('displayName');
-     this.userPic = data.payload.get('pic');
-     this.userWins = data.payload.get('wins');
-     this.userLosses = data.payload.get('losses');
-    });
+    if (currUserId) {
+      this.db.collection('users').doc(currUserId).snapshotChanges().subscribe(data => {
+        this.userUid = data.payload.get('uid');
+        this.userName = data.payload.get('displayName');
+        this.userPic = data.payload.get('pic');
+        this.userWins = data.payload.get('wins');
+        this.userLosses = data.payload.get('losses');
+      });
+    }
 
     this.myStyle = {
       'position': 'fixed',
@@ -128,8 +130,13 @@ export class MainMenuComponent implements OnInit, AfterViewInit {
   }
 
   playGame() {
+<<<<<<< HEAD
     this.router.navigate(['single-setup', this.userName, this.userUid, this.userPic, this.userWins, this.userLosses]);
     
+=======
+    this.router.navigateByUrl("single-setup");
+
+>>>>>>> b9bd84566f1c409586ed6d1c222c87df84d13bf7
     //const playerOne = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
     //const playerTwo = new PlayerData('Jack', '', PlayerType.AIMCTSRandom); // AIMCTSDef
     //const currUserId = this.auth.getCurrentUser();
