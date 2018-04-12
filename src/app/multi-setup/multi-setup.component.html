@@ -29,7 +29,11 @@
     <h2 style="color: #F2F2F2" *ngIf="oneSec">1</h2>
   </div>
 
-      <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 94%; margin: 5px;">
+      <div id="waiting" class="w3-third w3-container w3-center cardStyleMid" style="width: 31%; position: relative; right: 31.25%; top: 100px;">
+          Waiting for another player...
+        </div>
+
+      <div class="w3-third w3-display-container w3-right cardStyleRight" style="height: 94%; margin: 5px; position: relative; bottom: 40px;">
               <img src='{{joinerPic}}' class="w3-half w3-display-topmiddle">
               <div class = "infoText" class="w3-l4 w3-padding w3-display-middle w3-display-bottommiddle">
                 <p>{{joinerName}}</p>
