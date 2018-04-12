@@ -97,7 +97,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
          this.isGameStarting = true;
          setTimeout(() => {
            this.gameStartMessage = true;
-         }, 2000);
+         }, 500);
          setTimeout(() => {
            this.gameStartMessage = false;
            this.threeSecs = true;
@@ -166,11 +166,7 @@ export class MultiSetupComponent implements OnInit, OnDestroy {
       isOpen: false
     }).then(next => this.router.navigateByUrl('main-menu'));
   }
-
   ngOnDestroy() {
-    this.db.collection('games').doc(this.gameId).update({
-      isOpen: false
-    });
   }
 }
 
