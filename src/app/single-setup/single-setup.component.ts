@@ -46,19 +46,14 @@ aiPlayer;
 
   getGameInfo() {
 
-    this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
-      this.AiName = data['joinerName'];
-      this.AiId = data['joinerId']; // TODO: make it work
-      this.creatorName = data['displayName'];
-      this.creatorId = data['playerId'];
-      this.creatorWins = data['playerWins'];
-      this.creatorLosses = data['playerLosses'];
-      this.AiWins = data['joinerWins'];
-      this.AiLosses = data['joinerLosses'];
-      this.creatorPic = data['playerPic'];
-      this.AiPic = data['joinerPic'];
+    this.AiName = "Bob";
+    this.creatorName = this.route.snapshot.params['id'];;
+    this.creatorId = this.route.snapshot.params['id2'];
+    this.creatorWins = this.route.snapshot.params['id4'];
+    this.creatorLosses = this.route.snapshot.params['id5'];
+    this.creatorPic = this.route.snapshot.params['id3'];
+    this.AiPic = "assets/avatars/virusAvatar.png";
 
-  });
 }
   goToBoard() {
     let playerOne: PlayerData;
@@ -69,11 +64,9 @@ aiPlayer;
     if (this.AiDifficultyGroup === 'easy') {
       this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSRandom);
       this.AiDifficulty = 'Unfriendly';
-      document.getElementById('aiDiff').innerHTML = 'AI Difficulty: Unfriendly';
     } else {
       this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
       this.AiDifficulty = 'Wrathful';
-      document.getElementById('aiDiff').innerHTML = 'AI Difficulty: Wrathful';
     }
 
 // Determine the starting player if random.
