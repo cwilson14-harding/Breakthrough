@@ -38,6 +38,10 @@ aiPlayer;
   ngOnInit() {
     this.gameId = this.route.snapshot.params['id'];
     this.getGameInfo();
+
+    // Set the default values for the button groups.
+    this.AiDifficultyGroup = 'easy';
+    this.playerOrderGroup = 'rand';
   }
 
   createRandomId() {
@@ -46,15 +50,16 @@ aiPlayer;
 
   getGameInfo() {
 
-    this.AiName = "Bob";
-    this.creatorName = this.route.snapshot.params['id'];;
+    this.AiName = 'AI';
+    this.creatorName = this.route.snapshot.params['id'];
     this.creatorId = this.route.snapshot.params['id2'];
     this.creatorWins = this.route.snapshot.params['id4'];
     this.creatorLosses = this.route.snapshot.params['id5'];
     this.creatorPic = this.route.snapshot.params['id3'];
-    this.AiPic = "assets/avatars/virusAvatar.png";
+    this.AiPic = 'assets/avatars/virusAvatar.png';
 
 }
+
   goToBoard() {
     let playerOne: PlayerData;
     let playerTwo: PlayerData;
@@ -62,10 +67,10 @@ aiPlayer;
     this.humanPlayer = new PlayerData('Rogue Entertainment', '', PlayerType.Local);
 
     if (this.AiDifficultyGroup === 'easy') {
-      this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSRandom);
+      this.aiPlayer = new PlayerData(this.AiName, this.AiPic, PlayerType.AIMCTSRandom);
       this.AiDifficulty = 'Unfriendly';
     } else {
-      this.aiPlayer = new PlayerData('Jack', '', PlayerType.AIMCTSDef);
+      this.aiPlayer = new PlayerData(this.AiName, this.AiPic, PlayerType.AIMCTSDef);
       this.AiDifficulty = 'Wrathful';
     }
 
