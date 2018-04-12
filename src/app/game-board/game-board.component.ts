@@ -224,9 +224,9 @@ export class GameBoardComponent implements OnInit {
             
             // Route to game-over based on if this player won or lost
             if (winnerData.type === PlayerType.Local) {
-              this.router.navigateByUrl('game-over-win');
+              this.router.navigate(['game-over-win', winnerData.name, winnerData.imageUrl]);
             } else {
-              this.router.navigateByUrl('game-over-lose');
+              this.router.navigate(['game-over-lose', winnerData.name, winnerData.imageUrl]);
             }
           }, 3000);
         } else {
@@ -320,7 +320,7 @@ export class GameBoardComponent implements OnInit {
 
 
   forfeitClicked() {
-    this.router.navigateByUrl('game-over-lose'); // TODO: change to lose once testing complete
+    this.router.navigateByUrl('game-over-lose');
   }
 
   getCurrentGame(user, game) {
