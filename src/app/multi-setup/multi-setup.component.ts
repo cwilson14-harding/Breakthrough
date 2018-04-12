@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlayerData, PlayerType} from '../player-data';
 import {GameService} from '../game.service';
@@ -11,10 +11,10 @@ import {AngularFirestore} from 'angularfire2/firestore';
   templateUrl: './multi-setup.component.html',
   styleUrls: ['./multi-setup.component.scss']
 })
-export class MultiSetupComponent implements OnInit {
+export class MultiSetupComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private gameService: GameService, public route: ActivatedRoute,
-              public auth: AuthService, public db: AngularFirestore) { }
+              public auth: AuthService, public db: AngularFirestore) {}
 
   gameId;
   creatorName;
@@ -31,6 +31,24 @@ export class MultiSetupComponent implements OnInit {
   player2 = false;
   playerOrderGroup: string;
   gameNotJoined = false;
+  gameNotJoinedTimer;
+
+  isGameStarting = false;
+  gameStartMessage = false;
+  threeSecs = false;
+  twoSecs = false;
+  oneSec = false;
+
+
+  @HostListener('window:unload', ['$event'])
+  closeGames(event) {
+    console.log('hi');
+    this.db.collection('games').doc(this.gameId).update({
+      isOpen: false
+    });
+  }
+
+
 
   ngOnInit() {
     this.gameId = this.route.snapshot.params['id'];
@@ -38,9 +56,9 @@ export class MultiSetupComponent implements OnInit {
 
     // If no joiner after 45 seconds, the game will be closed by default
     // if (this.joinerName === undefined) {
-    //   setTimeout(() => {
+    //   this.gameNotJoinedTimer = setTimeout(() => {
     //     this.closeGame();
-    //   }, 45000);
+    //   }, 30000);
     // }
 
     // alert(this.joinerName);
@@ -76,13 +94,32 @@ export class MultiSetupComponent implements OnInit {
 
        if (this.joinerName !== '') {
       //   // document.getElementById('playButton').removeAttribute('disabled');
-         this.goToBoard();
+         this.isGameStarting = true;
+         setTimeout(() => {
+           this.gameStartMessage = true;
+         }, 2000);
+         setTimeout(() => {
+           this.gameStartMessage = false;
+           this.threeSecs = true;
+         }, 3000);
+         setTimeout(() => {
+           this.threeSecs = false;
+           this.twoSecs = true;
+         }, 4000);
+         setTimeout(() => {
+           this.twoSecs = false;
+           this.oneSec = true;
+         }, 5000);
+         setTimeout(() => {
+           this.goToBoard();
+         }, 6000);
       //   // alert(this.joinerName);
        }
     });
   }
 
   goToBoard() {
+    // this.gameNotJoinedTimer = null;
     let playerOne: PlayerData;
     let playerTwo: PlayerData;
 
@@ -116,7 +153,10 @@ export class MultiSetupComponent implements OnInit {
   }
 
   returnToMenu() {
-    this.router.navigateByUrl('main-menu'); // TODO: sometimes returns to main menu?
+    this.db.collection('games').doc(this.gameId).update({
+      isOpen: false
+    }).then(next => this.router.navigateByUrl('main-menu'));
+     // TODO: sometimes returns to main menu?
   }
 
   closeGame() {
@@ -127,6 +167,11 @@ export class MultiSetupComponent implements OnInit {
     }).then(next => this.router.navigateByUrl('main-menu'));
   }
 
+  ngOnDestroy() {
+    this.db.collection('games').doc(this.gameId).update({
+      isOpen: false
+    });
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

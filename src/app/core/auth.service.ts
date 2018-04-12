@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
 import {ChatComponent} from '../chat/chat.component';
+import {GameService} from '../game.service';
 
 export interface User {
   displayName?: string;
