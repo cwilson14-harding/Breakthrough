@@ -223,7 +223,7 @@ export class GameBoardComponent implements OnInit {
             // alert(winnerData.name + ' [' + winner + '] has won!');
             // TODO: route to game-over based on if this player won or lost
           
-            this.router.navigateByUrl('game-over-win'); // was main menu
+            this.router.navigateByUrl('game-over-lose'); // was main menu
           }, 3000);
         } else {
           this.getMove();
@@ -316,14 +316,14 @@ export class GameBoardComponent implements OnInit {
 
 
   forfeitClicked() {
-    this.router.navigateByUrl('game-over-win'); // TODO: change to lose once testing complete
+    this.router.navigateByUrl('game-over-lose'); // TODO: change to lose once testing complete
   }
 
   getCurrentGame(user, game) {
     if (user.displayName === game.creatorName) {
       alert('This is your game.');
     } else {
-      alert('This is ' + game.creatorName + ' game.');
+      alert("This is " + game.creatorName + "'s game."); // added 's. is accurate?
     }
   }
   goToGameSettings() {
