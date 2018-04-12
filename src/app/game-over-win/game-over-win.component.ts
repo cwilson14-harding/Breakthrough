@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {AuthService} from '../core/auth.service';
+import {AngularFirestore} from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-game-over-win',
@@ -9,14 +10,33 @@ import {AuthService} from '../core/auth.service';
 })
 export class GameOverWinComponent implements OnInit {
 
-  constructor(public auth: AuthService, private router: Router) { }
+  constructor(public auth: AuthService, private router: Router, public route: ActivatedRoute, public db: AngularFirestore) { }
+
+  gameId;
+  winnerName;
+  winnerPic;
+  winnerLosses;
+  winnerWins;
+
 
   ngOnInit() {
+    this.gameId = this.route.snapshot.params['id'];
+    this.getGameInfo();
   }
 
-returnToLeaderboard() {
-  this.router.navigateByUrl(('multiPlayerLobby'));
-}
+  getGameInfo(){
+    this.db.collection('games').doc(this.gameId).valueChanges().subscribe(data => {
+      this.winnerName = data['displayName'];
+      this.winnerWins = data['playerWins'];
+      this.winnerLosses = data['playerLosses'];
+      this.winnerPic = data['playerPic'];
+
+  });
+  }
+
+  returnToLeaderboard() {
+    this.router.navigateByUrl(('multiPlayerLobby'));
+  }
 
   returnToMenu() {
     this.router.navigateByUrl(('main-menu'));

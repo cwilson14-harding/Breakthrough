@@ -1,6 +1,6 @@
 .background{
     background-color: #6B5B95;
-    background-image: url("../../assets/backgrounds/lobby.jpg");
+    background-image: url("../../assets/backgrounds/lobbybackground2.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -39,7 +39,9 @@
     text-shadow: 2px 2px 4px rgb(113, 175, 230);
     background-color: #2FB5F3;
     font-size: 18pt;
+    font-weight: bold;
     border-radius: 20px;
+    border-style: solid;
     border: 3px black;
   }
 
@@ -50,7 +52,9 @@
     text-shadow: 2px 2px 4px rgb(113, 175, 230);
     background-color: #DD0048;
     font-size: 18pt;
+    font-weight: bold;
     border-radius: 20px;
+    border-style: solid;
     border: 3px black;
   }
 
@@ -63,5 +67,6 @@
     font-size: 16pt;
     border-radius: 20px;
     border-color: black;
+    border-style: solid;
     border-width: 3px;
   }
